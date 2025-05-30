@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./_components/Header";
+import Sidebar from "./_components/Sidebar";
+import Player from "./_components/Player";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,7 +31,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}
         >
           <ThemeProvider
             attribute="class"
@@ -37,8 +39,20 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Header />
-            {children}
+            <div className="grid grid-cols-12 grid-rows-12 h-screen">
+              <div className="col-span-12 row-span-1">
+                <Header />
+              </div>
+              <div className="col-span-3 row-span-11 p-4 -mt-6">
+                <Sidebar />
+              </div>
+              <div className="col-span-9 row-span-11 py-4 pr-4 -mt-6">
+                {children}
+              </div>
+              <div className="col-span-12 row-span-1">
+                <Player />
+              </div>
+            </div>
           </ThemeProvider>
         </body>
       </html>

@@ -4,9 +4,8 @@ import {
   ArtistItem,
   PlaylistItem,
   TrackItem,
-} from "./types/component";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import MediaList from "./_components/MediaList";
+} from "../types/component";
+import MediaList from "../_components/MediaList";
 
 const mockPlaylists: PlaylistItem[] = [
   {
@@ -300,24 +299,57 @@ const mockTracks: TrackItem[] = [
   },
 ];
 
+const mockData = [
+  {
+    id: 1,
+    title: "Playlist made for you",
+    data: mockPlaylists,
+  },
+  {
+    id: 2,
+    title: "You may have interest",
+    data: mockTracks,
+  },
+  {
+    id: 3,
+    title: "Latest albums",
+    data: mockAlbums,
+  },
+  {
+    id: 4,
+    title: "Popular artists",
+    data: mockArtists,
+  },
+  {
+    id: 5,
+    title: "Your playlists",
+    data: mockPlaylists,
+  },
+  {
+    id: 6,
+    title: "Your saved albums",
+    data: mockAlbums,
+  },
+  {
+    id: 7,
+    title: "Your saved artists",
+    data: mockArtists,
+  },
+];
+
 export default function Home() {
   return (
-    <ScrollArea className="h-full bg-card p-4 text-card-foreground rounded-xl border shadow-sm">
-      <MediaList title="Playlist made for you" data={mockPlaylists} />
-      <MediaList
-        title="You may have interest"
-        data={mockTracks}
-        className="mt-8"
-      />
-      <MediaList title="Latest albums" data={mockAlbums} className="mt-8" />
-      <MediaList title="Related artists" data={mockArtists} className="mt-8" />
-      <MediaList title="Your playlists" data={mockPlaylists} className="mt-8" />
-      <MediaList title="Your saved albums" data={mockAlbums} className="mt-8" />
-      <MediaList
-        title="Your saved artists"
-        data={mockArtists}
-        className="mt-8"
-      />
-    </ScrollArea>
+    <div>
+      {mockData.map((item, index) => {
+        return (
+          <MediaList
+            key={item.id}
+            title={item.title}
+            data={item.data}
+            className={index == 0 ? "mt-2" : "mt-8"}
+          />
+        );
+      })}
+    </div>
   );
 }

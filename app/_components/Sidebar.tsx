@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Home, Library, Plus, Search, XIcon } from "lucide-react";
+import { Plus, Search, XIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import {
@@ -19,8 +19,6 @@ import {
 } from "../types/component";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
-import { Separator } from "@/components/ui/separator";
-import { usePathname } from "next/navigation";
 
 const mockPlaylists: PlaylistItem[] = [
   {
@@ -65,7 +63,6 @@ const mockPlaylists: PlaylistItem[] = [
   },
 ];
 
-// Mảng dữ liệu giả cho AlbumItem
 const mockAlbums: AlbumItem[] = [
   {
     id: "al1",
@@ -158,68 +155,37 @@ const LibraryItem = ({ data }: LibraryItemProps) => {
   };
 
   return (
-    <div className="flex items-center gap-2 p-2 hover:bg-gray-500/30 rounded-lg cursor-pointer">
-      <Image
-        src={data.images?.[0]?.url || "/audionix_logo_short.png"}
-        alt=""
-        width={50}
-        height={50}
-        className={`${
-          data.type == "artist" ? "rounded-full" : "rounded-lg"
-        } object-cover aspect-square`}
-      />
-      <div>
-        <p>{data.name}</p>
-        <p className="text-sm">
-          <span className="capitalize">{data.type}</span>
-          {data.type !== "artist" && ` - ${getTrackCount()} songs`}
-        </p>
+    <Link href={`/${data.type}s/${data.id}`}>
+      <div className="flex items-center gap-2 p-2 hover:bg-gray-500/30 rounded-lg cursor-pointer">
+        <Image
+          src={data.images?.[0]?.url || "/audionix_logo_short.png"}
+          alt=""
+          width={50}
+          height={50}
+          className={`${
+            data.type == "artist" ? "rounded-full" : "rounded-lg"
+          } object-cover aspect-square`}
+        />
+        <div>
+          <p>{data.name}</p>
+          <p className="text-sm">
+            <span className="capitalize">{data.type}</span>
+            {data.type !== "artist" && ` - ${getTrackCount()} items`}
+          </p>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
 const Sidebar = () => {
   const filterButtons = ["Playlists", "Artists", "Albums"];
   const [selectedFilter, setSelectedFilter] = useState<string>("");
-  const navItems = [
-    {
-      name: "Home",
-      icon: <Home className="h-5 w-5" />,
-      href: "/",
-    },
-    {
-      name: "Explore",
-      icon: <Search className="h-5 w-5" />,
-      href: "/explore",
-    },
-    {
-      name: "Library",
-      icon: <Library className="h-5 w-5" />,
-      href: "/library",
-    },
-  ];
-  const pathname = usePathname();
 
   return (
     <Card className="h-full">
       <CardHeader>
         <CardTitle>
-          <nav className="space-y-2 -mx-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`flex items-center gap-3 rounded-xl hover:bg-gray-500/30 transition-colors px-2 py-3 ${
-                  pathname === item.href ? "bg-primary hover:bg-primary/70" : ""
-                }`}
-              >
-                {item.icon}
-                <span className="font-medium">{item.name}</span>
-              </Link>
-            ))}
-          </nav>
-          <Separator className="my-4" />
           <div className="flex items-center justify-between">
             <p>Your library</p>
             <Button
@@ -273,7 +239,7 @@ const Sidebar = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="px-4">
-        <ScrollArea className="overflow-y-auto h-[420px]">
+        <ScrollArea className="overflow-y-auto h-[610px]">
           <div className="flex flex-col gap-2">
             {selectedFilter === "Playlists" &&
               mockPlaylists.map((playlist) => (

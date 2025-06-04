@@ -46,6 +46,11 @@ export interface ArtistItem {
 export interface TrackItem {
   album: AlbumItem;
   artists: ArtistItem[];
+  images: {
+    url: string;
+    height: number;
+    width: number;
+  }[];
   duration_ms: number;
   explicit: boolean;
   href: string;

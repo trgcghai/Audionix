@@ -18,9 +18,19 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAppSelector } from "../_hooks/redux";
 import { SignInButton, SignOutButton, SignUpButton } from "@clerk/nextjs";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function MainHeader() {
   const user = useAppSelector((state) => state.user);
+  const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
+
+  const handleSearch = (e: React.KeyboardEvent) => {
+    if (e.key !== "Enter") return;
+
+    router.push(`/search?q=${encodeURIComponent(searchTerm)}`);
+  };
 
   return (
     <header className="relative top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out backdrop-blur-sm px-4 py-2">
@@ -48,6 +58,9 @@ export default function MainHeader() {
             <Search className="absolute left-2.5 top-3.5 h-5 w-5 text-gray-400" />
             <Input
               type="search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={handleSearch}
               placeholder="What do you want to play ?"
               className="p-6 pl-9 w-[180px] lg:w-[400px] h-9 rounded-full placeholder:text-md"
             />

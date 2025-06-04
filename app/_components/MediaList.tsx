@@ -72,7 +72,7 @@ const MediaList = ({
   data,
   className = "",
 }: {
-  title: string;
+  title?: string;
   data: PlaylistItem[] | AlbumItem[] | ArtistItem[] | TrackItem[];
   className?: string;
 }): React.ReactNode => {

@@ -3,6 +3,8 @@ import MainHeader from "../_components/Header";
 import Player from "../_components/Player";
 import Sidebar from "../_components/Sidebar";
 import ReduxProvider from "../_libs/redux/ReduxProvider";
+import { Separator } from "@/components/ui/separator";
+import Footer from "../_components/Footer";
 
 const layout = ({
   children,
@@ -21,6 +23,10 @@ const layout = ({
         <div className="col-span-9 row-span-11 py-4 pr-4 -mt-6">
           <ScrollArea className="h-full bg-card p-4 text-card-foreground rounded-xl border shadow-sm">
             {children}
+
+            <Separator className="my-12" />
+
+            <Footer />
           </ScrollArea>
         </div>
         <div className="col-span-12 row-span-1">

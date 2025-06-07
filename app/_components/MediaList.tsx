@@ -80,28 +80,28 @@ const MediaList = ({
     <div className={className}>
       <p className="px-3 text-xl dark:text-white font-semibold">{title}</p>
       <div className="grid grid-cols-7 mt-1">
-        {data.map((item) => {
+        {data.map((item, index) => {
           if (item.type === "playlist") {
             return (
-              <Link href={`/playlists/${item.id}`} key={item.id}>
+              <Link href={`/playlists/${item.id}`} key={item.id + index}>
                 <PlaylistCard key={item.id} playlist={item as PlaylistItem} />
               </Link>
             );
           } else if (item.type === "album") {
             return (
-              <Link href={`/albums/${item.id}`} key={item.id}>
+              <Link href={`/albums/${item.id}`} key={item.id + index}>
                 <AlbumCard key={item.id} album={item as AlbumItem} />
               </Link>
             );
           } else if (item.type === "artist") {
             return (
-              <Link href={`/artists/${item.id}`} key={item.id}>
+              <Link href={`/artists/${item.id}`} key={item.id + index}>
                 <ArtistCard key={item.id} artist={item as ArtistItem} />
               </Link>
             );
           } else if (item.type === "track") {
             return (
-              <Link href={`/tracks/${item.id}`} key={item.id}>
+              <Link href={`/tracks/${item.id}`} key={item.id + index}>
                 <TrackCard key={item.id} track={item as TrackItem} />
               </Link>
             );

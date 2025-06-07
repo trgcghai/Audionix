@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Clock, Dot, Play } from "lucide-react";
 import {
@@ -31,13 +30,9 @@ const Page = () => {
       <Separator className="my-4" />
 
       <div>
-        <Button
-          variant="default"
-          size="icon"
-          className="h-14 w-14 rounded-full scale-95 hover:scale-100 transition-all duration-200"
-        >
-          <Play className="h-7 w-7 ml-0.5" fill="currentColor" />
-        </Button>
+        <div className="h-14 w-14 aspect-square scale-95 hover:scale-100 rounded-full transition-all duration-200 bg-primary flex items-center justify-center cursor-pointer hover:bg-primary/80">
+          <Play className="h-7 w-7 ml-1 block" fill="currentColor" />
+        </div>
       </div>
 
       <Table className="mt-4">

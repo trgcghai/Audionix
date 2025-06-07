@@ -2,7 +2,9 @@ import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Geist, Geist_Mono } from "next/font/google";
+import { dark } from "@clerk/themes";
 import "./globals.css";
+import ReduxProvider from "./_libs/redux/ReduxProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +27,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+        variables: {
+          // Primary color (purple)
+          colorPrimary: "rgb(123, 97, 255)",
+
+          // Background colors
+          colorBackground: "rgb(47, 52, 54)",
+
+          // Input elements
+          colorInputBackground: "rgb(255, 255, 255)",
+          colorInputText: "rgb(33, 33, 33)",
+
+          // Success/error states
+          colorSuccess: "rgb(110, 231, 183)",
+          colorDanger: "rgb(239, 68, 68)",
+          colorWarning: "rgb(123, 97, 255)",
+
+          // Other elements
+          fontFamily: "var(--font-geist-sans)",
+          fontFamilyButtons: "var(--font-geist-sans)",
+        },
+      }}
+    >
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}
@@ -36,7 +62,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <ReduxProvider>{children}</ReduxProvider>
           </ThemeProvider>
         </body>
       </html>

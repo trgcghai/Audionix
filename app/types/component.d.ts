@@ -16,6 +16,7 @@ export interface PlaylistItem {
   };
   type: string;
   href: string;
+  description?: string;
 }
 
 export interface AlbumItem {

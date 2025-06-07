@@ -2,34 +2,31 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { LogOutIcon, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { ModeToggle } from "@/components/ModeToggle";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useAppSelector } from "../_hooks/redux";
-import { SignInButton, SignOutButton, SignUpButton } from "@clerk/nextjs";
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { dark } from "@clerk/themes";
 
 export default function MainHeader() {
-  const user = useAppSelector((state) => state.user);
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 
   const handleSearch = (e: React.KeyboardEvent) => {
     if (e.key !== "Enter") return;
+    if (!searchTerm.trim()) return;
 
-    router.push(`/search?q=${encodeURIComponent(searchTerm)}`);
+    router.push(`/search/${searchTerm}`);
   };
 
   return (
@@ -69,71 +66,39 @@ export default function MainHeader() {
           <div className="flex items-center space-x-2">
             <ModeToggle />
 
-            {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="relative h-8 w-8 rounded-full"
-                  >
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage
-                        src="/placeholder.svg?height=32&width=32"
-                        alt="User"
-                      />
-                      <AvatarFallback>JD</AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="end" forceMount>
-                  <DropdownMenuLabel className="font-normal">
-                    <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">
-                        John Doe
-                      </p>
-                      <p className="text-xs leading-none text-muted-foreground">
-                        john.doe@example.com
-                      </p>
-                    </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
-                  <DropdownMenuItem>Billing</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem variant="destructive" className="m-2 p-0">
-                    <SignOutButton>
-                      <Button
-                        variant="destructive"
-                        className="w-full justify-start"
-                      >
-                        <LogOutIcon className="mr-2 h-4 w-4 dark:text-white" />
-                        Log out
-                      </Button>
-                    </SignOutButton>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <>
-                <SignInButton>
-                  <Button
-                    variant="outline"
-                    className="rounded-full font-semibold"
-                  >
-                    Log In
-                  </Button>
-                </SignInButton>
-                <SignUpButton>
-                  <Button
-                    variant="default"
-                    className="rounded-full font-semibold"
-                  >
-                    Sign Up
-                  </Button>
-                </SignUpButton>
-              </>
-            )}
+            <SignedIn>
+              <UserButton
+                userProfileUrl="/profile"
+                userProfileMode="navigation"
+                appearance={{
+                  baseTheme: dark,
+                  elements: {
+                    userButtonPopoverCard: "!w-1/6",
+                    userPreview: "!p-3",
+                    userButtonPopoverActionButton: "!p-3 !gap-0",
+                  },
+                }}
+              />
+            </SignedIn>
+
+            <SignedOut>
+              <SignInButton>
+                <Button
+                  variant="outline"
+                  className="rounded-full font-semibold"
+                >
+                  Log In
+                </Button>
+              </SignInButton>
+              <SignUpButton>
+                <Button
+                  variant="default"
+                  className="rounded-full font-semibold"
+                >
+                  Sign Up
+                </Button>
+              </SignUpButton>
+            </SignedOut>
           </div>
         </div>
       </div>

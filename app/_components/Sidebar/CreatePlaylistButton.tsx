@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { motion } from "framer-motion";
 import { Bot, Music, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 const iconVariants = {
   rest: { rotate: 0 },
@@ -14,11 +16,11 @@ const iconVariants = {
 
 const CreateOptionItem = ({ optionItem }: { optionItem: OptionItem }) => {
   return (
-    <motion.div initial="rest" whileHover="hover" animate="rest" onClick={optionItem.onClick}>
+    <motion.div initial="rest" whileHover="hover" animate="rest" onClick={optionItem.onClick} className="w-full">
       <motion.div className="flex items-center gap-2 hover:bg-gray-500/30 px-1 py-2 rounded-md transition-all duration-200 cursor-pointer">
         <motion.span variants={iconVariants} transition={{ duration: 0.3 }}>
           <div className="h-10 w-10 aspect-square rounded-full transition-all duration-200 bg-gray-400 flex items-center justify-center">
-            <optionItem.icon className="h-5 w-5 -ml-0.5 block" />
+            <optionItem.icon className="h-7 w-7 -ml-0.5 block text-white" />
           </div>
         </motion.span>
         <div>
@@ -39,6 +41,7 @@ const CreatePlaylistButton = ({
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
 }) => {
+  const router = useRouter()
   const optionItems: OptionItem[] = [
     {
       icon: Music,
@@ -56,13 +59,14 @@ const CreatePlaylistButton = ({
       type: "ai-suggest",
       onClick: () => {
         console.log("AI suggest clicked");
+        router.push("/playlists/create");
       },
     },
   ];
 
   return (
-    <Popover open={isOpen} onOpenChange={onOpenChange}>
-      <PopoverTrigger asChild>
+    <DropdownMenu open={isOpen} onOpenChange={onOpenChange}>
+      <DropdownMenuTrigger asChild>
         <Button
           variant="default"
           className="rounded-full text-md font-semibold gap-1"
@@ -76,15 +80,17 @@ const CreatePlaylistButton = ({
           </motion.span>
           <span className="ml-1">Create</span>
         </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-80 p-3">
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-80 p-3">
         <div className="flex flex-col gap-2">
           {optionItems.map((item, index) => (
-            <CreateOptionItem key={index} optionItem={item} />
+            <DropdownMenuItem variant="default" className="p-0 hover:!bg-gray-500/30" key={index}>
+              <CreateOptionItem key={index} optionItem={item} />
+            </DropdownMenuItem>
           ))}
         </div>
-      </PopoverContent>
-    </Popover>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

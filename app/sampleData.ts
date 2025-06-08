@@ -10,7 +10,7 @@ const mockPlaylists: PlaylistItem[] = [
     id: "pl1",
     images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
     name: "Chill Hits",
-    tracks: { href: "https://api.example.com/playlists/pl1/tracks", total: 50 },
+    tracks: { href: "https://api.example.com/playlists/pl1/tracks", total: 0 },
     type: "playlist",
     href: "https://api.example.com/playlists/pl1",
   },

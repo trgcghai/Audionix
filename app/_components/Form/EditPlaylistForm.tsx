@@ -19,7 +19,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDropzone } from "react-dropzone";
 
 interface EditPlaylistFormProps {
-  data: PlaylistItem;
+  data?: PlaylistItem;
 }
 
 const formSchema = z.object({
@@ -33,45 +33,45 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-const EditPlaylistForm = ({ data}: EditPlaylistFormProps) => {
+const EditPlaylistForm = ({ data }: EditPlaylistFormProps) => {
   const [previewImage, setPreviewImage] = useState<string>(
-    data?.images[0]?.url || "/audionix_logo_short.png"
+    data?.images[0]?.url || ""
   );
 
   const form = useForm<FormValues>({
-      resolver: zodResolver(formSchema),
-      defaultValues: {
-        title: data.name || "",
-        description: "",
-      },
-    });
-  
-    const onSubmit = (formData: FormValues) => {
-      console.log("Form submitted:", formData);
-    };
-  
-    const onDrop = useCallback(
-      (acceptedFiles: File[]) => {
-        const file = acceptedFiles[0];
-        if (file) {
-          form.setValue("image", file);
-          const objectUrl = URL.createObjectURL(file);
-          setPreviewImage(objectUrl);
-        }
-      },
-      [form]
-    );
-  
-    const { getRootProps, getInputProps } = useDropzone({
-      onDrop,
-      accept: {
-        "image/jpeg": [".jpg", ".jpeg"],
-        "image/png": [".png"],
-        "image/gif": [".gif"],
-      },
-      maxFiles: 1,
-      multiple: false,
-    });
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: data?.name || "",
+      description: "",
+    },
+  });
+
+  const onSubmit = (formData: FormValues) => {
+    console.log("Form submitted:", formData);
+  };
+
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        form.setValue("image", file);
+        const objectUrl = URL.createObjectURL(file);
+        setPreviewImage(objectUrl);
+      }
+    },
+    [form]
+  );
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: {
+      "image/jpeg": [".jpg", ".jpeg"],
+      "image/png": [".png"],
+      "image/gif": [".gif"],
+    },
+    maxFiles: 1,
+    multiple: false,
+  });
 
   return (
     <Form {...form}>
@@ -84,11 +84,11 @@ const EditPlaylistForm = ({ data}: EditPlaylistFormProps) => {
             control={form.control}
             name="image"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="">
                 <FormControl>
                   <div
                     {...getRootProps()}
-                    className={`relative w-full h-full rounded-lg flex flex-col items-center justify-center cursor-pointer transition-colors`}
+                    className={`relative w-full h-full rounded-lg flex flex-col items-center justify-center cursor-pointer`}
                   >
                     <input
                       {...getInputProps()}
@@ -111,7 +111,7 @@ const EditPlaylistForm = ({ data}: EditPlaylistFormProps) => {
                         />
                       </div>
                     ) : (
-                      <div className="flex flex-col items-center justify-center h-full p-4 text-center">
+                      <div className="flex flex-col items-center justify-center w-full h-full p-4 text-center border rounded-lg">
                         <ImageIcon className="h-10 w-10 text-muted-foreground mb-2" />
                         <p className="text-sm text-muted-foreground">
                           Drop image here or click to upload

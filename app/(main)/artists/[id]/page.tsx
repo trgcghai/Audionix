@@ -10,7 +10,7 @@ import MediaList from "@/app/_components/MediaList";
 import HeroSection from "@/app/_components/HeroSection";
 import TrackRow from "@/app/_components/TrackRow";
 
-const Page = () => {
+const DetailArtistPage = () => {
   const [isFollowing, setIsFollowing] = useState(false);
   return (
     <div className="">
@@ -73,4 +73,4 @@ const Page = () => {
     </div>
   );
 };
-export default Page;
+export default DetailArtistPage;

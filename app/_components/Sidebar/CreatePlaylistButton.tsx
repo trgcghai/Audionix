@@ -81,7 +81,7 @@ const CreatePlaylistButton = ({
           <span className="ml-1">Create</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-80 p-3">
+      <DropdownMenuContent align="start" className="w-80 p-3">
         <div className="flex flex-col gap-2">
           {optionItems.map((item, index) => (
             <DropdownMenuItem variant="default" className="p-0 hover:!bg-gray-500/30" key={index}>

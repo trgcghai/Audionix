@@ -1,15 +1,16 @@
 "use client";
+import ControlSection from "@/app/_components/ControlSection";
+import TableTrack from "@/app/_components/DetailPlaylist/TableTrack";
 import HeroSection from "@/app/_components/HeroSection";
 import MediaList from "@/app/_components/MediaList";
-import TrackRow from "@/app/_components/TrackRow";
 import { mockAlbums, mockTracks } from "@/app/sampleData";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Table, TableBody } from "@/components/ui/table";
-import { Dot, Ellipsis, Heart, Play } from "lucide-react";
+import { Dot } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
-const Page = () => {
+const DetailTrackPage = () => {
+  const [isLiked, setIsLiked] = useState(false);
   return (
     <div>
       <HeroSection
@@ -27,29 +28,13 @@ const Page = () => {
 
       <Separator className="my-4" />
 
-      <div className="flex items-center gap-4">
-        <Button
-          variant="default"
-          size="icon"
-          className="h-14 w-14 rounded-full scale-95 hover:scale-100 transition-all duration-200"
-        >
-          <Play className="h-7 w-7 ml-0.5" fill="currentColor" />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-10 w-10 rounded-full scale-95 hover:scale-100 transition-all duration-200"
-        >
-          <Heart className="h-7 w-7 ml-0.5" fill="currentColor" />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-10 w-10 rounded-full scale-95 hover:scale-100 transition-all duration-200"
-        >
-          <Ellipsis className="h-7 w-7 ml-0.5" fill="currentColor" />
-        </Button>
-      </div>
+      <ControlSection 
+        onPlay={() => console.log("Play track")}
+        onAddToPlaylist={() => console.log("Add to playlist")}
+        onLike={() => setIsLiked(!isLiked)}
+        isLiked={isLiked}
+        variant="track"
+      />
 
       <div className="flex gap-4 items-center mt-8">
         <Image
@@ -69,17 +54,7 @@ const Page = () => {
 
       <div className="mt-12">
         <p className="text-xl font-bold px-3">Popular tracks by artist</p>
-        <Table className="mt-4">
-          <TableBody className="">
-            {mockTracks.map((track, index) => (
-              <TrackRow
-                key={track.id + index}
-                track={track}
-                index={index + 1}
-              />
-            ))}
-          </TableBody>
-        </Table>
+        <TableTrack tracks={mockTracks} showHeader={false} />
       </div>
 
       <div className="mt-12">
@@ -94,4 +69,4 @@ const Page = () => {
     </div>
   );
 };
-export default Page;
+export default DetailTrackPage;

@@ -1,3 +1,5 @@
+import { ArtistTrackStatus } from "../constant";
+
 export interface LibraryItemProps {
   data: PlaylistItem | AlbumItem | ArtistItem;
 }
@@ -59,4 +61,22 @@ export interface TrackItem {
   name: string;
   track_number: number;
   type: string;
+}
+
+export interface ArtistTrackItem {
+  album: AlbumItem;
+  images: {
+    url: string;
+    height: number;
+    width: number;
+  }[];
+  duration_ms: number;
+  explicit: boolean;
+  href: string;
+  id: string;
+  name: string;
+  track_number: number;
+  type: string;
+  uploadTime: string;
+  status: ArtistTrackStatus;
 }

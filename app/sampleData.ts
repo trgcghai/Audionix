@@ -1,6 +1,7 @@
 import {
   AlbumItem,
   ArtistItem,
+  ArtistTrackItem,
   PlaylistItem,
   TrackItem,
 } from "./types/component";
@@ -341,4 +342,137 @@ const mockData = [
   },
 ];
 
-export { mockData, mockPlaylists, mockAlbums, mockArtists, mockTracks };
+const mockArtistTracks: ArtistTrackItem[] = [
+  {
+    id: "at_01",
+    name: "Midnight Dreams",
+    type: "track",
+    href: "/tracks/at_01",
+    duration_ms: 237000, // 3:57
+    explicit: false,
+    track_number: 1,
+    uploadTime: "2025-05-10T14:23:45Z",
+    status: "active",
+    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    album: {
+      id: "alb_101",
+      name: "Late Night Sessions",
+      type: "album",
+      href: "/albums/alb_101",
+      total_tracks: 12,
+      images: [
+        {
+          url: "/album-covers/late-night-sessions.jpg",
+          height: 640,
+          width: 640
+        }
+      ]
+    }
+  },
+  {
+    id: "at_02",
+    name: "Ocean Waves",
+    type: "track",
+    href: "/tracks/at_02",
+    duration_ms: 184000, // 3:04
+    explicit: false,
+    track_number: 3,
+    uploadTime: "2025-06-02T09:12:30Z",
+    status: "inactive",
+    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    album: {
+      id: "alb_102",
+      name: "Summer Vibes",
+      type: "album",
+      href: "/albums/alb_102",
+      total_tracks: 10,
+      images: [
+        {
+          url: "/album-covers/summer-vibes.jpg",
+          height: 640,
+          width: 640
+        }
+      ]
+    }
+  },
+  {
+    id: "at_03",
+    name: "Electric Soul",
+    type: "track",
+    href: "/tracks/at_03",
+    duration_ms: 305000, // 5:05
+    explicit: true,
+    track_number: 2,
+    uploadTime: "2025-05-28T16:45:12Z",
+    status: "active",
+    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    album: {
+      id: "alb_103",
+      name: "Urban Rhythms",
+      type: "album",
+      href: "/albums/alb_103",
+      total_tracks: 8,
+      images: [
+        {
+          url: "/album-covers/urban-rhythms.jpg",
+          height: 640,
+          width: 640
+        }
+      ]
+    }
+  },
+  {
+    id: "at_04",
+    name: "Lost Highway",
+    type: "track",
+    href: "/tracks/at_04",
+    duration_ms: 219000, // 3:39
+    explicit: false,
+    track_number: 5,
+    uploadTime: "2025-06-05T10:30:00Z",
+    status: "active",
+    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    album: {
+      id: "alb_104",
+      name: "Road Trip Essentials",
+      type: "album",
+      href: "/albums/alb_104",
+      total_tracks: 15,
+      images: [
+        {
+          url: "/album-covers/road-trip-essentials.jpg",
+          height: 640,
+          width: 640
+        }
+      ]
+    }
+  },
+  {
+    id: "at_05",
+    name: "Neon Lights",
+    type: "track",
+    href: "/tracks/at_05",
+    duration_ms: 268000, // 4:28
+    explicit: true,
+    track_number: 1,
+    uploadTime: "2025-06-01T20:15:45Z",
+    status: "inactive",
+    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    album: {
+      id: "alb_105",
+      name: "Synthetic Dreams",
+      type: "album",
+      href: "/albums/alb_105",
+      total_tracks: 9,
+      images: [
+        {
+          url: "/album-covers/synthetic-dreams.jpg",
+          height: 640,
+          width: 640
+        }
+      ]
+    }
+  }
+];
+
+export { mockData, mockPlaylists, mockAlbums, mockArtists, mockTracks, mockArtistTracks };

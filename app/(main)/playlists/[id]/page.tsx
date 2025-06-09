@@ -10,7 +10,7 @@ import debounce from "lodash.debounce";
 import SearchTrack from "@/app/_components/DetailPlaylist/SearchTrack";
 import SearchResult from "@/app/_components/DetailPlaylist/SearchResult";
 import RecommendationsTracks from "@/app/_components/DetailPlaylist/RecommendationsTracks";
-import TableTrack from "@/app/_components/DetailPlaylist/TableTrack";
+import TableTrack from "@/app/_components/SimpleTrackTable";
 import ControlSection from "@/app/_components/ControlSection";
 
 const DetailPlaylistPage = () => {

@@ -20,7 +20,7 @@ const Page = () => {
         <Button
           variant={"default"}
           className="text-lg rounded-full"
-          onClick={() => router.push("/")}
+          onClick={() => router.back()}
         >
           <ArrowLeft className="h-7 w-7" />
           <p>Return to website</p>

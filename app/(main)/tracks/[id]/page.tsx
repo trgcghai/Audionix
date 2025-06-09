@@ -1,6 +1,6 @@
 "use client";
 import ControlSection from "@/app/_components/ControlSection";
-import TableTrack from "@/app/_components/DetailPlaylist/TableTrack";
+import TableTrack from "@/app/_components/SimpleTrackTable";
 import HeroSection from "@/app/_components/HeroSection";
 import MediaList from "@/app/_components/MediaList";
 import { mockAlbums, mockTracks } from "@/app/sampleData";

@@ -6,7 +6,7 @@ import { useState } from "react";
 import MediaList from "@/app/_components/MediaList";
 import HeroSection from "@/app/_components/HeroSection";
 import ControlSection from "@/app/_components/ControlSection";
-import TableTrack from "@/app/_components/DetailPlaylist/TableTrack";
+import TableTrack from "@/app/_components/SimpleTrackTable";
 
 const DetailAlbumPage = () => {
   const [isFollowing, setIsFollowing] = useState(false);

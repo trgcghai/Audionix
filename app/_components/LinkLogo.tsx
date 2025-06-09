@@ -1,0 +1,24 @@
+import Link from "next/link";
+import Image from "next/image";
+import { motion } from "framer-motion";
+
+const LinkLogo = ({ href = "/" }: { href?: string }) => {
+  return (
+    <Link href={href} className="flex items-center space-x-2">
+      <motion.div
+        className="w-10 h-10 rounded-full bg-gradient-to-tr from-violet-500 to-indigo-600 flex items-center justify-center"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <Image
+          alt="logo"
+          src={"/audionix_logo_short.png"}
+          width={50}
+          height={50}
+          className="rounded-lg"
+        />
+      </motion.div>
+    </Link>
+  );
+};
+export default LinkLogo;

@@ -4,12 +4,45 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { TrackItem } from "@/app/types/component";
 import { formatTrackDuration } from "@/app/_utils/formatTrackDuration";
 import { Button } from "@/components/ui/button";
+import { TableTracksVariant } from "../constant";
 
 const RenderByVariant = ({
   index,
   track,
   variant = "default",
 }: TrackRowProps) => {
+  if (variant === "artistTrack") {
+    return (
+      <TableRow className="border-b-0 rounded-lg">
+        <TableCell className="w-6 rounded-tl-lg rounded-bl-lg">
+          <p className="text-sm text-gray-500">{index}</p>
+        </TableCell>
+        <TableCell>
+          <div className="flex items-center gap-2">
+            <Image
+              src={track.album.images[0].url}
+              alt={track.name}
+              width={40}
+              height={40}
+              className="rounded"
+            />
+            <div>
+              <p className="text-sm font-semibold">{track.name}</p>
+            </div>
+          </div>
+        </TableCell>
+        <TableCell>
+          <p className="text-sm font-medium">{track.album.name}</p>
+        </TableCell>
+        <TableCell className="rounded-tr-lg rounded-br-lg">
+          <p className="text-sm font-medium">
+            {formatTrackDuration(track.duration_ms)}
+          </p>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
   if (variant === "addToPlaylist") {
     return (
       <TableRow className="border-b-0 rounded-lg">
@@ -94,5 +127,5 @@ export default TrackRow;
 interface TrackRowProps {
   index: number;
   track: TrackItem;
-  variant?: "default" | "addToPlaylist";
+  variant?: TableTracksVariant;
 }

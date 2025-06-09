@@ -2,13 +2,12 @@
 import { mockAlbums, mockArtists, mockTracks } from "@/app/sampleData";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Table, TableBody } from "@/components/ui/table";
 import { Dot } from "lucide-react";
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MediaList from "@/app/_components/MediaList";
 import HeroSection from "@/app/_components/HeroSection";
-import TrackRow from "@/app/_components/TrackRow";
+import TableTrack from "@/app/_components/SimpleTrackTable";
 
 const DetailArtistPage = () => {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -37,17 +36,7 @@ const DetailArtistPage = () => {
 
       <div className="px-3">
         <p className="text-xl font-bold">Popular tracks</p>
-        <Table className="mt-4">
-          <TableBody className="">
-            {mockTracks.map((track, index) => (
-              <TrackRow
-                key={track.id + index}
-                track={track}
-                index={index + 1}
-              />
-            ))}
-          </TableBody>
-        </Table>
+        <TableTrack tracks={mockTracks} showHeader={false} />
       </div>
 
       <div className="mt-12 px-3">

@@ -1,6 +1,6 @@
 "use client";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import MainHeader from "../_components/Header";
+import MainHeader from "../_components/Header/MainHeader";
 import Player from "../_components/Player/Player";
 import Sidebar from "../_components/Sidebar/Sidebar";
 import { Separator } from "@/components/ui/separator";

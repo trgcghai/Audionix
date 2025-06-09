@@ -49,7 +49,7 @@ const Sidebar = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="px-4">
-        <ScrollArea className="overflow-y-auto h-[610px]">
+        <ScrollArea className="overflow-y-auto h-[600px]">
           <div className="flex flex-col gap-2">
             {selectedFilter === "Playlists" &&
               mockPlaylists.map((playlist) => (

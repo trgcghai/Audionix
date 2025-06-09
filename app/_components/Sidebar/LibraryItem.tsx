@@ -28,7 +28,8 @@ const LibraryItem = ({ data }: LibraryItemProps) => {
           <p>{data.name}</p>
           <p className="text-sm">
             <span className="capitalize">{data.type}</span>
-            {data.type !== "artist" && ` - ${getTrackCount()} items`}
+            {["album", "playlist"].includes(data.type) &&
+              ` - ${getTrackCount()} items`}
           </p>
         </div>
       </div>

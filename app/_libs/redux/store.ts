@@ -12,6 +12,7 @@ import {
 } from "redux-persist";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import userReducer from "@/app/_libs/features/userSlice";
+import queueDrawerReducer from "@/app/_libs/features/queueDrawerSlice";
 
 const persistConfig = {
   key: "root",
@@ -23,6 +24,7 @@ const persistedReducer = persistReducer(
   persistConfig,
   combineReducers({
     user: userReducer,
+    queueDrawer: queueDrawerReducer,
   })
 );
 

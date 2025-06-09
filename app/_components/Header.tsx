@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Search } from "lucide-react";
+import { BadgeCheck, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
@@ -76,9 +76,18 @@ export default function MainHeader() {
                     userButtonPopoverCard: "!w-1/6",
                     userPreview: "!p-3",
                     userButtonPopoverActionButton: "!p-3 !gap-0",
+                    userButtonPopoverCustomItemButton: "!p-3 !gap-0",
                   },
                 }}
-              />
+              >
+                <UserButton.MenuItems>
+                  <UserButton.Link
+                    label="Change to artist"
+                    labelIcon={<BadgeCheck className="w-4 h-4" />}
+                    href="/artists/management"
+                  />
+                </UserButton.MenuItems>
+              </UserButton>
             </SignedIn>
 
             <SignedOut>

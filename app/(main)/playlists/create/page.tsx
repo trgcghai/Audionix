@@ -1,9 +1,12 @@
 import HeroSection from "@/app/_components/HeroSection";
+import TrackRow from "@/app/_components/TrackRow";
+import { mockTracks } from "@/app/sampleData";
 import { PlaylistItem } from "@/app/types/component";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Plus, Repeat, CornerDownLeft } from "lucide-react";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Plus, Repeat, CornerDownLeft, Clock } from "lucide-react";
 
 const CreatePlaylistPage = () => {
   const newPlaylist: PlaylistItem = {
@@ -63,7 +66,7 @@ const CreatePlaylistPage = () => {
         </div>
       </div>
 
-      {/* <Table className="mt-4">
+      <Table className="mt-4">
         <TableHeader>
           <TableRow className="cursor-default">
             <TableHead className="text-xs font-bold text-gray-400 rounded-tl-lg rounded-bl-lg">
@@ -88,7 +91,7 @@ const CreatePlaylistPage = () => {
             <TrackRow key={track.id + index} track={track} index={index + 1} />
           ))}
         </TableBody>
-      </Table> */}
+      </Table>
     </div>
   );
 };

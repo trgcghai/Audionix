@@ -59,7 +59,7 @@ export function TrackTable<TData, TValue>({
       </div>
 
       <div className="mb-8">
-        <DataTableFilterOptions table={table} />
+        <DataTableFilterOptions table={table} className="grid grid-cols-2 gap-4" itemClassName="m-0" inputClassName="w-3/5" />
       </div>
 
       <div className="rounded-lg border">

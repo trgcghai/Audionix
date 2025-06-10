@@ -8,20 +8,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Table } from "@tanstack/react-table";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { ARTIST_TRACK_STATUS_OPTIONS } from "@/app/constant";
+import ConfirmDialog from "../../Dialog/ConfirmDialog";
+import { Button } from "@/components/ui/button";
 
 function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
   const [selectedStatus, setSelectedStatus] = useState<string | undefined>();
@@ -34,6 +24,12 @@ function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
 
   const handleStatusConfirm = () => {
     console.log(`Changing status to: ${selectedStatus}`);
+    console.log(`Selected rows:`, table.getSelectedRowModel().rows);
+    setStatusDialogOpen(false);
+  };
+
+  const handleDeleteConfirm = () => {
+    console.log("Deleting selected rows:", table.getSelectedRowModel().rows);
     setStatusDialogOpen(false);
   };
 
@@ -53,46 +49,35 @@ function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
             ))}
           </SelectContent>
         </Select>
-
-        <AlertDialog open={statusDialogOpen} onOpenChange={setStatusDialogOpen}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Confirm Status Change</AlertDialogTitle>
-              <AlertDialogDescription>
-                Are you sure you want to change the status of selected items to
-                &quot;{selectedStatus}&quot;? This action can be reversed later.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleStatusConfirm}>
-                Continue
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        <ConfirmDialog
+          title="Confirm Status Change"
+          description={`Are you sure you want to change the status of ${
+            table.getSelectedRowModel().rows.length
+          } selected items to "${selectedStatus}"? This action can be reversed later.`}
+          onCancel={() => setStatusDialogOpen(false)}
+          onConfirm={handleStatusConfirm}
+          statusDialogOpen={statusDialogOpen}
+          setStatusDialogOpen={setStatusDialogOpen}
+        />
       </div>
       <div className="flex items-center gap-2">
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button variant={"destructive"} className="rounded-full">
-              Delete selected
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction>Continue</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        <Button
+          variant={"destructive"}
+          onClick={() => setStatusDialogOpen(true)}
+          className="rounded-full"
+        >
+          Delete selected
+        </Button>
+        <ConfirmDialog
+          title="Confirm Deletion"
+          description={`Are you absolutely sure to delete all ${
+            table.getSelectedRowModel().rows.length
+          } selected items? This action cannot be undone.`}
+          onCancel={() => setStatusDialogOpen(false)}
+          onConfirm={handleDeleteConfirm}
+          statusDialogOpen={statusDialogOpen}
+          setStatusDialogOpen={setStatusDialogOpen}
+        />
       </div>
     </div>
   );

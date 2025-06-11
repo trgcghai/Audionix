@@ -7,6 +7,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
 interface ConfirmDialogProps {
@@ -16,6 +17,8 @@ interface ConfirmDialogProps {
   onConfirm: () => void;
   statusDialogOpen?: boolean;
   setStatusDialogOpen?: (open: boolean) => void;
+  children?: React.ReactNode;
+  asChild?: boolean;
 }
 
 const ConfirmDialog = ({
@@ -25,9 +28,14 @@ const ConfirmDialog = ({
   onConfirm,
   statusDialogOpen,
   setStatusDialogOpen,
+  children,
+  asChild = false,
 }: ConfirmDialogProps) => {
   return (
     <AlertDialog open={statusDialogOpen} onOpenChange={setStatusDialogOpen}>
+      <AlertDialogTrigger asChild={asChild}>
+        {children}
+      </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>

@@ -14,11 +14,11 @@ const navItems = [
     items: [
       {
         title: "My Tracks",
-        url: "/tracks",
+        url: "/artist-tracks",
       },
       {
         title: "Upload New",
-        url: "/tracks/upload",
+        url: "/artist-tracks/upload",
       },
     ],
   },
@@ -29,11 +29,11 @@ const navItems = [
     items: [
       {
         title: "My Albums",
-        url: "/albums",
+        url: "/artist-albums",
       },
       {
         title: "Release New Album",
-        url: "/albums/create",
+        url: "/artist-albums/create",
       },
     ],
   },

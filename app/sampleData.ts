@@ -355,19 +355,13 @@ const mockArtistTracks: ArtistTrackItem[] = [
     status: "active",
     images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
     album: {
-      id: "alb_101",
-      name: "Late Night Sessions",
-      type: "album",
-      href: "/albums/alb_101",
+      id: "al1",
+      images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+      name: "Summer Tunes",
       total_tracks: 12,
-      images: [
-        {
-          url: "/album-covers/late-night-sessions.jpg",
-          height: 640,
-          width: 640
-        }
-      ]
-    }
+      type: "album",
+      href: "https://api.example.com/albums/al1",
+    },
   },
   {
     id: "at_02",
@@ -379,21 +373,15 @@ const mockArtistTracks: ArtistTrackItem[] = [
     track_number: 3,
     uploadTime: "2025-06-02T09:12:30Z",
     status: "inactive",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    images: [{ url: "https://picsum.photos/200s", height: 200, width: 200 }],
     album: {
-      id: "alb_102",
-      name: "Summer Vibes",
-      type: "album",
-      href: "/albums/alb_102",
+      id: "al2",
+      images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+      name: "Winter Ballads",
       total_tracks: 10,
-      images: [
-        {
-          url: "/album-covers/summer-vibes.jpg",
-          height: 640,
-          width: 640
-        }
-      ]
-    }
+      type: "album",
+      href: "https://api.example.com/albums/al2",
+    },
   },
   {
     id: "at_03",
@@ -407,19 +395,13 @@ const mockArtistTracks: ArtistTrackItem[] = [
     status: "active",
     images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
     album: {
-      id: "alb_103",
-      name: "Urban Rhythms",
+      id: "al3",
+      images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+      name: "City Lights",
+      total_tracks: 15,
       type: "album",
-      href: "/albums/alb_103",
-      total_tracks: 8,
-      images: [
-        {
-          url: "/album-covers/urban-rhythms.jpg",
-          height: 640,
-          width: 640
-        }
-      ]
-    }
+      href: "https://api.example.com/albums/al3",
+    },
   },
   {
     id: "at_04",
@@ -433,19 +415,13 @@ const mockArtistTracks: ArtistTrackItem[] = [
     status: "active",
     images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
     album: {
-      id: "alb_104",
-      name: "Road Trip Essentials",
+      id: "al4",
+      images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+      name: "Road Trip",
+      total_tracks: 8,
       type: "album",
-      href: "/albums/alb_104",
-      total_tracks: 15,
-      images: [
-        {
-          url: "/album-covers/road-trip-essentials.jpg",
-          height: 640,
-          width: 640
-        }
-      ]
-    }
+      href: "https://api.example.com/albums/al4",
+    },
   },
   {
     id: "at_05",
@@ -459,20 +435,21 @@ const mockArtistTracks: ArtistTrackItem[] = [
     status: "inactive",
     images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
     album: {
-      id: "alb_105",
-      name: "Synthetic Dreams",
+      id: "al4",
+      images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+      name: "Road Trip",
+      total_tracks: 8,
       type: "album",
-      href: "/albums/alb_105",
-      total_tracks: 9,
-      images: [
-        {
-          url: "/album-covers/synthetic-dreams.jpg",
-          height: 640,
-          width: 640
-        }
-      ]
-    }
-  }
+      href: "https://api.example.com/albums/al4",
+    },
+  },
 ];
 
-export { mockData, mockPlaylists, mockAlbums, mockArtists, mockTracks, mockArtistTracks };
+export {
+  mockData,
+  mockPlaylists,
+  mockAlbums,
+  mockArtists,
+  mockTracks,
+  mockArtistTracks,
+};

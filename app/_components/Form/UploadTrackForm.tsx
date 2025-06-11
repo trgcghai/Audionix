@@ -4,6 +4,7 @@ import {
   COVER_IMAGE_ACCEPT_TYPES,
 } from "@/app/constant";
 import { mockAlbums } from "@/app/sampleData";
+import { ArtistTrackItem } from "@/app/types/component";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -28,6 +29,7 @@ import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import ConfirmDialog from "../Dialog/ConfirmDialog";
 
 const formSchema = z.object({
   title: z
@@ -37,21 +39,28 @@ const formSchema = z.object({
   album: z.string().optional(),
   image: z.instanceof(File).optional(),
   audioFile: z.instanceof(File, { message: "Audio file is required" }),
+  status: z.string({ message: "Status is required" }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
-const UploadTrackForm = () => {
-  const [previewImage, setPreviewImage] = useState<string>("");
-  const [previewAudio, setPreviewAudio] = useState<string>("");
+const UploadTrackForm = ({ track }: { track?: ArtistTrackItem }) => {
+  const [previewImage, setPreviewImage] = useState<string>(
+    track?.images[0]?.url || ""
+  );
+  const [previewAudio, setPreviewAudio] = useState<string>(track?.href || "");
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      album: "",
-      image: undefined,
-      audioFile: undefined,
+      title: track?.name || "",
+      album: track?.album?.id || "",
+      image: track?.images[0].url
+        ? new File([], track?.images[0].url)
+        : undefined,
+      audioFile: track?.href ? new File([], track.href) : undefined,
+      status: track?.status || "inactive",
     },
   });
 
@@ -62,10 +71,6 @@ const UploadTrackForm = () => {
       .flat()
       .map((ext) => ext.replace(".", "").toUpperCase())
       .join(", ");
-  };
-
-  const onSubmit = (formData: FormValues) => {
-    console.log("Form submitted:", formData);
   };
 
   const onDropCoverImage = useCallback(
@@ -105,6 +110,10 @@ const UploadTrackForm = () => {
     maxFiles: 1,
     multiple: false,
   });
+
+  const onSubmit = (formData: FormValues) => {
+    console.log("Form submitted:", formData);
+  };
 
   return (
     <Form {...form}>
@@ -158,6 +167,7 @@ const UploadTrackForm = () => {
                             width={300}
                             height={300}
                             className="rounded-lg object-cover"
+                            onError={() => setPreviewImage("")}
                           />
                         </div>
 
@@ -225,7 +235,12 @@ const UploadTrackForm = () => {
                           />
                         </div>
 
-                        <audio controls src={previewAudio} className="w-full">
+                        <audio
+                          controls
+                          src={previewAudio}
+                          className="w-full"
+                          onError={() => setPreviewAudio("")}
+                        >
                           Your browser does not support the audio element.
                         </audio>
 
@@ -302,6 +317,34 @@ const UploadTrackForm = () => {
           />
         </div>
 
+        <div className="">
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem className="w-full h-full">
+                <FormLabel className="text-md font-semibold">Status</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    {...field}
+                    disabled={!track}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="inactive">Inactive</SelectItem>
+                      <SelectItem value="active">Active</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
         <div className="flex justify-end items-center gap-4">
           <Button
             type="button"
@@ -311,9 +354,24 @@ const UploadTrackForm = () => {
           >
             Cancel
           </Button>
-          <Button type="submit" className="rounded-full px-6 py-2">
-            Confirm
-          </Button>
+          <ConfirmDialog
+            title="Confirm Upload"
+            description={`Are you sure you want to ${
+              track ? "update" : "upload"
+            } this track ? Please ensure all details are correct before proceeding.`}
+            onConfirm={() => {
+              form.handleSubmit(onSubmit)();
+              setDialogOpen(false);
+            }}
+            onCancel={() => setDialogOpen(false)}
+            statusDialogOpen={dialogOpen}
+            setStatusDialogOpen={setDialogOpen}
+            asChild
+          >
+            <Button type="button" className="rounded-full px-6 py-2">
+              {track ? "Update" : "Upload"}
+            </Button>
+          </ConfirmDialog>
         </div>
       </form>
     </Form>

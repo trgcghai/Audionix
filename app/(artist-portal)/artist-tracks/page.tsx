@@ -3,7 +3,7 @@ import { TrackTable } from "@/app/_components/DataTable/TrackTable/Table";
 import { mockArtistTracks } from "@/app/sampleData";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-const TracksPage = () => {
+const ArtistTrackPage = () => {
   return (
     <ScrollArea className="px-3">
       <p className="text-xl font-bold mb-4">Your tracks</p>
@@ -23,4 +23,4 @@ const TracksPage = () => {
     </ScrollArea>
   );
 };
-export default TracksPage;
+export default ArtistTrackPage;

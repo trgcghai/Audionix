@@ -61,23 +61,17 @@ function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
         />
       </div>
       <div className="flex items-center gap-2">
-        <Button
-          variant={"destructive"}
-          onClick={() => setStatusDialogOpen(true)}
-          className="rounded-full"
-        >
-          Delete selected
-        </Button>
         <ConfirmDialog
           title="Confirm Deletion"
           description={`Are you absolutely sure to delete all ${
             table.getSelectedRowModel().rows.length
           } selected items? This action cannot be undone.`}
-          onCancel={() => setStatusDialogOpen(false)}
           onConfirm={handleDeleteConfirm}
-          statusDialogOpen={statusDialogOpen}
-          setStatusDialogOpen={setStatusDialogOpen}
-        />
+        >
+          <Button variant={"destructive"} className="rounded-full">
+            Delete selected
+          </Button>
+        </ConfirmDialog>
       </div>
     </div>
   );

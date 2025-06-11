@@ -6,7 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 const TracksPage = () => {
   return (
     <ScrollArea className="px-3">
-      <p className="text-xl font-bold px-2 mb-4">Your tracks</p>
+      <p className="text-xl font-bold mb-4">Your tracks</p>
 
       <TrackTable
         columns={Columns}

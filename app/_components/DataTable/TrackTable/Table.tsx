@@ -51,15 +51,23 @@ export function TrackTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <DataTableViewOptions table={table} />
-        {table.getSelectedRowModel().rows.length > 0 && (
-          <DataTableActionsOnSelected table={table} />
-        )}
+      <div className="mb-8">
+        <DataTableFilterOptions
+          table={table}
+          className="space-y-4"
+          itemClassName="mb-4 w-full"
+          inputClassName="w-full"
+          labelClassName="text-md w-1/6 font-semibold"
+        />
       </div>
 
-      <div className="mb-8">
-        <DataTableFilterOptions table={table} className="grid grid-cols-2 gap-4" itemClassName="m-0" inputClassName="w-3/5" />
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          {table.getSelectedRowModel().rows.length > 0 && (
+            <DataTableActionsOnSelected table={table} />
+          )}
+        </div>
+        <DataTableViewOptions table={table} />
       </div>
 
       <div className="rounded-lg border">

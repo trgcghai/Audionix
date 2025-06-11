@@ -80,3 +80,8 @@ export interface ArtistTrackItem {
   uploadTime: string;
   status: ArtistTrackStatus;
 }
+
+export type ArtistTrackStatus = (typeof ARTIST_TRACK_STATUS_OPTIONS)[number];
+
+export type SimpleTrackTablesVariant =
+  (typeof SIMPLE_TABLE_TRACKS_VARIANTS)[number];

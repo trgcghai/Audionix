@@ -1,39 +1,38 @@
 "use client";
 
-import { formatTrackDuration } from "@/app/_utils/formatTrackDuration";
-import { formatUploadTime } from "@/app/_utils/formatUploadTime";
-import { ArtistTrackItem } from "@/app/types/component";
-import { ColumnDef, Row } from "@tanstack/react-table";
-import Image from "next/image";
-import { DataTableColumnHeader } from "../Generics/ColumnHeader";
-import { Badge } from "@/components/ui/badge";
+import { ArtistAlbumItem } from "@/app/types/component";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ARTIST_TRACK_STATUS_OPTIONS } from "@/app/constant";
+import { ColumnDef, Row } from "@tanstack/react-table";
+import { DataTableColumnHeader } from "../Generics/ColumnHeader";
+import { useState } from "react";
 import { ImageIcon, MoreHorizontal, Settings2, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { formatUploadTime } from "@/app/_utils/formatUploadTime";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import ConfirmDialog from "../../Dialog/ConfirmDialog";
+import { ARTIST_ALBUM_STATUS_OPTIONS } from "@/app/constant";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import ConfirmDialog from "../../Dialog/ConfirmDialog";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Select } from "@radix-ui/react-select";
-import {
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
-export const Columns: ColumnDef<ArtistTrackItem>[] = [
+export const Columns: ColumnDef<ArtistAlbumItem>[] = [
   {
     id: "select",
     enableSorting: false,
@@ -60,26 +59,15 @@ export const Columns: ColumnDef<ArtistTrackItem>[] = [
     accessorKey: "images[0].url",
     enableSorting: false,
     meta: {
-      label: "Track Image Cover",
+      label: "Album Image Cover",
     },
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Track Image Cover" />
+      <DataTableColumnHeader column={column} title="Album Image Cover" />
     ),
     cell: RenderImageCell,
   },
   {
     accessorKey: "name",
-    enableColumnFilter: true,
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Track Name" />
-    ),
-    meta: {
-      label: "Track Name",
-      inputType: "text",
-    },
-  },
-  {
-    accessorKey: "album.name",
     enableColumnFilter: true,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Album Name" />
@@ -90,14 +78,25 @@ export const Columns: ColumnDef<ArtistTrackItem>[] = [
     },
   },
   {
-    accessorKey: "duration_ms",
+    accessorKey: "total_tracks",
+    enableColumnFilter: true,
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Duration" />
+      <DataTableColumnHeader column={column} title="Total Tracks" />
     ),
-    cell: ({ row }) => formatTrackDuration(row.original.duration_ms),
     meta: {
-      label: "Track Duration",
+      label: "Total Tracks",
+      inputType: "number",
     },
+    filterFn: (row, columnId, filterValue) => {
+    if (!filterValue) return true;
+    
+    const rowValue = Number(row.getValue(columnId));
+    const filterVal = Number(filterValue);
+    
+    if (isNaN(filterVal)) return true;
+    
+    return rowValue === filterVal;
+  }
   },
   {
     accessorKey: "uploadTime",
@@ -125,7 +124,7 @@ export const Columns: ColumnDef<ArtistTrackItem>[] = [
     cell: RenderStatusCell,
     meta: {
       inputType: "select",
-      options: ARTIST_TRACK_STATUS_OPTIONS,
+      options: ARTIST_ALBUM_STATUS_OPTIONS,
     },
   },
   {
@@ -134,63 +133,7 @@ export const Columns: ColumnDef<ArtistTrackItem>[] = [
   },
 ];
 
-function RenderStatusCell({ row }: { row: Row<ArtistTrackItem> }) {
-  const [status, setStatus] = useState(row.original.status);
-  const [statusDialogOpen, setStatusDialogOpen] = useState(false);
-
-  const handleStatusChange = (value: string) => {
-    setStatus(value);
-    setStatusDialogOpen(true);
-  };
-
-  const handleStatusConfirm = () => {
-    console.log(`Changing status to: ${status}`);
-    console.log(`Selected rows:`, row.original);
-    setStatusDialogOpen(false);
-  };
-
-  return (
-    <div className="flex items-center justify-center">
-      <Popover>
-        <PopoverTrigger asChild>
-          <Badge
-            variant={
-              row.original.status === ARTIST_TRACK_STATUS_OPTIONS[0] ? "default" : "destructive"
-            }
-            className="rounded-full px-2 py-1 capitalize cursor-pointer"
-          >
-            {row.original.status}
-          </Badge>
-        </PopoverTrigger>
-        <PopoverContent align="end" className="w-48">
-          <Select value={status} onValueChange={handleStatusChange}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select status" />
-            </SelectTrigger>
-            <SelectContent>
-              {ARTIST_TRACK_STATUS_OPTIONS.map((status) => (
-                <SelectItem key={status} value={status} className="capitalize">
-                  {status}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </PopoverContent>
-      </Popover>
-
-      <ConfirmDialog
-        title="Confirm Status Change"
-        description={`Are you sure you want to change the status of ${row.original.name} to "${status}"? This action can be reversed later.`}
-        onCancel={() => setStatusDialogOpen(false)}
-        onConfirm={handleStatusConfirm}
-        statusDialogOpen={statusDialogOpen}
-        setStatusDialogOpen={setStatusDialogOpen}
-      />
-    </div>
-  );
-}
-
-function RenderImageCell({ row }: { row: Row<ArtistTrackItem> }) {
+function RenderImageCell({ row }: { row: Row<ArtistAlbumItem> }) {
   const imageUrl = row.original.images[0]?.url;
   const [imageError, setImageError] = useState(false);
 
@@ -214,8 +157,66 @@ function RenderImageCell({ row }: { row: Row<ArtistTrackItem> }) {
   );
 }
 
-function RenderActionCell({ row }: { row: Row<ArtistTrackItem> }) {
-  const track = row.original;
+function RenderStatusCell({ row }: { row: Row<ArtistAlbumItem> }) {
+  const [status, setStatus] = useState(row.original.status);
+  const [statusDialogOpen, setStatusDialogOpen] = useState(false);
+
+  const handleStatusChange = (value: string) => {
+    setStatus(value);
+    setStatusDialogOpen(true);
+  };
+
+  const handleStatusConfirm = () => {
+    console.log(`Changing status to: ${status}`);
+    console.log(`Selected rows:`, row.original);
+    setStatusDialogOpen(false);
+  };
+
+  return (
+    <div className="flex items-center justify-center">
+      <Popover>
+        <PopoverTrigger asChild>
+          <Badge
+            variant={
+              row.original.status === ARTIST_ALBUM_STATUS_OPTIONS[0]
+                ? "default"
+                : "destructive"
+            }
+            className="rounded-full px-2 py-1 capitalize cursor-pointer"
+          >
+            {row.original.status}
+          </Badge>
+        </PopoverTrigger>
+        <PopoverContent align="end" className="w-48">
+          <Select value={status} onValueChange={handleStatusChange}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select status" />
+            </SelectTrigger>
+            <SelectContent>
+              {ARTIST_ALBUM_STATUS_OPTIONS.map((status) => (
+                <SelectItem key={status} value={status} className="capitalize">
+                  {status}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </PopoverContent>
+      </Popover>
+
+      <ConfirmDialog
+        title="Confirm Status Change"
+        description={`Are you sure you want to change the status of ${row.original.name} to "${status}"? This action can be reversed later.`}
+        onCancel={() => setStatusDialogOpen(false)}
+        onConfirm={handleStatusConfirm}
+        statusDialogOpen={statusDialogOpen}
+        setStatusDialogOpen={setStatusDialogOpen}
+      />
+    </div>
+  );
+}
+
+function RenderActionCell({ row }: { row: Row<ArtistAlbumItem> }) {
+  const album = row.original;
   const [statusDialogOpen, setStatusDialogOpen] = useState(false);
 
   return (
@@ -229,7 +230,7 @@ function RenderActionCell({ row }: { row: Row<ArtistTrackItem> }) {
         <DropdownMenuContent align="end">
           <DropdownMenuItem variant="default" className="cursor-pointer">
             <Link
-              href={`/artist-tracks/update/${track.id}`}
+              href={`/artist-albums/update/${album.id}`}
               className="flex items-center gap-2"
             >
               <Settings2 className="h-4 w-4 mr-2" />
@@ -248,9 +249,9 @@ function RenderActionCell({ row }: { row: Row<ArtistTrackItem> }) {
       </DropdownMenu>
       <ConfirmDialog
         title="Confirm Deletion"
-        description={`Are you absolutely sure to delete track with name ${track.name} ? This action cannot be undone.`}
+        description={`Are you absolutely sure to delete album with name ${album.name} ? This action cannot be undone.`}
         onConfirm={() => {
-          console.log("Deleting track:", track);
+          console.log("Deleting album:", album);
           setStatusDialogOpen(false);
         }}
         onCancel={() => setStatusDialogOpen(false)}

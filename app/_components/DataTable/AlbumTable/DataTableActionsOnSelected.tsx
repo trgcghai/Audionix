@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Table } from "@tanstack/react-table";
 import { useState } from "react";
-import { ARTIST_TRACK_STATUS_OPTIONS } from "@/app/constant";
+import { ARTIST_ALBUM_STATUS_OPTIONS } from "@/app/constant";
 import ConfirmDialog from "../../Dialog/ConfirmDialog";
 import { Button } from "@/components/ui/button";
 
@@ -42,7 +42,7 @@ function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
             <SelectValue placeholder="Select status" />
           </SelectTrigger>
           <SelectContent>
-            {ARTIST_TRACK_STATUS_OPTIONS.map((status) => (
+            {ARTIST_ALBUM_STATUS_OPTIONS.map((status) => (
               <SelectItem key={status} value={status} className="capitalize">
                 {status}
               </SelectItem>

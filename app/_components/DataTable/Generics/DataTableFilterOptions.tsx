@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -34,6 +35,7 @@ function DataTableFilterOptions<TData>({
     .filter((col) => col.columnDef.enableColumnFilter);
 
   return (
+    <>
     <div className={className}>
       {filterableColumns.map((column) => {
         const meta = column.columnDef.meta as
@@ -90,6 +92,14 @@ function DataTableFilterOptions<TData>({
         );
       })}
     </div>
+
+    <Button className="rounded-full" size={"sm"} onClick={() => {
+      table.resetColumnFilters()
+      table.resetColumnOrder()
+    }}>
+      Clear Filters
+    </Button>
+    </>
   );
 }
 export default DataTableFilterOptions;

@@ -1,5 +1,6 @@
 import {
   AlbumItem,
+  ArtistAlbumItem,
   ArtistItem,
   ArtistTrackItem,
   PlaylistItem,
@@ -445,6 +446,232 @@ const mockArtistTracks: ArtistTrackItem[] = [
   },
 ];
 
+const mockArtistAlbums: ArtistAlbumItem[] = [
+  {
+    id: "alb_001",
+    name: "Midnight Memories",
+    total_tracks: 3,
+    href: "/album/midnight-memories",
+    images: [
+      {
+        url: "https://picsum.photos/200",
+        height: 200,
+        width: 200,
+      },
+    ],
+    tracks: [
+      {
+        images: mockTracks[0].images,
+        duration_ms: mockTracks[0].duration_ms,
+        id: mockTracks[0].id,
+        name: mockTracks[0].name,
+        track_number: mockTracks[0].track_number,
+      },
+      {
+        images: mockTracks[1].images,
+        duration_ms: mockTracks[1].duration_ms,
+        id: mockTracks[1].id,
+        name: mockTracks[1].name,
+        track_number: mockTracks[1].track_number,
+      },
+      {
+        images: mockTracks[2].images,
+        duration_ms: mockTracks[2].duration_ms,
+        id: mockTracks[2].id,
+        name: mockTracks[2].name,
+        track_number: mockTracks[2].track_number,
+      },
+    ],
+    type: "album",
+    uploadTime: "2023-06-15T08:30:00.000Z",
+    status: "published",
+  },
+  {
+    id: "alb_002",
+    name: "Acoustic Sessions",
+    total_tracks: 4,
+    href: "/album/acoustic-sessions",
+    images: [
+      {
+        url: "https://picsum.photos/200",
+        height: 200,
+        width: 200,
+      },
+    ],
+    tracks: [
+      {
+        images: mockTracks[1].images,
+        duration_ms: mockTracks[1].duration_ms,
+        id: mockTracks[1].id,
+        name: mockTracks[1].name,
+        track_number: mockTracks[1].track_number,
+      },
+      {
+        images: mockTracks[2].images,
+        duration_ms: mockTracks[2].duration_ms,
+        id: mockTracks[2].id,
+        name: mockTracks[2].name,
+        track_number: mockTracks[2].track_number,
+      },
+      {
+        images: mockTracks[3].images,
+        duration_ms: mockTracks[3].duration_ms,
+        id: mockTracks[3].id,
+        name: mockTracks[3].name,
+        track_number: mockTracks[3].track_number,
+      },
+      {
+        images: mockTracks[4].images,
+        duration_ms: mockTracks[4].duration_ms,
+        id: mockTracks[4].id,
+        name: mockTracks[4].name,
+        track_number: mockTracks[4].track_number,
+      },
+    ],
+    type: "album",
+    uploadTime: "2023-09-20T14:45:00.000Z",
+    status: "published",
+  },
+  {
+    id: "alb_003",
+    name: "Electronic Dreams",
+    total_tracks: 5,
+    href: "/album/electronic-dreams",
+    images: [
+      {
+        url: "https://picsum.photos/200",
+        height: 200,
+        width: 200,
+      },
+    ],
+    tracks: [
+      {
+        images: mockTracks[0].images,
+        duration_ms: mockTracks[0].duration_ms,
+        id: mockTracks[0].id,
+        name: mockTracks[0].name,
+        track_number: mockTracks[0].track_number,
+      },
+      {
+        images: mockTracks[1].images,
+        duration_ms: mockTracks[1].duration_ms,
+        id: mockTracks[1].id,
+        name: mockTracks[1].name,
+        track_number: mockTracks[1].track_number,
+      },
+      {
+        images: mockTracks[2].images,
+        duration_ms: mockTracks[2].duration_ms,
+        id: mockTracks[2].id,
+        name: mockTracks[2].name,
+        track_number: mockTracks[2].track_number,
+      },
+      {
+        images: mockTracks[3].images,
+        duration_ms: mockTracks[3].duration_ms,
+        id: mockTracks[3].id,
+        name: mockTracks[3].name,
+        track_number: mockTracks[3].track_number,
+      },
+      {
+        images: mockTracks[4].images,
+        duration_ms: mockTracks[4].duration_ms,
+        id: mockTracks[4].id,
+        name: mockTracks[4].name,
+        track_number: mockTracks[4].track_number,
+      },
+    ],
+    type: "album",
+    uploadTime: "2024-01-08T10:15:00.000Z",
+    status: "hidden",
+  },
+  {
+    id: "alb_004",
+    name: "Summer Vibes",
+    total_tracks: 3,
+    href: "/album/summer-vibes",
+    images: [
+      {
+        url: "https://picsum.photos/200",
+        height: 200,
+        width: 200,
+      },
+    ],
+    tracks: [
+      {
+        images: mockTracks[2].images,
+        duration_ms: mockTracks[2].duration_ms,
+        id: mockTracks[2].id,
+        name: mockTracks[2].name,
+        track_number: mockTracks[2].track_number,
+      },
+      {
+        images: mockTracks[3].images,
+        duration_ms: mockTracks[3].duration_ms,
+        id: mockTracks[3].id,
+        name: mockTracks[3].name,
+        track_number: mockTracks[3].track_number,
+      },
+      {
+        images: mockTracks[4].images,
+        duration_ms: mockTracks[4].duration_ms,
+        id: mockTracks[4].id,
+        name: mockTracks[4].name,
+        track_number: mockTracks[4].track_number,
+      },
+    ],
+    type: "EP",
+    uploadTime: "2024-03-22T16:20:00.000Z",
+    status: "published",
+  },
+  {
+    id: "alb_005",
+    name: "Unreleased Collection",
+    total_tracks: 4,
+    href: "/album/unreleased-collection",
+    images: [
+      {
+        url: "https://picsum.photos/200",
+        height: 200,
+        width: 200,
+      },
+    ],
+    tracks: [
+      {
+        images: mockTracks[5].images,
+        duration_ms: mockTracks[5].duration_ms,
+        id: mockTracks[5].id,
+        name: mockTracks[5].name,
+        track_number: mockTracks[5].track_number,
+      },
+      {
+        images: mockTracks[0].images,
+        duration_ms: mockTracks[0].duration_ms,
+        id: mockTracks[0].id,
+        name: mockTracks[0].name,
+        track_number: mockTracks[0].track_number,
+      },
+      {
+        images: mockTracks[1].images,
+        duration_ms: mockTracks[1].duration_ms,
+        id: mockTracks[1].id,
+        name: mockTracks[1].name,
+        track_number: mockTracks[1].track_number,
+      },
+      {
+        images: mockTracks[2].images,
+        duration_ms: mockTracks[2].duration_ms,
+        id: mockTracks[2].id,
+        name: mockTracks[2].name,
+        track_number: mockTracks[2].track_number,
+      },
+    ],
+    type: "compilation",
+    uploadTime: "2024-05-10T09:00:00.000Z",
+    status: "hidden",
+  },
+];
+
 export {
   mockData,
   mockPlaylists,
@@ -452,4 +679,5 @@ export {
   mockArtists,
   mockTracks,
   mockArtistTracks,
+  mockArtistAlbums,
 };

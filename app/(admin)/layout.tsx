@@ -3,18 +3,18 @@ import MainHeader from "../_components/Header/MainHeader";
 import { Separator } from "@/components/ui/separator";
 import Footer from "../_components/Footer";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import ArtistSidebar from "@/components/ArtistSidebar";
+import AdminSidebar from "@/components/AdminSidebar";
 
-export default function ArtistPortalLayout({
+const AdmindashboardLayout = ({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}) => {
   return (
     <div className="h-screen flex flex-col overflow-hidden">
       <SidebarProvider>
         <div className="flex h-full w-full overflow-hidden">
-          <ArtistSidebar />
+          <AdminSidebar />
           <SidebarInset className="h-full flex flex-col overflow-hidden">
             <MainHeader
               showSearch={false}
@@ -33,5 +33,6 @@ export default function ArtistPortalLayout({
         </div>
       </SidebarProvider>
     </div>
-  );
+  )
 }
+export default AdmindashboardLayout

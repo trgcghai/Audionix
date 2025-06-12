@@ -2,7 +2,7 @@
 
 import { formatTrackDuration } from "@/app/_utils/formatTrackDuration";
 import { formatUploadTime } from "@/app/_utils/formatUploadTime";
-import { ArtistTrackItem } from "@/app/types/component";
+import { ArtistTrackItem, TrackInArtistAlbum } from "@/app/types/component";
 import { ColumnDef, Row } from "@tanstack/react-table";
 import Image from "next/image";
 import { DataTableColumnHeader } from "../Generics/ColumnHeader";
@@ -64,6 +64,7 @@ export const Columns: ColumnDef<ArtistTrackItem>[] = [
     ),
   },
   {
+    id: "coverImage",
     accessorKey: "images[0].url",
     enableSorting: false,
     meta: {
@@ -75,6 +76,7 @@ export const Columns: ColumnDef<ArtistTrackItem>[] = [
     cell: RenderImageCell,
   },
   {
+    id: "name",
     accessorKey: "name",
     enableColumnFilter: true,
     header: ({ column }) => (
@@ -86,6 +88,7 @@ export const Columns: ColumnDef<ArtistTrackItem>[] = [
     },
   },
   {
+    id: "albumName",
     accessorKey: "album.name",
     enableColumnFilter: true,
     header: ({ column }) => (
@@ -97,6 +100,7 @@ export const Columns: ColumnDef<ArtistTrackItem>[] = [
     },
   },
   {
+    id: "duration",
     accessorKey: "duration_ms",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Duration" />
@@ -107,18 +111,21 @@ export const Columns: ColumnDef<ArtistTrackItem>[] = [
     },
   },
   {
+    id: "uploadTime",
     accessorKey: "uploadTime",
     enableColumnFilter: true,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Upload Time" />
     ),
-    cell: ({ row }) => formatUploadTime(row.original.uploadTime),
+    cell: ({ row }) =>
+      formatUploadTime((row.original as ArtistTrackItem).uploadTime),
     meta: {
       label: "Upload Time",
       inputType: "date",
     },
   },
   {
+    id: "status",
     accessorKey: "status",
     enableSorting: false,
     enableColumnFilter: true,
@@ -140,6 +147,11 @@ export const Columns: ColumnDef<ArtistTrackItem>[] = [
     cell: RenderActionCell,
   },
 ];
+
+export const TrackInAlbumColumns: ColumnDef<TrackInArtistAlbum>[] =
+  Columns.filter((item) =>
+    ["select", "coverImage", "name", "duration"].includes(item.id || "")
+  ).map((item) => item as TrackInArtistAlbum);
 
 function RenderStatusCell({ row }: { row: Row<ArtistTrackItem> }) {
   const [status, setStatus] = useState(row.original.status);
@@ -264,7 +276,7 @@ function RenderActionCell({ row }: { row: Row<ArtistTrackItem> }) {
         </DropdownMenuContent>
       </DropdownMenu>
       <AddTrackToAlbumDialog
-        tracks={[track]}
+        tracks={[track as ArtistTrackItem]}
         statusDialogOpen={addToAlbumDialog}
         setStatusDialogOpen={setAddToAlbumDialog}
       />

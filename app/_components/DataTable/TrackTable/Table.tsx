@@ -29,11 +29,17 @@ import { useState } from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  showActions?: boolean;
+  showViewOptions?: boolean;
+  showFilterOptions?: boolean;
 }
 
 export function TrackTable<TData, TValue>({
   columns,
   data,
+  showActions = true,
+  showViewOptions = true,
+  showFilterOptions = true,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
@@ -51,23 +57,25 @@ export function TrackTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <div className="mb-8">
-        <DataTableFilterOptions
-          table={table}
-          className="space-y-4"
-          itemClassName="mb-4 w-full"
-          inputClassName="w-full"
-          labelClassName="text-md w-1/6 font-semibold"
-        />
-      </div>
+      {showFilterOptions && (
+        <div className="mb-4">
+          <DataTableFilterOptions
+            table={table}
+            className="space-y-4"
+            itemClassName="mb-4 w-full"
+            inputClassName="w-full"
+            labelClassName="text-md w-1/5"
+          />
+        </div>
+      )}
 
       <div className="flex items-center justify-between mb-4">
         <div>
-          {table.getSelectedRowModel().rows.length > 0 && (
+          {showActions && table.getSelectedRowModel().rows.length > 0 && (
             <DataTableActionsOnSelected table={table} />
           )}
         </div>
-        <DataTableViewOptions table={table} />
+        {showViewOptions && <DataTableViewOptions table={table} />}
       </div>
 
       <div className="rounded-lg border">

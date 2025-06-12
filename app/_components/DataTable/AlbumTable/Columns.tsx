@@ -5,7 +5,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef, Row } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../Generics/ColumnHeader";
 import { useState } from "react";
-import { ImageIcon, MoreHorizontal, Settings2, Trash2 } from "lucide-react";
+import {
+  FileText,
+  ImageIcon,
+  MoreHorizontal,
+  Settings2,
+  Trash2,
+} from "lucide-react";
 import Image from "next/image";
 import { formatUploadTime } from "@/app/_utils/formatUploadTime";
 import {
@@ -31,6 +37,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useAppDispatch } from "@/app/_hooks/redux";
+import { openViewDetail } from "@/app/_libs/features/detailAlbumSlice";
 
 export const Columns: ColumnDef<ArtistAlbumItem>[] = [
   {
@@ -88,15 +96,15 @@ export const Columns: ColumnDef<ArtistAlbumItem>[] = [
       inputType: "number",
     },
     filterFn: (row, columnId, filterValue) => {
-    if (!filterValue) return true;
-    
-    const rowValue = Number(row.getValue(columnId));
-    const filterVal = Number(filterValue);
-    
-    if (isNaN(filterVal)) return true;
-    
-    return rowValue === filterVal;
-  }
+      if (!filterValue) return true;
+
+      const rowValue = Number(row.getValue(columnId));
+      const filterVal = Number(filterValue);
+
+      if (isNaN(filterVal)) return true;
+
+      return rowValue === filterVal;
+    },
   },
   {
     accessorKey: "uploadTime",
@@ -218,6 +226,11 @@ function RenderStatusCell({ row }: { row: Row<ArtistAlbumItem> }) {
 function RenderActionCell({ row }: { row: Row<ArtistAlbumItem> }) {
   const album = row.original;
   const [statusDialogOpen, setStatusDialogOpen] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const handleViewDetail = () => {
+    dispatch(openViewDetail({ album }));
+  };
 
   return (
     <>
@@ -228,6 +241,16 @@ function RenderActionCell({ row }: { row: Row<ArtistAlbumItem> }) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
+          <DropdownMenuItem
+            variant="default"
+            className="cursor-pointer"
+            onClick={handleViewDetail}
+          >
+            <div className="flex items-center gap-2">
+              <FileText className="h-4 w-4 mr-2" />
+              <span>View detail</span>
+            </div>
+          </DropdownMenuItem>
           <DropdownMenuItem variant="default" className="cursor-pointer">
             <Link
               href={`/artist-albums/update/${album.id}`}

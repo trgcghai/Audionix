@@ -11,8 +11,8 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import userReducer from "@/app/_libs/features/userSlice";
 import queueDrawerReducer from "@/app/_libs/features/queueDrawerSlice";
+import detailAlbumReducer from "@/app/_libs/features/detailAlbumSlice";
 
 const persistConfig = {
   key: "root",
@@ -23,8 +23,8 @@ const persistConfig = {
 const persistedReducer = persistReducer(
   persistConfig,
   combineReducers({
-    user: userReducer,
     queueDrawer: queueDrawerReducer,
+    detailAlbum: detailAlbumReducer
   })
 );
 

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { XIcon } from "lucide-react";
-import TrackInfo from "../TrackInfo";
+import TrackInfo from "./TrackInfo";
 import { useMemo } from "react";
 
 const QueueDrawer = () => {

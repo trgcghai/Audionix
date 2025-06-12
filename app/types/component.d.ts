@@ -85,6 +85,18 @@ export interface ArtistTrackItem {
   status: ArtistTrackStatus;
 }
 
+export interface TrackInArtistAlbum {
+  images: {
+      url: string;
+      height: number;
+      width: number;
+    }[];
+    duration_ms: number;
+    id: string;
+    name: string;
+    track_number: number;
+}
+
 export interface ArtistAlbumItem {
   total_tracks: number;
   href: string;
@@ -94,17 +106,7 @@ export interface ArtistAlbumItem {
     height: number;
     width: number;
   }[];
-  tracks: {
-    images: {
-      url: string;
-      height: number;
-      width: number;
-    }[];
-    duration_ms: number;
-    id: string;
-    name: string;
-    track_number: number;
-  }[];
+  tracks: TrackInArtistAlbum[];
   name: string;
   type: string;
   uploadTime: string;

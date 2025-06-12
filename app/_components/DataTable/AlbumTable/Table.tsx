@@ -57,7 +57,7 @@ const AlbumTable = <TData, TValue>({
           className="space-y-4"
           itemClassName="mb-4 w-full"
           inputClassName="w-full"
-          labelClassName="text-md w-1/6 font-semibold"
+          labelClassName="text-md w-1/5"
         />
       </div>
 

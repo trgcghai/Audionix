@@ -6,7 +6,7 @@ import Sidebar from "../_components/Sidebar/Sidebar";
 import { Separator } from "@/components/ui/separator";
 import Footer from "../_components/Footer";
 import { useAppSelector } from "../_hooks/redux";
-import QueueDrawer from "../_components/QueueDrawer/QueueDrawer";
+import QueueDrawer from "../_components/QueueDrawer";
 
 const Layout = ({
   children,

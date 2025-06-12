@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDropzone } from "react-dropzone";
-import { COVER_IMAGE_ACCEPT_TYPES } from "@/app/constant";
+import { ARTIST_ALBUM_STATUS_OPTIONS, COVER_IMAGE_ACCEPT_TYPES } from "@/app/constant";
 import ConfirmDialog from "../Dialog/ConfirmDialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import getAcceptedFileExtensions from "@/app/_utils/getAcceptedFileExtensions";
@@ -43,7 +43,7 @@ const EditAlbumForm = ({ album }: { album?: ArtistAlbumItem }) => {
       image: album?.images[0].url
         ? new File([], album?.images[0].url)
         : undefined,
-      status: album?.status || "inactive",
+      status: album?.status || "hidden",
     },
   });
 
@@ -183,8 +183,17 @@ const EditAlbumForm = ({ album }: { album?: ArtistAlbumItem }) => {
                       <SelectValue placeholder="Select status" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="inactive">Inactive</SelectItem>
-                      <SelectItem value="active">Active</SelectItem>
+                      {ARTIST_ALBUM_STATUS_OPTIONS.map((status) => {
+                        return (
+                          <SelectItem
+                            key={status}
+                            value={status}
+                            className="capitalize"
+                          >
+                            {status}
+                          </SelectItem>
+                        );
+                      })}
                     </SelectContent>
                   </Select>
                 </FormControl>

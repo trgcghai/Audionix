@@ -9,7 +9,13 @@ import { DataTableColumnHeader } from "../Generics/ColumnHeader";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ARTIST_TRACK_STATUS_OPTIONS } from "@/app/constant";
-import { ImageIcon, MoreHorizontal, Settings2, Trash2 } from "lucide-react";
+import {
+  ImageIcon,
+  MoreHorizontal,
+  PlusCircle,
+  Settings2,
+  Trash2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -32,6 +38,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import AddTrackToAlbumDialog from "../../Dialog/AddTrackToAlbumDialog";
 
 export const Columns: ColumnDef<ArtistTrackItem>[] = [
   {
@@ -155,7 +162,9 @@ function RenderStatusCell({ row }: { row: Row<ArtistTrackItem> }) {
         <PopoverTrigger asChild>
           <Badge
             variant={
-              row.original.status === ARTIST_TRACK_STATUS_OPTIONS[0] ? "default" : "destructive"
+              row.original.status === ARTIST_TRACK_STATUS_OPTIONS[0]
+                ? "default"
+                : "destructive"
             }
             className="rounded-full px-2 py-1 capitalize cursor-pointer"
           >
@@ -216,7 +225,8 @@ function RenderImageCell({ row }: { row: Row<ArtistTrackItem> }) {
 
 function RenderActionCell({ row }: { row: Row<ArtistTrackItem> }) {
   const track = row.original;
-  const [statusDialogOpen, setStatusDialogOpen] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState(false);
+  const [addToAlbumDialog, setAddToAlbumDialog] = useState(false);
 
   return (
     <>
@@ -237,25 +247,37 @@ function RenderActionCell({ row }: { row: Row<ArtistTrackItem> }) {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => setAddToAlbumDialog(true)}
+          >
+            <PlusCircle className="h-4 w-4 mr-1" />
+            Add to album
+          </DropdownMenuItem>
+          <DropdownMenuItem
             variant="destructive"
             className="cursor-pointer"
-            onClick={() => setStatusDialogOpen(true)}
+            onClick={() => setDeleteDialog(true)}
           >
             <Trash2 className="h-4 w-4 mr-2" />
             <span>Delete</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <AddTrackToAlbumDialog
+        tracks={[track]}
+        statusDialogOpen={addToAlbumDialog}
+        setStatusDialogOpen={setAddToAlbumDialog}
+      />
       <ConfirmDialog
         title="Confirm Deletion"
         description={`Are you absolutely sure to delete track with name ${track.name} ? This action cannot be undone.`}
         onConfirm={() => {
           console.log("Deleting track:", track);
-          setStatusDialogOpen(false);
+          setDeleteDialog(false);
         }}
-        onCancel={() => setStatusDialogOpen(false)}
-        statusDialogOpen={statusDialogOpen}
-        setStatusDialogOpen={setStatusDialogOpen}
+        onCancel={() => setDeleteDialog(false)}
+        statusDialogOpen={deleteDialog}
+        setStatusDialogOpen={setDeleteDialog}
       />
     </>
   );

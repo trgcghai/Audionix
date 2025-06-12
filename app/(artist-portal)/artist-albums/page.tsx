@@ -6,7 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 const ArtistAlbumPage = () => {
   return (
     <ScrollArea className="px-3">
-      <p className="text-xl font-bold mb-4">Your tracks</p>
+      <p className="text-xl font-bold mb-4">Your albums</p>
 
       <AlbumTable 
         columns={Columns}

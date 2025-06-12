@@ -11,7 +11,7 @@ const UpdateTrackPage = () => {
     [id]
   );
   return (
-    <div className="">
+    <div className="w-4xl mx-auto">
       <UploadTrackForm track={track} />
     </div>
   );

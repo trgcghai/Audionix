@@ -12,6 +12,9 @@ import { useState } from "react";
 import { ARTIST_TRACK_STATUS_OPTIONS } from "@/app/constant";
 import ConfirmDialog from "../../Dialog/ConfirmDialog";
 import { Button } from "@/components/ui/button";
+import AddTrackToAlbumDialog from "../../Dialog/AddTrackToAlbumDialog";
+import { ArtistTrackItem } from "@/app/types/component";
+import { PlusCircle, Trash2 } from "lucide-react";
 
 function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
   const [selectedStatus, setSelectedStatus] = useState<string | undefined>();
@@ -60,7 +63,19 @@ function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
           setStatusDialogOpen={setStatusDialogOpen}
         />
       </div>
-      <div className="flex items-center gap-2">
+      <div>
+        <AddTrackToAlbumDialog
+          tracks={table
+            .getSelectedRowModel()
+            .rows.map((item) => item.original as ArtistTrackItem)}
+        >
+          <Button variant={"outline"} className="rounded-full">
+            <PlusCircle className="h-4 w-4 mr-1" />
+            Add to album
+          </Button>
+        </AddTrackToAlbumDialog>
+      </div>
+      <div className="">
         <ConfirmDialog
           title="Confirm Deletion"
           description={`Are you absolutely sure to delete all ${
@@ -70,6 +85,7 @@ function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
           asChild
         >
           <Button variant={"destructive"} className="rounded-full">
+            <Trash2 className="h-4 w-4 mr-1" />
             Delete selected
           </Button>
         </ConfirmDialog>

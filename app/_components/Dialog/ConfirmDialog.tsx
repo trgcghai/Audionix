@@ -13,22 +13,22 @@ import {
 interface ConfirmDialogProps {
   title: string;
   description: string;
-  onCancel?: () => void;
-  onConfirm: () => void;
   statusDialogOpen?: boolean;
-  setStatusDialogOpen?: (open: boolean) => void;
   children?: React.ReactNode;
   asChild?: boolean;
+  onCancel?: () => void;
+  onConfirm: () => void;
+  setStatusDialogOpen?: (open: boolean) => void;
 }
 
 const ConfirmDialog = ({
   title,
   description,
+  statusDialogOpen,
+  children,
   onCancel = () => {},
   onConfirm,
-  statusDialogOpen,
   setStatusDialogOpen,
-  children,
   asChild = false,
 }: ConfirmDialogProps) => {
   return (

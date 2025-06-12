@@ -1,11 +1,5 @@
 "use client";
-import {
-  AUDIO_FILE_ACCEPT_TYPES,
-  COVER_IMAGE_ACCEPT_TYPES,
-} from "@/app/constant";
-import { mockAlbums } from "@/app/sampleData";
-import { ArtistTrackItem } from "@/app/types/component";
-import { Button } from "@/components/ui/button";
+import { useCallback, useState } from "react";
 import {
   Form,
   FormControl,
@@ -14,54 +8,42 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ImageIcon, Music, XIcon } from "lucide-react";
+import { ArtistAlbumItem } from "@/app/types/component";
 import Image from "next/image";
-import { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
+import { ImageIcon, XIcon } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
-import z from "zod";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useDropzone } from "react-dropzone";
+import { COVER_IMAGE_ACCEPT_TYPES } from "@/app/constant";
 import ConfirmDialog from "../Dialog/ConfirmDialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import getAcceptedFileExtensions from "@/app/_utils/getAcceptedFileExtensions";
 
 const formSchema = z.object({
-  title: z
-    .string()
-    .min(1, "Title is required")
-    .max(100, "Title cannot exceed 100 characters"),
-  album: z.string().optional(),
+  name: z.string({ message: "Name is required" }),
   image: z.instanceof(File).optional(),
-  audioFile: z.instanceof(File, { message: "Audio file is required" }),
-  status: z.string({ message: "Status is required" }),
+  status: z.string(),
 });
 
-type FormValues = z.infer<typeof formSchema>;
+export type FormValues = z.infer<typeof formSchema>;
 
-const UploadTrackForm = ({ track }: { track?: ArtistTrackItem }) => {
+const EditAlbumForm = ({ album }: { album?: ArtistAlbumItem }) => {
   const [previewImage, setPreviewImage] = useState<string>(
-    track?.images[0]?.url || ""
+    album?.images[0]?.url || ""
   );
-  const [previewAudio, setPreviewAudio] = useState<string>(track?.href || "");
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: track?.name || "",
-      album: track?.album?.id || "",
-      image: track?.images[0].url
-        ? new File([], track?.images[0].url)
+      name: album?.name || "",
+      image: album?.images[0].url
+        ? new File([], album?.images[0].url)
         : undefined,
-      audioFile: track?.href ? new File([], track.href) : undefined,
-      status: track?.status || "inactive",
+      status: album?.status || "inactive",
     },
   });
 
@@ -77,31 +59,12 @@ const UploadTrackForm = ({ track }: { track?: ArtistTrackItem }) => {
     [form]
   );
 
-  const onDropAudioFile = useCallback(
-    (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
-      if (file) {
-        form.setValue("audioFile", file);
-        const objectUrl = URL.createObjectURL(file);
-        setPreviewAudio(objectUrl);
-      }
-    },
-    [form]
-  );
-
   const coverImageFileInput = useDropzone({
-    onDrop: onDropCoverImage,
-    accept: COVER_IMAGE_ACCEPT_TYPES,
-    maxFiles: 1,
-    multiple: false,
-  });
-
-  const audioFileInput = useDropzone({
-    onDrop: onDropAudioFile,
-    accept: AUDIO_FILE_ACCEPT_TYPES,
-    maxFiles: 1,
-    multiple: false,
-  });
+      onDrop: onDropCoverImage,
+      accept: COVER_IMAGE_ACCEPT_TYPES,
+      maxFiles: 1,
+      multiple: false,
+    });
 
   const onSubmit = (formData: FormValues) => {
     console.log("Form submitted:", formData);
@@ -190,118 +153,12 @@ const UploadTrackForm = ({ track }: { track?: ArtistTrackItem }) => {
         <div className="">
           <FormField
             control={form.control}
-            name="audioFile"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-md font-semibold">
-                  Track Audio File
-                </FormLabel>
-                <FormControl>
-                  <div
-                    {...audioFileInput.getRootProps()}
-                    className={`rounded-lg flex flex-col items-center justify-center cursor-pointer border border-dashed p-4`}
-                  >
-                    <Input
-                      type="file"
-                      {...audioFileInput.getInputProps()}
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          field.onChange(file);
-                          const objectUrl = URL.createObjectURL(file);
-                          setPreviewAudio(objectUrl);
-                        }
-                      }}
-                    />
-
-                    {previewAudio ? (
-                      <div className="w-full space-y-2">
-                        <div className="flex items-center justify-end gap-2">
-                          <XIcon
-                            className="h-4 w-4"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setPreviewAudio("");
-                              field.onChange(undefined);
-                            }}
-                          />
-                        </div>
-
-                        <audio
-                          controls
-                          src={previewAudio}
-                          className="w-full"
-                          onError={() => setPreviewAudio("")}
-                        >
-                          Your browser does not support the audio element.
-                        </audio>
-
-                        <p className="text-xs text-center text-muted-foreground">
-                          Drop a new file to replace
-                        </p>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-center justify-center py-4">
-                        <Music className="h-10 w-10 text-muted-foreground mb-2" />
-                        <p className="text-sm text-muted-foreground">
-                          Drop audio file here or click to upload
-                        </p>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          {getAcceptedFileExtensions(AUDIO_FILE_ACCEPT_TYPES)}{" "}
-                          accepted
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="">
-          <FormField
-            control={form.control}
-            name="title"
+            name="name"
             render={({ field }) => (
               <FormItem className="w-full h-full">
                 <FormLabel className="text-md font-semibold">Name</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="Track name" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="">
-          <FormField
-            control={form.control}
-            name="album"
-            render={({ field }) => (
-              <FormItem className="w-full h-full">
-                <FormLabel className="text-md font-semibold">Album</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select an album" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {mockAlbums.map((album) => {
-                        return (
-                          <SelectItem key={album.id} value={album.id}>
-                            {album.name}
-                          </SelectItem>
-                        );
-                      })}
-                    </SelectContent>
-                  </Select>
+                  <Input {...field} placeholder="Album name" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -320,7 +177,7 @@ const UploadTrackForm = ({ track }: { track?: ArtistTrackItem }) => {
                   <Select
                     onValueChange={field.onChange}
                     {...field}
-                    disabled={!track}
+                    disabled={!album}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select status" />
@@ -349,7 +206,7 @@ const UploadTrackForm = ({ track }: { track?: ArtistTrackItem }) => {
           <ConfirmDialog
             title="Confirm Upload"
             description={`Are you sure you want to ${
-              track ? "update" : "upload"
+              album ? "update" : "upload"
             } this track ? Please ensure all details are correct before proceeding.`}
             onConfirm={() => {
               form.handleSubmit(onSubmit)();
@@ -361,7 +218,7 @@ const UploadTrackForm = ({ track }: { track?: ArtistTrackItem }) => {
             asChild
           >
             <Button type="button" className="rounded-full px-6 py-2">
-              {track ? "Update" : "Upload"}
+              {album ? "Update" : "Upload"}
             </Button>
           </ConfirmDialog>
         </div>
@@ -369,4 +226,4 @@ const UploadTrackForm = ({ track }: { track?: ArtistTrackItem }) => {
     </Form>
   );
 };
-export default UploadTrackForm;
+export default EditAlbumForm;

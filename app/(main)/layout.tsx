@@ -1,12 +1,12 @@
 "use client";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import MainHeader from "../_components/Header/MainHeader";
-import Player from "../_components/Player/Player";
-import Sidebar from "../_components/Sidebar/Sidebar";
+import MainHeader from "../../components/header/MainHeader";
+import Player from "../../components/player/Player";
+import Sidebar from "../../components/sidebar/Sidebar";
 import { Separator } from "@/components/ui/separator";
-import Footer from "../_components/Footer";
-import { useAppSelector } from "../_hooks/redux";
-import QueueDrawer from "../_components/QueueDrawer";
+import Footer from "../../components/common/Footer";
+import { useAppSelector } from "../../hooks/redux";
+import QueueDrawer from "../../components/common/QueueDrawer";
 
 const Layout = ({
   children,

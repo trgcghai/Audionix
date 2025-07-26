@@ -1,5 +1,5 @@
-import { Columns } from "@/app/_components/DataTable/TrackTable/Columns";
-import { TrackTable } from "@/app/_components/DataTable/TrackTable/Table";
+import { Columns } from "@/app/(artist-portal)/artist-tracks/components/table/Columns";
+import { TrackTable } from "@/app/(artist-portal)/artist-tracks/components/table";
 import { mockArtistTracks } from "@/app/sampleData";
 import { ScrollArea } from "@/components/ui/scroll-area";
 

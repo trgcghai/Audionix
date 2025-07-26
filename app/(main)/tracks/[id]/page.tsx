@@ -1,8 +1,8 @@
 "use client";
-import ControlSection from "@/app/_components/ControlSection";
-import TableTrack from "@/app/_components/SimpleTrackTable";
-import HeroSection from "@/app/_components/HeroSection";
-import MediaList from "@/app/_components/MediaList";
+import ControlSection from "@/components/common/ControlSection";
+import TableTrack from "@/components/common/SimpleTrackTable";
+import HeroSection from "@/components/common/HeroSection";
+import MediaList from "@/components/common/MediaList";
 import { mockAlbums, mockTracks } from "@/app/sampleData";
 import { Separator } from "@/components/ui/separator";
 import { Dot } from "lucide-react";
@@ -28,7 +28,7 @@ const DetailTrackPage = () => {
 
       <Separator className="my-4" />
 
-      <ControlSection 
+      <ControlSection
         onPlay={() => console.log("Play track")}
         onAddToPlaylist={() => console.log("Add to playlist")}
         onLike={() => setIsLiked(!isLiked)}

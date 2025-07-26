@@ -1,23 +1,23 @@
 "use client";
-import { Columns } from "@/app/_components/DataTable/AlbumTable/Columns";
-import AlbumTable from "@/app/_components/DataTable/AlbumTable/Table";
+import { Columns } from "@/app/(artist-portal)/artist-albums/components/table/Columns";
+import AlbumTable from "@/app/(artist-portal)/artist-albums/components/table";
 import { mockArtistAlbums } from "@/app/sampleData";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-import { useAppDispatch, useAppSelector } from "@/app/_hooks/redux";
-import DetailAlbumCard from "@/app/_components/DetailAlbumCard";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import DetailAlbumCard from "@/components/common/DetailAlbumCard";
 import { useEffect } from "react";
-import { hideViewDetail } from "@/app/_libs/features/detailAlbumSlice";
+import { hideViewDetail } from "@/lib/features/detailAlbumSlice";
 
 const ArtistAlbumPage = () => {
   const { album, isOpen } = useAppSelector((state) => state.detailAlbum);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     return () => {
-      dispatch(hideViewDetail())
-    }
-  }, [dispatch])
+      dispatch(hideViewDetail());
+    };
+  }, [dispatch]);
 
   return (
     <ScrollArea className="px-3 h-full">

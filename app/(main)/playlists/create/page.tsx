@@ -1,11 +1,17 @@
-import HeroSection from "@/app/_components/HeroSection";
-import TrackRow from "@/app/_components/TrackRow";
+import HeroSection from "@/components/common/HeroSection";
+import TrackRow from "@/components/common/TrackRow";
 import { mockTracks } from "@/app/sampleData";
 import { PlaylistItem } from "@/app/types/component";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Plus, Repeat, CornerDownLeft, Clock } from "lucide-react";
 
 const CreatePlaylistPage = () => {

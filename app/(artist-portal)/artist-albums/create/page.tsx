@@ -1,4 +1,4 @@
-import EditAlbumForm from "@/app/_components/Form/EditAlbumForm";
+import EditAlbumForm from "@/app/(artist-portal)/artist-albums/components/EditAlbumForm";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const CreateNewAlbumPage = () => {

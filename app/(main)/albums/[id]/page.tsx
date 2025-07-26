@@ -3,10 +3,10 @@ import { Separator } from "@/components/ui/separator";
 import { Dot } from "lucide-react";
 import { mockAlbums, mockTracks } from "@/app/sampleData";
 import { useState } from "react";
-import MediaList from "@/app/_components/MediaList";
-import HeroSection from "@/app/_components/HeroSection";
-import ControlSection from "@/app/_components/ControlSection";
-import TableTrack from "@/app/_components/SimpleTrackTable";
+import MediaList from "@/components/common/MediaList";
+import HeroSection from "@/components/common/HeroSection";
+import ControlSection from "@/components/common/ControlSection";
+import TableTrack from "@/components/common/SimpleTrackTable";
 
 const DetailAlbumPage = () => {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -27,7 +27,7 @@ const DetailAlbumPage = () => {
 
       <Separator className="my-4" />
 
-      <ControlSection 
+      <ControlSection
         onPlay={() => console.log("Play album")}
         onFollow={() => setIsFollowing(!isFollowing)}
         variant="album"

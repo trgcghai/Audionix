@@ -1,5 +1,5 @@
 "use client";
-import MediaList from "../_components/MediaList";
+import MediaList from "../../components/common/MediaList";
 import { mockData } from "../sampleData";
 
 export default function Home() {

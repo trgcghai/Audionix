@@ -1,5 +1,5 @@
 "use client";
-import EditAlbumForm from "@/app/_components/Form/EditAlbumForm";
+import EditAlbumForm from "@/app/(artist-portal)/artist-albums/components/EditAlbumForm";
 import { mockArtistAlbums } from "@/app/sampleData";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useParams } from "next/navigation";

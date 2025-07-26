@@ -1,6 +1,6 @@
 "use client";
-import MediaList from "@/app/_components/MediaList";
-import TrackRow from "@/app/_components/TrackRow";
+import MediaList from "@/components/common/MediaList";
+import TrackRow from "@/components/common/TrackRow";
 import {
   mockAlbums,
   mockArtists,

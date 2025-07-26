@@ -4,7 +4,7 @@ import * as React from "react";
 import { Disc, Music2 } from "lucide-react";
 import { NavMain } from "@/components/nav-main";
 import { Sidebar, SidebarContent, SidebarRail } from "@/components/ui/sidebar";
-import LinkLogo from "@/app/_components/LinkLogo";
+import LinkLogo from "@/components/common/LinkLogo";
 
 const navItems = [
   {
@@ -39,7 +39,9 @@ const navItems = [
   },
 ];
 
-export default function ArtistSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export default function ArtistSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <div className="p-4 pb-0 flex items-center justify-start">

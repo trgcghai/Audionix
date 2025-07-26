@@ -5,9 +5,9 @@ import { Separator } from "@/components/ui/separator";
 import { Dot } from "lucide-react";
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import MediaList from "@/app/_components/MediaList";
-import HeroSection from "@/app/_components/HeroSection";
-import TableTrack from "@/app/_components/SimpleTrackTable";
+import MediaList from "@/components/common/MediaList";
+import HeroSection from "@/components/common/HeroSection";
+import TableTrack from "@/components/common/SimpleTrackTable";
 
 const DetailArtistPage = () => {
   const [isFollowing, setIsFollowing] = useState(false);

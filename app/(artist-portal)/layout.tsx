@@ -1,7 +1,7 @@
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import MainHeader from "../_components/Header/MainHeader";
+import MainHeader from "../../components/header/MainHeader";
 import { Separator } from "@/components/ui/separator";
-import Footer from "../_components/Footer";
+import Footer from "../../components/common/Footer";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ArtistSidebar from "@/components/ArtistSidebar";
 

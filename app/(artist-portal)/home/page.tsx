@@ -1,5 +1,5 @@
-import TableTrack from "@/app/_components/SimpleTrackTable";
-import MediaList from "@/app/_components/MediaList";
+import TableTrack from "@/components/common/SimpleTrackTable";
+import MediaList from "@/components/common/MediaList";
 import { mockTracks, mockAlbums } from "@/app/sampleData";
 
 const ArtistPortalPage = () => {

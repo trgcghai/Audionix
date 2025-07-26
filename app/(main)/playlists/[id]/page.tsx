@@ -2,16 +2,16 @@
 import { Separator } from "@/components/ui/separator";
 import { Dot } from "lucide-react";
 import { mockPlaylists, mockTracks } from "@/app/sampleData";
-import HeroSection from "@/app/_components/HeroSection";
+import HeroSection from "@/components/common/HeroSection";
 import { useEffect, useMemo, useState } from "react";
 import { TrackItem } from "@/app/types/component";
 import { useParams } from "next/navigation";
 import debounce from "lodash.debounce";
-import SearchTrack from "@/app/_components/DetailPlaylist/SearchTrack";
-import SearchResult from "@/app/_components/DetailPlaylist/SearchResult";
-import RecommendationsTracks from "@/app/_components/DetailPlaylist/RecommendationsTracks";
-import TableTrack from "@/app/_components/SimpleTrackTable";
-import ControlSection from "@/app/_components/ControlSection";
+import SearchTrack from "@/app/(main)/playlists/components/SearchTrack";
+import SearchResult from "@/app/(main)/playlists/components/SearchResult";
+import RecommendationsTracks from "@/app/(main)/playlists/components/RecommendationsTracks";
+import TableTrack from "@/components/common/SimpleTrackTable";
+import ControlSection from "@/components/common/ControlSection";
 
 const DetailPlaylistPage = () => {
   const { id } = useParams<{ id: string }>();

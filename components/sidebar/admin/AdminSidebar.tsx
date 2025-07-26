@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { Settings } from "lucide-react";
-import { NavMain } from "@/components/nav-main";
+import { NavMain } from "@/components/sidebar/artist/nav-main";
 import { Sidebar, SidebarContent, SidebarRail } from "@/components/ui/sidebar";
 import LinkLogo from "@/components/common/LinkLogo";
 

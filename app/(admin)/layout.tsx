@@ -3,7 +3,7 @@ import MainHeader from "../../components/header/MainHeader";
 import { Separator } from "@/components/ui/separator";
 import Footer from "../../components/common/Footer";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import AdminSidebar from "@/components/AdminSidebar";
+import AdminSidebar from "@/components/sidebar/admin/AdminSidebar";
 
 const AdmindashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (

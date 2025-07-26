@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { mockAlbums, mockArtists, mockPlaylists } from "../../app/sampleData";
+import { mockAlbums, mockArtists, mockPlaylists } from "@/app/sampleData";
 import CreatePlaylistButton from "./CreatePlaylistButton";
 import FilterButtons from "./FilterButtons";
 import LibraryItem from "./LibraryItem";

@@ -1,12 +1,12 @@
 "use client";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import MainHeader from "../../components/header/MainHeader";
-import Player from "../../components/player/Player";
-import Sidebar from "../../components/sidebar/Sidebar";
+import MainHeader from "@/components/header/MainHeader";
+import Player from "@/components/player/Player";
 import { Separator } from "@/components/ui/separator";
-import Footer from "../../components/common/Footer";
-import { useAppSelector } from "../../hooks/redux";
-import QueueDrawer from "../../components/common/QueueDrawer";
+import Footer from "@/components/common/Footer";
+import { useAppSelector } from "@/hooks/redux";
+import QueueDrawer from "@/components/common/QueueDrawer";
+import Sidebar from "@/components/sidebar/main/Sidebar";
 
 const Layout = ({
   children,
@@ -20,13 +20,13 @@ const Layout = ({
       <div className="col-span-12 row-span-1">
         <MainHeader />
       </div>
-      <div className="col-span-3 row-span-11 p-4 -mt-6">
+      <div className="col-span-3 row-span-11 p-4 -mt-5">
         <Sidebar />
       </div>
       <div
         className={`${
           isDrawerOpen ? "col-span-6" : "col-span-9"
-        } row-span-11 py-4 px-0 -mt-6`}
+        } row-span-11 py-4 px-0 -mt-5`}
       >
         <ScrollArea className="h-full bg-card p-4 text-card-foreground rounded-xl border shadow-sm">
           {children}

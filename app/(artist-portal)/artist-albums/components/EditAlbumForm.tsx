@@ -21,7 +21,7 @@ import {
   ARTIST_ALBUM_STATUS_OPTIONS,
   COVER_IMAGE_ACCEPT_TYPES,
 } from "@/app/constant";
-import ConfirmDialog from "../../../../components/dialog/ConfirmDialog";
+import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import {
   Select,
   SelectContent,

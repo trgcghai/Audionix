@@ -33,7 +33,7 @@ export function NavMain({
     }[];
   }[];
 }) {
-  const navClassName = "text-base cursor-pointer";
+  const navClassName = "text-sm cursor-pointer";
   return (
     <SidebarGroup>
       <SidebarMenu>

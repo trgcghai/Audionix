@@ -27,7 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import ConfirmDialog from "../../../../../components/dialog/ConfirmDialog";
+import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import { ARTIST_ALBUM_STATUS_OPTIONS } from "@/app/constant";
 import {
   DropdownMenu,

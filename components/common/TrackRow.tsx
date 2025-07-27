@@ -1,10 +1,9 @@
 "use client";
 import Image from "next/image";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { TrackItem } from "@/app/types/component";
+import { SimpleTrackTablesVariant, TrackItem } from "@/app/types/component";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { Button } from "@/components/ui/button";
-import { SimpleTrackTablesVariant } from "../../app/constant";
 
 const RenderByVariant = ({
   index,

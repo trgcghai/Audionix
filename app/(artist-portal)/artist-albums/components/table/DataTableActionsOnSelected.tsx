@@ -10,7 +10,7 @@ import {
 import { Table } from "@tanstack/react-table";
 import { useState } from "react";
 import { ARTIST_ALBUM_STATUS_OPTIONS } from "@/app/constant";
-import ConfirmDialog from "../../../../../components/dialog/ConfirmDialog";
+import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import { Button } from "@/components/ui/button";
 
 function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {

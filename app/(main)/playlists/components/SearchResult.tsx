@@ -1,6 +1,6 @@
 import { TrackItem } from "@/app/types/component";
 import { Table, TableBody } from "@/components/ui/table";
-import TrackRow from "../../../../components/common/TrackRow";
+import TrackRow from "@/components/common/TrackRow";
 
 const SearchResult = ({
   searchTerm,

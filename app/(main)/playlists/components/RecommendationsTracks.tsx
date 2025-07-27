@@ -1,5 +1,5 @@
 import { TrackItem } from "@/app/types/component";
-import TrackRow from "../../../../components/common/TrackRow";
+import TrackRow from "@/components/common/TrackRow";
 import { Table, TableBody } from "@/components/ui/table";
 
 const RecommendationsTracks = ({ mockTracks }: { mockTracks: TrackItem[] }) => {

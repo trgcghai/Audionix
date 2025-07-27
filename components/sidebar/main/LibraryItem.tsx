@@ -26,7 +26,7 @@ const LibraryItem = ({ data }: LibraryItemProps) => {
         />
         <div>
           <p>{data.name}</p>
-          <p className="text-sm">
+          <p className="text-sm text-muted-foregrounds">
             <span className="capitalize">{data.type}</span>
             {["album", "playlist"].includes(data.type) &&
               ` - ${getTrackCount()} items`}

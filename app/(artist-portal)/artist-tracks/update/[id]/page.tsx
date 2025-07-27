@@ -1,5 +1,5 @@
 "use client";
-import UploadTrackForm from "@/app/(artist-portal)/artist-tracks/components/UploadTrackForm";
+import UploadTrackForm from "@/app/(artist-portal)/artist-tracks/components/form/UploadTrackForm";
 import { mockArtistTracks } from "@/app/sampleData";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";

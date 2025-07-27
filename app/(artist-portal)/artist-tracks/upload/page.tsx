@@ -1,4 +1,4 @@
-import UploadTrackForm from "@/app/(artist-portal)/artist-tracks/components/UploadTrackForm";
+import UploadTrackForm from "@/app/(artist-portal)/artist-tracks/components/form/UploadTrackForm";
 
 const UploadTrackPage = () => {
   return (

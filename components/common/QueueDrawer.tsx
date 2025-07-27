@@ -17,7 +17,7 @@ const QueueDrawer = () => {
   };
 
   return (
-    <Card className="h-full">
+    <Card className="h-full mt-1">
       <CardHeader>
         <CardTitle>
           <div className="flex items-center justify-between">

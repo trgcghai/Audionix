@@ -23,7 +23,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import ConfirmDialog from "../../../../../components/dialog/ConfirmDialog";
+import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import { useState } from "react";
 import Link from "next/link";
 import {

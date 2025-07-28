@@ -7,43 +7,80 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "../ui/button";
 
 interface ConfirmDialogProps {
   title: string;
   description: string;
-  statusDialogOpen?: boolean;
-  children?: React.ReactNode;
-  asChild?: boolean;
+
+  isOpen?: boolean;
+  setIsOpen?: (open: boolean) => void;
+
   onCancel?: () => void;
-  onConfirm: () => void;
-  setStatusDialogOpen?: (open: boolean) => void;
+  onConfirm?: () => void;
+
+  cancelText?: string;
+  confirmText?: string;
+  variant?: "default" | "destructive";
+  confirmButtonClassName?: string;
+  cancelButtonClassName?: string;
 }
 
 const ConfirmDialog = ({
   title,
   description,
-  statusDialogOpen,
-  children,
+  isOpen,
+  setIsOpen,
   onCancel = () => {},
-  onConfirm,
-  setStatusDialogOpen,
-  asChild = false,
+  onConfirm = () => {},
+  cancelText = "Cancel",
+  confirmText = "Continue",
+  variant,
+  confirmButtonClassName = "rounded-full",
+  cancelButtonClassName = "rounded-full",
 }: ConfirmDialogProps) => {
+  const handleConfirm = () => {
+    onConfirm();
+    setIsOpen?.(false);
+  };
+
+  const handleCancel = () => {
+    onCancel();
+    setIsOpen?.(false);
+  };
+
   return (
-    <AlertDialog open={statusDialogOpen} onOpenChange={setStatusDialogOpen}>
-      <AlertDialogTrigger asChild={asChild}>
-        {children}
-      </AlertDialogTrigger>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="rounded-full" onClick={onCancel}>Cancel</AlertDialogCancel>
-          <AlertDialogAction className="rounded-full" onClick={onConfirm}>Continue</AlertDialogAction>
+          <AlertDialogCancel
+            className={cancelButtonClassName}
+            onClick={handleCancel}
+          >
+            {cancelText}
+          </AlertDialogCancel>
+
+          {variant === "destructive" ? (
+            <Button
+              onClick={handleConfirm}
+              variant="destructive"
+              className={confirmButtonClassName}
+            >
+              {confirmText}
+            </Button>
+          ) : (
+            <AlertDialogAction
+              className={confirmButtonClassName}
+              onClick={handleConfirm}
+            >
+              {confirmText}
+            </AlertDialogAction>
+          )}
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

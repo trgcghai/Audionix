@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 import { Table } from "@tanstack/react-table";
 
 interface DataTableFilterOptionsProps<TData> {
@@ -36,16 +36,50 @@ function DataTableFilterOptions<TData>({
 
   return (
     <>
-    <div className={className}>
-      {filterableColumns.map((column) => {
-        const meta = column.columnDef.meta as
-          | { label?: string; inputType?: string; options?: string[] }
-          | undefined;
-        const label = meta?.label;
-        const inputType = meta?.inputType;
+      <div className={className}>
+        {filterableColumns.map((column) => {
+          const meta = column.columnDef.meta as
+            | {
+                label?: string;
+                inputType?: string;
+                options?: { key: string; value: string; label: string }[];
+              }
+            | undefined;
+          const label = meta?.label;
+          const inputType = meta?.inputType;
 
-        if (inputType === "select") {
-          const options = meta?.options;
+          if (inputType === "select") {
+            const options = meta?.options;
+            return (
+              <div
+                key={column.id}
+                className={cn(itemBaseClassName, itemClassName)}
+              >
+                <Label className={cn(labelBaseClassName, labelClassName)}>
+                  {label ?? column.id}
+                </Label>
+                <Select onValueChange={(event) => column.setFilterValue(event)}>
+                  <SelectTrigger
+                    className={cn(inputBaseClassName, inputClassName)}
+                  >
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {options?.map((status) => (
+                      <SelectItem
+                        key={status.key}
+                        value={status.value}
+                        className="capitalize"
+                      >
+                        {status.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            );
+          }
+
           return (
             <div
               key={column.id}
@@ -54,51 +88,28 @@ function DataTableFilterOptions<TData>({
               <Label className={cn(labelBaseClassName, labelClassName)}>
                 {label ?? column.id}
               </Label>
-              <Select onValueChange={(event) => column.setFilterValue(event)}>
-                <SelectTrigger
-                  className={cn(inputBaseClassName, inputClassName)}
-                >
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent>
-                  {options?.map((status) => (
-                    <SelectItem
-                      key={status}
-                      value={status}
-                      className="capitalize"
-                    >
-                      {status}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Input
+                placeholder={`Filter ${label ?? column.id}...`}
+                value={(column.getFilterValue() as string) ?? ""}
+                onChange={(event) => column.setFilterValue(event.target.value)}
+                className={cn(inputBaseClassName, inputClassName)}
+                type={inputType}
+              />
             </div>
           );
-        }
+        })}
+      </div>
 
-        return (
-          <div key={column.id} className={cn(itemBaseClassName, itemClassName)}>
-            <Label className={cn(labelBaseClassName, labelClassName)}>
-              {label ?? column.id}
-            </Label>
-            <Input
-              placeholder={`Filter ${label ?? column.id}...`}
-              value={(column.getFilterValue() as string) ?? ""}
-              onChange={(event) => column.setFilterValue(event.target.value)}
-              className={cn(inputBaseClassName, inputClassName)}
-              type={inputType}
-            />
-          </div>
-        );
-      })}
-    </div>
-
-    <Button className="rounded-full" size={"sm"} onClick={() => {
-      table.resetColumnFilters()
-      table.resetColumnOrder()
-    }}>
-      Clear Filters
-    </Button>
+      <Button
+        className="rounded-full"
+        size={"sm"}
+        onClick={() => {
+          table.resetColumnFilters();
+          table.resetColumnOrder();
+        }}
+      >
+        Clear Filters
+      </Button>
     </>
   );
 }

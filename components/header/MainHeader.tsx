@@ -14,7 +14,7 @@ import {
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { dark } from "@clerk/themes";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 import LinkLogo from "../common/LinkLogo";
 
 export default function MainHeader({

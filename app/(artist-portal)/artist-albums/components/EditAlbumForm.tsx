@@ -218,6 +218,13 @@ const EditAlbumForm = ({ album }: { album?: ArtistAlbumItem }) => {
           >
             Cancel
           </Button>
+          <Button
+            type="button"
+            className="rounded-full px-6 py-2"
+            onClick={() => setDialogOpen(true)}
+          >
+            {album ? "Update" : "Upload"}
+          </Button>
           <ConfirmDialog
             title="Confirm Upload"
             description={`Are you sure you want to ${
@@ -228,14 +235,9 @@ const EditAlbumForm = ({ album }: { album?: ArtistAlbumItem }) => {
               setDialogOpen(false);
             }}
             onCancel={() => setDialogOpen(false)}
-            statusDialogOpen={dialogOpen}
-            setStatusDialogOpen={setDialogOpen}
-            asChild
-          >
-            <Button type="button" className="rounded-full px-6 py-2">
-              {album ? "Update" : "Upload"}
-            </Button>
-          </ConfirmDialog>
+            isOpen={dialogOpen}
+            setIsOpen={setDialogOpen}
+          />
         </div>
       </form>
     </Form>

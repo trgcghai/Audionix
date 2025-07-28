@@ -38,7 +38,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useAppDispatch } from "@/hooks/redux";
-import { openViewDetail } from "@/lib/features/detailAlbumSlice";
+import { openViewDetail } from "@/store/slices/detailAlbumSlice";
 
 export const Columns: ColumnDef<ArtistAlbumItem>[] = [
   {
@@ -216,8 +216,8 @@ function RenderStatusCell({ row }: { row: Row<ArtistAlbumItem> }) {
         description={`Are you sure you want to change the status of ${row.original.name} to "${status}"? This action can be reversed later.`}
         onCancel={() => setStatusDialogOpen(false)}
         onConfirm={handleStatusConfirm}
-        statusDialogOpen={statusDialogOpen}
-        setStatusDialogOpen={setStatusDialogOpen}
+        isOpen={statusDialogOpen}
+        setIsOpen={setStatusDialogOpen}
       />
     </div>
   );
@@ -278,8 +278,8 @@ function RenderActionCell({ row }: { row: Row<ArtistAlbumItem> }) {
           setStatusDialogOpen(false);
         }}
         onCancel={() => setStatusDialogOpen(false)}
-        statusDialogOpen={statusDialogOpen}
-        setStatusDialogOpen={setStatusDialogOpen}
+        isOpen={statusDialogOpen}
+        setIsOpen={setStatusDialogOpen}
       />
     </>
   );

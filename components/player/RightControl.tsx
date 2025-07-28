@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Mic, VolumeX, Volume2, List } from "lucide-react";
 import { useState } from "react";
-import { toggleQueueDrawer } from "@/lib/features/queueDrawerSlice";
+import { toggleQueueDrawer } from "@/store/slices/queueDrawerSlice";
 
 const RightControl = () => {
   const [volume, setVolume] = useState(70);

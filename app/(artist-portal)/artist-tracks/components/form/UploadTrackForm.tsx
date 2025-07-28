@@ -1,6 +1,5 @@
 "use client";
 import { mockAlbums } from "@/app/sampleData";
-import { ArtistTrackItem } from "@/app/types/component";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -20,24 +19,25 @@ import {
 } from "@/components/ui/select";
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import { createTrackValues } from "./schemas";
-import { useTrackForm } from "../../hooks/useCreateTrackForm";
+import { useCreateTrackForm } from "../../hooks/useCreateTrackForm";
 import { ImageUploadField } from "./ImageUploadField";
 import { AudioUploadField } from "./AudioUploadField";
+import StatusSelect from "../StatusSelect";
 
 interface UploadTrackFormProps {
-  track?: ArtistTrackItem;
   onSubmit?: (data: createTrackValues) => void;
 }
 
-const UploadTrackForm = ({ track, onSubmit }: UploadTrackFormProps) => {
+const UploadTrackForm = ({ onSubmit }: UploadTrackFormProps) => {
   const {
     form,
     dialogOpen,
+    setDialogOpen,
     handleSubmit,
     handleReset,
+    openConfirmDialog,
     closeConfirmDialog,
-    isEditMode,
-  } = useTrackForm({ track, onSubmit });
+  } = useCreateTrackForm({ onSubmit });
 
   return (
     <Form {...form}>
@@ -50,7 +50,7 @@ const UploadTrackForm = ({ track, onSubmit }: UploadTrackFormProps) => {
               value={field.value}
               onChange={field.onChange}
               label="Track Cover Image"
-              initialPreview={track?.images[0]?.url}
+              initialPreview={undefined}
             />
           )}
         />
@@ -63,7 +63,7 @@ const UploadTrackForm = ({ track, onSubmit }: UploadTrackFormProps) => {
               value={field.value}
               onChange={field.onChange}
               label="Track Audio File"
-              initialPreview={track?.href}
+              initialPreview={undefined}
             />
           )}
         />
@@ -118,19 +118,11 @@ const UploadTrackForm = ({ track, onSubmit }: UploadTrackFormProps) => {
             <FormItem className="w-full h-full">
               <FormLabel className="text-md font-semibold">Status</FormLabel>
               <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  {...field}
-                  disabled={!isEditMode}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="inactive">Inactive</SelectItem>
-                    <SelectItem value="active">Active</SelectItem>
-                  </SelectContent>
-                </Select>
+                <StatusSelect
+                  status={field.value}
+                  handleStatusChange={field.onChange}
+                  disabled={true}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -146,21 +138,21 @@ const UploadTrackForm = ({ track, onSubmit }: UploadTrackFormProps) => {
           >
             Cancel
           </Button>
+          <Button
+            type="button"
+            className="rounded-full px-6 py-2"
+            onClick={openConfirmDialog}
+          >
+            Upload
+          </Button>
           <ConfirmDialog
             title="Confirm Upload"
-            description={`Are you sure you want to ${
-              isEditMode ? "update" : "upload"
-            } this track? Please ensure all details are correct before proceeding.`}
+            description={`Are you sure you want to upload this track? Please ensure all details are correct before proceeding.`}
             onConfirm={() => form.handleSubmit(handleSubmit)()}
             onCancel={closeConfirmDialog}
-            statusDialogOpen={dialogOpen}
-            setStatusDialogOpen={closeConfirmDialog}
-            asChild
-          >
-            <Button type="button" className="rounded-full px-6 py-2">
-              {isEditMode ? "Update" : "Upload"}
-            </Button>
-          </ConfirmDialog>
+            isOpen={dialogOpen}
+            setIsOpen={setDialogOpen}
+          />
         </div>
       </form>
     </Form>

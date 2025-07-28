@@ -11,13 +11,16 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import queueDrawerReducer from "@/lib/features/queueDrawerSlice";
-import detailAlbumReducer from "@/lib/features/detailAlbumSlice";
+import queueDrawerReducer from "@/store/slices/queueDrawerSlice";
+import detailAlbumReducer from "@/store/slices/detailAlbumSlice";
+import { api } from "@/services/api";
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
+  whitelist: ["queueDrawer", "detailAlbum"], // Only persist these slices
+  blacklist: [api.reducerPath],
 };
 
 const persistedReducer = persistReducer(
@@ -25,6 +28,7 @@ const persistedReducer = persistReducer(
   combineReducers({
     queueDrawer: queueDrawerReducer,
     detailAlbum: detailAlbumReducer,
+    [api.reducerPath]: api.reducer,
   })
 );
 
@@ -35,7 +39,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    });
+    }).concat(api.middleware);
   },
 });
 

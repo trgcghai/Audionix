@@ -1,5 +1,5 @@
 import { AlertCircle, RefreshCw } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 import { Button } from "../ui/button";
 
 type ErrorVariant = "default" | "compact" | "inline" | "card";
@@ -49,7 +49,7 @@ const ErrorMessage = ({
       className={cn(
         variantClasses[variant],
         severityClasses[severity],
-        className,
+        className
       )}
     >
       <div className="flex items-center justify-center gap-2">

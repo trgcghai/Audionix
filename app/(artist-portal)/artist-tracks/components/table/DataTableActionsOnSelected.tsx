@@ -1,20 +1,14 @@
 "use client";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Table } from "@tanstack/react-table";
-import { ARTIST_TRACK_STATUS_OPTIONS } from "@/app/constant";
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import { Button } from "@/components/ui/button";
 import AddTrackToAlbumDialog from "../AddTrackToAlbumDialog";
 import { ArtistTrackItem } from "@/app/types/component";
 import { PlusCircle, Trash2 } from "lucide-react";
 import { useTrackActions } from "../../hooks/useTrackActions";
+import { useState } from "react";
+import StatusSelect from "../StatusSelect";
 
 const StatusChangeSection = ({
   selectedStatus,
@@ -33,25 +27,17 @@ const StatusChangeSection = ({
 }) => (
   <div className="flex items-center gap-2">
     <Label>Change selected row to status:</Label>
-    <Select onValueChange={onStatusChange}>
-      <SelectTrigger className="w-[180px] rounded-full">
-        <SelectValue placeholder="Select status" />
-      </SelectTrigger>
-      <SelectContent>
-        {ARTIST_TRACK_STATUS_OPTIONS.map((status) => (
-          <SelectItem key={status} value={status} className="capitalize">
-            {status}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <StatusSelect
+      status={selectedStatus!}
+      handleStatusChange={onStatusChange}
+    />
     <ConfirmDialog
       title="Confirm Status Change"
       description={`Are you sure you want to change the status of ${selectedRowsCount} selected items to "${selectedStatus}"? This action can be reversed later.`}
       onCancel={onCloseDialog}
       onConfirm={onStatusConfirm}
-      statusDialogOpen={statusDialogOpen}
-      setStatusDialogOpen={onCloseDialog}
+      isOpen={statusDialogOpen}
+      setIsOpen={onCloseDialog}
     />
   </div>
 );
@@ -77,21 +63,27 @@ const DeleteSection = ({
 }: {
   selectedRowsCount: number;
   onDeleteConfirm: () => void;
-}) => (
-  <div>
-    <ConfirmDialog
-      title="Confirm Deletion"
-      description={`Are you absolutely sure to delete all ${selectedRowsCount} selected items? This action cannot be undone.`}
-      onConfirm={onDeleteConfirm}
-      asChild
-    >
-      <Button variant="destructive" className="rounded-full">
-        <Trash2 className="h-4 w-4 mr-1" />
-        Delete selected
+}) => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  return (
+    <div>
+      <Button
+        variant="destructive"
+        className="rounded-full"
+        onClick={() => setDialogOpen(true)}
+      >
+        <Trash2 className="h-4 w-4 mr-1" /> Delete selected
       </Button>
-    </ConfirmDialog>
-  </div>
-);
+      <ConfirmDialog
+        title="Confirm Deletion"
+        description={`Are you absolutely sure to delete all ${selectedRowsCount} selected items? This action cannot be undone.`}
+        onConfirm={onDeleteConfirm}
+        isOpen={dialogOpen}
+        setIsOpen={setDialogOpen}
+      />
+    </div>
+  );
+};
 
 function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
   const {

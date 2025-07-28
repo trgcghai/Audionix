@@ -15,7 +15,7 @@ import { formatUploadTime } from "../../utils/formatUploadTime";
 import { TrackTable } from "../../app/(artist-portal)/artist-tracks/components/table";
 import { TrackInAlbumColumns } from "../../app/(artist-portal)/artist-tracks/components/table/Columns";
 import { Separator } from "@/components/ui/separator";
-import { hideViewDetail } from "@/lib/features/detailAlbumSlice";
+import { hideViewDetail } from "@/store/slices/detailAlbumSlice";
 
 const DetailAlbumCard = ({ album }: { album: ArtistAlbumItem }) => {
   const dispatch = useAppDispatch();

@@ -1,8 +1,4 @@
-import {
-  ARTIST_ALBUM_STATUS_OPTIONS,
-  ARTIST_TRACK_STATUS_OPTIONS,
-  ArtistTrackStatus,
-} from "../constant";
+import { ARTIST_ALBUM_STATUS_OPTIONS, ArtistTrackStatus } from "../constant";
 
 export interface LibraryItemProps {
   data: PlaylistItem | AlbumItem | ArtistItem;
@@ -87,14 +83,14 @@ export interface ArtistTrackItem {
 
 export interface TrackInArtistAlbum {
   images: {
-      url: string;
-      height: number;
-      width: number;
-    }[];
-    duration_ms: number;
-    id: string;
-    name: string;
-    track_number: number;
+    url: string;
+    height: number;
+    width: number;
+  }[];
+  duration_ms: number;
+  id: string;
+  name: string;
+  track_number: number;
 }
 
 export interface ArtistAlbumItem {
@@ -112,8 +108,6 @@ export interface ArtistAlbumItem {
   uploadTime: string;
   status: ArtistAlbumStatus;
 }
-
-export type ArtistTrackStatus = (typeof ARTIST_TRACK_STATUS_OPTIONS)[number];
 
 export type ArtistAlbumStatus = (typeof ARTIST_ALBUM_STATUS_OPTIONS)[number];
 

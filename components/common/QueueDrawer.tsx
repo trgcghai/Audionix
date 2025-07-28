@@ -6,7 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { XIcon } from "lucide-react";
 import TrackInfo from "./TrackInfo";
 import { useMemo } from "react";
-import { closeQueueDrawer } from "@/lib/features/queueDrawerSlice";
+import { closeQueueDrawer } from "@/store/slices/queueDrawerSlice";
 
 const QueueDrawer = () => {
   const dispatch = useAppDispatch();

@@ -5,10 +5,10 @@ import { formatUploadTime } from "@/utils/formatUploadTime";
 import { ArtistTrackItem, TrackInArtistAlbum } from "@/app/types/component";
 import { ColumnDef, Row } from "@tanstack/react-table";
 import Image from "next/image";
-import { DataTableColumnHeader } from "../../../../../components/dataTable/ColumnHeader";
+import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ARTIST_TRACK_STATUS_OPTIONS } from "@/app/constant";
+import { TrackStatusValues } from "@/app/constant";
 import {
   ImageIcon,
   MoreHorizontal,
@@ -31,14 +31,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Select } from "@radix-ui/react-select";
-import {
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import AddTrackToAlbumDialog from "../AddTrackToAlbumDialog";
+import { TrackStatus } from "@/app/enums";
+import StatusSelect from "../StatusSelect";
 
 export const Columns: ColumnDef<ArtistTrackItem>[] = [
   {
@@ -139,7 +134,7 @@ export const Columns: ColumnDef<ArtistTrackItem>[] = [
     cell: RenderStatusCell,
     meta: {
       inputType: "select",
-      options: ARTIST_TRACK_STATUS_OPTIONS,
+      options: TrackStatusValues,
     },
   },
   {
@@ -174,7 +169,7 @@ function RenderStatusCell({ row }: { row: Row<ArtistTrackItem> }) {
         <PopoverTrigger asChild>
           <Badge
             variant={
-              row.original.status === ARTIST_TRACK_STATUS_OPTIONS[0]
+              row.original.status !== TrackStatus.HIDDEN
                 ? "default"
                 : "destructive"
             }
@@ -184,18 +179,10 @@ function RenderStatusCell({ row }: { row: Row<ArtistTrackItem> }) {
           </Badge>
         </PopoverTrigger>
         <PopoverContent align="end" className="w-48">
-          <Select value={status} onValueChange={handleStatusChange}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select status" />
-            </SelectTrigger>
-            <SelectContent>
-              {ARTIST_TRACK_STATUS_OPTIONS.map((status) => (
-                <SelectItem key={status} value={status} className="capitalize">
-                  {status}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <StatusSelect
+            status={status}
+            handleStatusChange={handleStatusChange}
+          />
         </PopoverContent>
       </Popover>
 
@@ -204,8 +191,8 @@ function RenderStatusCell({ row }: { row: Row<ArtistTrackItem> }) {
         description={`Are you sure you want to change the status of ${row.original.name} to "${status}"? This action can be reversed later.`}
         onCancel={() => setStatusDialogOpen(false)}
         onConfirm={handleStatusConfirm}
-        statusDialogOpen={statusDialogOpen}
-        setStatusDialogOpen={setStatusDialogOpen}
+        isOpen={statusDialogOpen}
+        setIsOpen={setStatusDialogOpen}
       />
     </div>
   );
@@ -288,8 +275,8 @@ function RenderActionCell({ row }: { row: Row<ArtistTrackItem> }) {
           setDeleteDialog(false);
         }}
         onCancel={() => setDeleteDialog(false)}
-        statusDialogOpen={deleteDialog}
-        setStatusDialogOpen={setDeleteDialog}
+        isOpen={deleteDialog}
+        setIsOpen={setDeleteDialog}
       />
     </>
   );

@@ -7,7 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import DetailAlbumCard from "@/components/common/DetailAlbumCard";
 import { useEffect } from "react";
-import { hideViewDetail } from "@/lib/features/detailAlbumSlice";
+import { hideViewDetail } from "@/store/slices/detailAlbumSlice";
 
 const ArtistAlbumPage = () => {
   const { album, isOpen } = useAppSelector((state) => state.detailAlbum);

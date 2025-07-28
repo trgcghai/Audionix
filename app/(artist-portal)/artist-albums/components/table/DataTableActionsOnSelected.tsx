@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
   const [selectedStatus, setSelectedStatus] = useState<string | undefined>();
   const [statusDialogOpen, setStatusDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const handleStatusChange = (value: string) => {
     setSelectedStatus(value);
@@ -51,28 +52,28 @@ function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
         </Select>
         <ConfirmDialog
           title="Confirm Status Change"
-          description={`Are you sure you want to change the status of ${
-            table.getSelectedRowModel().rows.length
-          } selected items to "${selectedStatus}"? This action can be reversed later.`}
+          description={`Are you sure you want to change the status of selected items to "${selectedStatus}"? This action can be reversed later.`}
           onCancel={() => setStatusDialogOpen(false)}
           onConfirm={handleStatusConfirm}
-          statusDialogOpen={statusDialogOpen}
-          setStatusDialogOpen={setStatusDialogOpen}
+          isOpen={statusDialogOpen}
+          setIsOpen={setStatusDialogOpen}
         />
       </div>
       <div className="flex items-center gap-2">
+        <Button
+          variant={"destructive"}
+          className="rounded-full"
+          onClick={() => setDeleteDialogOpen(true)}
+        >
+          Delete selected
+        </Button>
         <ConfirmDialog
           title="Confirm Deletion"
-          description={`Are you absolutely sure to delete all ${
-            table.getSelectedRowModel().rows.length
-          } selected items? This action cannot be undone.`}
+          description={`Are you absolutely sure to delete all selected items? This action cannot be undone.`}
           onConfirm={handleDeleteConfirm}
-          asChild
-        >
-          <Button variant={"destructive"} className="rounded-full">
-            Delete selected
-          </Button>
-        </ConfirmDialog>
+          isOpen={deleteDialogOpen}
+          setIsOpen={setDeleteDialogOpen}
+        />
       </div>
     </div>
   );

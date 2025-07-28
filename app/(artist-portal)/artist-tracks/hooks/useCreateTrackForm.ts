@@ -1,30 +1,27 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArtistTrackItem } from "@/app/types/component";
 import { useState } from "react";
 import {
   createTrackSchema,
   createTrackValues,
 } from "../components/form/schemas";
+import { TrackStatus } from "@/app/enums";
 
-interface UseTrackFormProps {
-  track?: ArtistTrackItem;
+interface useCreateTrackFormProps {
   onSubmit?: (data: createTrackValues) => void;
 }
 
-export const useTrackForm = ({ track, onSubmit }: UseTrackFormProps) => {
+export const useCreateTrackForm = ({ onSubmit }: useCreateTrackFormProps) => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const form = useForm<createTrackValues>({
     resolver: zodResolver(createTrackSchema),
     defaultValues: {
-      title: track?.name || "",
-      album: track?.album?.id || "",
-      image: track?.images[0]?.url
-        ? new File([], track?.images[0].url)
-        : undefined,
-      audioFile: track?.href ? new File([], track.href) : undefined,
-      status: track?.status || "inactive",
+      title: "",
+      album: "",
+      image: undefined,
+      audioFile: undefined,
+      status: TrackStatus.HIDDEN,
     },
   });
 
@@ -50,10 +47,10 @@ export const useTrackForm = ({ track, onSubmit }: UseTrackFormProps) => {
   return {
     form,
     dialogOpen,
+    setDialogOpen,
     handleSubmit,
     handleReset,
     openConfirmDialog,
     closeConfirmDialog,
-    isEditMode: !!track,
   };
 };

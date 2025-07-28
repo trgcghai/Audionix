@@ -1,5 +1,4 @@
 "use client";
-import UploadTrackForm from "@/app/(artist-portal)/artist-tracks/components/form/UploadTrackForm";
 import { mockArtistTracks } from "@/app/sampleData";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
@@ -10,10 +9,6 @@ const UpdateTrackPage = () => {
     () => mockArtistTracks.find((track) => track.id === id),
     [id]
   );
-  return (
-    <div className="w-4xl mx-auto">
-      <UploadTrackForm track={track} />
-    </div>
-  );
+  return <div className="w-4xl mx-auto">{track?.name}</div>;
 };
 export default UpdateTrackPage;

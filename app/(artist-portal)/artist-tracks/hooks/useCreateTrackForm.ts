@@ -26,7 +26,6 @@ export const useCreateTrackForm = ({ onSubmit }: useCreateTrackFormProps) => {
   });
 
   const handleSubmit = (data: createTrackValues) => {
-    console.log("Form submitted:", data);
     onSubmit?.(data);
     setDialogOpen(false);
   };

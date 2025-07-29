@@ -2,7 +2,7 @@
 
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { formatUploadTime } from "@/utils/formatUploadTime";
-import { ArtistTrackItem, TrackInArtistAlbum } from "@/app/types/component";
+import { TrackInArtistAlbum } from "@/app/types/component";
 import { ColumnDef, Row } from "@tanstack/react-table";
 import Image from "next/image";
 import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
@@ -33,9 +33,10 @@ import {
 } from "@/components/ui/popover";
 import AddTrackToAlbumDialog from "../AddTrackToAlbumDialog";
 import { TrackStatus } from "@/app/enums";
+import { Track } from "@/app/types/model";
 import StatusSelect from "../StatusSelect";
 
-export const Columns: ColumnDef<ArtistTrackItem>[] = [
+export const Columns: ColumnDef<Track>[] = [
   {
     id: "select",
     enableSorting: false,
@@ -71,26 +72,30 @@ export const Columns: ColumnDef<ArtistTrackItem>[] = [
     cell: RenderImageCell,
   },
   {
-    id: "name",
-    accessorKey: "name",
+    id: "title",
+    accessorKey: "title",
     enableColumnFilter: true,
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Track Name" />
+      <DataTableColumnHeader column={column} title="Track title" />
     ),
     meta: {
-      label: "Track Name",
+      label: "Track title",
       inputType: "text",
     },
   },
   {
-    id: "albumName",
+    id: "album",
     accessorKey: "album.name",
     enableColumnFilter: true,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Album Name" />
     ),
+    cell: ({ row }) => {
+      const album = row.original.album;
+      return album ? album.name : "-";
+    },
     meta: {
-      label: "Album Name",
+      label: "Album",
       inputType: "text",
     },
   },
@@ -112,8 +117,7 @@ export const Columns: ColumnDef<ArtistTrackItem>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Upload Time" />
     ),
-    cell: ({ row }) =>
-      formatUploadTime((row.original as ArtistTrackItem).uploadTime),
+    cell: ({ row }) => formatUploadTime((row.original as Track).createdAt),
     meta: {
       label: "Upload Time",
       inputType: "date",
@@ -148,8 +152,8 @@ export const TrackInAlbumColumns: ColumnDef<TrackInArtistAlbum>[] =
     ["select", "coverImage", "name", "duration"].includes(item.id || "")
   ).map((item) => item as TrackInArtistAlbum);
 
-function RenderStatusCell({ row }: { row: Row<ArtistTrackItem> }) {
-  const [status, setStatus] = useState(row.original.status);
+function RenderStatusCell({ row }: { row: Row<Track> }) {
+  const [status, setStatus] = useState(row.original.status as string);
   const [statusDialogOpen, setStatusDialogOpen] = useState(false);
 
   const handleStatusChange = (value: string) => {
@@ -188,7 +192,7 @@ function RenderStatusCell({ row }: { row: Row<ArtistTrackItem> }) {
 
       <ConfirmDialog
         title="Confirm Status Change"
-        description={`Are you sure you want to change the status of ${row.original.name} to "${status}"? This action can be reversed later.`}
+        description={`Are you sure you want to change the status of this track to "${status}"?`}
         onCancel={() => setStatusDialogOpen(false)}
         onConfirm={handleStatusConfirm}
         isOpen={statusDialogOpen}
@@ -198,8 +202,10 @@ function RenderStatusCell({ row }: { row: Row<ArtistTrackItem> }) {
   );
 }
 
-function RenderImageCell({ row }: { row: Row<ArtistTrackItem> }) {
-  const imageUrl = row.original.images[0]?.url;
+function RenderImageCell({ row }: { row: Row<Track> }) {
+  console.log("Rendering image cell for row:", row.original);
+
+  const imageUrl = row.original.cover_images[0]?.url;
   const [imageError, setImageError] = useState(false);
 
   if (!imageUrl || imageError) {
@@ -222,7 +228,7 @@ function RenderImageCell({ row }: { row: Row<ArtistTrackItem> }) {
   );
 }
 
-function RenderActionCell({ row }: { row: Row<ArtistTrackItem> }) {
+function RenderActionCell({ row }: { row: Row<Track> }) {
   const track = row.original;
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [addToAlbumDialog, setAddToAlbumDialog] = useState(false);
@@ -238,7 +244,7 @@ function RenderActionCell({ row }: { row: Row<ArtistTrackItem> }) {
         <DropdownMenuContent align="end">
           <DropdownMenuItem variant="default" className="cursor-pointer">
             <Link
-              href={`/artist-tracks/update/${track.id}`}
+              href={`/artist-tracks/update/${track._id}`}
               className="flex items-center gap-2"
             >
               <Settings2 className="h-4 w-4 mr-2" />
@@ -263,13 +269,13 @@ function RenderActionCell({ row }: { row: Row<ArtistTrackItem> }) {
         </DropdownMenuContent>
       </DropdownMenu>
       <AddTrackToAlbumDialog
-        tracks={[track as ArtistTrackItem]}
+        tracks={[track as Track]}
         statusDialogOpen={addToAlbumDialog}
         setStatusDialogOpen={setAddToAlbumDialog}
       />
       <ConfirmDialog
         title="Confirm Deletion"
-        description={`Are you absolutely sure to delete track with name ${track.name} ? This action cannot be undone.`}
+        description={`Are you absolutely sure to delete this track ? This action cannot be undone.`}
         onConfirm={() => {
           console.log("Deleting track:", track);
           setDeleteDialog(false);

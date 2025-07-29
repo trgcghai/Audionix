@@ -1,6 +1,6 @@
 "use client";
 import { mockArtistAlbums } from "@/app/sampleData";
-import { ArtistTrackItem } from "@/app/types/component";
+import { Track } from "@/app/types/model";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,7 +21,7 @@ import {
 import { useState } from "react";
 
 interface AddTrackToAlbumDialogProps {
-  tracks: ArtistTrackItem[];
+  tracks: Track[];
   statusDialogOpen?: boolean;
   children?: React.ReactNode;
   asChild?: boolean;

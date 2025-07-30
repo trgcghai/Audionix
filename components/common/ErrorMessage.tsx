@@ -25,9 +25,9 @@ const ErrorMessage = ({
   className,
 }: ErrorMessageProps) => {
   const severityClasses = {
-    error: "text-main-red bg-main-red/10 border-main-red/40",
+    error: "text-red-400 bg-red-500/10 border-red-500/40",
     warning: "text-yellow-600 bg-yellow-50 border-yellow-200",
-    info: "text-main-blue bg-main-blue/10 border-main-blue/40",
+    info: "text-primary bg-primary/10 border-primary/40",
   };
 
   const variantClasses = {
@@ -49,7 +49,7 @@ const ErrorMessage = ({
       className={cn(
         variantClasses[variant],
         severityClasses[severity],
-        className
+        className,
       )}
     >
       <div className="flex items-center justify-center gap-2">

@@ -1,8 +1,13 @@
 "use client";
+import { useProfileQuery } from "@/services/auth/authApi";
 import MediaList from "../../components/common/MediaList";
 import { mockData } from "../sampleData";
 
 export default function Home() {
+  const { data } = useProfileQuery();
+
+  console.log("Profile Data:", data);
+
   return (
     <div>
       {mockData.map((item, index) => {

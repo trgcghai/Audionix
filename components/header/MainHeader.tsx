@@ -1,21 +1,16 @@
 "use client";
 
-import { BadgeCheck, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ModeToggle } from "@/components/ModeToggle";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-} from "@clerk/nextjs";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { dark } from "@clerk/themes";
 import { cn } from "@/libs/utils";
 import LinkLogo from "../common/LinkLogo";
+import Link from "next/link";
+import { useAppSelector } from "@/hooks/redux";
+import UserPopover from "./UserPopover";
 
 export default function MainHeader({
   className = "",
@@ -24,6 +19,8 @@ export default function MainHeader({
 }: MainHeaderProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
+
+  const user = useAppSelector((state) => state.user);
 
   const handleSearch = (e: React.KeyboardEvent) => {
     if (e.key !== "Enter") return;
@@ -35,8 +32,8 @@ export default function MainHeader({
   return (
     <header
       className={cn(
-        "relative top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out backdrop-blur-sm px-4 py-2",
-        className
+        "relative top-0 right-0 left-0 z-50 px-4 py-2 backdrop-blur-sm transition-all duration-300 ease-in-out",
+        className,
       )}
     >
       <div className="">
@@ -46,15 +43,15 @@ export default function MainHeader({
           </div>
 
           {showSearch && (
-            <div className="hidden md:flex relative">
-              <Search className="absolute left-2.5 top-3.5 h-5 w-5 text-gray-400" />
+            <div className="relative hidden md:flex">
+              <Search className="absolute top-3.5 left-2.5 h-5 w-5 text-gray-400" />
               <Input
                 type="search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={handleSearch}
                 placeholder="What do you want to play ?"
-                className="p-6 pl-9 w-[180px] lg:w-[400px] h-9 rounded-full placeholder:text-md"
+                className="placeholder:text-md h-9 w-[180px] rounded-full p-6 pl-9 lg:w-[400px]"
               />
             </div>
           )}
@@ -62,48 +59,19 @@ export default function MainHeader({
           <div className="flex items-center space-x-2">
             <ModeToggle />
 
-            <SignedIn>
-              <UserButton
-                userProfileUrl="/profile"
-                userProfileMode="navigation"
-                appearance={{
-                  baseTheme: dark,
-                  elements: {
-                    userButtonPopoverCard: "!w-1/6",
-                    userPreview: "!p-3",
-                    userButtonPopoverActionButton: "!p-3 !gap-0",
-                    userButtonPopoverCustomItemButton: "!p-3 !gap-0",
-                  },
-                }}
-              >
-                <UserButton.MenuItems>
-                  <UserButton.Link
-                    label="Change to artist"
-                    labelIcon={<BadgeCheck className="w-4 h-4" />}
-                    href="/home"
-                  />
-                </UserButton.MenuItems>
-              </UserButton>
-            </SignedIn>
-
-            <SignedOut>
-              <SignInButton>
-                <Button
-                  variant="outline"
-                  className="rounded-full font-semibold"
-                >
-                  Log In
-                </Button>
-              </SignInButton>
-              <SignUpButton>
-                <Button
-                  variant="default"
-                  className="rounded-full font-semibold"
-                >
-                  Sign Up
-                </Button>
-              </SignUpButton>
-            </SignedOut>
+            {!user.isAuthenticated && (
+              <>
+                <Link href="/auth/login">
+                  <Button variant="outline" className="rounded-full">
+                    Log In
+                  </Button>
+                </Link>
+                <Link href="/auth/register">
+                  <Button className="rounded-full">Register</Button>
+                </Link>
+              </>
+            )}
+            {user.isAuthenticated && <UserPopover user={user} />}
           </div>
         </div>
       </div>

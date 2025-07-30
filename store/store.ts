@@ -13,13 +13,14 @@ import {
 import { setupListeners } from "@reduxjs/toolkit/query";
 import queueDrawerReducer from "@/store/slices/queueDrawerSlice";
 import detailAlbumReducer from "@/store/slices/detailAlbumSlice";
+import userReducer from "@/store/slices/userSlice";
 import { api } from "@/services/api";
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["queueDrawer", "detailAlbum"], // Only persist these slices
+  whitelist: ["queueDrawer", "detailAlbum", "user"], // Only persist these slices
   blacklist: [api.reducerPath],
 };
 
@@ -28,8 +29,9 @@ const persistedReducer = persistReducer(
   combineReducers({
     queueDrawer: queueDrawerReducer,
     detailAlbum: detailAlbumReducer,
+    user: userReducer,
     [api.reducerPath]: api.reducer,
-  })
+  }),
 );
 
 export const store = configureStore({

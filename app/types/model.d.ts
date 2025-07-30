@@ -10,7 +10,7 @@ export type Track = {
       width: number;
       height: number;
       key: string;
-    }
+    },
   ];
   status: TrackStatus;
   album: {
@@ -22,7 +22,7 @@ export type Track = {
         width: number;
         height: number;
         key: string;
-      }
+      },
     ];
   };
   artist: {
@@ -34,7 +34,7 @@ export type Track = {
         width: number;
         height: number;
         key: string;
-      }
+      },
     ];
   };
   genres: string[];
@@ -44,6 +44,18 @@ export type Track = {
     size: number;
     mimetype: string;
   };
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
+export type Account = {
+  _id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: string[];
+  isVerified: boolean;
   createdAt: string;
   updatedAt: string;
   __v: number;

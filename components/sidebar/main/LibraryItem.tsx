@@ -14,7 +14,7 @@ const LibraryItem = ({ data }: LibraryItemProps) => {
 
   return (
     <Link href={`/${data.type}s/${data.id}`}>
-      <div className="flex items-center gap-2 p-2 hover:bg-gray-500/30 rounded-lg cursor-pointer">
+      <div className="flex cursor-pointer items-center gap-2 rounded-lg p-2 hover:bg-gray-500/30">
         <Image
           src={data.images?.[0]?.url || "/audionix_logo_short.png"}
           alt=""
@@ -22,11 +22,11 @@ const LibraryItem = ({ data }: LibraryItemProps) => {
           height={50}
           className={`${
             data.type == "artist" ? "rounded-full" : "rounded-lg"
-          } object-cover aspect-square`}
+          } aspect-square object-cover`}
         />
         <div>
           <p>{data.name}</p>
-          <p className="text-sm text-muted-foregrounds">
+          <p className="text-muted-foreground text-sm">
             <span className="capitalize">{data.type}</span>
             {["album", "playlist"].includes(data.type) &&
               ` - ${getTrackCount()} items`}

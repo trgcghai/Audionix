@@ -36,10 +36,7 @@ const CreatePlaylistPage = () => {
 
       <div>
         <div className="flex items-center justify-start">
-          <Button
-            variant="default"
-            className="rounded-full text-md font-semibold gap-1"
-          >
+          <Button variant="default" className="text-md gap-1 rounded-full">
             <Plus className="h-4 w-4" />
             <span className="ml-1">Create</span>
           </Button>
@@ -47,25 +44,25 @@ const CreatePlaylistPage = () => {
 
         <div className="mt-4 flex items-center justify-start gap-2">
           <Input
-            className="rounded-full w-2/5"
+            className="w-2/5 rounded-full"
             placeholder="Describe the musical experience you want (e.g. 'Jazz for a dinner party')"
           />
           <Input
             type="number"
             placeholder="Number of tracks, default is 20"
             min={1}
-            className="rounded-full w-1/5"
+            className="w-1/5 rounded-full"
           />
 
           <Button
             variant="default"
-            className="rounded-full aspect-square text-md font-semibold h-10 w-10"
+            className="text-md aspect-square h-10 w-10 rounded-full font-semibold"
           >
             <CornerDownLeft className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
-            className="rounded-full aspect-square text-md font-semibold h-10 w-10"
+            className="text-md aspect-square h-10 w-10 rounded-full font-semibold"
           >
             <Repeat className="h-4 w-4" />
           </Button>
@@ -75,7 +72,7 @@ const CreatePlaylistPage = () => {
       <Table className="mt-4">
         <TableHeader>
           <TableRow className="cursor-default">
-            <TableHead className="text-xs font-bold text-gray-400 rounded-tl-lg rounded-bl-lg">
+            <TableHead className="rounded-tl-lg rounded-bl-lg text-xs font-bold text-gray-400">
               #
             </TableHead>
             <TableHead className="text-xs font-bold text-gray-400">
@@ -87,8 +84,8 @@ const CreatePlaylistPage = () => {
             <TableHead className="text-xs font-bold text-gray-400">
               Date added
             </TableHead>
-            <TableHead className="text-xs font-bold text-gray-400 rounded-tr-lg rounded-br-lg">
-              <Clock className="w-4 h-4" />
+            <TableHead className="rounded-tr-lg rounded-br-lg text-xs font-bold text-gray-400">
+              <Clock className="h-4 w-4" />
             </TableHead>
           </TableRow>
         </TableHeader>

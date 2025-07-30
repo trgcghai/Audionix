@@ -10,17 +10,17 @@ const FilterButtons = ({
   onSelect: (filter: string) => void;
   options: string[];
 }) => (
-  <div className="flex gap-2 mt-2">
+  <div className="mt-2 flex gap-2">
     {selected ? (
       <>
         <Button
           variant="outline"
           onClick={() => onSelect("")}
-          className="text-sm font-medium aspect-square rounded-full"
+          className="aspect-square rounded-full text-sm font-medium"
         >
           <XIcon />
         </Button>
-        <Button variant="default" className="text-sm font-medium rounded-full">
+        <Button variant="default" className="rounded-full text-sm font-medium">
           {selected}
         </Button>
       </>
@@ -30,7 +30,7 @@ const FilterButtons = ({
           key={button}
           onClick={() => onSelect(button)}
           variant="outline"
-          className="text-md font-medium rounded-full dark:text-white"
+          className="text-md dark:text-muted-foreground rounded-full font-medium hover:dark:text-white"
         >
           {button}
         </Button>

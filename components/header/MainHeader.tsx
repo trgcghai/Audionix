@@ -11,6 +11,8 @@ import LinkLogo from "../common/LinkLogo";
 import Link from "next/link";
 import { useAppSelector } from "@/hooks/redux";
 import UserPopover from "./UserPopover";
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 export default function MainHeader({
   className = "",
@@ -19,8 +21,8 @@ export default function MainHeader({
 }: MainHeaderProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
-
   const user = useAppSelector((state) => state.user);
+  const { data: session } = useSession();
 
   const handleSearch = (e: React.KeyboardEvent) => {
     if (e.key !== "Enter") return;
@@ -58,7 +60,14 @@ export default function MainHeader({
 
           <div className="flex items-center space-x-2">
             <ModeToggle />
-
+            <p>
+              {session?.user
+                ? `Welcome, ${session?.user?.firstName + " " + session?.user?.lastName}`
+                : "Welcome, Guest"}
+            </p>
+            <Button className="rounded-full" onClick={() => signOut()}>
+              Sign Out
+            </Button>
             {!user.isAuthenticated && (
               <>
                 <Link href="/auth/login">

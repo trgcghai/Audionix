@@ -10,11 +10,9 @@ import {
 const PlayButton = ({ onClick }: { onClick: () => void }) => (
   <div
     onClick={onClick}
-    className="h-14 w-14 aspect-square scale-95 hover:scale-100 rounded-full 
-      transition-all duration-200 bg-primary flex items-center justify-center 
-      cursor-pointer hover:bg-primary/80"
+    className="bg-primary hover:bg-primary/80 flex aspect-square h-14 w-14 scale-95 cursor-pointer items-center justify-center rounded-full transition-all duration-200 hover:scale-100"
   >
-    <Play className="h-7 w-7 ml-1 block" fill="currentColor" />
+    <Play className="ml-1 block h-7 w-7" fill="currentColor" />
   </div>
 );
 
@@ -28,10 +26,10 @@ const ActionMenu = ({
   onAddToPlaylist?: () => void;
 }) => (
   <DropdownMenu>
-    <DropdownMenuTrigger>
+    <DropdownMenuTrigger asChild>
       <Button
         variant="outline"
-        className="rounded-full text-md font-semibold gap-1 h-10 w-10"
+        className="text-md h-10 w-10 gap-1 rounded-full font-semibold"
       >
         <Ellipsis className="h-4 w-4" />
       </Button>
@@ -39,13 +37,13 @@ const ActionMenu = ({
     <DropdownMenuContent align="start" sideOffset={10}>
       {variant === "playlist" && onDelete && (
         <DropdownMenuItem variant="destructive" onClick={onDelete}>
-          <Trash2 className="h-4 w-4 mr-2" />
+          <Trash2 className="mr-2 h-4 w-4" />
           Delete
         </DropdownMenuItem>
       )}
       {variant === "track" && onAddToPlaylist && (
         <DropdownMenuItem variant="default" onClick={onAddToPlaylist}>
-          <PlusCircle className="h-4 w-4 mr-2" />
+          <PlusCircle className="mr-2 h-4 w-4" />
           Add to Playlist
         </DropdownMenuItem>
       )}
@@ -100,10 +98,10 @@ const ControlSection = (props: ControlSectionProps) => {
             variant="outline"
             size="icon"
             onClick={props.onLike}
-            className="h-10 w-10 rounded-full scale-95 hover:scale-100 transition-all duration-200"
+            className="h-10 w-10 scale-95 rounded-full transition-all duration-200 hover:scale-100"
           >
             <Heart
-              className={`h-7 w-7 ml-0.5 ${props.isLiked && "text-primary"}`}
+              className={`ml-0.5 h-7 w-7 ${props.isLiked && "text-primary"}`}
               fill={props.isLiked ? "var(--primary)" : "currentColor"}
             />
           </Button>

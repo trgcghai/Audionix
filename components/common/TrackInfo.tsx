@@ -11,7 +11,7 @@ const TrackInfo = ({
   return (
     <div className="flex items-center gap-3">
       <Image
-        src={track.album.images[0].url}
+        src={track.cover_images[0].url}
         alt={track.name}
         width={50}
         height={50}

@@ -10,12 +10,17 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { mockAlbums, mockArtists, mockPlaylists } from "@/app/sampleData";
+import { mockAlbums, mockArtists } from "@/app/sampleData";
 import CreatePlaylistButton from "./CreatePlaylistButton";
 import FilterButtons from "./FilterButtons";
 import LibraryItem from "./LibraryItem";
+import { Playlist } from "@/app/types/model";
 
-const Sidebar = () => {
+interface SidebarProps {
+  playlists: Playlist[];
+}
+
+const Sidebar = ({ playlists }: SidebarProps) => {
   const filterButtons = ["Playlists", "Artists", "Albums"];
   const [selectedFilter, setSelectedFilter] = useState<string>("");
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -39,40 +44,40 @@ const Sidebar = () => {
             options={filterButtons}
           />
           <div className="relative">
-            <Search className="absolute left-2.5 top-2 h-5 w-5 text-gray-400" />
+            <Search className="absolute top-2 left-2.5 h-5 w-5 text-gray-400" />
             <Input
               type="search"
               placeholder="Search your library"
-              className="pl-8 rounded-full placeholder:text-md"
+              className="placeholder:text-md rounded-full pl-8"
             />
           </div>
         </CardDescription>
       </CardHeader>
       <CardContent className="px-4">
-        <ScrollArea className="overflow-y-auto h-[600px]">
+        <ScrollArea className="h-[600px] overflow-y-auto">
           <div className="flex flex-col gap-2">
             {selectedFilter === "Playlists" &&
-              mockPlaylists.map((playlist) => (
-                <LibraryItem key={playlist.id} data={playlist} />
+              playlists.map((playlist) => (
+                <LibraryItem key={playlist._id} data={playlist} />
               ))}
             {selectedFilter === "Albums" &&
               mockAlbums.map((album) => (
-                <LibraryItem key={album.id} data={album} />
+                <LibraryItem key={album._id} data={album} />
               ))}
             {selectedFilter === "Artists" &&
               mockArtists.map((artist) => (
-                <LibraryItem key={artist.id} data={artist} />
+                <LibraryItem key={artist._id} data={artist} />
               ))}
             {!selectedFilter && (
               <>
-                {mockPlaylists.map((playlist) => (
-                  <LibraryItem key={playlist.id} data={playlist} />
+                {playlists.map((playlist) => (
+                  <LibraryItem key={playlist._id} data={playlist} />
                 ))}
                 {mockAlbums.map((album) => (
-                  <LibraryItem key={album.id} data={album} />
+                  <LibraryItem key={album._id} data={album} />
                 ))}
                 {mockArtists.map((artist) => (
-                  <LibraryItem key={artist.id} data={artist} />
+                  <LibraryItem key={artist._id} data={artist} />
                 ))}
               </>
             )}

@@ -9,56 +9,70 @@ import {
 
 const mockPlaylists: PlaylistItem[] = [
   {
-    id: "pl1",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    _id: "pl1",
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     name: "Chill Hits",
     tracks: { href: "https://api.example.com/playlists/pl1/tracks", total: 0 },
     type: "playlist",
     href: "https://api.example.com/playlists/pl1",
   },
   {
-    id: "pl2",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    _id: "pl2",
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     name: "Rock Classics",
     tracks: { href: "https://api.example.com/playlists/pl2/tracks", total: 30 },
     type: "playlist",
     href: "https://api.example.com/playlists/pl2",
   },
   {
-    id: "pl3",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    _id: "pl3",
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     name: "Pop Party",
     tracks: { href: "https://api.example.com/playlists/pl3/tracks", total: 40 },
     type: "playlist",
     href: "https://api.example.com/playlists/pl3",
   },
   {
-    id: "pl4",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    _id: "pl4",
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     name: "Jazz Vibes",
     tracks: { href: "https://api.example.com/playlists/pl4/tracks", total: 25 },
     type: "playlist",
     href: "https://api.example.com/playlists/pl4",
   },
   {
-    id: "pl5",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    _id: "pl5",
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     name: "Indie Mix",
     tracks: { href: "https://api.example.com/playlists/pl5/tracks", total: 35 },
     type: "playlist",
     href: "https://api.example.com/playlists/pl5",
   },
   {
-    id: "pl6",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    _id: "pl6",
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     name: "Indie Mix",
     tracks: { href: "https://api.example.com/playlists/pl5/tracks", total: 35 },
     type: "playlist",
     href: "https://api.example.com/playlists/pl5",
   },
   {
-    id: "pl7",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    _id: "pl7",
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     name: "Indie Mix",
     tracks: { href: "https://api.example.com/playlists/pl5/tracks", total: 35 },
     type: "playlist",
@@ -68,40 +82,50 @@ const mockPlaylists: PlaylistItem[] = [
 
 const mockAlbums: AlbumItem[] = [
   {
-    id: "al1",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    _id: "al1",
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     name: "Summer Tunes",
     total_tracks: 12,
     type: "album",
     href: "https://api.example.com/albums/al1",
   },
   {
-    id: "al2",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    _id: "al2",
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     name: "Winter Ballads",
     total_tracks: 10,
     type: "album",
     href: "https://api.example.com/albums/al2",
   },
   {
-    id: "al3",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    _id: "al3",
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     name: "City Lights",
     total_tracks: 15,
     type: "album",
     href: "https://api.example.com/albums/al3",
   },
   {
-    id: "al4",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    _id: "al4",
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     name: "Road Trip",
     total_tracks: 8,
     type: "album",
     href: "https://api.example.com/albums/al4",
   },
   {
-    id: "al5",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    _id: "al5",
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     name: "Night Drive",
     total_tracks: 14,
     type: "album",
@@ -111,29 +135,37 @@ const mockAlbums: AlbumItem[] = [
 
 const mockArtists: ArtistItem[] = [
   {
-    id: "ar1",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    _id: "ar1",
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     name: "John Doe",
     type: "artist",
     href: "https://api.example.com/artists/ar1",
   },
   {
-    id: "ar2",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    _id: "ar2",
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     name: "Jane Smith",
     type: "artist",
     href: "https://api.example.com/artists/ar2",
   },
   {
-    id: "ar3",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    _id: "ar3",
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     name: "The Band",
     type: "artist",
     href: "https://api.example.com/artists/ar3",
   },
   {
-    id: "ar4",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    _id: "ar4",
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     name: "Emma Wilson",
     type: "artist",
     href: "https://api.example.com/artists/ar4",
@@ -142,21 +174,27 @@ const mockArtists: ArtistItem[] = [
 
 const mockTracks: TrackItem[] = [
   {
-    id: "track1",
+    _id: "track1",
     name: "Sunset Dreams",
     album: {
-      id: "al1",
-      images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+      _id: "al1",
+      cover_images: [
+        { url: "https://picsum.photos/200", height: 200, width: 200 },
+      ],
       name: "Summer Tunes",
       total_tracks: 12,
       type: "album",
       href: "https://api.example.com/albums/al1",
     },
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     artists: [
       {
-        id: "ar1",
-        images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+        _id: "ar1",
+        cover_images: [
+          { url: "https://picsum.photos/200", height: 200, width: 200 },
+        ],
         name: "John Doe",
         type: "artist",
         href: "https://api.example.com/artists/ar1",
@@ -169,21 +207,27 @@ const mockTracks: TrackItem[] = [
     type: "track",
   },
   {
-    id: "track2",
+    _id: "track2",
     name: "Moonlight Vibes",
     album: {
-      id: "al2",
-      images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+      _id: "al2",
+      cover_images: [
+        { url: "https://picsum.photos/200", height: 200, width: 200 },
+      ],
       name: "Winter Ballads",
       total_tracks: 10,
       type: "album",
       href: "https://api.example.com/albums/al2",
     },
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     artists: [
       {
-        id: "ar2",
-        images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+        _id: "ar2",
+        cover_images: [
+          { url: "https://picsum.photos/200", height: 200, width: 200 },
+        ],
         name: "Jane Smith",
         type: "artist",
         href: "https://api.example.com/artists/ar2",
@@ -196,21 +240,27 @@ const mockTracks: TrackItem[] = [
     type: "track",
   },
   {
-    id: "track3",
+    _id: "track3",
     name: "City Lights",
     album: {
-      id: "al3",
-      images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+      _id: "al3",
+      cover_images: [
+        { url: "https://picsum.photos/200", height: 200, width: 200 },
+      ],
       name: "City Lights",
       total_tracks: 15,
       type: "album",
       href: "https://api.example.com/albums/al3",
     },
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     artists: [
       {
-        id: "ar3",
-        images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+        _id: "ar3",
+        cover_images: [
+          { url: "https://picsum.photos/200", height: 200, width: 200 },
+        ],
         name: "The Band",
         type: "artist",
         href: "https://api.example.com/artists/ar3",
@@ -223,21 +273,27 @@ const mockTracks: TrackItem[] = [
     type: "track",
   },
   {
-    id: "track4",
+    _id: "track4",
     name: "Road Trip Anthem",
     album: {
-      id: "al4",
-      images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+      _id: "al4",
+      cover_images: [
+        { url: "https://picsum.photos/200", height: 200, width: 200 },
+      ],
       name: "Road Trip",
       total_tracks: 8,
       type: "album",
       href: "https://api.example.com/albums/al4",
     },
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     artists: [
       {
-        id: "ar4",
-        images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+        _id: "ar4",
+        cover_images: [
+          { url: "https://picsum.photos/200", height: 200, width: 200 },
+        ],
         name: "Emma Wilson",
         type: "artist",
         href: "https://api.example.com/artists/ar4",
@@ -250,21 +306,27 @@ const mockTracks: TrackItem[] = [
     type: "track",
   },
   {
-    id: "track5",
+    _id: "track5",
     name: "Night Drive",
     album: {
-      id: "al5",
-      images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+      _id: "al5",
+      cover_images: [
+        { url: "https://picsum.photos/200", height: 200, width: 200 },
+      ],
       name: "Night Drive",
       total_tracks: 14,
       type: "album",
       href: "https://api.example.com/albums/al5",
     },
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     artists: [
       {
-        id: "ar5",
-        images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+        _id: "ar5",
+        cover_images: [
+          { url: "https://picsum.photos/200", height: 200, width: 200 },
+        ],
         name: "Cool Vibes",
         type: "artist",
         href: "https://api.example.com/artists/ar5",
@@ -277,21 +339,27 @@ const mockTracks: TrackItem[] = [
     type: "track",
   },
   {
-    id: "track6",
+    _id: "track6",
     name: "Night Drive",
     album: {
-      id: "al5",
-      images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+      _id: "al5",
+      cover_images: [
+        { url: "https://picsum.photos/200", height: 200, width: 200 },
+      ],
       name: "Night Drive",
       total_tracks: 14,
       type: "album",
       href: "https://api.example.com/albums/al5",
     },
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     artists: [
       {
-        id: "ar5",
-        images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+        _id: "ar5",
+        cover_images: [
+          { url: "https://picsum.photos/200", height: 200, width: 200 },
+        ],
         name: "Cool Vibes",
         type: "artist",
         href: "https://api.example.com/artists/ar5",
@@ -307,37 +375,37 @@ const mockTracks: TrackItem[] = [
 
 const mockData = [
   {
-    id: 1,
+    _id: 1,
     title: "Playlist made for you",
     data: mockPlaylists,
   },
   {
-    id: 2,
+    _id: 2,
     title: "You may have interest",
     data: mockTracks,
   },
   {
-    id: 3,
+    _id: 3,
     title: "Latest albums",
     data: mockAlbums,
   },
   {
-    id: 4,
+    _id: 4,
     title: "Popular artists",
     data: mockArtists,
   },
   {
-    id: 5,
+    _id: 5,
     title: "Your playlists",
     data: mockPlaylists,
   },
   {
-    id: 6,
+    _id: 6,
     title: "Your saved albums",
     data: mockAlbums,
   },
   {
-    id: 7,
+    _id: 7,
     title: "Your saved artists",
     data: mockArtists,
   },
@@ -345,7 +413,7 @@ const mockData = [
 
 const mockArtistTracks: ArtistTrackItem[] = [
   {
-    id: "at_01",
+    _id: "at_01",
     name: "Midnight Dreams",
     type: "track",
     href: "/tracks/at_01",
@@ -354,10 +422,14 @@ const mockArtistTracks: ArtistTrackItem[] = [
     track_number: 1,
     uploadTime: "2025-05-10T14:23:45Z",
     status: "active",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     album: {
-      id: "al1",
-      images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+      _id: "al1",
+      cover_images: [
+        { url: "https://picsum.photos/200", height: 200, width: 200 },
+      ],
       name: "Summer Tunes",
       total_tracks: 12,
       type: "album",
@@ -365,7 +437,7 @@ const mockArtistTracks: ArtistTrackItem[] = [
     },
   },
   {
-    id: "at_02",
+    _id: "at_02",
     name: "Ocean Waves",
     type: "track",
     href: "/tracks/at_02",
@@ -374,10 +446,14 @@ const mockArtistTracks: ArtistTrackItem[] = [
     track_number: 3,
     uploadTime: "2025-06-02T09:12:30Z",
     status: "inactive",
-    images: [{ url: "https://picsum.photos/200s", height: 200, width: 200 }],
+    cover_images: [
+      { url: "https://picsum.photos/200s", height: 200, width: 200 },
+    ],
     album: {
-      id: "al2",
-      images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+      _id: "al2",
+      cover_images: [
+        { url: "https://picsum.photos/200", height: 200, width: 200 },
+      ],
       name: "Winter Ballads",
       total_tracks: 10,
       type: "album",
@@ -385,7 +461,7 @@ const mockArtistTracks: ArtistTrackItem[] = [
     },
   },
   {
-    id: "at_03",
+    _id: "at_03",
     name: "Electric Soul",
     type: "track",
     href: "/tracks/at_03",
@@ -394,10 +470,14 @@ const mockArtistTracks: ArtistTrackItem[] = [
     track_number: 2,
     uploadTime: "2025-05-28T16:45:12Z",
     status: "active",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     album: {
-      id: "al3",
-      images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+      _id: "al3",
+      cover_images: [
+        { url: "https://picsum.photos/200", height: 200, width: 200 },
+      ],
       name: "City Lights",
       total_tracks: 15,
       type: "album",
@@ -405,7 +485,7 @@ const mockArtistTracks: ArtistTrackItem[] = [
     },
   },
   {
-    id: "at_04",
+    _id: "at_04",
     name: "Lost Highway",
     type: "track",
     href: "/tracks/at_04",
@@ -414,10 +494,14 @@ const mockArtistTracks: ArtistTrackItem[] = [
     track_number: 5,
     uploadTime: "2025-06-05T10:30:00Z",
     status: "active",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     album: {
-      id: "al4",
-      images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+      _id: "al4",
+      cover_images: [
+        { url: "https://picsum.photos/200", height: 200, width: 200 },
+      ],
       name: "Road Trip",
       total_tracks: 8,
       type: "album",
@@ -425,7 +509,7 @@ const mockArtistTracks: ArtistTrackItem[] = [
     },
   },
   {
-    id: "at_05",
+    _id: "at_05",
     name: "Neon Lights",
     type: "track",
     href: "/tracks/at_05",
@@ -434,10 +518,14 @@ const mockArtistTracks: ArtistTrackItem[] = [
     track_number: 1,
     uploadTime: "2025-06-01T20:15:45Z",
     status: "inactive",
-    images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+    cover_images: [
+      { url: "https://picsum.photos/200", height: 200, width: 200 },
+    ],
     album: {
-      id: "al4",
-      images: [{ url: "https://picsum.photos/200", height: 200, width: 200 }],
+      _id: "al4",
+      cover_images: [
+        { url: "https://picsum.photos/200", height: 200, width: 200 },
+      ],
       name: "Road Trip",
       total_tracks: 8,
       type: "album",
@@ -448,11 +536,11 @@ const mockArtistTracks: ArtistTrackItem[] = [
 
 const mockArtistAlbums: ArtistAlbumItem[] = [
   {
-    id: "alb_001",
+    _id: "alb_001",
     name: "Midnight Memories",
     total_tracks: 3,
     href: "/album/midnight-memories",
-    images: [
+    cover_images: [
       {
         url: "https://picsum.photos/200",
         height: 200,
@@ -461,23 +549,23 @@ const mockArtistAlbums: ArtistAlbumItem[] = [
     ],
     tracks: [
       {
-        images: mockTracks[0].images,
+        cover_images: mockTracks[0].cover_images,
         duration_ms: mockTracks[0].duration_ms,
-        id: mockTracks[0].id,
+        _id: mockTracks[0]._id,
         name: mockTracks[0].name,
         track_number: mockTracks[0].track_number,
       },
       {
-        images: mockTracks[1].images,
+        cover_images: mockTracks[1].cover_images,
         duration_ms: mockTracks[1].duration_ms,
-        id: mockTracks[1].id,
+        _id: mockTracks[1]._id,
         name: mockTracks[1].name,
         track_number: mockTracks[1].track_number,
       },
       {
-        images: mockTracks[2].images,
+        cover_images: mockTracks[2].cover_images,
         duration_ms: mockTracks[2].duration_ms,
-        id: mockTracks[2].id,
+        _id: mockTracks[2]._id,
         name: mockTracks[2].name,
         track_number: mockTracks[2].track_number,
       },
@@ -487,11 +575,11 @@ const mockArtistAlbums: ArtistAlbumItem[] = [
     status: "published",
   },
   {
-    id: "alb_002",
+    _id: "alb_002",
     name: "Acoustic Sessions",
     total_tracks: 4,
     href: "/album/acoustic-sessions",
-    images: [
+    cover_images: [
       {
         url: "https://picsum.photos/200",
         height: 200,
@@ -500,30 +588,30 @@ const mockArtistAlbums: ArtistAlbumItem[] = [
     ],
     tracks: [
       {
-        images: mockTracks[1].images,
+        cover_images: mockTracks[1].cover_images,
         duration_ms: mockTracks[1].duration_ms,
-        id: mockTracks[1].id,
+        _id: mockTracks[1]._id,
         name: mockTracks[1].name,
         track_number: mockTracks[1].track_number,
       },
       {
-        images: mockTracks[2].images,
+        cover_images: mockTracks[2].cover_images,
         duration_ms: mockTracks[2].duration_ms,
-        id: mockTracks[2].id,
+        _id: mockTracks[2]._id,
         name: mockTracks[2].name,
         track_number: mockTracks[2].track_number,
       },
       {
-        images: mockTracks[3].images,
+        cover_images: mockTracks[3].cover_images,
         duration_ms: mockTracks[3].duration_ms,
-        id: mockTracks[3].id,
+        _id: mockTracks[3]._id,
         name: mockTracks[3].name,
         track_number: mockTracks[3].track_number,
       },
       {
-        images: mockTracks[4].images,
+        cover_images: mockTracks[4].cover_images,
         duration_ms: mockTracks[4].duration_ms,
-        id: mockTracks[4].id,
+        _id: mockTracks[4]._id,
         name: mockTracks[4].name,
         track_number: mockTracks[4].track_number,
       },
@@ -533,11 +621,11 @@ const mockArtistAlbums: ArtistAlbumItem[] = [
     status: "published",
   },
   {
-    id: "alb_003",
+    _id: "alb_003",
     name: "Electronic Dreams",
     total_tracks: 5,
     href: "/album/electronic-dreams",
-    images: [
+    cover_images: [
       {
         url: "https://picsum.photos/200",
         height: 200,
@@ -546,107 +634,107 @@ const mockArtistAlbums: ArtistAlbumItem[] = [
     ],
     tracks: [
       {
-        images: mockTracks[0].images,
+        cover_images: mockTracks[0].cover_images,
         duration_ms: mockTracks[0].duration_ms,
-        id: mockTracks[0].id,
+        _id: mockTracks[0]._id,
         name: mockTracks[0].name,
         track_number: mockTracks[0].track_number,
       },
       {
-        images: mockTracks[1].images,
+        cover_images: mockTracks[1].cover_images,
         duration_ms: mockTracks[1].duration_ms,
-        id: mockTracks[1].id,
+        _id: mockTracks[1]._id,
         name: mockTracks[1].name,
         track_number: mockTracks[1].track_number,
       },
       {
-        images: mockTracks[2].images,
+        cover_images: mockTracks[2].cover_images,
         duration_ms: mockTracks[2].duration_ms,
-        id: mockTracks[2].id,
+        _id: mockTracks[2]._id,
         name: mockTracks[2].name,
         track_number: mockTracks[2].track_number,
       },
       {
-        images: mockTracks[3].images,
+        cover_images: mockTracks[3].cover_images,
         duration_ms: mockTracks[3].duration_ms,
-        id: mockTracks[3].id,
+        _id: mockTracks[3]._id,
         name: mockTracks[3].name,
         track_number: mockTracks[3].track_number,
       },
       {
-        images: mockTracks[4].images,
+        cover_images: mockTracks[4].cover_images,
         duration_ms: mockTracks[4].duration_ms,
-        id: mockTracks[4].id,
+        _id: mockTracks[4]._id,
         name: mockTracks[4].name,
         track_number: mockTracks[4].track_number,
       },
       {
-        images: mockTracks[0].images,
+        cover_images: mockTracks[0].cover_images,
         duration_ms: mockTracks[0].duration_ms,
-        id: mockTracks[0].id,
+        _id: mockTracks[0]._id,
         name: mockTracks[0].name,
         track_number: mockTracks[0].track_number,
       },
       {
-        images: mockTracks[1].images,
+        cover_images: mockTracks[1].cover_images,
         duration_ms: mockTracks[1].duration_ms,
-        id: mockTracks[1].id,
+        _id: mockTracks[1]._id,
         name: mockTracks[1].name,
         track_number: mockTracks[1].track_number,
       },
       {
-        images: mockTracks[2].images,
+        cover_images: mockTracks[2].cover_images,
         duration_ms: mockTracks[2].duration_ms,
-        id: mockTracks[2].id,
+        _id: mockTracks[2]._id,
         name: mockTracks[2].name,
         track_number: mockTracks[2].track_number,
       },
       {
-        images: mockTracks[3].images,
+        cover_images: mockTracks[3].cover_images,
         duration_ms: mockTracks[3].duration_ms,
-        id: mockTracks[3].id,
+        _id: mockTracks[3]._id,
         name: mockTracks[3].name,
         track_number: mockTracks[3].track_number,
       },
       {
-        images: mockTracks[4].images,
+        cover_images: mockTracks[4].cover_images,
         duration_ms: mockTracks[4].duration_ms,
-        id: mockTracks[4].id,
+        _id: mockTracks[4]._id,
         name: mockTracks[4].name,
         track_number: mockTracks[4].track_number,
       },
       {
-        images: mockTracks[0].images,
+        cover_images: mockTracks[0].cover_images,
         duration_ms: mockTracks[0].duration_ms,
-        id: mockTracks[0].id,
+        _id: mockTracks[0]._id,
         name: mockTracks[0].name,
         track_number: mockTracks[0].track_number,
       },
       {
-        images: mockTracks[1].images,
+        cover_images: mockTracks[1].cover_images,
         duration_ms: mockTracks[1].duration_ms,
-        id: mockTracks[1].id,
+        _id: mockTracks[1]._id,
         name: mockTracks[1].name,
         track_number: mockTracks[1].track_number,
       },
       {
-        images: mockTracks[2].images,
+        cover_images: mockTracks[2].cover_images,
         duration_ms: mockTracks[2].duration_ms,
-        id: mockTracks[2].id,
+        _id: mockTracks[2]._id,
         name: mockTracks[2].name,
         track_number: mockTracks[2].track_number,
       },
       {
-        images: mockTracks[3].images,
+        cover_images: mockTracks[3].cover_images,
         duration_ms: mockTracks[3].duration_ms,
-        id: mockTracks[3].id,
+        _id: mockTracks[3]._id,
         name: mockTracks[3].name,
         track_number: mockTracks[3].track_number,
       },
       {
-        images: mockTracks[4].images,
+        cover_images: mockTracks[4].cover_images,
         duration_ms: mockTracks[4].duration_ms,
-        id: mockTracks[4].id,
+        _id: mockTracks[4]._id,
         name: mockTracks[4].name,
         track_number: mockTracks[4].track_number,
       },
@@ -656,11 +744,11 @@ const mockArtistAlbums: ArtistAlbumItem[] = [
     status: "hidden",
   },
   {
-    id: "alb_004",
+    _id: "alb_004",
     name: "Summer Vibes",
     total_tracks: 3,
     href: "/album/summer-vibes",
-    images: [
+    cover_images: [
       {
         url: "https://picsum.photos/200",
         height: 200,
@@ -669,23 +757,23 @@ const mockArtistAlbums: ArtistAlbumItem[] = [
     ],
     tracks: [
       {
-        images: mockTracks[2].images,
+        cover_images: mockTracks[2].cover_images,
         duration_ms: mockTracks[2].duration_ms,
-        id: mockTracks[2].id,
+        _id: mockTracks[2]._id,
         name: mockTracks[2].name,
         track_number: mockTracks[2].track_number,
       },
       {
-        images: mockTracks[3].images,
+        cover_images: mockTracks[3].cover_images,
         duration_ms: mockTracks[3].duration_ms,
-        id: mockTracks[3].id,
+        _id: mockTracks[3]._id,
         name: mockTracks[3].name,
         track_number: mockTracks[3].track_number,
       },
       {
-        images: mockTracks[4].images,
+        cover_images: mockTracks[4].cover_images,
         duration_ms: mockTracks[4].duration_ms,
-        id: mockTracks[4].id,
+        _id: mockTracks[4]._id,
         name: mockTracks[4].name,
         track_number: mockTracks[4].track_number,
       },
@@ -695,11 +783,11 @@ const mockArtistAlbums: ArtistAlbumItem[] = [
     status: "published",
   },
   {
-    id: "alb_005",
+    _id: "alb_005",
     name: "Unreleased Collection",
     total_tracks: 4,
     href: "/album/unreleased-collection",
-    images: [
+    cover_images: [
       {
         url: "https://picsum.photos/200",
         height: 200,
@@ -708,30 +796,30 @@ const mockArtistAlbums: ArtistAlbumItem[] = [
     ],
     tracks: [
       {
-        images: mockTracks[5].images,
+        cover_images: mockTracks[5].cover_images,
         duration_ms: mockTracks[5].duration_ms,
-        id: mockTracks[5].id,
+        _id: mockTracks[5]._id,
         name: mockTracks[5].name,
         track_number: mockTracks[5].track_number,
       },
       {
-        images: mockTracks[0].images,
+        cover_images: mockTracks[0].cover_images,
         duration_ms: mockTracks[0].duration_ms,
-        id: mockTracks[0].id,
+        _id: mockTracks[0]._id,
         name: mockTracks[0].name,
         track_number: mockTracks[0].track_number,
       },
       {
-        images: mockTracks[1].images,
+        cover_images: mockTracks[1].cover_images,
         duration_ms: mockTracks[1].duration_ms,
-        id: mockTracks[1].id,
+        _id: mockTracks[1]._id,
         name: mockTracks[1].name,
         track_number: mockTracks[1].track_number,
       },
       {
-        images: mockTracks[2].images,
+        cover_images: mockTracks[2].cover_images,
         duration_ms: mockTracks[2].duration_ms,
-        id: mockTracks[2].id,
+        _id: mockTracks[2]._id,
         name: mockTracks[2].name,
         track_number: mockTracks[2].track_number,
       },

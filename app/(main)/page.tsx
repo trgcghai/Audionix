@@ -8,7 +8,7 @@ export default function Home() {
       {mockData.map((item, index) => {
         return (
           <MediaList
-            key={item.id}
+            key={item._id}
             title={item.title}
             data={item.data}
             className={index == 0 ? "mt-2" : "mt-8"}

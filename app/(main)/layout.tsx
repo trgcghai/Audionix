@@ -8,6 +8,9 @@ import { useAppSelector } from "@/hooks/redux";
 import QueueDrawer from "@/components/common/QueueDrawer";
 import Sidebar from "@/components/sidebar/main/Sidebar";
 import { cn } from "@/libs/utils";
+import { useGetMyPlaylistsQuery } from "@/services/playlists/playlistApi";
+import LoaderSpin from "@/components/common/LoaderSpin";
+import ErrorMessage from "@/components/common/ErrorMessage";
 
 const Layout = ({
   children,
@@ -15,6 +18,15 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   const { isOpen: isDrawerOpen } = useAppSelector((state) => state.queueDrawer);
+  const { data, isLoading, isError } = useGetMyPlaylistsQuery({});
+
+  if (isLoading) {
+    return <LoaderSpin />;
+  }
+
+  if (isError) {
+    return;
+  }
 
   return (
     <div className="grid h-screen grid-cols-12 grid-rows-12">
@@ -22,7 +34,9 @@ const Layout = ({
         <MainHeader />
       </div>
       <div className="col-span-3 row-span-11 -mt-5 p-4">
-        <Sidebar />
+        {isLoading && <LoaderSpin />}
+        {isError && <ErrorMessage message="Failed to load your playlists" />}
+        {data && <Sidebar playlists={data?.data.items} />}
       </div>
       <div
         className={cn(

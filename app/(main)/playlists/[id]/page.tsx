@@ -1,7 +1,7 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
 import { Dot } from "lucide-react";
-import { mockPlaylists, mockTracks } from "@/app/sampleData";
+import { mockTracks } from "@/app/sampleData";
 import HeroSection from "@/components/common/HeroSection";
 import { useEffect, useMemo, useState } from "react";
 import { TrackItem } from "@/app/types/component";
@@ -12,13 +12,15 @@ import SearchResult from "@/app/(main)/playlists/components/SearchResult";
 import RecommendationsTracks from "@/app/(main)/playlists/components/RecommendationsTracks";
 import TableTrack from "@/components/common/SimpleTrackTable";
 import ControlSection from "@/components/common/ControlSection";
+import { useGetPlaylistByIdQuery } from "@/services/playlists/playlistApi";
+import LoaderSpin from "@/components/common/LoaderSpin";
+import ErrorMessage from "@/components/common/ErrorMessage";
 
 const DetailPlaylistPage = () => {
   const { id } = useParams<{ id: string }>();
-  const playlist = useMemo(
-    () => mockPlaylists.find((item) => item.id === id),
-    [id]
-  );
+  const { data, isLoading, isError } = useGetPlaylistByIdQuery(id);
+  const playlist = useMemo(() => data?.data.item, [data]);
+  const tracksLength = useMemo(() => playlist?.tracks.length || 0, [playlist]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<TrackItem[]>([]);
 
@@ -31,11 +33,11 @@ const DetailPlaylistPage = () => {
         }
 
         const results = mockTracks.filter((track) =>
-          track.name.toLowerCase().includes(term.toLowerCase())
+          track.name.toLowerCase().includes(term.toLowerCase()),
         );
         setSearchResults(results);
       }, 500),
-    []
+    [],
   );
 
   useEffect(() => {
@@ -44,6 +46,22 @@ const DetailPlaylistPage = () => {
       debouncedSearch.cancel();
     };
   }, [debouncedSearch, searchTerm]);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center">
+        <LoaderSpin />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex items-center justify-center">
+        <ErrorMessage message="Failed to load playlist data" />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -54,7 +72,7 @@ const DetailPlaylistPage = () => {
             <>
               <p>Playlist&apos;s creator</p>
               <Dot />
-              <p>{playlist.tracks.total} tracks</p>
+              <p>{data?.data.item.tracks.length} tracks</p>
             </>
           }
         />
@@ -63,7 +81,7 @@ const DetailPlaylistPage = () => {
       <Separator className="my-4" />
 
       {/* display play button if playlist has tracks */}
-      {playlist?.tracks.total !== 0 && (
+      {tracksLength !== 0 && (
         <ControlSection
           onPlay={() => console.log("Play playlist")}
           onDelete={() => console.log("Delete playlist")}
@@ -72,7 +90,7 @@ const DetailPlaylistPage = () => {
       )}
 
       {/* display search bar to add tracks to playlist */}
-      {playlist?.tracks.total === 0 && (
+      {tracksLength === 0 && (
         <SearchTrack searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       )}
 
@@ -82,12 +100,10 @@ const DetailPlaylistPage = () => {
       )}
 
       {/* display recommendations to add to playlist */}
-      {playlist?.tracks.total === 0 && (
-        <RecommendationsTracks mockTracks={mockTracks} />
-      )}
+      {tracksLength === 0 && <RecommendationsTracks mockTracks={mockTracks} />}
 
       {/* display tracks in playlist if playlist already have some */}
-      {playlist?.tracks.total !== 0 && (
+      {tracksLength !== 0 && (
         <TableTrack tracks={[...mockTracks, ...mockTracks]} />
       )}
     </div>

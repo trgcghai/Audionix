@@ -10,7 +10,7 @@ const RecommendationsTracks = ({ mockTracks }: { mockTracks: TrackItem[] }) => {
         <TableBody className="">
           {mockTracks.map((track, index) => (
             <TrackRow
-              key={track.id + index}
+              key={track._id + index}
               track={track}
               index={index + 1}
               variant="addToPlaylist"

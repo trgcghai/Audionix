@@ -6,7 +6,7 @@ import {
   PlaylistItem,
   TrackItem,
 } from "../../app/types/component";
-import { ReactNode } from "react";
+import { ReactNode, useMemo } from "react";
 import {
   Dialog,
   DialogContent,
@@ -16,36 +16,43 @@ import {
 } from "@/components/ui/dialog";
 import EditPlaylistForm from "../form/EditPlaylistForm";
 import { ImageIcon, Music } from "lucide-react";
+import { Playlist } from "@/app/types/model";
 
 interface HeroSectionProps {
-  data: AlbumItem | ArtistItem | PlaylistItem | TrackItem;
+  data: AlbumItem | ArtistItem | Playlist | TrackItem;
   extraInfo?: ReactNode;
 }
 
 const HeroSection = ({ data, extraInfo }: HeroSectionProps) => {
+  const title = useMemo(() => {
+    if ("name" in data) return data.name;
+    if ("title" in data) return data.title;
+    return "";
+  }, [data]);
+
   if (data.type !== "playlist") {
     return (
-      <div className="flex gap-4 items-end cursor-default">
+      <div className="flex cursor-default items-end gap-4">
         {data ? (
           <Image
-            src={data?.images[0].url}
+            src={data?.cover_images[0].url}
             alt=""
             width={220}
             height={220}
             className={data.type === "artist" ? "rounded-full" : "rounded-lg"}
           />
         ) : (
-          <div className="w-[220px] h-[220px] bg-muted rounded-lg flex items-center justify-center">
+          <div className="bg-muted flex h-[220px] w-[220px] items-center justify-center rounded-lg">
             <ImageIcon />
           </div>
         )}
-        <div className="flex flex-col gap-6 justify-end">
+        <div className="flex flex-col justify-end gap-6">
           <p className="text-foreground text-sm font-semibold capitalize">
             {data.type || ""}
           </p>
-          <p className="text-7xl font-bold capitalize">{data.name || ""}</p>
+          <p className="text-7xl font-bold capitalize">{title}</p>
           {extraInfo && (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <div className="text-muted-foreground flex items-center gap-2 text-sm">
               {extraInfo}
             </div>
           )}
@@ -54,30 +61,32 @@ const HeroSection = ({ data, extraInfo }: HeroSectionProps) => {
     );
   }
 
+  console.log("data", data);
+
   return (
     <Dialog>
       <DialogTrigger className="block">
-        <div className="flex gap-4 items-end cursor-pointer">
-          {data?.images[0] ? (
+        <div className="flex cursor-pointer items-end gap-4">
+          {data.cover_images.length != 0 ? (
             <Image
-              src={data?.images[0].url}
+              src={data?.cover_images[0].url}
               alt=""
               width={220}
               height={220}
               className={"rounded-lg"}
             />
           ) : (
-            <div className="w-[220px] h-[220px] bg-muted rounded-lg flex items-center justify-center">
+            <div className="bg-muted flex h-[220px] w-[220px] items-center justify-center rounded-lg">
               <Music className="h-20 w-20" />
             </div>
           )}
-          <div className="flex flex-col gap-6 justify-end items-start">
+          <div className="flex flex-col items-start justify-end gap-6">
             <p className="text-foreground text-sm font-semibold capitalize">
               {data.type}
             </p>
-            <p className="text-7xl font-bold capitalize">{data.name}</p>
+            <p className="text-7xl font-bold capitalize">{title}</p>
             {extraInfo && (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="text-muted-foreground flex items-center gap-2 text-sm">
                 {extraInfo}
               </div>
             )}

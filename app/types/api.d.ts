@@ -18,7 +18,7 @@ export type ApiErrorResponse = {
 };
 
 export type PaginatedResponse<T> = {
-  result: T[];
+  items: T[];
   totalItems: number;
   totalPages: number;
   currentPage: number;

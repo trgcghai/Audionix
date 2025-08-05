@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useCreatePlaylistMutation } from "@/services/playlists/playlistApi";
 
 const iconVariants = {
   rest: { rotate: 0 },
@@ -48,14 +49,15 @@ const CreatePlaylistButton = ({
   onOpenChange: (open: boolean) => void;
 }) => {
   const router = useRouter();
+  const [createPlaylist] = useCreatePlaylistMutation();
   const optionItems: OptionItem[] = [
     {
       icon: Music,
       title: "New Playlist",
       description: "Create a new playlist with tracks",
       type: "playlist",
-      onClick: () => {
-        console.log("Create new playlist clicked");
+      onClick: async () => {
+        await createPlaylist({}).unwrap();
       },
     },
     {

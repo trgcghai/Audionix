@@ -18,7 +18,7 @@ const RenderHeaderByVariant = ({
     return (
       <TableHeader>
         <TableRow className="cursor-default">
-          <TableHead className="text-xs font-bold text-gray-400 rounded-tl-lg rounded-bl-lg">
+          <TableHead className="rounded-tl-lg rounded-bl-lg text-xs font-bold text-gray-400">
             #
           </TableHead>
           <TableHead className="text-xs font-bold text-gray-400">
@@ -33,8 +33,8 @@ const RenderHeaderByVariant = ({
           <TableHead className="text-xs font-bold text-gray-400">
             Status
           </TableHead>
-          <TableHead className="text-xs font-bold text-gray-400 rounded-tr-lg rounded-br-lg">
-            <Clock className="w-4 h-4" />
+          <TableHead className="rounded-tr-lg rounded-br-lg text-xs font-bold text-gray-400">
+            <Clock className="h-4 w-4" />
           </TableHead>
         </TableRow>
       </TableHeader>
@@ -45,7 +45,7 @@ const RenderHeaderByVariant = ({
     return (
       <TableHeader>
         <TableRow className="cursor-default">
-          <TableHead className="text-xs font-bold text-gray-400 rounded-tl-lg rounded-bl-lg">
+          <TableHead className="rounded-tl-lg rounded-bl-lg text-xs font-bold text-gray-400">
             #
           </TableHead>
           <TableHead className="text-xs font-bold text-gray-400">
@@ -54,7 +54,7 @@ const RenderHeaderByVariant = ({
           <TableHead className="text-xs font-bold text-gray-400">
             Album
           </TableHead>
-          <TableHead className="text-xs font-bold text-gray-400 rounded-tr-lg rounded-br-lg"></TableHead>
+          <TableHead className="rounded-tr-lg rounded-br-lg text-xs font-bold text-gray-400"></TableHead>
         </TableRow>
       </TableHeader>
     );
@@ -63,7 +63,7 @@ const RenderHeaderByVariant = ({
   return (
     <TableHeader>
       <TableRow className="cursor-default">
-        <TableHead className="text-xs font-bold text-gray-400 rounded-tl-lg rounded-bl-lg">
+        <TableHead className="rounded-tl-lg rounded-bl-lg text-xs font-bold text-gray-400">
           #
         </TableHead>
         <TableHead className="text-xs font-bold text-gray-400">Title</TableHead>
@@ -71,8 +71,8 @@ const RenderHeaderByVariant = ({
         <TableHead className="text-xs font-bold text-gray-400">
           Date added
         </TableHead>
-        <TableHead className="text-xs font-bold text-gray-400 rounded-tr-lg rounded-br-lg">
-          <Clock className="w-4 h-4" />
+        <TableHead className="rounded-tr-lg rounded-br-lg text-xs font-bold text-gray-400">
+          <Clock className="h-4 w-4" />
         </TableHead>
       </TableRow>
     </TableHeader>
@@ -90,7 +90,7 @@ const SimpleTrackTable = ({
       <TableBody className="">
         {tracks.map((track, index) => (
           <TrackRow
-            key={track.id + index}
+            key={track._id + index}
             track={track}
             index={index + 1}
             variant={variant}

@@ -9,60 +9,60 @@ import Link from "next/link";
 
 const PlaylistCard = ({ playlist }: { playlist: PlaylistItem }) => {
   return (
-    <div className="p-3 hover:bg-gray-500/30 rounded-lg cursor-pointer">
+    <div className="cursor-pointer rounded-lg p-3 hover:bg-gray-500/30">
       <Image
-        src={playlist.images[0].url || "/audionix_logo_short.png"}
+        src={playlist.cover_images[0].url || "/audionix_logo_short.png"}
         alt=""
         width={200}
         height={200}
-        className="rounded-lg object-cover aspect-square"
+        className="aspect-square rounded-lg object-cover"
       />
-      <p className="text-md capitalize dark:text-white mt-2">{playlist.name}</p>
+      <p className="text-md mt-2 capitalize dark:text-white">{playlist.name}</p>
     </div>
   );
 };
 
 const AlbumCard = ({ album }: { album: AlbumItem }) => {
   return (
-    <div className="p-3 hover:bg-gray-500/30 rounded-lg cursor-pointer">
+    <div className="cursor-pointer rounded-lg p-3 hover:bg-gray-500/30">
       <Image
-        src={album.images[0].url || "/audionix_logo_short.png"}
+        src={album.cover_images[0].url || "/audionix_logo_short.png"}
         alt=""
         width={200}
         height={200}
-        className="rounded-lg object-cover aspect-square"
+        className="aspect-square rounded-lg object-cover"
       />
-      <p className="text-md capitalize dark:text-white mt-2">{album.name}</p>
+      <p className="text-md mt-2 capitalize dark:text-white">{album.name}</p>
     </div>
   );
 };
 
 const TrackCard = ({ track }: { track: TrackItem }) => {
   return (
-    <div className="p-3 hover:bg-gray-500/30 rounded-lg cursor-pointer">
+    <div className="cursor-pointer rounded-lg p-3 hover:bg-gray-500/30">
       <Image
-        src={track.album.images[0].url || "/audionix_logo_short.png"}
+        src={track.cover_images[0].url || "/audionix_logo_short.png"}
         alt=""
         width={200}
         height={200}
-        className="rounded-lg object-cover aspect-square"
+        className="aspect-square rounded-lg object-cover"
       />
-      <p className="text-md capitalize dark:text-white mt-2">{track.name}</p>
+      <p className="text-md mt-2 capitalize dark:text-white">{track.name}</p>
     </div>
   );
 };
 
 const ArtistCard = ({ artist }: { artist: ArtistItem }) => {
   return (
-    <div className="p-3 hover:bg-gray-500/30 rounded-lg cursor-pointer">
+    <div className="cursor-pointer rounded-lg p-3 hover:bg-gray-500/30">
       <Image
-        src={artist.images[0].url || "/audionix_logo_short.png"}
+        src={artist.cover_images[0].url || "/audionix_logo_short.png"}
         alt=""
         width={200}
         height={200}
-        className="rounded-full object-cover aspect-square"
+        className="aspect-square rounded-full object-cover"
       />
-      <p className="text-md capitalize dark:text-white mt-2">{artist.name}</p>
+      <p className="text-md mt-2 capitalize dark:text-white">{artist.name}</p>
     </div>
   );
 };
@@ -78,31 +78,31 @@ const MediaList = ({
 }): React.ReactNode => {
   return (
     <div className={className}>
-      <p className="px-3 text-xl dark:text-white font-semibold">{title}</p>
-      <div className="grid grid-cols-7 mt-1">
+      <p className="px-3 text-xl font-semibold dark:text-white">{title}</p>
+      <div className="mt-1 grid grid-cols-7">
         {data.map((item, index) => {
           if (item.type === "playlist") {
             return (
-              <Link href={`/playlists/${item.id}`} key={item.id + index}>
-                <PlaylistCard key={item.id} playlist={item as PlaylistItem} />
+              <Link href={`/playlists/${item._id}`} key={item._id + index}>
+                <PlaylistCard key={item._id} playlist={item as PlaylistItem} />
               </Link>
             );
           } else if (item.type === "album") {
             return (
-              <Link href={`/albums/${item.id}`} key={item.id + index}>
-                <AlbumCard key={item.id} album={item as AlbumItem} />
+              <Link href={`/albums/${item._id}`} key={item._id + index}>
+                <AlbumCard key={item._id} album={item as AlbumItem} />
               </Link>
             );
           } else if (item.type === "artist") {
             return (
-              <Link href={`/artists/${item.id}`} key={item.id + index}>
-                <ArtistCard key={item.id} artist={item as ArtistItem} />
+              <Link href={`/artists/${item._id}`} key={item._id + index}>
+                <ArtistCard key={item._id} artist={item as ArtistItem} />
               </Link>
             );
           } else if (item.type === "track") {
             return (
-              <Link href={`/tracks/${item.id}`} key={item.id + index}>
-                <TrackCard key={item.id} track={item as TrackItem} />
+              <Link href={`/tracks/${item._id}`} key={item._id + index}>
+                <TrackCard key={item._id} track={item as TrackItem} />
               </Link>
             );
           }

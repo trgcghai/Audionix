@@ -1,12 +1,8 @@
 import { ARTIST_ALBUM_STATUS_OPTIONS, ArtistTrackStatus } from "../constant";
 
-export interface LibraryItemProps {
-  data: PlaylistItem | AlbumItem | ArtistItem;
-}
-
 export interface PlaylistItem {
-  id: string;
-  images: {
+  _id: string;
+  cover_images: {
     url: string;
     height: number;
     width: number;
@@ -24,8 +20,8 @@ export interface PlaylistItem {
 export interface AlbumItem {
   total_tracks: number;
   href: string;
-  id: string;
-  images: {
+  _id: string;
+  cover_images: {
     url: string;
     height: number;
     width: number;
@@ -36,8 +32,8 @@ export interface AlbumItem {
 
 export interface ArtistItem {
   href: string;
-  id: string;
-  images: {
+  _id: string;
+  cover_images: {
     url: string;
     height: number;
     width: number;
@@ -49,7 +45,7 @@ export interface ArtistItem {
 export interface TrackItem {
   album: AlbumItem;
   artists: ArtistItem[];
-  images: {
+  cover_images: {
     url: string;
     height: number;
     width: number;
@@ -57,7 +53,7 @@ export interface TrackItem {
   duration_ms: number;
   explicit: boolean;
   href: string;
-  id: string;
+  _id: string;
   name: string;
   track_number: number;
   type: string;
@@ -65,7 +61,7 @@ export interface TrackItem {
 
 export interface ArtistTrackItem {
   album: AlbumItem;
-  images: {
+  cover_images: {
     url: string;
     height: number;
     width: number;
@@ -73,7 +69,7 @@ export interface ArtistTrackItem {
   duration_ms: number;
   explicit: boolean;
   href: string;
-  id: string;
+  _id: string;
   name: string;
   track_number: number;
   type: string;
@@ -82,13 +78,13 @@ export interface ArtistTrackItem {
 }
 
 export interface TrackInArtistAlbum {
-  images: {
+  cover_images: {
     url: string;
     height: number;
     width: number;
   }[];
   duration_ms: number;
-  id: string;
+  _id: string;
   name: string;
   track_number: number;
 }
@@ -96,8 +92,8 @@ export interface TrackInArtistAlbum {
 export interface ArtistAlbumItem {
   total_tracks: number;
   href: string;
-  id: string;
-  images: {
+  _id: string;
+  cover_images: {
     url: string;
     height: number;
     width: number;

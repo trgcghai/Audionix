@@ -12,14 +12,14 @@ const RenderByVariant = ({
 }: TrackRowProps) => {
   if (variant === "addToPlaylist") {
     return (
-      <TableRow className="border-b-0 rounded-lg">
+      <TableRow className="rounded-lg border-b-0">
         <TableCell className="w-6 rounded-tl-lg rounded-bl-lg">
           <p className="text-sm text-gray-500">{index}</p>
         </TableCell>
         <TableCell>
           <div className="flex items-center gap-2">
             <Image
-              src={track.album.images[0].url}
+              src={track.cover_images[0].url}
               alt={track.name}
               width={40}
               height={40}
@@ -37,7 +37,7 @@ const RenderByVariant = ({
         <TableCell className="rounded-tr-lg rounded-br-lg text-end">
           <Button
             variant="outline"
-            className="text-sm font-medium h-8 rounded-full"
+            className="h-8 rounded-full text-sm font-medium"
             onClick={(e) => {
               e.stopPropagation();
               console.log(`Adding ${track.name} to playlist`);
@@ -51,14 +51,14 @@ const RenderByVariant = ({
   }
 
   return (
-    <TableRow className="border-b-0 rounded-lg">
+    <TableRow className="rounded-lg border-b-0">
       <TableCell className="w-6 rounded-tl-lg rounded-bl-lg">
         <p className="text-sm text-gray-500">{index}</p>
       </TableCell>
       <TableCell>
         <div className="flex items-center gap-2">
           <Image
-            src={track.album.images[0].url}
+            src={track.cover_images[0].url}
             alt={track.name}
             width={40}
             height={40}

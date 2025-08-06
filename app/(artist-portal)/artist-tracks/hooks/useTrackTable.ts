@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -19,6 +19,9 @@ export const useTrackTable = <TData, TValue>({
   columns,
   data,
 }: UseTrackTableProps<TData, TValue>) => {
+  const [selectedRowsCount, setSelectedRowsCount] = useState(0);
+  const [hasSelectedRows, setHasSelectedRows] = useState(false);
+  const [selectedTracks, setSelectedTracks] = useState<TData[]>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
@@ -34,11 +37,12 @@ export const useTrackTable = <TData, TValue>({
     },
   });
 
-  const selectedRowsCount = table.getSelectedRowModel().rows.length;
-  const hasSelectedRows = selectedRowsCount > 0;
-  const selectedTracks = table
-    .getSelectedRowModel()
-    .rows.map((row) => row.original);
+  useEffect(() => {
+    const selectedRows = table.getSelectedRowModel().rows;
+    setSelectedRowsCount(selectedRows.length);
+    setHasSelectedRows(selectedRows.length > 0);
+    setSelectedTracks(selectedRows.map((row) => row.original));
+  }, [table]);
 
   return {
     table,

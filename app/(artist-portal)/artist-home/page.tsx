@@ -2,11 +2,18 @@
 
 import LoaderSpin from "@/components/common/LoaderSpin";
 import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
 
 const ArtistPortalPage = () => {
   const router = useRouter();
+  const hasRedirected = useRef(false); // đảm bảo chỉ redirect 1 lần
 
-  router.push("/artist-tracks");
+  useEffect(() => {
+    if (!hasRedirected.current) {
+      hasRedirected.current = true;
+      router.push("/artist-tracks");
+    }
+  }, [router]);
 
   return <LoaderSpin />;
 };

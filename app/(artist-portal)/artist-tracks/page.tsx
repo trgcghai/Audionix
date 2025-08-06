@@ -6,11 +6,10 @@ import useTrackManagement from "@/services/tracks/useTrackManagement";
 
 const ArtistTrackPage = () => {
   const { tracks } = useTrackManagement();
-  console.log(tracks);
 
   return (
     <ScrollArea className="px-3">
-      <p className="text-xl font-bold mb-4">Your tracks</p>
+      <p className="mb-4 text-xl font-bold">Your tracks</p>
 
       <TrackTable columns={Columns} data={tracks} />
     </ScrollArea>

@@ -5,7 +5,6 @@ import HeroSection from "@/components/common/HeroSection";
 import { useEffect, useMemo, useState } from "react";
 import { TrackItem } from "@/app/types/component";
 import { useParams, useRouter } from "next/navigation";
-import debounce from "lodash.debounce";
 import SearchTrack from "@/app/(main)/playlists/components/SearchTrack";
 import SearchResult from "@/app/(main)/playlists/components/SearchResult";
 import RecommendationsTracks from "@/app/(main)/playlists/components/RecommendationsTracks";
@@ -17,6 +16,7 @@ import {
 } from "@/services/playlists/playlistApi";
 import LoaderSpin from "@/components/common/LoaderSpin";
 import ErrorMessage from "@/components/common/ErrorMessage";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const DetailPlaylistPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -27,6 +27,8 @@ const DetailPlaylistPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<TrackItem[]>([]);
   const router = useRouter();
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const handleDeletePlaylist = async () => {
     if (!id) return;
@@ -39,28 +41,17 @@ const DetailPlaylistPage = () => {
     }
   };
 
-  const debouncedSearch = useMemo(
-    () =>
-      debounce((term: string) => {
-        if (term.trim() === "") {
-          setSearchResults([]);
-          return;
-        }
-
-        const results = mockTracks.filter((track) =>
-          track.name.toLowerCase().includes(term.toLowerCase()),
-        );
-        setSearchResults(results);
-      }, 500),
-    [],
-  );
-
   useEffect(() => {
-    debouncedSearch(searchTerm);
-    return () => {
-      debouncedSearch.cancel();
-    };
-  }, [debouncedSearch, searchTerm]);
+    if (debouncedSearchTerm.trim() === "") {
+      setSearchResults([]);
+      return;
+    }
+
+    const results = mockTracks.filter((track) =>
+      track.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()),
+    );
+    setSearchResults(results);
+  }, [debouncedSearchTerm]);
 
   if (isLoading) {
     return (
@@ -84,15 +75,13 @@ const DetailPlaylistPage = () => {
 
       <Separator className="my-4" />
 
-      {/* display play button if playlist has tracks */}
+      {/* display play button and control section such as delete,... */}
       <ControlSection
         playable={tracksLength !== 0}
         onPlay={() => console.log("Play playlist")}
         onDelete={handleDeletePlaylist}
         variant="playlist"
       />
-      {/* {tracksLength !== 0 && (
-      )} */}
 
       {/* display search bar to add tracks to playlist */}
       {tracksLength === 0 && (

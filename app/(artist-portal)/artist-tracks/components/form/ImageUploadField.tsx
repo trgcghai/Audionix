@@ -65,7 +65,7 @@ export const ImageUploadField = ({
       <FormControl>
         <div
           {...dropzone.getRootProps()}
-          className="relative w-full h-full rounded-lg flex flex-col items-center justify-center cursor-pointer border border-dashed p-4"
+          className="relative flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed p-4"
         >
           <Input
             type="file"
@@ -83,23 +83,23 @@ export const ImageUploadField = ({
                   alt="Preview"
                   width={300}
                   height={300}
-                  className="rounded-lg object-cover"
+                  className="aspect-square rounded-lg object-cover"
                   onError={handlePreviewError}
                 />
               </div>
-              <p className="text-xs text-center text-muted-foreground">
+              <p className="text-muted-foreground text-center text-xs">
                 Drop a new file to replace
               </p>
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center w-full h-full p-4 text-center">
-              <ImageIcon className="h-10 w-10 text-muted-foreground mb-2" />
-              <p className="text-sm text-muted-foreground">
+            <div className="flex h-full w-full flex-col items-center justify-center p-4 text-center">
+              <ImageIcon className="text-muted-foreground mb-2 h-10 w-10" />
+              <p className="text-muted-foreground text-sm">
                 {error
                   ? "Image failed to load. Please try again."
                   : "Drop image here or click to upload"}
               </p>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-muted-foreground mt-1 text-xs">
                 {getAcceptedFileExtensions(COVER_IMAGE_ACCEPT_TYPES)} accepted
               </p>
             </div>

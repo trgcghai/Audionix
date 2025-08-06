@@ -38,6 +38,24 @@ const playlistApi = api.injectEndpoints({
         }),
         invalidatesTags: ["Playlists"],
       }),
+      updatePlaylist: builder.mutation<
+        ApiResponse<Playlist>,
+        { id: string; formData: FormData }
+      >({
+        query: ({ id, formData }) => ({
+          url: `/playlists/${id}`,
+          method: "PUT",
+          data: formData,
+        }),
+        invalidatesTags: ["Playlists"],
+      }),
+      deletePlaylist: builder.mutation({
+        query: (id) => ({
+          url: `/playlists/${id}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["Playlists"],
+      }),
     };
   },
 });
@@ -46,4 +64,6 @@ export const {
   useGetMyPlaylistsQuery,
   useCreatePlaylistMutation,
   useGetPlaylistByIdQuery,
+  useUpdatePlaylistMutation,
+  useDeletePlaylistMutation,
 } = playlistApi;

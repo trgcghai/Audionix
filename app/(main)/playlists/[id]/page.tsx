@@ -1,28 +1,43 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
-import { Dot } from "lucide-react";
 import { mockTracks } from "@/app/sampleData";
 import HeroSection from "@/components/common/HeroSection";
 import { useEffect, useMemo, useState } from "react";
 import { TrackItem } from "@/app/types/component";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import debounce from "lodash.debounce";
 import SearchTrack from "@/app/(main)/playlists/components/SearchTrack";
 import SearchResult from "@/app/(main)/playlists/components/SearchResult";
 import RecommendationsTracks from "@/app/(main)/playlists/components/RecommendationsTracks";
 import TableTrack from "@/components/common/SimpleTrackTable";
 import ControlSection from "@/components/common/ControlSection";
-import { useGetPlaylistByIdQuery } from "@/services/playlists/playlistApi";
+import {
+  useDeletePlaylistMutation,
+  useGetPlaylistByIdQuery,
+} from "@/services/playlists/playlistApi";
 import LoaderSpin from "@/components/common/LoaderSpin";
 import ErrorMessage from "@/components/common/ErrorMessage";
 
 const DetailPlaylistPage = () => {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading, isError } = useGetPlaylistByIdQuery(id);
+  const [deletePlaylist] = useDeletePlaylistMutation();
   const playlist = useMemo(() => data?.data.item, [data]);
   const tracksLength = useMemo(() => playlist?.tracks.length || 0, [playlist]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<TrackItem[]>([]);
+  const router = useRouter();
+
+  const handleDeletePlaylist = async () => {
+    if (!id) return;
+    try {
+      await deletePlaylist(id).unwrap();
+      // Optionally, redirect or show a success message
+      router.push("/");
+    } catch (error) {
+      console.error("Failed to delete playlist:", error);
+    }
+  };
 
   const debouncedSearch = useMemo(
     () =>
@@ -65,29 +80,19 @@ const DetailPlaylistPage = () => {
 
   return (
     <div>
-      {playlist && (
-        <HeroSection
-          data={playlist}
-          extraInfo={
-            <>
-              <p>Playlist&apos;s creator</p>
-              <Dot />
-              <p>{data?.data.item.tracks.length} tracks</p>
-            </>
-          }
-        />
-      )}
+      {playlist && <HeroSection data={playlist} />}
 
       <Separator className="my-4" />
 
       {/* display play button if playlist has tracks */}
-      {tracksLength !== 0 && (
-        <ControlSection
-          onPlay={() => console.log("Play playlist")}
-          onDelete={() => console.log("Delete playlist")}
-          variant="playlist"
-        />
-      )}
+      <ControlSection
+        playable={tracksLength !== 0}
+        onPlay={() => console.log("Play playlist")}
+        onDelete={handleDeletePlaylist}
+        variant="playlist"
+      />
+      {/* {tracksLength !== 0 && (
+      )} */}
 
       {/* display search bar to add tracks to playlist */}
       {tracksLength === 0 && (

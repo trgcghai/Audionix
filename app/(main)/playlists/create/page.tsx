@@ -16,10 +16,10 @@ import { Plus, Repeat, CornerDownLeft, Clock } from "lucide-react";
 
 const CreatePlaylistPage = () => {
   const newPlaylist: PlaylistItem = {
-    id: "new-playlist",
+    _id: "new-playlist",
     name: "New AI Playlist",
     type: "playlist",
-    images: [],
+    cover_images: [],
     tracks: {
       href: "",
       total: 0,
@@ -91,7 +91,7 @@ const CreatePlaylistPage = () => {
         </TableHeader>
         <TableBody className="">
           {[...mockTracks, ...mockTracks].map((track, index) => (
-            <TrackRow key={track.id + index} track={track} index={index + 1} />
+            <TrackRow key={track._id + index} track={track} index={index + 1} />
           ))}
         </TableBody>
       </Table>

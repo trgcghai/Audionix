@@ -57,6 +57,7 @@ type BaseProps = {
 
 type PlaylistProps = BaseProps & {
   variant: "playlist";
+  playable?: boolean;
   onDelete?: () => void;
 };
 
@@ -79,7 +80,7 @@ const ControlSection = (props: ControlSectionProps) => {
   const { variant, onPlay } = props;
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="my-4 flex items-center gap-4">
       <PlayButton onClick={onPlay} />
 
       {variant === "album" && (

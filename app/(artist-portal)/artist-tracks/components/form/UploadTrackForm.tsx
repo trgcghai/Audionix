@@ -72,7 +72,7 @@ const UploadTrackForm = ({ onSubmit }: UploadTrackFormProps) => {
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem className="w-full h-full">
+            <FormItem className="h-full w-full">
               <FormLabel className="text-md font-semibold">Name</FormLabel>
               <FormControl>
                 <Input {...field} placeholder="Track name" />
@@ -86,7 +86,7 @@ const UploadTrackForm = ({ onSubmit }: UploadTrackFormProps) => {
           control={form.control}
           name="album"
           render={({ field }) => (
-            <FormItem className="w-full h-full">
+            <FormItem className="h-full w-full">
               <FormLabel className="text-md font-semibold">Album</FormLabel>
               <FormControl>
                 <Select
@@ -99,7 +99,7 @@ const UploadTrackForm = ({ onSubmit }: UploadTrackFormProps) => {
                   </SelectTrigger>
                   <SelectContent>
                     {mockAlbums.map((album) => (
-                      <SelectItem key={album.id} value={album.id}>
+                      <SelectItem key={album._id} value={album._id}>
                         {album.name}
                       </SelectItem>
                     ))}
@@ -115,7 +115,7 @@ const UploadTrackForm = ({ onSubmit }: UploadTrackFormProps) => {
           control={form.control}
           name="status"
           render={({ field }) => (
-            <FormItem className="w-full h-full">
+            <FormItem className="h-full w-full">
               <FormLabel className="text-md font-semibold">Status</FormLabel>
               <FormControl>
                 <StatusSelect
@@ -129,7 +129,7 @@ const UploadTrackForm = ({ onSubmit }: UploadTrackFormProps) => {
           )}
         />
 
-        <div className="flex justify-end items-center gap-4">
+        <div className="flex items-center justify-end gap-4">
           <Button
             type="button"
             variant="outline"

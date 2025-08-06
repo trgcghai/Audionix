@@ -1,11 +1,6 @@
 "use client";
 import Image from "next/image";
-import {
-  AlbumItem,
-  ArtistItem,
-  PlaylistItem,
-  TrackItem,
-} from "../../app/types/component";
+import { AlbumItem, ArtistItem, TrackItem } from "../../app/types/component";
 import { ReactNode, useMemo } from "react";
 import {
   Dialog,
@@ -14,9 +9,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import EditPlaylistForm from "../form/EditPlaylistForm";
-import { ImageIcon, Music } from "lucide-react";
+import EditPlaylistForm from "../../app/(main)/playlists/components/form/EditPlaylistForm";
+import { Dot, ImageIcon, Music } from "lucide-react";
 import { Playlist } from "@/app/types/model";
+import ErrorMessage from "@/components/common/ErrorMessage";
 
 interface HeroSectionProps {
   data: AlbumItem | ArtistItem | Playlist | TrackItem;
@@ -61,47 +57,57 @@ const HeroSection = ({ data, extraInfo }: HeroSectionProps) => {
     );
   }
 
-  console.log("data", data);
-
-  return (
-    <Dialog>
-      <DialogTrigger className="block">
-        <div className="flex cursor-pointer items-end gap-4">
-          {data.cover_images.length != 0 ? (
-            <Image
-              src={data?.cover_images[0].url}
-              alt=""
-              width={220}
-              height={220}
-              className={"rounded-lg"}
-            />
-          ) : (
-            <div className="bg-muted flex h-[220px] w-[220px] items-center justify-center rounded-lg">
-              <Music className="h-20 w-20" />
-            </div>
-          )}
-          <div className="flex flex-col items-start justify-end gap-6">
-            <p className="text-foreground text-sm font-semibold capitalize">
-              {data.type}
-            </p>
-            <p className="text-7xl font-bold capitalize">{title}</p>
-            {extraInfo && (
-              <div className="text-muted-foreground flex items-center gap-2 text-sm">
-                {extraInfo}
+  if (data.type == "playlist") {
+    const playlist = data as Playlist;
+    return (
+      <Dialog>
+        <DialogTrigger className="block">
+          <div className="flex cursor-pointer items-end gap-4">
+            {playlist.cover_images.length > 0 ? (
+              <Image
+                src={playlist?.cover_images[0].url}
+                alt=""
+                width={220}
+                height={220}
+                className={"aspect-square rounded-lg object-cover"}
+              />
+            ) : (
+              <div className="bg-muted flex h-[220px] w-[220px] items-center justify-center rounded-lg">
+                <Music className="h-20 w-20" />
               </div>
             )}
+            <div className="flex flex-col items-start justify-end gap-6">
+              <p className="text-foreground text-sm font-semibold capitalize">
+                {data.type}
+              </p>
+              <p className="text-start text-7xl font-bold capitalize">
+                {title}
+              </p>
+              <div className="text-muted-foreground flex flex-col items-start gap-2 text-sm">
+                {playlist?.description && (
+                  <p>{playlist?.description || "No description available"}</p>
+                )}
+                <div className="flex items-center gap-2">
+                  <p>Total time</p>
+                  <Dot />
+                  <p>{playlist?.tracks.length} tracks</p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle>Edit detail</DialogTitle>
-        </DialogHeader>
-        {data.type === "playlist" && (
-          <EditPlaylistForm data={data as PlaylistItem} />
-        )}
-      </DialogContent>
-    </Dialog>
-  );
+        </DialogTrigger>
+        <DialogContent className="!max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Edit detail</DialogTitle>
+          </DialogHeader>
+          {data.type === "playlist" && (
+            <EditPlaylistForm data={data as Playlist} />
+          )}
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  return <ErrorMessage message="Invalid data type for HeroSection" />;
 };
 export default HeroSection;

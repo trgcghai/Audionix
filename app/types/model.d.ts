@@ -67,6 +67,7 @@ export type Playlist = {
   owner?: string;
   status: string;
   type: "playlist";
+  description: string;
   cover_images: [
     {
       url: string;

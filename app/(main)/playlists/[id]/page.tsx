@@ -9,7 +9,6 @@ import SearchTrack from "@/app/(main)/playlists/components/SearchTrack";
 import SearchResult from "@/app/(main)/playlists/components/SearchResult";
 import RecommendationsTracks from "@/app/(main)/playlists/components/RecommendationsTracks";
 import TableTrack from "@/components/common/SimpleTrackTable";
-import ControlSection from "@/components/common/ControlSection";
 import {
   useDeletePlaylistMutation,
   useGetPlaylistByIdQuery,
@@ -17,6 +16,8 @@ import {
 import LoaderSpin from "@/components/common/LoaderSpin";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { useDebounce } from "@/hooks/useDebounce";
+import ControlSection from "@/app/(main)/playlists/components/ControlSection";
+import useToast from "@/hooks/useToast";
 
 const DetailPlaylistPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -30,11 +31,14 @@ const DetailPlaylistPage = () => {
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
+  const { showToast } = useToast();
+
   const handleDeletePlaylist = async () => {
     if (!id) return;
     try {
-      await deletePlaylist(id).unwrap();
-      // Optionally, redirect or show a success message
+      deletePlaylist(id);
+      showToast("Deleted playlist successfully", "success");
+
       router.push("/");
     } catch (error) {
       console.error("Failed to delete playlist:", error);
@@ -77,10 +81,8 @@ const DetailPlaylistPage = () => {
 
       {/* display play button and control section such as delete,... */}
       <ControlSection
-        playable={tracksLength !== 0}
         onPlay={() => console.log("Play playlist")}
         onDelete={handleDeletePlaylist}
-        variant="playlist"
       />
 
       {/* display search bar to add tracks to playlist */}

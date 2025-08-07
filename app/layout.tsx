@@ -2,6 +2,7 @@ import { type Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Geist, Geist_Mono } from "next/font/google";
 import ReduxProvider from "@/store/ReduxProvider";
+import { ToastContainer } from "react-toastify";
 
 import "./globals.css";
 
@@ -38,6 +39,7 @@ export default function RootLayout({
         >
           <ReduxProvider>{children}</ReduxProvider>
         </ThemeProvider>
+        <ToastContainer />
       </body>
     </html>
   );

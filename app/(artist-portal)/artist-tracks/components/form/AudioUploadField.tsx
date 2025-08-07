@@ -1,10 +1,4 @@
 "use client";
-import {
-  FormControl,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Music, XIcon } from "lucide-react";
 import { useFileUploadWithPreview } from "@/hooks/useFileUpload";
@@ -13,16 +7,15 @@ import getAcceptedFileExtensions from "@/utils/getAcceptedFileExtensions";
 import { useEffect } from "react";
 
 interface AudioUploadFieldProps {
-  value?: File;
   onChange: (file: File | undefined) => void;
-  label?: string;
   initialPreview?: string;
+  disabled?: boolean;
 }
 
 export const AudioUploadField = ({
   onChange,
-  label = "Audio File",
   initialPreview = "",
+  disabled,
 }: AudioUploadFieldProps) => {
   const {
     preview,
@@ -59,51 +52,46 @@ export const AudioUploadField = ({
   };
 
   return (
-    <FormItem>
-      <FormLabel className="text-md font-semibold">{label}</FormLabel>
-      <FormControl>
-        <div
-          {...dropzone.getRootProps()}
-          className="rounded-lg flex flex-col items-center justify-center cursor-pointer border border-dashed p-4"
-        >
-          <Input
-            type="file"
-            {...dropzone.getInputProps()}
-            onChange={handleFileInputChange}
-          />
-          {preview && !error ? (
-            <div className="w-full space-y-2">
-              <div className="flex items-center justify-end gap-2">
-                <XIcon className="h-4 w-4" onClick={handleClear} />
-              </div>
-              <audio
-                controls
-                src={preview}
-                className="w-full"
-                onError={handlePreviewError}
-              >
-                Your browser does not support the audio element.
-              </audio>
-              <p className="text-xs text-center text-muted-foreground">
-                Drop a new file to replace
-              </p>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center py-4">
-              <Music className="h-10 w-10 text-muted-foreground mb-2" />
-              <p className="text-sm text-muted-foreground">
-                {error
-                  ? "Audio failed to load. Please try again."
-                  : "Drop audio file here or click to upload"}
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                {getAcceptedFileExtensions(AUDIO_FILE_ACCEPT_TYPES)} accepted
-              </p>
-            </div>
-          )}
+    <div
+      {...dropzone.getRootProps()}
+      className="flex cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed p-4"
+    >
+      <Input
+        {...dropzone.getInputProps()}
+        type="file"
+        onChange={handleFileInputChange}
+        disabled={disabled}
+      />
+      {preview && !error ? (
+        <div className="w-full space-y-2">
+          <div className="flex items-center justify-end gap-2">
+            <XIcon className="h-4 w-4" onClick={handleClear} />
+          </div>
+          <audio
+            controls
+            src={preview}
+            className="w-full"
+            onError={handlePreviewError}
+          >
+            Your browser does not support the audio element.
+          </audio>
+          <p className="text-muted-foreground text-center text-xs">
+            Drop a new file to replace
+          </p>
         </div>
-      </FormControl>
-      <FormMessage />
-    </FormItem>
+      ) : (
+        <div className="flex flex-col items-center justify-center py-4">
+          <Music className="text-muted-foreground mb-2 h-10 w-10" />
+          <p className="text-muted-foreground text-sm">
+            {error
+              ? "Audio failed to load. Please try again."
+              : "Drop audio file here or click to upload"}
+          </p>
+          <p className="text-muted-foreground mt-1 text-xs">
+            {getAcceptedFileExtensions(AUDIO_FILE_ACCEPT_TYPES)} accepted
+          </p>
+        </div>
+      )}
+    </div>
   );
 };

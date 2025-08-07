@@ -1,16 +1,16 @@
 "use client";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import MainHeader from "@/components/header/MainHeader";
-import Player from "@/components/player/Player";
+import Player from "@/app/(main)/components/player/Player";
 import { Separator } from "@/components/ui/separator";
 import Footer from "@/components/common/Footer";
 import { useAppSelector } from "@/hooks/redux";
 import QueueDrawer from "@/components/common/QueueDrawer";
-import Sidebar from "@/components/sidebar/main/Sidebar";
 import { cn } from "@/libs/utils";
 import { useGetMyPlaylistsQuery } from "@/services/playlists/playlistApi";
 import LoaderSpin from "@/components/common/LoaderSpin";
 import ErrorMessage from "@/components/common/ErrorMessage";
+import MainSidebar from "@/app/(main)/components/sidebar";
 
 const Layout = ({
   children,
@@ -36,7 +36,7 @@ const Layout = ({
       <div className="col-span-3 row-span-11 -mt-5 p-4">
         {isLoading && <LoaderSpin />}
         {isError && <ErrorMessage message="Failed to load your playlists" />}
-        {data && <Sidebar playlists={data?.data.items} />}
+        {data && <MainSidebar playlists={data?.data.items} />}
       </div>
       <div
         className={cn(

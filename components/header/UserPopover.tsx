@@ -9,7 +9,8 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { useLogout } from "@/hooks/useAuthUser";
-import { ChevronDown, LogOut, Settings, User } from "lucide-react";
+import { ChevronDown, LogOut, Mic, Settings, User } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface UserPopoverProps {
   user: {
@@ -21,6 +22,20 @@ interface UserPopoverProps {
 
 export default function UserPopover({ user }: UserPopoverProps) {
   const { handleLogout } = useLogout();
+  const router = useRouter();
+
+  const goToProfile = () => {
+    console.log("Go to profile. (Not implemented yet)");
+  };
+
+  const goToSettings = () => {
+    console.log("Go to settings. (Not implemented yet)");
+  };
+
+  const goToArtistPortal = () => {
+    router.push("/artist-home");
+  };
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -76,16 +91,31 @@ export default function UserPopover({ user }: UserPopoverProps) {
           <Button
             variant="ghost"
             className="h-auto w-full justify-start gap-2 px-3 py-2"
+            onClick={goToProfile}
           >
             <User className="h-4 w-4" />
-            <span className="text-sm">Hồ sơ cá nhân</span>
+            <span className="text-sm">Profile</span>
           </Button>
           <Button
             variant="ghost"
             className="h-auto w-full justify-start gap-2 px-3 py-2"
+            onClick={goToSettings}
           >
             <Settings className="h-4 w-4" />
-            <span className="text-sm">Cài đặt</span>
+            <span className="text-sm">Setting</span>
+          </Button>
+        </div>
+
+        <Separator />
+
+        <div className="p-1">
+          <Button
+            variant="ghost"
+            className="h-auto w-full justify-start gap-2 px-3 py-2"
+            onClick={goToArtistPortal}
+          >
+            <Mic className="h-4 w-4" />
+            <span className="text-sm capitalize">Change to artist</span>
           </Button>
         </div>
 

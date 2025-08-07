@@ -2,9 +2,9 @@
 
 import * as React from "react";
 import { Settings } from "lucide-react";
-import { NavMain } from "@/components/sidebar/artist/nav-main";
 import { Sidebar, SidebarContent, SidebarRail } from "@/components/ui/sidebar";
 import LinkLogo from "@/components/common/LinkLogo";
+import { NavMain } from "@/components/ui/nav-main";
 
 const navItems = [
   {
@@ -37,7 +37,7 @@ export default function AdminSidebar({
 }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <div className="p-4 pb-0 flex items-center justify-start">
+      <div className="flex items-center justify-start p-4 pb-0">
         <LinkLogo href="/dashboard" />
       </div>
       <SidebarContent>

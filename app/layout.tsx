@@ -1,5 +1,5 @@
 import { type Metadata } from "next";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/common/theme/theme-provider";
 import { Geist, Geist_Mono } from "next/font/google";
 import ReduxProvider from "@/store/ReduxProvider";
 import { ToastContainer } from "react-toastify";

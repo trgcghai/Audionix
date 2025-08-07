@@ -20,18 +20,18 @@ const Form = FormProvider;
 
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > = {
   name: TName;
 };
 
 const FormFieldContext = React.createContext<FormFieldContextValue>(
-  {} as FormFieldContextValue
+  {} as FormFieldContextValue,
 );
 
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
@@ -70,7 +70,7 @@ type FormItemContextValue = {
 };
 
 const FormItemContext = React.createContext<FormItemContextValue>(
-  {} as FormItemContextValue
+  {} as FormItemContextValue,
 );
 
 function FormItem({ className, ...props }: React.ComponentProps<"div">) {
@@ -87,11 +87,27 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function FormLabel({
-  className,
-  ...props
-}: React.ComponentProps<typeof LabelPrimitive.Root>) {
+interface FormLabelProps
+  extends React.ComponentProps<typeof LabelPrimitive.Root> {
+  required?: boolean;
+}
+
+function FormLabel({ className, required, ...props }: FormLabelProps) {
   const { error, formItemId } = useFormField();
+
+  if (required) {
+    return (
+      <Label
+        data-slot="form-label"
+        data-error={!!error}
+        className={cn("data-[error=true]:text-destructive", className)}
+        htmlFor={formItemId}
+        {...props}
+      >
+        {props.children} <span className="text-red-500">*</span>
+      </Label>
+    );
+  }
 
   return (
     <Label

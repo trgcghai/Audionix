@@ -3,7 +3,7 @@
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ModeToggle } from "@/components/ModeToggle";
+import { ModeToggle } from "@/components/common/theme/ModeToggle";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/libs/utils";

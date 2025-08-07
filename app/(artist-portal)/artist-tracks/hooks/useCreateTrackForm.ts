@@ -5,7 +5,6 @@ import {
   createTrackSchema,
   createTrackValues,
 } from "../components/form/schemas";
-import { TrackStatus } from "@/app/enums";
 
 interface useCreateTrackFormProps {
   onSubmit?: (data: createTrackValues) => void;
@@ -18,20 +17,34 @@ export const useCreateTrackForm = ({ onSubmit }: useCreateTrackFormProps) => {
     resolver: zodResolver(createTrackSchema),
     defaultValues: {
       title: "",
-      album: "",
-      image: undefined,
-      audioFile: undefined,
-      status: TrackStatus.HIDDEN,
+      albums: [],
+      genres: [],
+      cover_image: undefined,
+      audio: undefined,
     },
   });
 
-  const handleSubmit = (data: createTrackValues) => {
-    onSubmit?.(data);
+  const handleSubmit = async (data: createTrackValues) => {
+    await onSubmit?.(data);
     setDialogOpen(false);
+
+    form.reset({
+      title: "",
+      albums: [],
+      genres: [],
+      cover_image: undefined,
+      audio: undefined,
+    });
   };
 
   const handleReset = () => {
-    form.reset();
+    form.reset({
+      title: "",
+      albums: [],
+      genres: [],
+      cover_image: undefined,
+      audio: undefined,
+    });
     setDialogOpen(false);
   };
 

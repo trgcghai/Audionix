@@ -11,16 +11,16 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { mockAlbums, mockArtists } from "@/app/sampleData";
-import CreatePlaylistButton from "./CreatePlaylistButton";
-import FilterButtons from "./FilterButtons";
-import LibraryItem from "./LibraryItem";
 import { Playlist } from "@/app/types/model";
+import CreatePlaylistButton from "@/app/(main)/components/sidebar/CreatePlaylistButton";
+import FilterButtons from "@/app/(main)/components/sidebar/FilterButtons";
+import LibraryItem from "@/app/(main)/components/sidebar/LibraryItem";
 
 interface SidebarProps {
   playlists: Playlist[];
 }
 
-const Sidebar = ({ playlists }: SidebarProps) => {
+const MainSidebar = ({ playlists }: SidebarProps) => {
   const filterButtons = ["Playlists", "Artists", "Albums"];
   const [selectedFilter, setSelectedFilter] = useState<string>("");
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -87,4 +87,4 @@ const Sidebar = ({ playlists }: SidebarProps) => {
     </Card>
   );
 };
-export default Sidebar;
+export default MainSidebar;

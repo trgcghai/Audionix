@@ -10,25 +10,29 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import { createTrackValues } from "./schemas";
 import { useCreateTrackForm } from "../../hooks/useCreateTrackForm";
 import { ImageUploadField } from "./ImageUploadField";
 import { AudioUploadField } from "./AudioUploadField";
-import StatusSelect from "../StatusSelect";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import MultipleSelector from "@/components/ui/MultipleSelector";
+import { DEFAULT_GENRES } from "@/app/constant";
+import LoaderSpin from "@/components/common/LoaderSpin";
 
 interface UploadTrackFormProps {
-  onSubmit?: (data: createTrackValues) => void;
+  onSubmit: (data: createTrackValues) => void;
+  isLoading?: boolean;
+  isError?: boolean;
+  error?: string;
 }
 
-const UploadTrackForm = ({ onSubmit }: UploadTrackFormProps) => {
+const UploadTrackForm = ({
+  onSubmit,
+  isLoading,
+  isError,
+  error,
+}: UploadTrackFormProps) => {
   const {
     form,
     dialogOpen,
@@ -44,27 +48,39 @@ const UploadTrackForm = ({ onSubmit }: UploadTrackFormProps) => {
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
         <FormField
           control={form.control}
-          name="image"
+          name="cover_image"
           render={({ field }) => (
-            <ImageUploadField
-              value={field.value}
-              onChange={field.onChange}
-              label="Track Cover Image"
-              initialPreview={undefined}
-            />
+            <FormItem className="h-full w-full">
+              <FormLabel required className="text-md font-semibold">
+                Cover Image
+              </FormLabel>
+              <FormControl>
+                <ImageUploadField
+                  onChange={field.onChange}
+                  disabled={isLoading}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
           )}
         />
 
         <FormField
           control={form.control}
-          name="audioFile"
+          name="audio"
           render={({ field }) => (
-            <AudioUploadField
-              value={field.value}
-              onChange={field.onChange}
-              label="Track Audio File"
-              initialPreview={undefined}
-            />
+            <FormItem className="h-full w-full">
+              <FormLabel required className="text-md font-semibold">
+                Audio File
+              </FormLabel>
+              <FormControl>
+                <AudioUploadField
+                  onChange={field.onChange}
+                  disabled={isLoading}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
           )}
         />
 
@@ -73,55 +89,14 @@ const UploadTrackForm = ({ onSubmit }: UploadTrackFormProps) => {
           name="title"
           render={({ field }) => (
             <FormItem className="h-full w-full">
-              <FormLabel className="text-md font-semibold">Name</FormLabel>
+              <FormLabel required className="text-md font-semibold">
+                Title
+              </FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Track name" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="album"
-          render={({ field }) => (
-            <FormItem className="h-full w-full">
-              <FormLabel className="text-md font-semibold">Album</FormLabel>
-              <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  value={field.value}
-                  defaultValue={field.value}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select an album" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {mockAlbums.map((album) => (
-                      <SelectItem key={album._id} value={album._id}>
-                        {album.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="status"
-          render={({ field }) => (
-            <FormItem className="h-full w-full">
-              <FormLabel className="text-md font-semibold">Status</FormLabel>
-              <FormControl>
-                <StatusSelect
-                  status={field.value}
-                  handleStatusChange={field.onChange}
-                  disabled={true}
+                <Input
+                  {...field}
+                  placeholder="Track title"
+                  disabled={isLoading}
                 />
               </FormControl>
               <FormMessage />
@@ -129,21 +104,82 @@ const UploadTrackForm = ({ onSubmit }: UploadTrackFormProps) => {
           )}
         />
 
+        <FormField
+          control={form.control}
+          name="genres"
+          render={({ field }) => (
+            <FormItem className="h-full w-full">
+              <FormLabel required className="text-md font-semibold">
+                Genres
+              </FormLabel>
+              <FormControl>
+                <MultipleSelector
+                  {...field}
+                  options={DEFAULT_GENRES}
+                  maxSelected={5}
+                  creatable
+                  placeholder="Select genres"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="albums"
+          render={({ field }) => (
+            <FormItem className="h-full w-full">
+              <FormLabel className="text-md font-semibold">Album</FormLabel>
+              <FormControl>
+                <MultipleSelector
+                  {...field}
+                  options={mockAlbums.map((album) => ({
+                    value: album._id,
+                    label: album.name,
+                  }))}
+                  placeholder="Select albums"
+                  emptyIndicator={
+                    <div className="flex items-center justify-center">
+                      <ErrorMessage
+                        message="No albums found."
+                        severity="info"
+                        variant="inline"
+                        showIcon={false}
+                      />
+                    </div>
+                  }
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {isError && (
+          <ErrorMessage
+            message={error || "An error occurred while uploading the track."}
+          />
+        )}
+
         <div className="flex items-center justify-end gap-4">
           <Button
             type="button"
             variant="outline"
             className="rounded-full px-6 py-2"
             onClick={handleReset}
+            disabled={isLoading}
           >
             Cancel
           </Button>
           <Button
             type="button"
-            className="rounded-full px-6 py-2"
+            className="min-w-24 rounded-full px-6 py-2"
             onClick={openConfirmDialog}
+            disabled={isLoading}
           >
-            Upload
+            {isLoading ? <LoaderSpin /> : "Upload"}
           </Button>
           <ConfirmDialog
             title="Confirm Upload"

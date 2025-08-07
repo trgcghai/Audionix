@@ -3,13 +3,14 @@
 import * as React from "react";
 import { Disc, Music2 } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarRail } from "@/components/ui/sidebar";
-import { NavMain } from "./nav-main";
+import { NavMain } from "@/components/ui/nav-main";
 
 const navItems = [
   {
     title: "Tracks",
     url: "#",
     icon: Music2,
+    isActive: true,
     items: [
       {
         title: "My Tracks",
@@ -25,6 +26,7 @@ const navItems = [
     title: "Albums",
     url: "#",
     icon: Disc,
+    isActive: true,
     items: [
       {
         title: "My Albums",

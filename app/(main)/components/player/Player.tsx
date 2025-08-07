@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { mockTracks } from "@/app/sampleData";
-import TrackInfo from "../common/TrackInfo";
+import TrackInfo from "../../../../components/common/TrackInfo";
 import RightControl from "./RightControl";
 import MediaControl from "./MediaControl";
 
@@ -10,8 +10,8 @@ const Player = () => {
   const activeTrack = useMemo(() => mockTracks[0], []);
 
   return (
-    <div className="py-2 px-6 border-t flex items-center justify-between bg-background">
-      <div className="flex items-center gap-3 w-1/4">
+    <div className="bg-background flex items-center justify-between border-t px-6 py-2">
+      <div className="flex w-1/4 items-center gap-3">
         <TrackInfo track={activeTrack} />
       </div>
 

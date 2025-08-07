@@ -1,3 +1,4 @@
+import { Option } from "@/components/ui/MultipleSelector";
 import { TrackStatus } from "./enums";
 
 export const SIMPLE_TABLE_TRACKS_VARIANTS = [
@@ -15,7 +16,7 @@ export const TrackStatusValues = Object.entries(TrackStatus).map(
     key,
     value,
     label: value.charAt(0).toUpperCase() + value.slice(1).replace(/_/g, " "),
-  })
+  }),
 );
 
 export const ARTIST_ALBUM_STATUS_OPTIONS = ["published", "hidden"];
@@ -34,3 +35,58 @@ export const AUDIO_FILE_ACCEPT_TYPES = {
   "audio/aac": [".aac"],
   "audio/x-m4a": [".m4a"],
 };
+
+export const DEFAULT_GENRES: Option[] = [
+  {
+    value: "pop",
+    label: "Pop",
+  },
+  {
+    value: "rock",
+    label: "Rock",
+  },
+  {
+    value: "hip-hop",
+    label: "Hip-Hop",
+  },
+  {
+    value: "jazz",
+    label: "Jazz",
+  },
+  {
+    value: "classical",
+    label: "Classical",
+  },
+  {
+    value: "electronic",
+    label: "Electronic",
+  },
+  {
+    value: "country",
+    label: "Country",
+  },
+  {
+    value: "reggae",
+    label: "Reggae",
+  },
+  {
+    value: "blues",
+    label: "Blues",
+  },
+  {
+    value: "metal",
+    label: "Metal",
+  },
+  {
+    value: "folk",
+    label: "Folk",
+  },
+  {
+    value: "latin",
+    label: "Latin",
+  },
+  {
+    value: "indie",
+    label: "Indie",
+  },
+];

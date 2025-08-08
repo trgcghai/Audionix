@@ -55,10 +55,7 @@ const UploadTrackForm = ({
                 Cover Image
               </FormLabel>
               <FormControl>
-                <ImageUploadField
-                  onChange={field.onChange}
-                  disabled={isLoading}
-                />
+                <ImageUploadField field={field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -74,10 +71,7 @@ const UploadTrackForm = ({
                 Audio File
               </FormLabel>
               <FormControl>
-                <AudioUploadField
-                  onChange={field.onChange}
-                  disabled={isLoading}
-                />
+                <AudioUploadField field={field} />
               </FormControl>
               <FormMessage />
             </FormItem>

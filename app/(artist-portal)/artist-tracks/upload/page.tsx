@@ -26,9 +26,9 @@ const UploadTrackPage = () => {
       JSON.stringify(data.genres.map((genre) => genre.value)),
     );
 
-    formData.append("cover_image", data.cover_image);
+    formData.append("cover_image", data.cover_image[0]);
 
-    formData.append("audio", data.audio);
+    formData.append("audio", data.audio[0]);
 
     return formData;
   };

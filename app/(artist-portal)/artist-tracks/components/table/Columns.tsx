@@ -149,7 +149,7 @@ export const Columns: ColumnDef<Track>[] = [
 
 export const TrackInAlbumColumns: ColumnDef<TrackInArtistAlbum>[] =
   Columns.filter((item) =>
-    ["select", "coverImage", "name", "duration"].includes(item.id || "")
+    ["select", "coverImage", "name", "duration"].includes(item.id || ""),
   ).map((item) => item as TrackInArtistAlbum);
 
 function RenderStatusCell({ row }: { row: Row<Track> }) {
@@ -177,7 +177,7 @@ function RenderStatusCell({ row }: { row: Row<Track> }) {
                 ? "default"
                 : "destructive"
             }
-            className="rounded-full px-2 py-1 capitalize cursor-pointer"
+            className="cursor-pointer rounded-full px-2 py-1 capitalize"
           >
             {row.original.status}
           </Badge>
@@ -203,15 +203,13 @@ function RenderStatusCell({ row }: { row: Row<Track> }) {
 }
 
 function RenderImageCell({ row }: { row: Row<Track> }) {
-  console.log("Rendering image cell for row:", row.original);
-
   const imageUrl = row.original.cover_images[0]?.url;
   const [imageError, setImageError] = useState(false);
 
   if (!imageUrl || imageError) {
     return (
-      <div className="flex items-center justify-center h-[70px] w-[70px] text-xs rounded-lg border">
-        <ImageIcon className="h-4 w-4 text-muted-foreground" />
+      <div className="flex h-[70px] w-[70px] items-center justify-center rounded-lg border text-xs">
+        <ImageIcon className="text-muted-foreground h-4 w-4" />
       </div>
     );
   }
@@ -237,7 +235,7 @@ function RenderActionCell({ row }: { row: Row<Track> }) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="h-8 w-8 p-0 rounded-full">
+          <Button variant="outline" className="h-8 w-8 rounded-full p-0">
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
@@ -247,7 +245,7 @@ function RenderActionCell({ row }: { row: Row<Track> }) {
               href={`/artist-tracks/update/${track._id}`}
               className="flex items-center gap-2"
             >
-              <Settings2 className="h-4 w-4 mr-2" />
+              <Settings2 className="mr-2 h-4 w-4" />
               <span>Edit</span>
             </Link>
           </DropdownMenuItem>
@@ -255,7 +253,7 @@ function RenderActionCell({ row }: { row: Row<Track> }) {
             className="cursor-pointer"
             onClick={() => setAddToAlbumDialog(true)}
           >
-            <PlusCircle className="h-4 w-4 mr-1" />
+            <PlusCircle className="mr-1 h-4 w-4" />
             Add to album
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -263,7 +261,7 @@ function RenderActionCell({ row }: { row: Row<Track> }) {
             className="cursor-pointer"
             onClick={() => setDeleteDialog(true)}
           >
-            <Trash2 className="h-4 w-4 mr-2" />
+            <Trash2 className="mr-2 h-4 w-4" />
             <span>Delete</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

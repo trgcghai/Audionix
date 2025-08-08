@@ -20,7 +20,6 @@ import {
 } from "react-dropzone";
 import { toast } from "sonner";
 import { Trash2 as RemoveIcon } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/libs/utils";
 
 type DirectionOptions = "rtl" | "ltr" | undefined;
@@ -290,29 +289,32 @@ FileUploaderContent.displayName = "FileUploaderContent";
 
 export const FileUploaderItem = forwardRef<
   HTMLDivElement,
-  { index: number } & React.HTMLAttributes<HTMLDivElement>
->(({ className, index, children, ...props }, ref) => {
+  {
+    index: number;
+    removeButtonClassname?: string;
+  } & React.HTMLAttributes<HTMLDivElement>
+>(({ className, index, children, removeButtonClassname, ...props }, ref) => {
   const { removeFileFromSet, activeIndex, direction } = useFileUpload();
   const isSelected = index === activeIndex;
   return (
     <div
       ref={ref}
       className={cn(
-        buttonVariants({ variant: "ghost" }),
-        "relative h-6 cursor-pointer justify-between p-1",
+        "relative cursor-pointer justify-between p-1",
         className,
         isSelected ? "bg-muted" : "",
       )}
       {...props}
     >
-      <div className="flex h-full w-full items-center gap-1.5 leading-none font-medium tracking-tight">
+      <div className="flex w-full items-center gap-1.5 leading-none font-medium tracking-tight">
         {children}
       </div>
       <button
         type="button"
         className={cn(
-          "absolute",
+          "absolute cursor-pointer p-2",
           direction === "rtl" ? "top-1 left-1" : "top-1 right-1",
+          removeButtonClassname,
         )}
         onClick={() => removeFileFromSet(index)}
       >

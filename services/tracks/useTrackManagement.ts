@@ -45,7 +45,7 @@ const useTrackManagement = () => {
 
   return {
     // Data structure
-    tracks: data?.data.result || [],
+    tracks: data?.data.items || [],
     totalItems: data?.data.totalItems || 0,
     totalPages: data?.data.totalPages || 0,
     current: data?.data.currentPage || current,

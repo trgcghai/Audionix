@@ -1,11 +1,9 @@
 import Image from "next/image";
-import {
-  AlbumItem,
-  ArtistItem,
-  PlaylistItem,
-  TrackItem,
-} from "../../app/types/component";
+import { AlbumItem, ArtistItem, PlaylistItem } from "../../app/types/component";
 import Link from "next/link";
+import { Track } from "@/app/types/model";
+import LoaderSpin from "@/components/common/LoaderSpin";
+import ErrorMessage from "@/components/common/ErrorMessage";
 
 const PlaylistCard = ({ playlist }: { playlist: PlaylistItem }) => {
   return (
@@ -37,7 +35,7 @@ const AlbumCard = ({ album }: { album: AlbumItem }) => {
   );
 };
 
-const TrackCard = ({ track }: { track: TrackItem }) => {
+const TrackCard = ({ track }: { track: Track }) => {
   return (
     <div className="cursor-pointer rounded-lg p-3 hover:bg-gray-500/30">
       <Image
@@ -47,7 +45,7 @@ const TrackCard = ({ track }: { track: TrackItem }) => {
         height={200}
         className="aspect-square rounded-lg object-cover"
       />
-      <p className="text-md mt-2 capitalize dark:text-white">{track.name}</p>
+      <p className="text-md mt-2 capitalize dark:text-white">{track.title}</p>
     </div>
   );
 };
@@ -67,20 +65,49 @@ const ArtistCard = ({ artist }: { artist: ArtistItem }) => {
   );
 };
 
+interface MediaListProps {
+  title?: string;
+  data: PlaylistItem[] | AlbumItem[] | ArtistItem[] | Track[];
+  className?: string;
+  isLoading?: boolean;
+  isError?: boolean;
+  error?: string;
+}
+
 const MediaList = ({
   title,
   data,
   className = "",
-}: {
-  title?: string;
-  data: PlaylistItem[] | AlbumItem[] | ArtistItem[] | TrackItem[];
-  className?: string;
-}): React.ReactNode => {
+  error,
+  isError,
+  isLoading,
+}: MediaListProps): React.ReactNode => {
+  if (isLoading) {
+    return <LoaderSpin />;
+  }
+
+  if (isError) {
+    return (
+      <ErrorMessage
+        message={error || "An error occurred while fetching media"}
+      />
+    );
+  }
+
   return (
     <div className={className}>
       <p className="px-3 text-xl font-semibold dark:text-white">{title}</p>
       <div className="mt-1 grid grid-cols-7">
+        {data.length === 0 && (
+          <ErrorMessage
+            message={"No media found"}
+            variant="inline"
+            severity="info"
+            showIcon={false}
+          />
+        )}
         {data.map((item, index) => {
+          console.log("item:", item);
           if (item.type === "playlist") {
             return (
               <Link href={`/playlists/${item._id}`} key={item._id + index}>
@@ -102,7 +129,7 @@ const MediaList = ({
           } else if (item.type === "track") {
             return (
               <Link href={`/tracks/${item._id}`} key={item._id + index}>
-                <TrackCard key={item._id} track={item as TrackItem} />
+                <TrackCard key={item._id} track={item as Track} />
               </Link>
             );
           }

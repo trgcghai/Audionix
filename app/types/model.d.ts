@@ -3,6 +3,7 @@ import { TrackStatus } from "../enums";
 export type Track = {
   _id: string;
   title: string;
+  type: "track";
   duration_ms: string;
   cover_images: [
     {

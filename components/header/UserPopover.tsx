@@ -9,8 +9,16 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { useLogout } from "@/hooks/useAuthUser";
-import { ChevronDown, LogOut, Mic, Settings, User } from "lucide-react";
-import { useRouter } from "next/navigation";
+import {
+  ChevronDown,
+  Headphones,
+  LogOut,
+  Mic,
+  Settings,
+  User,
+} from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useMemo } from "react";
 
 interface UserPopoverProps {
   user: {
@@ -23,6 +31,12 @@ interface UserPopoverProps {
 export default function UserPopover({ user }: UserPopoverProps) {
   const { handleLogout } = useLogout();
   const router = useRouter();
+  const pathname = usePathname();
+
+  const isAtArtistPortal = useMemo(
+    () => pathname.includes("/artist-"),
+    [pathname],
+  );
 
   const goToProfile = () => {
     console.log("Go to profile. (Not implemented yet)");
@@ -34,6 +48,10 @@ export default function UserPopover({ user }: UserPopoverProps) {
 
   const goToArtistPortal = () => {
     router.push("/artist-home");
+  };
+
+  const goToUser = () => {
+    router.push("/");
   };
 
   return (
@@ -109,14 +127,25 @@ export default function UserPopover({ user }: UserPopoverProps) {
         <Separator />
 
         <div className="p-1">
-          <Button
-            variant="ghost"
-            className="h-auto w-full justify-start gap-2 px-3 py-2"
-            onClick={goToArtistPortal}
-          >
-            <Mic className="h-4 w-4" />
-            <span className="text-sm capitalize">Change to artist</span>
-          </Button>
+          {isAtArtistPortal ? (
+            <Button
+              variant="ghost"
+              className="h-auto w-full justify-start gap-2 px-3 py-2"
+              onClick={goToUser}
+            >
+              <Headphones className="h-4 w-4" />
+              <span className="text-sm capitalize">Change to user</span>
+            </Button>
+          ) : (
+            <Button
+              variant="ghost"
+              className="h-auto w-full justify-start gap-2 px-3 py-2"
+              onClick={goToArtistPortal}
+            >
+              <Mic className="h-4 w-4" />
+              <span className="text-sm capitalize">Change to artist</span>
+            </Button>
+          )}
         </div>
 
         <Separator />

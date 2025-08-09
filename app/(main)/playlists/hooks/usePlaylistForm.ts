@@ -3,7 +3,7 @@ import {
   PlaylistFormValues,
 } from "@/app/(main)/playlists/schema";
 import { Playlist } from "@/app/types/model";
-import { useUpdatePlaylistMutation } from "@/services/playlists/playlistApi";
+import usePlaylistAction from "@/hooks/usePlaylistAction";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -12,8 +12,7 @@ interface UsePlaylistFormProps {
 }
 
 const usePlaylistForm = ({ data }: UsePlaylistFormProps) => {
-  const [updatePlaylist, { isLoading, isError, error }] =
-    useUpdatePlaylistMutation();
+  const { handleUpdatePlaylist, updateState } = usePlaylistAction();
   const form = useForm<PlaylistFormValues>({
     resolver: zodResolver(PlaylistFormSchema),
     defaultValues: {
@@ -22,37 +21,25 @@ const usePlaylistForm = ({ data }: UsePlaylistFormProps) => {
     },
   });
 
-  const transformToPayload = (formData: PlaylistFormValues): FormData => {
-    const payload = new FormData();
-    payload.append("title", formData.title);
-    if (formData.description) {
-      payload.append("description", formData.description);
-    }
-    if (formData.image) {
-      payload.append("file", formData.image);
-    }
-    return payload;
-  };
-
   const onSubmit = async (formData: PlaylistFormValues) => {
     if (!data?._id) {
       form.setError("root", { message: "Playlist ID is required" });
     }
 
-    const payload = transformToPayload(formData);
-
-    await updatePlaylist({
-      id: data?._id as string,
-      formData: payload,
-    }).unwrap();
+    try {
+      await handleUpdatePlaylist(data?._id as string, formData);
+    } catch (error) {
+      console.error("Failed to update playlist:", error);
+      form.setError("root", { message: "Failed to update playlist" });
+    }
   };
 
   return {
     form,
     onSubmit,
-    isLoading,
-    isError,
-    error,
+    isLoading: updateState.isLoading,
+    isError: updateState.isError,
+    error: updateState.error,
   };
 };
 export default usePlaylistForm;

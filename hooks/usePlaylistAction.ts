@@ -1,0 +1,80 @@
+import { PlaylistFormValues } from "@/app/(main)/playlists/schema";
+import useToast from "@/hooks/useToast";
+import {
+  useCreatePlaylistMutation,
+  useDeletePlaylistMutation,
+  useUpdatePlaylistMutation,
+} from "@/services/playlists/playlistApi";
+import { useRouter } from "next/navigation";
+
+const usePlaylistAction = () => {
+  const { showToast } = useToast();
+  const router = useRouter();
+  const [createPlaylist, createState] = useCreatePlaylistMutation();
+  const [updatePlaylist, updateState] = useUpdatePlaylistMutation();
+  const [deletePlaylist, deleteState] = useDeletePlaylistMutation();
+
+  const transformToUpdatePayload = (formData: PlaylistFormValues): FormData => {
+    const payload = new FormData();
+    payload.append("title", formData.title);
+    if (formData.description) {
+      payload.append("description", formData.description);
+    }
+    if (formData.image) {
+      payload.append("file", formData.image);
+    }
+    return payload;
+  };
+
+  const handleCreatePlaylist = async () => {
+    try {
+      await createPlaylist({}).unwrap();
+      showToast("Created playlist successfully", "success");
+    } catch (error) {
+      console.error("Failed to create playlist:", error);
+      showToast("Failed to create playlist", "error");
+    }
+  };
+
+  const handleUpdatePlaylist = async (
+    id: string,
+    formData: PlaylistFormValues,
+  ) => {
+    try {
+      if (!id) return;
+      const payload = transformToUpdatePayload(formData);
+
+      await updatePlaylist({
+        id,
+        formData: payload,
+      }).unwrap();
+      showToast("Updated playlist successfully", "success");
+    } catch (error) {
+      console.error("Failed to update playlist:", error);
+      showToast("Failed to update playlist", "error");
+    }
+  };
+
+  const handleDeletePlaylist = async (id: string) => {
+    if (!id) return;
+    try {
+      await deletePlaylist(id).unwrap();
+      showToast("Deleted playlist successfully", "success");
+
+      router.push("/");
+    } catch (error) {
+      console.error("Failed to delete playlist:", error);
+      showToast("Failed to delete playlist", "error");
+    }
+  };
+
+  return {
+    handleCreatePlaylist,
+    createState,
+    handleUpdatePlaylist,
+    updateState,
+    handleDeletePlaylist,
+    deleteState,
+  };
+};
+export default usePlaylistAction;

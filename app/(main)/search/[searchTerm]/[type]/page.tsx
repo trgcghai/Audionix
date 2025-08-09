@@ -1,28 +1,10 @@
 "use client";
 import MediaList from "@/components/common/MediaList";
-import TrackRow from "@/components/common/TrackRow";
-import {
-  mockAlbums,
-  mockArtists,
-  mockPlaylists,
-  mockTracks,
-} from "@/app/sampleData";
+import { mockAlbums, mockArtists, mockPlaylists } from "@/app/sampleData";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody } from "@/components/ui/table";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-
-const TrackResult = () => {
-  return (
-    <Table className="mt-4">
-      <TableBody className="">
-        {[...mockTracks, ...mockTracks].map((track, index) => (
-          <TrackRow key={track.id + index} track={track} index={index + 1} />
-        ))}
-      </TableBody>
-    </Table>
-  );
-};
+import SimpleTrackTable from "@/components/common/SimpleTrackTable";
 
 const Page = () => {
   const { searchTerm, type } = useParams();
@@ -33,7 +15,7 @@ const Page = () => {
       <div className="flex items-center justify-start gap-2">
         <Button
           variant={"outline"}
-          className={`text-md font-medium rounded-full dark:text-white w-24`}
+          className={`text-md w-24 rounded-full font-medium dark:text-white`}
         >
           <Link href={`/search/${searchTerm}`}>All</Link>
         </Button>
@@ -45,7 +27,7 @@ const Page = () => {
                 ? "default"
                 : "outline"
             }
-            className={`text-md font-medium rounded-full dark:text-white w-24`}
+            className={`text-md w-24 rounded-full font-medium dark:text-white`}
           >
             <Link href={`/search/${searchTerm}/${button.toLowerCase()}`}>
               {button}
@@ -54,8 +36,8 @@ const Page = () => {
         ))}
       </div>
 
-      <div className="px-3 mt-4">
-        {type === "tracks" && <TrackResult />}
+      <div className="mt-4 px-3">
+        {type === "tracks" && <SimpleTrackTable tracks={[]} />}
         {type === "playlists" && (
           <MediaList
             data={[...mockPlaylists, ...mockPlaylists, ...mockPlaylists]}

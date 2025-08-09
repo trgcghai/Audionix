@@ -1,18 +1,10 @@
 import HeroSection from "@/components/common/HeroSection";
-import TrackRow from "@/components/common/TrackRow";
-import { mockTracks } from "@/app/sampleData";
 import { PlaylistItem } from "@/app/types/component";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Plus, Repeat, CornerDownLeft, Clock } from "lucide-react";
+import { Plus, Repeat, CornerDownLeft } from "lucide-react";
+import SimpleTrackTable from "@/components/common/SimpleTrackTable";
 
 const CreatePlaylistPage = () => {
   const newPlaylist: PlaylistItem = {
@@ -69,32 +61,12 @@ const CreatePlaylistPage = () => {
         </div>
       </div>
 
-      <Table className="mt-4">
-        <TableHeader>
-          <TableRow className="cursor-default">
-            <TableHead className="rounded-tl-lg rounded-bl-lg text-xs font-bold text-gray-400">
-              #
-            </TableHead>
-            <TableHead className="text-xs font-bold text-gray-400">
-              Title
-            </TableHead>
-            <TableHead className="text-xs font-bold text-gray-400">
-              Album
-            </TableHead>
-            <TableHead className="text-xs font-bold text-gray-400">
-              Date added
-            </TableHead>
-            <TableHead className="rounded-tr-lg rounded-br-lg text-xs font-bold text-gray-400">
-              <Clock className="h-4 w-4" />
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody className="">
-          {[...mockTracks, ...mockTracks].map((track, index) => (
-            <TrackRow key={track._id + index} track={track} index={index + 1} />
-          ))}
-        </TableBody>
-      </Table>
+      <SimpleTrackTable
+        tracks={[]}
+        showHeader={false}
+        variant="addToPlaylist"
+        className="mt-4"
+      />
     </div>
   );
 };

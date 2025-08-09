@@ -1,18 +1,17 @@
-import { TrackItem } from "@/app/types/component";
-import { Table, TableBody } from "@/components/ui/table";
-import TrackRow from "@/components/common/TrackRow";
+import SimpleTrackTable from "@/components/common/SimpleTrackTable";
+import { Track } from "@/app/types/model";
 
 const SearchResult = ({
   searchTerm,
   searchResults,
 }: {
   searchTerm: string;
-  searchResults: TrackItem[];
+  searchResults: Track[];
 }) => {
   if (searchResults.length === 0) {
     return (
       <div className="mt-4">
-        <p className="text-lg font-semibold mb-2">
+        <p className="mb-2 text-lg font-semibold">
           Search results for {searchTerm}
         </p>
         <p className="text-gray-500">
@@ -24,21 +23,14 @@ const SearchResult = ({
 
   return (
     <div className="mt-4">
-      <p className="text-lg font-semibold mb-2">
+      <p className="mb-2 text-lg font-semibold">
         Search results for {searchTerm}
       </p>
-      <Table>
-        <TableBody>
-          {searchResults.map((track, index) => (
-            <TrackRow
-              key={track.id + index}
-              track={track}
-              index={index + 1}
-              variant="addToPlaylist"
-            />
-          ))}
-        </TableBody>
-      </Table>
+      <SimpleTrackTable
+        tracks={searchResults}
+        showHeader={false}
+        variant="addToPlaylist"
+      />
     </div>
   );
 };

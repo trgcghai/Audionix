@@ -1,4 +1,4 @@
-import { SimpleTrackTablesVariant, TrackItem } from "@/app/types/component";
+import { SimpleTrackTablesVariant } from "@/app/types/component";
 import TrackRow from "./TrackRow";
 import {
   Table,
@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Clock } from "lucide-react";
+import { Track } from "@/app/types/model";
 
 const RenderHeaderByVariant = ({
   variant = "default",
@@ -83,9 +84,10 @@ const SimpleTrackTable = ({
   variant = "default",
   showHeader = true,
   tracks,
+  className,
 }: SimpleTrackTableProps) => {
   return (
-    <Table className="mt-4">
+    <Table className={className}>
       {showHeader && <RenderHeaderByVariant variant={variant} />}
       <TableBody className="">
         {tracks.map((track, index) => (
@@ -103,7 +105,8 @@ const SimpleTrackTable = ({
 export default SimpleTrackTable;
 
 interface SimpleTrackTableProps {
-  tracks: TrackItem[];
+  tracks: Track[];
   showHeader?: boolean;
   variant?: SimpleTrackTablesVariant;
+  className?: string;
 }

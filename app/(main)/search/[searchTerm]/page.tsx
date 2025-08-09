@@ -1,16 +1,10 @@
 "use client";
 import MediaList from "@/components/common/MediaList";
-import TrackRow from "@/components/common/TrackRow";
-import {
-  mockAlbums,
-  mockArtists,
-  mockPlaylists,
-  mockTracks,
-} from "@/app/sampleData";
+import { mockAlbums, mockArtists, mockPlaylists } from "@/app/sampleData";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody } from "@/components/ui/table";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import SimpleTrackTable from "@/components/common/SimpleTrackTable";
 
 const Page = () => {
   const { searchTerm } = useParams();
@@ -21,7 +15,7 @@ const Page = () => {
       <div className="flex items-center justify-start gap-2">
         <Button
           variant="default"
-          className={`text-md font-medium rounded-full dark:text-white w-24`}
+          className={`text-md w-24 rounded-full font-medium dark:text-white`}
         >
           <Link href={`/search/${searchTerm}`}>All</Link>
         </Button>
@@ -29,7 +23,7 @@ const Page = () => {
           <Button
             key={button}
             variant="outline"
-            className={`text-md font-medium rounded-full dark:text-white w-24`}
+            className={`text-md w-24 rounded-full font-medium dark:text-white`}
           >
             <Link href={`/search/${searchTerm}/${button.toLowerCase()}`}>
               {button}
@@ -38,19 +32,14 @@ const Page = () => {
         ))}
       </div>
 
-      <div className="px-3 mt-12">
-        <p className="text-xl font-bold px-2">Tracks</p>
-        <Table className="mt-4">
-          <TableBody className="">
-            {mockTracks.map((track, index) => (
-              <TrackRow
-                key={track.id + index}
-                track={track}
-                index={index + 1}
-              />
-            ))}
-          </TableBody>
-        </Table>
+      <div className="mt-12 px-3">
+        <p className="px-2 text-xl font-bold">Tracks</p>
+        <SimpleTrackTable
+          tracks={[]}
+          showHeader={false}
+          variant="addToPlaylist"
+          className="mt-4"
+        />
       </div>
 
       <div className="mt-12 px-3">

@@ -9,12 +9,12 @@ const SearchTrack = ({
   setSearchTerm: (term: string) => void;
 }) => {
   return (
-    <div className="mx-2">
-      <p className="w-2/5 text-xl font-semibold mb-4">
+    <div className="">
+      <p className="mb-4 w-2/5 text-xl font-semibold">
         Let&apos;s find something for your playlist
       </p>
-      <div className="hidden md:flex relative w-1/3">
-        <Search className="absolute left-2.5 top-2 h-5 w-5 text-gray-400" />
+      <div className="relative hidden w-1/3 md:flex">
+        <Search className="absolute top-2 left-2.5 h-5 w-5 text-gray-400" />
         <Input
           type="search"
           value={searchTerm}
@@ -22,7 +22,7 @@ const SearchTrack = ({
             setSearchTerm(e.target.value);
           }}
           placeholder="What do you want to play ?"
-          className="pl-9 rounded-full placeholder:text-md"
+          className="placeholder:text-md rounded-full pl-9"
         />
       </div>
     </div>

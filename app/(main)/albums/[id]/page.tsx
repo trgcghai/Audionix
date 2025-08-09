@@ -6,7 +6,7 @@ import { useState } from "react";
 import MediaList from "@/components/common/MediaList";
 import HeroSection from "@/components/common/HeroSection";
 import ControlSection from "@/components/common/ControlSection";
-import TableTrack from "@/components/common/SimpleTrackTable";
+import SimpleTrackTable from "@/components/common/SimpleTrackTable";
 
 const DetailAlbumPage = () => {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -34,7 +34,7 @@ const DetailAlbumPage = () => {
         isFollowing={isFollowing}
       />
 
-      <TableTrack tracks={[...mockTracks, ...mockTracks]} />
+      <SimpleTrackTable tracks={[]} />
 
       <MediaList
         className="mt-12"

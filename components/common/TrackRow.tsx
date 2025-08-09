@@ -1,15 +1,19 @@
 "use client";
 import Image from "next/image";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { SimpleTrackTablesVariant, TrackItem } from "@/app/types/component";
+import { SimpleTrackTablesVariant } from "@/app/types/component";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { Button } from "@/components/ui/button";
+import { Track } from "@/app/types/model";
+import { useMemo } from "react";
 
 const RenderByVariant = ({
   index,
   track,
   variant = "default",
 }: TrackRowProps) => {
+  const albumName = useMemo(() => track?.album?.name || "-", [track.album]);
+
   if (variant === "addToPlaylist") {
     return (
       <TableRow className="rounded-lg border-b-0">
@@ -20,19 +24,19 @@ const RenderByVariant = ({
           <div className="flex items-center gap-2">
             <Image
               src={track.cover_images[0].url}
-              alt={track.name}
+              alt={track.title}
               width={40}
               height={40}
-              className="rounded"
+              className="aspect-square rounded object-cover"
             />
             <div>
-              <p className="text-sm font-semibold">{track.name}</p>
-              <p className="text-sm text-gray-500">{track.artists[0].name}</p>
+              <p className="text-sm font-semibold">{track.title}</p>
+              <p className="text-sm text-gray-500">{track.artist.name}</p>
             </div>
           </div>
         </TableCell>
         <TableCell>
-          <p className="text-sm font-medium">{track.album.name}</p>
+          <p className="text-sm font-medium">{albumName}</p>
         </TableCell>
         <TableCell className="rounded-tr-lg rounded-br-lg text-end">
           <Button
@@ -40,7 +44,7 @@ const RenderByVariant = ({
             className="h-8 rounded-full text-sm font-medium"
             onClick={(e) => {
               e.stopPropagation();
-              console.log(`Adding ${track.name} to playlist`);
+              console.log(`Adding ${track.title} to playlist`);
             }}
           >
             Add
@@ -59,19 +63,19 @@ const RenderByVariant = ({
         <div className="flex items-center gap-2">
           <Image
             src={track.cover_images[0].url}
-            alt={track.name}
+            alt={track.title}
             width={40}
             height={40}
-            className="rounded"
+            className="aspect-square rounded object-cover"
           />
           <div>
-            <p className="text-sm font-semibold">{track.name}</p>
-            <p className="text-sm text-gray-500">{track.artists[0].name}</p>
+            <p className="text-sm font-semibold">{track.title}</p>
+            <p className="text-sm text-gray-500">{track.artist.name}</p>
           </div>
         </div>
       </TableCell>
       <TableCell>
-        <p className="text-sm font-medium">{track.album.name}</p>
+        <p className="text-sm font-medium">{albumName}</p>
       </TableCell>
       <TableCell>
         <p className="text-sm font-medium">Time added to playlist</p>
@@ -93,6 +97,6 @@ export default TrackRow;
 
 interface TrackRowProps {
   index: number;
-  track: TrackItem;
+  track: Track;
   variant?: SimpleTrackTablesVariant;
 }

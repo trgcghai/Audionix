@@ -59,6 +59,8 @@ const DetailPlaylistPage = () => {
     );
   }
 
+  console.log("Playlist data:", playlist?.tracks);
+
   return (
     <div>
       {playlist && <HeroSection data={playlist} />}

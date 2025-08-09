@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import usePlaylistAction from "@/hooks/usePlaylistAction";
+import { useState } from "react";
 
 const iconVariants = {
   rest: { rotate: 0 },
@@ -41,15 +42,11 @@ const CreateOptionItem = ({ optionItem }: { optionItem: OptionItem }) => {
   );
 };
 
-const CreatePlaylistButton = ({
-  isOpen,
-  onOpenChange,
-}: {
-  isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
-}) => {
+const CreatePlaylistButton = () => {
   const router = useRouter();
   const { handleCreatePlaylist } = usePlaylistAction();
+  const [isOpen, setIsOpen] = useState(false);
+
   const optionItems: OptionItem[] = [
     {
       icon: Music,
@@ -71,7 +68,7 @@ const CreatePlaylistButton = ({
   ];
 
   return (
-    <DropdownMenu open={isOpen} onOpenChange={onOpenChange}>
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
         <Button variant="default" className="text-md gap-1 rounded-full">
           <motion.span

@@ -12,3 +12,19 @@ export type FindPlaylistParams = {
 };
 
 export type CreatePlaylistResponse = ApiResponse<{ result: Playlist }>;
+
+export type AddTracksParams = {
+  id: string;
+  trackIds: string[];
+};
+
+export type AddTracksResponse = ApiResponse<{
+  _id: string;
+  result: {
+    acknowledged: boolean;
+    modifiedCount: number;
+    upsertedId?: string;
+    upsertedCount?: number;
+    matchedCount: number;
+  };
+}>;

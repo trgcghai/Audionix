@@ -2,6 +2,8 @@ import { ApiResponse } from "@/app/types/api";
 import { Playlist } from "@/app/types/model";
 import { api } from "@/services/api";
 import {
+  AddTracksParams,
+  AddTracksResponse,
   FindPlaylistParams,
   FindPlaylistResponse,
 } from "@/services/playlists/type";
@@ -31,7 +33,7 @@ const playlistApi = api.injectEndpoints({
         }),
         providesTags: ["Playlists"],
       }),
-      createPlaylist: builder.mutation({
+      createPlaylist: builder.mutation<ApiResponse<Playlist>, void>({
         query: () => ({
           url: "/playlists",
           method: "POST",
@@ -49,13 +51,23 @@ const playlistApi = api.injectEndpoints({
         }),
         invalidatesTags: ["Playlists"],
       }),
-      deletePlaylist: builder.mutation({
+      deletePlaylist: builder.mutation<ApiResponse<Playlist>, string>({
         query: (id) => ({
           url: `/playlists/${id}`,
           method: "DELETE",
         }),
         invalidatesTags: ["Playlists"],
       }),
+      addTracksToPlaylist: builder.mutation<AddTracksResponse, AddTracksParams>(
+        {
+          query: ({ id, trackIds }) => ({
+            url: `/playlists/${id}/tracks`,
+            method: "PUT",
+            data: { trackIds },
+          }),
+          invalidatesTags: (_, __, { id }) => [{ type: "Playlists", id }],
+        },
+      ),
     };
   },
 });
@@ -66,4 +78,5 @@ export const {
   useGetPlaylistByIdQuery,
   useUpdatePlaylistMutation,
   useDeletePlaylistMutation,
+  useAddTracksToPlaylistMutation,
 } = playlistApi;

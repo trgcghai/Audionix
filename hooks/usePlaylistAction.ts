@@ -1,6 +1,7 @@
 import { PlaylistFormValues } from "@/app/(main)/playlists/schema";
 import useToast from "@/hooks/useToast";
 import {
+  useAddTracksToPlaylistMutation,
   useCreatePlaylistMutation,
   useDeletePlaylistMutation,
   useUpdatePlaylistMutation,
@@ -13,6 +14,8 @@ const usePlaylistAction = () => {
   const [createPlaylist, createState] = useCreatePlaylistMutation();
   const [updatePlaylist, updateState] = useUpdatePlaylistMutation();
   const [deletePlaylist, deleteState] = useDeletePlaylistMutation();
+  const [addTracksToPlaylist, addTracksState] =
+    useAddTracksToPlaylistMutation();
 
   const transformToUpdatePayload = (formData: PlaylistFormValues): FormData => {
     const payload = new FormData();
@@ -28,7 +31,7 @@ const usePlaylistAction = () => {
 
   const handleCreatePlaylist = async () => {
     try {
-      await createPlaylist({}).unwrap();
+      await createPlaylist().unwrap();
       showToast("Created playlist successfully", "success");
     } catch (error) {
       console.error("Failed to create playlist:", error);
@@ -68,6 +71,23 @@ const usePlaylistAction = () => {
     }
   };
 
+  const handleAddTracksToPlaylist = async ({
+    id,
+    trackIds,
+  }: {
+    id: string;
+    trackIds: string[];
+  }) => {
+    if (!id || trackIds.length === 0) return;
+    try {
+      await addTracksToPlaylist({ id, trackIds }).unwrap();
+      showToast("Added tracks to playlist successfully", "success");
+    } catch (error) {
+      console.error("Failed to add tracks to playlist:", error);
+      showToast("Failed to add tracks to playlist", "error");
+    }
+  };
+
   return {
     handleCreatePlaylist,
     createState,
@@ -75,6 +95,8 @@ const usePlaylistAction = () => {
     updateState,
     handleDeletePlaylist,
     deleteState,
+    handleAddTracksToPlaylist,
+    addTracksState,
   };
 };
 export default usePlaylistAction;

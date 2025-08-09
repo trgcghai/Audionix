@@ -6,6 +6,7 @@ import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { Button } from "@/components/ui/button";
 import { Track } from "@/app/types/model";
 import { useMemo } from "react";
+import usePlaylistAction from "@/hooks/usePlaylistAction";
 
 const RenderByVariant = ({
   index,
@@ -13,6 +14,7 @@ const RenderByVariant = ({
   variant = "default",
 }: TrackRowProps) => {
   const albumName = useMemo(() => track?.album?.name || "-", [track.album]);
+  const { handleAddTracksToPlaylist } = usePlaylistAction();
 
   if (variant === "addToPlaylist") {
     return (
@@ -44,7 +46,7 @@ const RenderByVariant = ({
             className="h-8 rounded-full text-sm font-medium"
             onClick={(e) => {
               e.stopPropagation();
-              console.log(`Adding ${track.title} to playlist`);
+              handleAddTracksToPlaylist({ id: "", trackIds: [track._id] });
             }}
           >
             Add

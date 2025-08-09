@@ -23,7 +23,6 @@ interface SidebarProps {
 const MainSidebar = ({ playlists }: SidebarProps) => {
   const filterButtons = ["Playlists", "Artists", "Albums"];
   const [selectedFilter, setSelectedFilter] = useState<string>("");
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   return (
     <Card className="h-full">
@@ -31,10 +30,7 @@ const MainSidebar = ({ playlists }: SidebarProps) => {
         <CardTitle>
           <div className="flex items-center justify-between">
             <p>Your library</p>
-            <CreatePlaylistButton
-              isOpen={isPopoverOpen}
-              onOpenChange={setIsPopoverOpen}
-            />
+            <CreatePlaylistButton />
           </div>
         </CardTitle>
         <CardDescription className="space-y-4">

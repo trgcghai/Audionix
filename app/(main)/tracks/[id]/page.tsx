@@ -1,6 +1,5 @@
 "use client";
 import ControlSection from "@/components/common/ControlSection";
-import TableTrack from "@/components/common/SimpleTrackTable";
 import HeroSection from "@/components/common/HeroSection";
 import MediaList from "@/components/common/MediaList";
 import { mockAlbums, mockTracks } from "@/app/sampleData";
@@ -8,6 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { Dot } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import SimpleTrackTable from "@/components/common/SimpleTrackTable";
 
 const DetailTrackPage = () => {
   const [isLiked, setIsLiked] = useState(false);
@@ -36,7 +36,7 @@ const DetailTrackPage = () => {
         variant="track"
       />
 
-      <div className="flex gap-4 items-center mt-8">
+      <div className="mt-8 flex items-center gap-4">
         <Image
           src={"/audionix_logo_short.png"}
           alt=""
@@ -53,17 +53,17 @@ const DetailTrackPage = () => {
       </div>
 
       <div className="mt-12">
-        <p className="text-xl font-bold px-3">Popular tracks by artist</p>
-        <TableTrack tracks={mockTracks} showHeader={false} />
+        <p className="px-3 text-xl font-bold">Popular tracks by artist</p>
+        <SimpleTrackTable tracks={mockTracks} showHeader={false} />
       </div>
 
       <div className="mt-12">
-        <p className="text-xl font-bold px-3">Popular albums by artist</p>
+        <p className="px-3 text-xl font-bold">Popular albums by artist</p>
         <MediaList data={mockAlbums} />
       </div>
 
       <div className="mt-12">
-        <p className="text-xl font-bold px-3">Fan also like</p>
+        <p className="px-3 text-xl font-bold">Fan also like</p>
         <MediaList data={mockTracks} />
       </div>
     </div>

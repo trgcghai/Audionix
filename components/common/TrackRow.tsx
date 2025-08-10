@@ -4,17 +4,47 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { SimpleTrackTablesVariant } from "@/app/types/component";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { Button } from "@/components/ui/button";
-import { Track } from "@/app/types/model";
-import { useMemo } from "react";
+import { Playlist, Track } from "@/app/types/model";
+import { useCallback, useMemo } from "react";
 import usePlaylistAction from "@/hooks/usePlaylistAction";
+import { formatUploadTime } from "@/utils/formatUploadTime";
+
+interface TrackRowProps {
+  index: number;
+  track: Track | Playlist["tracks"][number];
+  variant?: SimpleTrackTablesVariant;
+}
 
 const RenderByVariant = ({
   index,
   track,
   variant = "default",
 }: TrackRowProps) => {
-  const albumName = useMemo(() => track?.album?.name || "-", [track.album]);
-  const { handleAddTracksToPlaylist } = usePlaylistAction();
+  const extractTrackData = useCallback((track: TrackRowProps["track"]) => {
+    const isPlaylistTrack = "time_added" in track;
+    if (isPlaylistTrack) {
+      return {
+        ...(track._id as Track),
+        time_added: track.time_added,
+      };
+    } else {
+      return {
+        ...(track as Track),
+      };
+    }
+  }, []);
+
+  const { handleAddTracksToPlaylist, getCurrrentPlaylistId } =
+    usePlaylistAction();
+
+  const trackData = useMemo(
+    () => extractTrackData(track),
+    [extractTrackData, track],
+  );
+
+  const albumName = useMemo(() => {
+    return trackData.album ? trackData.album.name : "-";
+  }, [trackData]);
 
   if (variant === "addToPlaylist") {
     return (
@@ -25,15 +55,15 @@ const RenderByVariant = ({
         <TableCell>
           <div className="flex items-center gap-2">
             <Image
-              src={track.cover_images[0].url}
-              alt={track.title}
+              src={trackData.cover_images[0].url}
+              alt={trackData.title}
               width={40}
               height={40}
               className="aspect-square rounded object-cover"
             />
             <div>
-              <p className="text-sm font-semibold">{track.title}</p>
-              <p className="text-sm text-gray-500">{track.artist.name}</p>
+              <p className="text-sm font-semibold">{trackData.title}</p>
+              {/* <p className="text-sm text-gray-500">{trackData.artist.name}</p> */}
             </div>
           </div>
         </TableCell>
@@ -46,7 +76,10 @@ const RenderByVariant = ({
             className="h-8 rounded-full text-sm font-medium"
             onClick={(e) => {
               e.stopPropagation();
-              handleAddTracksToPlaylist({ id: "", trackIds: [track._id] });
+              handleAddTracksToPlaylist({
+                id: getCurrrentPlaylistId()!,
+                trackIds: [trackData._id],
+              });
             }}
           >
             Add
@@ -64,15 +97,15 @@ const RenderByVariant = ({
       <TableCell>
         <div className="flex items-center gap-2">
           <Image
-            src={track.cover_images[0].url}
-            alt={track.title}
+            src={trackData.cover_images[0].url}
+            alt={trackData.title}
             width={40}
             height={40}
             className="aspect-square rounded object-cover"
           />
           <div>
-            <p className="text-sm font-semibold">{track.title}</p>
-            <p className="text-sm text-gray-500">{track.artist.name}</p>
+            <p className="text-sm font-semibold">{trackData.title}</p>
+            <p className="text-sm text-gray-500">{trackData.artist.name}</p>
           </div>
         </div>
       </TableCell>
@@ -80,11 +113,15 @@ const RenderByVariant = ({
         <p className="text-sm font-medium">{albumName}</p>
       </TableCell>
       <TableCell>
-        <p className="text-sm font-medium">Time added to playlist</p>
+        <p className="text-sm font-medium">
+          {"time_added" in trackData
+            ? formatUploadTime(trackData.time_added)
+            : ""}
+        </p>
       </TableCell>
       <TableCell className="rounded-tr-lg rounded-br-lg">
         <p className="text-sm font-medium">
-          {formatTrackDuration(track.duration_ms)}
+          {formatTrackDuration(trackData.duration_ms)}
         </p>
       </TableCell>
     </TableRow>
@@ -96,9 +133,3 @@ const TrackRow = ({ index, track, variant = "default" }: TrackRowProps) => {
 };
 
 export default TrackRow;
-
-interface TrackRowProps {
-  index: number;
-  track: Track;
-  variant?: SimpleTrackTablesVariant;
-}

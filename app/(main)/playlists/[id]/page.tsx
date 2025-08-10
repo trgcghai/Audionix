@@ -4,7 +4,6 @@ import HeroSection from "@/components/common/HeroSection";
 import { useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import SearchTrack from "@/app/(main)/playlists/components/SearchTrack";
-import TableTrack from "@/components/common/SimpleTrackTable";
 import { useGetPlaylistByIdQuery } from "@/services/playlists/playlistApi";
 import LoaderSpin from "@/components/common/LoaderSpin";
 import ErrorMessage from "@/components/common/ErrorMessage";
@@ -14,6 +13,7 @@ import { useGetTracksQuery } from "@/services/tracks/trackApi";
 import { ApiErrorResponse } from "@/app/types/api";
 import TracksList from "@/app/(main)/playlists/components/TracksList";
 import usePlaylistAction from "@/hooks/usePlaylistAction";
+import SimpleTrackTable from "@/components/common/SimpleTrackTable";
 
 const DetailPlaylistPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -25,9 +25,12 @@ const DetailPlaylistPage = () => {
     isLoading: playlistLoading,
     isError: playlistError,
   } = useGetPlaylistByIdQuery(id);
+
+  const playlist = useMemo(() => {
+    return playlistData && playlistData.data;
+  }, [playlistData]);
+
   const { handleDeletePlaylist } = usePlaylistAction();
-  const playlist = useMemo(() => playlistData?.data.item, [playlistData]);
-  const tracksLength = useMemo(() => playlist?.tracks.length || 0, [playlist]);
   const {
     data: recommendTrackData,
     isLoading: recommendLoading,
@@ -39,7 +42,7 @@ const DetailPlaylistPage = () => {
       title: debouncedSearchTerm,
     },
     {
-      skip: tracksLength !== 0,
+      skip: playlist?.tracks.length !== 0,
     },
   );
 
@@ -59,25 +62,19 @@ const DetailPlaylistPage = () => {
     );
   }
 
-  console.log("Playlist data:", playlist?.tracks);
-
   return (
     <div>
       {playlist && <HeroSection data={playlist} />}
-
       <Separator className="my-4" />
-
       {/* display play button and control section such as delete,... */}
       <ControlSection
         onPlay={() => console.log("Play playlist")}
         onDelete={() => handleDeletePlaylist(id)}
       />
-
       {/* display search bar to add tracks to playlist */}
-      {tracksLength === 0 && (
+      {playlist && playlist.tracks.length === 0 && (
         <SearchTrack searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       )}
-
       {/* display search result to add to playlist */}
       {searchTerm && (
         <TracksList
@@ -89,9 +86,8 @@ const DetailPlaylistPage = () => {
           error={(recommendErrorData as ApiErrorResponse)?.message}
         />
       )}
-
       {/* display recommendations to add to playlist */}
-      {!searchTerm && tracksLength === 0 && (
+      {!searchTerm && playlist && playlist.tracks.length === 0 && (
         <TracksList
           tracks={recommendTrackData?.data.items || []}
           title="Recommended tracks"
@@ -100,9 +96,10 @@ const DetailPlaylistPage = () => {
           error={(recommendErrorData as ApiErrorResponse)?.message}
         />
       )}
-
       {/* display tracks in playlist if playlist already have some */}
-      {tracksLength !== 0 && <TableTrack tracks={[]} />}
+      {playlist && playlist.tracks.length !== 0 && (
+        <SimpleTrackTable tracks={playlist.tracks} />
+      )}
     </div>
   );
 };

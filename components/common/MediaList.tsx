@@ -107,7 +107,6 @@ const MediaList = ({
           />
         )}
         {data.map((item, index) => {
-          console.log("item:", item);
           if (item.type === "playlist") {
             return (
               <Link href={`/playlists/${item._id}`} key={item._id + index}>

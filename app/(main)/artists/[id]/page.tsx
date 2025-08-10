@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MediaList from "@/components/common/MediaList";
 import HeroSection from "@/components/common/HeroSection";
-import TableTrack from "@/components/common/SimpleTrackTable";
+import SimpleTrackTable from "@/components/common/SimpleTrackTable";
 
 const DetailArtistPage = () => {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -36,7 +36,7 @@ const DetailArtistPage = () => {
 
       <div className="px-3">
         <p className="text-xl font-bold">Popular tracks</p>
-        <TableTrack tracks={mockTracks} showHeader={false} />
+        <SimpleTrackTable tracks={mockTracks} showHeader={false} />
       </div>
 
       <div className="mt-12 px-3">

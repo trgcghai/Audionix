@@ -8,40 +8,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Clock } from "lucide-react";
-import { Track } from "@/app/types/model";
+import { Playlist, Track } from "@/app/types/model";
 
 const RenderHeaderByVariant = ({
   variant = "default",
 }: {
   variant?: SimpleTrackTablesVariant;
 }) => {
-  if (variant === "artistTrack") {
-    return (
-      <TableHeader>
-        <TableRow className="cursor-default">
-          <TableHead className="rounded-tl-lg rounded-bl-lg text-xs font-bold text-gray-400">
-            #
-          </TableHead>
-          <TableHead className="text-xs font-bold text-gray-400">
-            Title
-          </TableHead>
-          <TableHead className="text-xs font-bold text-gray-400">
-            Album
-          </TableHead>
-          <TableHead className="text-xs font-bold text-gray-400">
-            Date uploaded
-          </TableHead>
-          <TableHead className="text-xs font-bold text-gray-400">
-            Status
-          </TableHead>
-          <TableHead className="rounded-tr-lg rounded-br-lg text-xs font-bold text-gray-400">
-            <Clock className="h-4 w-4" />
-          </TableHead>
-        </TableRow>
-      </TableHeader>
-    );
-  }
-
   if (variant === "addToPlaylist") {
     return (
       <TableHeader>
@@ -92,7 +65,7 @@ const SimpleTrackTable = ({
       <TableBody className="">
         {tracks.map((track, index) => (
           <TrackRow
-            key={track._id + index}
+            key={"time_added" in track ? track._id._id : track._id}
             track={track}
             index={index + 1}
             variant={variant}
@@ -105,7 +78,7 @@ const SimpleTrackTable = ({
 export default SimpleTrackTable;
 
 interface SimpleTrackTableProps {
-  tracks: Track[];
+  tracks: Track[] | Playlist["tracks"];
   showHeader?: boolean;
   variant?: SimpleTrackTablesVariant;
   className?: string;

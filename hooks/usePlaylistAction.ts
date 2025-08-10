@@ -6,11 +6,12 @@ import {
   useDeletePlaylistMutation,
   useUpdatePlaylistMutation,
 } from "@/services/playlists/playlistApi";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const usePlaylistAction = () => {
   const { showToast } = useToast();
   const router = useRouter();
+  const pathname = usePathname();
   const [createPlaylist, createState] = useCreatePlaylistMutation();
   const [updatePlaylist, updateState] = useUpdatePlaylistMutation();
   const [deletePlaylist, deleteState] = useDeletePlaylistMutation();
@@ -88,6 +89,11 @@ const usePlaylistAction = () => {
     }
   };
 
+  const getCurrrentPlaylistId = () => {
+    const match = pathname.match(/playlists\/([^/]+)/);
+    return match ? match[1] : "";
+  };
+
   return {
     handleCreatePlaylist,
     createState,
@@ -97,6 +103,7 @@ const usePlaylistAction = () => {
     deleteState,
     handleAddTracksToPlaylist,
     addTracksState,
+    getCurrrentPlaylistId,
   };
 };
 export default usePlaylistAction;

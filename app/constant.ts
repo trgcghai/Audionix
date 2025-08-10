@@ -3,7 +3,6 @@ import { TrackStatus } from "./enums";
 
 export const SIMPLE_TABLE_TRACKS_VARIANTS = [
   "default",
-  "artistTrack",
   "addToPlaylist",
 ] as const;
 

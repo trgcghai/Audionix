@@ -12,7 +12,7 @@ const playlistApi = api.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => {
     return {
-      getPlaylistById: builder.query<ApiResponse<{ item: Playlist }>, string>({
+      getPlaylistById: builder.query<ApiResponse<Playlist>, string>({
         query: (id: string) => ({
           url: `/playlists/${id}`,
           method: "GET",

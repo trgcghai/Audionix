@@ -44,8 +44,8 @@ export default function UserPopover({ user }: UserPopoverProps) {
   };
 
   const goToArtistPortal = () => {
+    router.push("/artist-home");
     if (user.roles.includes("artist")) {
-      router.push("/artist-home");
     } else {
       forbidden();
     }
@@ -63,7 +63,7 @@ export default function UserPopover({ user }: UserPopoverProps) {
           className="flex h-auto items-center gap-3 px-3 py-2"
         >
           <Avatar className="h-8 w-8">
-            <AvatarImage src={"/placeholder.svg"} alt={user.username} />
+            <AvatarImage src={"/audionix_logo_short.png"} alt={user.username} />
             <AvatarFallback className="text-sm">
               {user.username
                 .split(" ")
@@ -80,7 +80,10 @@ export default function UserPopover({ user }: UserPopoverProps) {
         <div className="p-4">
           <div className="flex items-center gap-3">
             <Avatar className="h-12 w-12">
-              <AvatarImage src={"/placeholder.svg"} alt={user.username} />
+              <AvatarImage
+                src={"/audionix_logo_short.png"}
+                alt={user.username}
+              />
               <AvatarFallback className="text-lg">
                 {user.username
                   .split(" ")

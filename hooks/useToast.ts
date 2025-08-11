@@ -46,7 +46,7 @@ const useToast = () => {
   const baseConfig: ToastOptions = useMemo(() => {
     return {
       position: "top-right",
-      autoClose: 3000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -101,7 +101,19 @@ const useToast = () => {
     }
   };
 
-  return { showToast };
+  const showSuccessToast = (message: string, config?: ToastOptions) => {
+    showToast(message, "success", config);
+  };
+
+  const showErrorToast = (message: string, config?: ToastOptions) => {
+    showToast(message, "error", config);
+  };
+
+  const showInfoToast = (message: string, config?: ToastOptions) => {
+    showToast(message, "info", config);
+  };
+
+  return { showSuccessToast, showErrorToast, showInfoToast };
 };
 
 export default useToast;

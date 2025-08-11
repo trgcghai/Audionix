@@ -13,6 +13,7 @@ import EditPlaylistForm from "../../app/(main)/playlists/components/form/EditPla
 import { Dot, ImageIcon, Music } from "lucide-react";
 import { Playlist } from "@/app/types/model";
 import ErrorMessage from "@/components/common/ErrorMessage";
+import formatTotalTime from "@/utils/formatTotalTime";
 
 interface HeroSectionProps {
   data: AlbumItem | ArtistItem | Playlist | TrackItem;
@@ -84,11 +85,16 @@ const HeroSection = ({ data, extraInfo }: HeroSectionProps) => {
                 {title}
               </p>
               <div className="text-muted-foreground flex flex-col items-start gap-2 text-sm">
-                {playlist?.description && (
-                  <p>{playlist?.description || "No description available"}</p>
-                )}
+                {playlist?.description && <p>{playlist?.description}</p>}
                 <div className="flex items-center gap-2">
-                  <p>Total time</p>
+                  <p>
+                    {formatTotalTime(
+                      playlist.tracks.reduce(
+                        (prev, curr) => prev + parseInt(curr.duration_ms),
+                        0,
+                      ),
+                    )}
+                  </p>
                   <Dot />
                   <p>{playlist?.tracks.length} tracks</p>
                 </div>

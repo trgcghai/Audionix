@@ -4,12 +4,13 @@ import {
   useAddTracksToPlaylistMutation,
   useCreatePlaylistMutation,
   useDeletePlaylistMutation,
+  useRemoveTracksFromPlaylistMutation,
   useUpdatePlaylistMutation,
 } from "@/services/playlists/playlistApi";
 import { usePathname, useRouter } from "next/navigation";
 
 const usePlaylistAction = () => {
-  const { showToast } = useToast();
+  const { showSuccessToast, showErrorToast } = useToast();
   const router = useRouter();
   const pathname = usePathname();
   const [createPlaylist, createState] = useCreatePlaylistMutation();
@@ -17,6 +18,8 @@ const usePlaylistAction = () => {
   const [deletePlaylist, deleteState] = useDeletePlaylistMutation();
   const [addTracksToPlaylist, addTracksState] =
     useAddTracksToPlaylistMutation();
+  const [removeTracksFromPlaylist, removeTracksState] =
+    useRemoveTracksFromPlaylistMutation();
 
   const transformToUpdatePayload = (formData: PlaylistFormValues): FormData => {
     const payload = new FormData();
@@ -33,10 +36,10 @@ const usePlaylistAction = () => {
   const handleCreatePlaylist = async () => {
     try {
       await createPlaylist().unwrap();
-      showToast("Created playlist successfully", "success");
+      showSuccessToast("Created playlist successfully");
     } catch (error) {
       console.error("Failed to create playlist:", error);
-      showToast("Failed to create playlist", "error");
+      showErrorToast("Failed to create playlist");
     }
   };
 
@@ -52,10 +55,10 @@ const usePlaylistAction = () => {
         id,
         formData: payload,
       }).unwrap();
-      showToast("Updated playlist successfully", "success");
+      showSuccessToast("Updated playlist successfully");
     } catch (error) {
       console.error("Failed to update playlist:", error);
-      showToast("Failed to update playlist", "error");
+      showErrorToast("Failed to update playlist");
     }
   };
 
@@ -63,12 +66,12 @@ const usePlaylistAction = () => {
     if (!id) return;
     try {
       await deletePlaylist(id).unwrap();
-      showToast("Deleted playlist successfully", "success");
+      showSuccessToast("Deleted playlist successfully");
 
       router.push("/");
     } catch (error) {
       console.error("Failed to delete playlist:", error);
-      showToast("Failed to delete playlist", "error");
+      showErrorToast("Failed to delete playlist");
     }
   };
 
@@ -82,10 +85,27 @@ const usePlaylistAction = () => {
     if (!id || trackIds.length === 0) return;
     try {
       await addTracksToPlaylist({ id, trackIds }).unwrap();
-      showToast("Added tracks to playlist successfully", "success");
+      showSuccessToast("Added tracks to playlist successfully");
     } catch (error) {
       console.error("Failed to add tracks to playlist:", error);
-      showToast("Failed to add tracks to playlist", "error");
+      showErrorToast("Failed to add tracks to playlist");
+    }
+  };
+
+  const handleRemoveTracksFromPlaylist = async ({
+    id,
+    trackIds,
+  }: {
+    id: string;
+    trackIds: string[];
+  }) => {
+    if (!id || trackIds.length === 0) return;
+    try {
+      await removeTracksFromPlaylist({ id, trackIds }).unwrap();
+      showSuccessToast("Removed tracks from playlist successfully");
+    } catch (error) {
+      console.error("Failed to remove tracks from playlist:", error);
+      showErrorToast("Failed to remove tracks from playlist");
     }
   };
 
@@ -103,6 +123,8 @@ const usePlaylistAction = () => {
     deleteState,
     handleAddTracksToPlaylist,
     addTracksState,
+    handleRemoveTracksFromPlaylist,
+    removeTracksState,
     getCurrrentPlaylistId,
   };
 };

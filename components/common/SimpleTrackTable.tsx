@@ -65,7 +65,7 @@ const SimpleTrackTable = ({
       <TableBody className="">
         {tracks.map((track, index) => (
           <TrackRow
-            key={"time_added" in track ? track._id._id : track._id}
+            key={track._id}
             track={track}
             index={index + 1}
             variant={variant}

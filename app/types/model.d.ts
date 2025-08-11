@@ -14,9 +14,9 @@ export type Track = {
     },
   ];
   status: TrackStatus;
-  album: {
+  albums: {
     _id: string;
-    name: string;
+    title: string;
     cover_images: [
       {
         url: string;
@@ -25,7 +25,7 @@ export type Track = {
         key: string;
       },
     ];
-  };
+  }[];
   artist: {
     _id: string;
     name: string;
@@ -48,6 +48,37 @@ export type Track = {
   createdAt: string;
   updatedAt: string;
   __v: number;
+};
+
+export type EmbbedTrack = {
+  _id: string;
+  title: string;
+  type: "track";
+  duration_ms: string;
+  cover_images: [
+    {
+      url: string;
+      width: number;
+      height: number;
+      key: string;
+    },
+  ];
+  artist: {
+    _id: string;
+    name: string;
+  };
+  albums: {
+    _id: string;
+    title: string;
+  }[];
+  genres: string[];
+  file: {
+    url: string;
+    key: string;
+    size: number;
+    mimetype: string;
+  };
+  timeAdded?: string;
 };
 
 export type Account = {
@@ -77,10 +108,7 @@ export type Playlist = {
       key: string;
     },
   ];
-  tracks: {
-    _id: Track;
-    time_added: string;
-  }[];
+  tracks: EmbbedTrack[];
   createdAt: string;
   updatedAt: string;
   __v: number;

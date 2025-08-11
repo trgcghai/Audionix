@@ -7,7 +7,7 @@ import useToast from "@/hooks/useToast";
 
 const UploadTrackPage = () => {
   const [createTrack, { isLoading, isError, error }] = useCreateTrackMutation();
-  const { showToast } = useToast();
+  const { showSuccessToast, showErrorToast } = useToast();
 
   const transformToPayload = (data: createTrackValues) => {
     const formData = new FormData();
@@ -41,10 +41,10 @@ const UploadTrackPage = () => {
 
       await createTrack(payload).unwrap();
 
-      showToast("Track uploaded successfully!", "success");
+      showSuccessToast("Track uploaded successfully!");
     } catch (err) {
       console.error("Error creating track:", err);
-      showToast("Upload track failed. Please try again.", "error");
+      showErrorToast("Upload track failed. Please try again.");
     }
   };
 

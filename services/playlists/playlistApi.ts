@@ -68,6 +68,17 @@ const playlistApi = api.injectEndpoints({
           invalidatesTags: (_, __, { id }) => [{ type: "Playlists", id }],
         },
       ),
+      removeTracksFromPlaylist: builder.mutation<
+        ApiResponse<Playlist>,
+        AddTracksParams
+      >({
+        query: ({ id, trackIds }) => ({
+          url: `/playlists/${id}/tracks`,
+          method: "DELETE",
+          data: { trackIds },
+        }),
+        invalidatesTags: (_, __, { id }) => [{ type: "Playlists", id }],
+      }),
     };
   },
 });
@@ -79,4 +90,5 @@ export const {
   useUpdatePlaylistMutation,
   useDeletePlaylistMutation,
   useAddTracksToPlaylistMutation,
+  useRemoveTracksFromPlaylistMutation,
 } = playlistApi;

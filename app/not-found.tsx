@@ -1,3 +1,5 @@
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/libs/utils";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
@@ -14,10 +16,20 @@ const Page = () => {
             moved.
           </p>
         </div>
-        <Link href="/" className="rounded-full text-base">
-          <ArrowLeft className="h-7 w-7" />
-          <p>Return to home page</p>
-        </Link>
+        <div className="flex justify-center">
+          <Link
+            href="/"
+            className={cn(
+              buttonVariants({ variant: "default" }),
+              "rounded-full",
+            )}
+          >
+            <div>
+              <ArrowLeft className="h-7 w-7" />
+            </div>
+            <p>Return to home page</p>
+          </Link>
+        </div>
       </div>
     </div>
   );

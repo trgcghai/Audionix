@@ -7,6 +7,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  RowSelectionState,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -24,6 +25,9 @@ export const useTrackTable = <TData, TValue>({
   const [selectedTracks, setSelectedTracks] = useState<TData[]>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
+  // Thêm state để theo dõi row selection
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+
   const table = useReactTable({
     data,
     columns,
@@ -32,9 +36,14 @@ export const useTrackTable = <TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onRowSelectionChange: setRowSelection, // Thêm hàm xử lý thay đổi row selection
     state: {
       columnFilters,
+      rowSelection, // Thêm rowSelection vào state
     },
+    // Enable selection
+    enableRowSelection: true,
+    enableMultiRowSelection: true,
   });
 
   useEffect(() => {
@@ -42,7 +51,7 @@ export const useTrackTable = <TData, TValue>({
     setSelectedRowsCount(selectedRows.length);
     setHasSelectedRows(selectedRows.length > 0);
     setSelectedTracks(selectedRows.map((row) => row.original));
-  }, [table]);
+  }, [table, rowSelection]);
 
   return {
     table,

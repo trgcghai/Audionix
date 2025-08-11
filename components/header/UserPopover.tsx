@@ -18,7 +18,7 @@ import {
   Settings,
   User,
 } from "lucide-react";
-import { forbidden, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useMemo } from "react";
 
 interface UserPopoverProps {
@@ -45,10 +45,6 @@ export default function UserPopover({ user }: UserPopoverProps) {
 
   const goToArtistPortal = () => {
     router.push("/artist-home");
-    if (user.roles.includes("artist")) {
-    } else {
-      forbidden();
-    }
   };
 
   const goToUser = () => {

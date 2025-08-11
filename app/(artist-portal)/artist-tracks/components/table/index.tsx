@@ -7,6 +7,7 @@ import DataTableFilterOptions from "@/components/dataTable/DataTableFilterOption
 import DataTableActionsOnSelected from "./DataTableActionsOnSelected";
 import { useTrackTable } from "../../hooks/useTrackTable";
 import TableContent from "@/components/dataTable/TableContent";
+import { cn } from "@/libs/utils";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -24,7 +25,6 @@ export function TrackTable<TData, TValue>({
   showFilterOptions = true,
 }: DataTableProps<TData, TValue>) {
   const { table, hasSelectedRows } = useTrackTable({ columns, data });
-
   return (
     <div className="space-y-4">
       {showFilterOptions && (
@@ -36,12 +36,15 @@ export function TrackTable<TData, TValue>({
           labelClassName="text-md w-1/5"
         />
       )}
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          {showActions && hasSelectedRows && (
-            <DataTableActionsOnSelected table={table} />
-          )}
-        </div>
+      <div
+        className={cn(
+          "mb-4 flex items-center justify-end",
+          showActions && hasSelectedRows && "justify-between",
+        )}
+      >
+        {showActions && hasSelectedRows && (
+          <DataTableActionsOnSelected table={table} />
+        )}
         {showViewOptions && <DataTableViewOptions table={table} />}
       </div>
       <TableContent table={table} columns={columns} />

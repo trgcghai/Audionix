@@ -13,7 +13,7 @@ const ArtistPortalPage = () => {
     if (roles && roles.includes("artist")) {
       router.push("/artist-tracks");
     } else {
-      router.push("/auth/login");
+      router.push("/");
     }
   }, [roles, router]);
 

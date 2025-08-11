@@ -28,7 +28,7 @@ function DataTableFilterOptions<TData>({
 }: DataTableFilterOptionsProps<TData>) {
   const itemBaseClassName = "mb-4 flex items-center gap-2";
   const inputBaseClassName = "w-sm rounded-full";
-  const labelBaseClassName = "capitalize w-25";
+  const labelBaseClassName = "capitalize";
 
   const filterableColumns = table
     .getAllColumns()

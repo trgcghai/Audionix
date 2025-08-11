@@ -1,7 +1,7 @@
 "use client";
 import { Columns } from "@/app/(artist-portal)/artist-albums/components/table/Columns";
 import AlbumTable from "@/app/(artist-portal)/artist-albums/components/table";
-import { mockArtistAlbums } from "@/app/sampleData";
+import { mockAlbums } from "@/app/sampleData";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAppDispatch } from "@/hooks/redux";
 import DetailAlbumCard from "@/components/common/DetailAlbumCard";
@@ -29,11 +29,7 @@ const ArtistAlbumPage = () => {
 
           <AlbumTable
             columns={Columns}
-            data={[
-              ...mockArtistAlbums,
-              ...mockArtistAlbums,
-              ...mockArtistAlbums,
-            ]}
+            data={[...mockAlbums, ...mockAlbums, ...mockAlbums]}
           />
         </div>
 

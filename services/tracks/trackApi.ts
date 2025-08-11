@@ -1,9 +1,14 @@
+import { ApiResponse } from "@/app/types/api";
 import { api } from "../api";
 import {
   CreateTrackResponse,
   FindTrackParams,
   FindTrackResponse,
+  UpdateMultipleStatusParams,
+  UpdateMultipleStatusResponse,
+  UpdateOneStatusParams,
 } from "./type";
+import { Track } from "@/app/types/model";
 
 const trackApi = api.injectEndpoints({
   endpoints: (builder) => {
@@ -40,8 +45,52 @@ const trackApi = api.injectEndpoints({
         }),
         invalidatesTags: ["Tracks"],
       }),
+      deleteOneTrack: builder.mutation<void, string>({
+        query: (trackId) => ({
+          url: `/tracks/${trackId}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["Tracks"],
+      }),
+      deleteTracks: builder.mutation<void, string[]>({
+        query: (ids) => ({
+          url: `/tracks`,
+          method: "DELETE",
+          data: { ids },
+        }),
+        invalidatesTags: ["Tracks"],
+      }),
+      changeOneTrackStatus: builder.mutation<
+        ApiResponse<Track>,
+        UpdateOneStatusParams
+      >({
+        query: ({ trackId, status }) => ({
+          url: `/tracks/${trackId}/status`,
+          method: "PATCH",
+          data: { status },
+        }),
+        invalidatesTags: ["Tracks"],
+      }),
+      changeTracksStatus: builder.mutation<
+        UpdateMultipleStatusResponse,
+        UpdateMultipleStatusParams
+      >({
+        query: ({ ids, status }) => ({
+          url: `/tracks/status`,
+          method: "PATCH",
+          data: { ids, status },
+        }),
+        invalidatesTags: ["Tracks"],
+      }),
     };
   },
 });
 
-export const { useGetTracksQuery, useCreateTrackMutation } = trackApi;
+export const {
+  useGetTracksQuery,
+  useCreateTrackMutation,
+  useDeleteOneTrackMutation,
+  useDeleteTracksMutation,
+  useChangeOneTrackStatusMutation,
+  useChangeTracksStatusMutation,
+} = trackApi;

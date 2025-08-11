@@ -1,4 +1,5 @@
 import { ArtistAlbumItem } from "@/app/types/component";
+import { useAppSelector } from "@/hooks/redux";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface DetailAlbumSliceState {
@@ -36,5 +37,8 @@ export const detailAlbumSlice = createSlice({
 
 export const { openViewDetail, hideViewDetail, toggleViewDetail } =
   detailAlbumSlice.actions;
+
+export const useDetailAlbumSlice = () =>
+  useAppSelector((state) => state.detailAlbum);
 
 export default detailAlbumSlice.reducer;

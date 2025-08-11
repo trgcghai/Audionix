@@ -1,15 +1,16 @@
+import { useAppSelector } from "@/hooks/redux";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface UserSliceState {
+export interface UserSliceState {
   email: string;
-  role: string[];
+  roles: string[];
   isAuthenticated: boolean;
   username: string;
 }
 
 const initialState: UserSliceState = {
   email: "",
-  role: [],
+  roles: [],
   isAuthenticated: false,
   username: "",
 };
@@ -22,19 +23,19 @@ export const userSlice = createSlice({
       state,
       action: PayloadAction<{
         email: string;
-        role: string[];
+        roles: string[];
         username: string;
       }>,
     ) => {
-      const { email, role, username } = action.payload;
+      const { email, roles, username } = action.payload;
       state.email = email;
-      state.role = role;
+      state.roles = roles;
       state.username = username;
       state.isAuthenticated = true;
     },
     clearUser: (state) => {
       state.email = "";
-      state.role = [];
+      state.roles = [];
       state.username = "";
       state.isAuthenticated = false;
     },
@@ -42,5 +43,7 @@ export const userSlice = createSlice({
 });
 
 export const { setUser, clearUser } = userSlice.actions;
+
+export const useUserSlice = () => useAppSelector((state) => state.user);
 
 export default userSlice.reducer;

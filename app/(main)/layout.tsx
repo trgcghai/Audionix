@@ -4,20 +4,20 @@ import MainHeader from "@/components/header/MainHeader";
 import Player from "@/app/(main)/components/player/Player";
 import { Separator } from "@/components/ui/separator";
 import Footer from "@/components/common/Footer";
-import { useAppSelector } from "@/hooks/redux";
 import QueueDrawer from "@/components/common/QueueDrawer";
 import { cn } from "@/libs/utils";
 import { useGetMyPlaylistsQuery } from "@/services/playlists/playlistApi";
 import LoaderSpin from "@/components/common/LoaderSpin";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import MainSidebar from "@/app/(main)/components/sidebar";
+import { useQueueDrawer } from "@/store/slices/queueDrawerSlice";
 
 const Layout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const { isOpen: isDrawerOpen } = useAppSelector((state) => state.queueDrawer);
+  const { isOpen: isDrawerOpen } = useQueueDrawer();
   const { data, isLoading, isError } = useGetMyPlaylistsQuery({});
 
   if (isLoading) {

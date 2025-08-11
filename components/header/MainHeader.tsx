@@ -9,8 +9,8 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/libs/utils";
 import LinkLogo from "../common/LinkLogo";
 import Link from "next/link";
-import { useAppSelector } from "@/hooks/redux";
 import UserPopover from "./UserPopover";
+import { useUserSlice } from "@/store/slices/userSlice";
 
 export default function MainHeader({
   className = "",
@@ -20,7 +20,7 @@ export default function MainHeader({
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 
-  const user = useAppSelector((state) => state.user);
+  const user = useUserSlice();
 
   const handleSearch = (e: React.KeyboardEvent) => {
     if (e.key !== "Enter") return;

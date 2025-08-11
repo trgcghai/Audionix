@@ -62,12 +62,10 @@ const useLogin = () => {
           },
         } = result;
 
-        console.log({ email, role, firstName, lastName });
-
         dispatch(
           setUser({
             email,
-            role,
+            roles: role,
             username: `${firstName} ${lastName}`,
           }),
         );

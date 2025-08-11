@@ -1,17 +1,16 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
-const Page = () => {
+const forbidden = () => {
   return (
     <div className="flex h-screen items-center px-4 py-12 sm:px-6 md:px-8 lg:px-12 xl:px-16">
       <div className="w-full space-y-6 text-center">
         <div className="space-y-3">
           <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">
-            Oops! Page not found.
+            Oops! You don&apos;t have permission to access this page.
           </h1>
           <p className="my-4 text-gray-500">
-            The page you&apos;re looking for doesn&apos;t exist or has been
-            moved.
+            You are not authorized to view this page.
           </p>
         </div>
         <Link href="/" className="rounded-full text-base">
@@ -22,4 +21,4 @@ const Page = () => {
     </div>
   );
 };
-export default Page;
+export default forbidden;

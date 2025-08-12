@@ -30,7 +30,7 @@ const trackApi = api.injectEndpoints({
           if (title) urlParams.append("title", title);
           if (artist) urlParams.append("artist", artist);
           if (genres) urlParams.append("genres", genres.join(","));
-          if (status) urlParams.append("status", status);
+          if (status) urlParams.append("status", status.join(","));
           if (sort) urlParams.append("sort", sort);
           if (albums) urlParams.append("albums", albums.join(","));
           return { url: `/tracks?${urlParams.toString()}` };

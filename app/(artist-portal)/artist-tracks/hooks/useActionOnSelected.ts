@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Table } from "@tanstack/react-table";
 import { Track } from "@/app/types/model";
 
-export const useTrackActions = <TData>(table: Table<TData>) => {
+export const useActionOnSelected = <TData>(table: Table<TData>) => {
   const [selectedStatus, setSelectedStatus] = useState<string | undefined>();
   const [addToAlbumDialogOpen, setAddToAlbumDialogOpen] = useState(false);
 

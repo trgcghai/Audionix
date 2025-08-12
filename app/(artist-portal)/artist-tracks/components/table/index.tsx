@@ -4,9 +4,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { DataTablePagination } from "@/components/dataTable/DataTablePagination";
 import { DataTableViewOptions } from "@/components/dataTable/DataTableViewOptions";
 import DataTableFilterOptions from "@/components/dataTable/DataTableFilterOptions";
-import DataTableActionsOnSelected from "./DataTableActionsOnSelected";
 import { useTrackTable } from "../../hooks/useTrackTable";
 import TableContent from "@/components/dataTable/TableContent";
+import DataTableActionsOnSelected from "@/app/(artist-portal)/artist-tracks/components/table/actionsOnSelected";
 import { cn } from "@/libs/utils";
 
 interface DataTableProps<TData, TValue> {

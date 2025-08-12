@@ -1,5 +1,3 @@
-"use client";
-
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import { ColumnDef } from "@tanstack/react-table";
@@ -7,9 +5,9 @@ import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
 import { Checkbox } from "@/components/ui/checkbox";
 import { TrackStatusValues } from "@/app/constant";
 import { Track } from "@/app/types/model";
-import ImageCell from "./ImageCell";
-import StatusCell from "./StatusCell";
-import ActionCell from "./ActionCell";
+import ImageCell from "./cells/ImageCell";
+import StatusCell from "./cells/StatusCell";
+import ActionCell from "./cells/ActionCell";
 
 export const Columns: ColumnDef<Track>[] = [
   {

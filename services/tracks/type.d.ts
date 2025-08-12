@@ -9,7 +9,7 @@ export type FindTrackParams = {
   title?: string;
   artist?: string;
   genres?: string[];
-  status?: string;
+  status?: string[];
   sort?: string;
   albums?: string[];
 };

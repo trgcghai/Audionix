@@ -1,8 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useDebounce } from "@/hooks/useDebounce";
 import { cn } from "@/libs/utils";
-import { useEffect, useState } from "react";
 
 interface TitleFilterProps {
   value: string;
@@ -23,33 +21,13 @@ const TitleFilter = ({
   labelClassName = "",
   inputClassName = "",
 }: TitleFilterProps) => {
-  const [inputValue, setInputValue] = useState(value);
-  const debouncedValue = useDebounce(inputValue, 500);
-
-  // Khi người dùng nhập, cập nhật local state
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
-
-  // Khi giá trị debounced thay đổi, trigger onChange để cập nhật filter
-  useEffect(() => {
-    onChange(debouncedValue);
-  }, [debouncedValue, onChange]);
-
-  // Đồng bộ với external value nếu nó thay đổi từ bên ngoài
-  useEffect(() => {
-    if (value !== inputValue && value === "") {
-      setInputValue("");
-    }
-  }, [inputValue, value]);
-
   return (
-    <div className={cn("mb-4 flex items-center gap-2", className)}>
-      <Label className={cn("capitalize", labelClassName)}>Track title</Label>
+    <div className={cn(className)}>
+      <Label className={cn(labelClassName)}>Track title</Label>
       <Input
-        className={cn("w-sm rounded-full", inputClassName)}
-        value={inputValue}
-        onChange={handleInputChange}
+        className={cn("!bg-transparent", inputClassName)}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         disabled={disabled}
       />

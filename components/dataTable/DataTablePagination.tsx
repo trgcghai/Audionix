@@ -7,94 +7,108 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Table } from "@tanstack/react-table";
 import {
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
 } from "lucide-react";
+import { useEffect } from "react";
 
-interface DataTablePaginationProps<TData> {
-  table: Table<TData>;
+interface DataTablePaginationProps {
+  current: number;
+  limit: number;
+  setLimit: (limit: number) => void;
+  totalPages: number;
+  onGoToFirst: () => void;
+  onGoToPrevious: () => void;
+  onGoToNext: () => void;
+  onGoToLast: (pages: number) => void;
 }
 
-export function DataTablePagination<TData>({
-  table,
-}: DataTablePaginationProps<TData>) {
+export function DataTablePagination({
+  current,
+  limit,
+  setLimit,
+  totalPages,
+  onGoToFirst,
+  onGoToPrevious,
+  onGoToNext,
+  onGoToLast,
+}: DataTablePaginationProps) {
+  useEffect(() => {
+    // Ensure the current page is within valid bounds
+    if (current > totalPages) {
+      onGoToLast(totalPages);
+    }
+  }, [current, onGoToLast, totalPages]);
+
   return (
-    <div className="flex items-center justify-between px-2">
-      <div className="text-muted-foreground flex-1 text-sm">
-        {table.getFilteredSelectedRowModel().rows.length} of{" "}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
+    <div className="flex items-center justify-end space-x-6 lg:space-x-8">
+      <div className="flex items-center space-x-2">
+        <p className="text-sm font-medium">Rows per page</p>
+        <Select
+          value={limit.toString()}
+          onValueChange={(value) => {
+            setLimit(Number(value));
+          }}
+        >
+          <SelectTrigger className="h-8 w-[70px] rounded-full">
+            <SelectValue placeholder="Select page size" />
+          </SelectTrigger>
+          <SelectContent side="top">
+            {PAGE_SIZE_OPTIONS.map((pageSize) => (
+              <SelectItem key={pageSize} value={`${pageSize}`}>
+                {pageSize}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
-      <div className="flex items-center space-x-6 lg:space-x-8">
-        <div className="flex items-center space-x-2">
-          <p className="text-sm font-medium">Rows per page</p>
-          <Select
-            value={`${table.getState().pagination.pageSize}`}
-            onValueChange={(value) => {
-              table.setPageSize(Number(value));
-            }}
-          >
-            <SelectTrigger className="h-8 w-[70px] rounded-full">
-              <SelectValue placeholder={table.getState().pagination.pageSize} />
-            </SelectTrigger>
-            <SelectContent side="top">
-              {PAGE_SIZE_OPTIONS.map((pageSize) => (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="flex gap-2 items-center justify-center text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount()}
-        </div>
-        <div className="flex items-center space-x-2">
-          <Button
-            variant="outline"
-            size="icon"
-            className="hidden size-8 lg:flex rounded-full"
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Go to first page</span>
-            <ChevronsLeft />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="size-8 rounded-full"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Go to previous page</span>
-            <ChevronLeft />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="size-8 rounded-full"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to next page</span>
-            <ChevronRight />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="hidden size-8 lg:flex rounded-full"
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to last page</span>
-            <ChevronsRight />
-          </Button>
-        </div>
+      <div className="flex items-center justify-center gap-2 text-sm font-medium">
+        Page {current} of {totalPages}
+      </div>
+      <div className="flex items-center space-x-2">
+        <Button
+          variant="outline"
+          size="icon"
+          className="hidden size-8 rounded-full lg:flex"
+          onClick={() => onGoToFirst()}
+          disabled={current === 1}
+        >
+          <span className="sr-only">Go to first page</span>
+          <ChevronsLeft />
+        </Button>
+        <Button
+          variant="outline"
+          size="icon"
+          className="size-8 rounded-full"
+          onClick={() => onGoToPrevious()}
+          disabled={current === 1}
+        >
+          <span className="sr-only">Go to previous page</span>
+          <ChevronLeft />
+        </Button>
+        <Button
+          variant="outline"
+          size="icon"
+          className="size-8 rounded-full"
+          onClick={() => onGoToNext()}
+          disabled={current === totalPages}
+        >
+          <span className="sr-only">Go to next page</span>
+          <ChevronRight />
+        </Button>
+        <Button
+          variant="outline"
+          size="icon"
+          className="hidden size-8 rounded-full lg:flex"
+          onClick={() => onGoToLast(totalPages)}
+          disabled={current === totalPages}
+        >
+          <span className="sr-only">Go to last page</span>
+          <ChevronsRight />
+        </Button>
       </div>
     </div>
   );

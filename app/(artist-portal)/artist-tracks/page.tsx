@@ -2,13 +2,15 @@
 import { Columns } from "@/app/(artist-portal)/artist-tracks/components/table/Columns";
 import { TrackTable } from "@/app/(artist-portal)/artist-tracks/components/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import useTrackManagement from "@/services/tracks/useTrackManagement";
+import useTrackManagement from "@/app/(artist-portal)/artist-tracks/hooks/useTrackManagement";
 import LoaderSpin from "@/components/common/LoaderSpin";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { ApiErrorResponse } from "@/app/types/api";
 
 const ArtistTrackPage = () => {
-  const { tracks, isLoading, isError, error } = useTrackManagement();
+  const { tracks, isLoading, isError, error, title } = useTrackManagement();
+
+  console.log({ title });
 
   return (
     <ScrollArea className="px-3">

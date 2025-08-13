@@ -1,9 +1,9 @@
-import { mockAlbums } from "@/app/sampleData";
+import { TrackStatusValues } from "@/app/constant";
 import { Label } from "@/components/ui/label";
 import MultipleSelector, { Option } from "@/components/ui/MultipleSelector";
 import { cn } from "@/libs/utils";
 
-interface AlbumsSelectProps {
+interface StatusFilterProps {
   value: Option[];
   onChange: (e: Option[]) => void;
   placeholder?: string;
@@ -13,22 +13,22 @@ interface AlbumsSelectProps {
   inputClassName?: string;
 }
 
-const AlbumsSelect = ({
+const StatusFilter = ({
   value,
   onChange,
-  placeholder = "Select albums...",
+  placeholder = "Select status",
   disabled,
   className,
   labelClassName,
   inputClassName,
-}: AlbumsSelectProps) => {
+}: StatusFilterProps) => {
   return (
     <div className={cn(className)}>
-      <Label className={cn(labelClassName)}>Album</Label>
+      <Label className={cn(labelClassName)}>Status</Label>
       <MultipleSelector
-        options={mockAlbums.map((album) => ({
-          label: album.name,
-          value: album._id,
+        options={TrackStatusValues.map((status) => ({
+          label: status.label,
+          value: status.value,
         }))}
         value={value}
         onChange={onChange}
@@ -39,4 +39,4 @@ const AlbumsSelect = ({
     </div>
   );
 };
-export default AlbumsSelect;
+export default StatusFilter;

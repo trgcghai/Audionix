@@ -6,7 +6,7 @@ export const SIMPLE_TABLE_TRACKS_VARIANTS = [
   "addToPlaylist",
 ] as const;
 
-export const PAGE_SIZE_OPTIONS = [10, 15, 20, 25, 30, 35, 40] as const;
+export const PAGE_SIZE_OPTIONS = [1, 10, 15, 20, 25, 30, 35, 40] as const;
 
 export const ARTIST_TRACK_STATUS_OPTIONS = ["active", "inactive"];
 

@@ -82,6 +82,7 @@ const UploadTrackForm = () => {
                   {...field}
                   placeholder="Track title"
                   disabled={isLoading}
+                  className="!bg-transparent"
                 />
               </FormControl>
               <FormMessage />

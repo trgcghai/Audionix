@@ -9,6 +9,7 @@ import { Album } from "@/app/types/model";
 import StatusCell from "./cells/StatusCell";
 import ImageCell from "./cells/ImageCell";
 import ActionCell from "./cells/ActionCell";
+import GenresCell from "@/app/(artist-portal)/artist-tracks/components/table/cells/GenresCell";
 
 export const Columns: ColumnDef<Album>[] = [
   {
@@ -34,6 +35,7 @@ export const Columns: ColumnDef<Album>[] = [
     ),
   },
   {
+    id: "cover_images",
     accessorKey: "images[0].url",
     enableSorting: false,
     meta: {
@@ -45,18 +47,49 @@ export const Columns: ColumnDef<Album>[] = [
     cell: ({ row }) => <ImageCell row={row} />,
   },
   {
+    id: "title",
     accessorKey: "title",
     enableColumnFilter: true,
+    enableSorting: false,
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Album Name" />
+      <DataTableColumnHeader column={column} title="Album title" />
     ),
     meta: {
-      label: "Album Name",
+      label: "Album title",
       inputType: "text",
     },
   },
   {
-    accessorKey: "uploadTime",
+    id: "number_of_followers",
+    accessorKey: "number_of_followers",
+    enableColumnFilter: true,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Number of Followers" />
+    ),
+    meta: {
+      label: "Number of Followers",
+      inputType: "text",
+    },
+  },
+  {
+    id: "genres",
+    accessorKey: "genres",
+    enableColumnFilter: true,
+    enableSorting: false,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Genres" />
+    ),
+    cell: ({ row }) => (
+      <GenresCell<Album> row={row} getGenres={(data) => data.genres} />
+    ),
+    meta: {
+      label: "Genres",
+      inputType: "text",
+    },
+  },
+  {
+    id: "createdAt",
+    accessorKey: "createdAt",
     enableColumnFilter: true,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Upload Time" />
@@ -64,6 +97,19 @@ export const Columns: ColumnDef<Album>[] = [
     cell: ({ row }) => formatUploadTime(row.original.createdAt),
     meta: {
       label: "Upload Time",
+      inputType: "date",
+    },
+  },
+  {
+    id: "updatedAt",
+    accessorKey: "updatedAt",
+    enableColumnFilter: true,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Last update" />
+    ),
+    cell: ({ row }) => formatUploadTime(row.original.updatedAt),
+    meta: {
+      label: "Last update",
       inputType: "date",
     },
   },

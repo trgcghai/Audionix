@@ -32,23 +32,14 @@ const useAlbumManagement = () => {
 
   useEffect(() => {
     const params = new URLSearchParams();
-    if (debouncedTitle) params.set("title", debouncedTitle);
+    if (title) params.set("title", title);
     if (status.length > 0) params.set("status", status.join(","));
     if (genres.length > 0) params.set("genres", genres.join(","));
     if (uploadTime) params.set("uploadTime", uploadTime.toISOString());
     if (current) params.set("current", current.toString());
     if (limit !== 10) params.set("limit", limit.toString());
     router.replace(`${pathname}?${params.toString()}`);
-  }, [
-    genres,
-    current,
-    limit,
-    pathname,
-    router,
-    status,
-    debouncedTitle,
-    uploadTime,
-  ]);
+  }, [genres, current, limit, pathname, router, status, title, uploadTime]);
 
   console.log({
     current,

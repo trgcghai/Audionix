@@ -1,10 +1,9 @@
+import useAlbumManagement from "@/app/(artist-portal)/artist-albums/hooks/useAlbumManagement";
+import TitleFilter from "@/components/common/filters/TitleFilter";
+import { AlbumStatusValues, DEFAULT_GENRES } from "@/app/constant";
+import MultipleValueFilter from "@/components/common/filters/MultipleValueFilter";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/libs/utils";
-import useTrackManagement from "@/app/(artist-portal)/artist-tracks/hooks/useTrackManagement";
-import TitleFilter from "../../../../../../components/common/filters/TitleFilter";
-import MultipleValueFilter from "@/components/common/filters/MultipleValueFilter";
-import { DEFAULT_GENRES, TrackStatusValues } from "@/app/constant";
-import { mockAlbums } from "@/app/sampleData";
 
 interface TableFiltersProps {
   className?: string;
@@ -22,14 +21,12 @@ const TableFilters = ({
   const {
     debounceTitle,
     setTitleFilter,
-    albums,
-    setAlbumsFilter,
     status,
     setStatusFilter,
     genres,
     setGenresFilter,
     clearFilter,
-  } = useTrackManagement();
+  } = useAlbumManagement();
   return (
     <>
       <div className={cn("space-y-4", className)}>
@@ -40,35 +37,6 @@ const TableFilters = ({
           inputClassName={cn(inputClassName)}
           labelClassName={cn(labelClassName)}
         />
-
-        <MultipleValueFilter
-          options={mockAlbums.map((album) => ({
-            label: album.name,
-            value: album._id,
-          }))}
-          label="Albums"
-          placeholder="Select albums"
-          value={albums}
-          onChange={setAlbumsFilter}
-          className={cn(itemClassName)}
-          inputClassName={cn(inputClassName)}
-          labelClassName={cn(labelClassName)}
-        />
-
-        <MultipleValueFilter
-          options={TrackStatusValues.map((status) => ({
-            label: status.label,
-            value: status.value,
-          }))}
-          label="Status"
-          placeholder="Select status"
-          value={status}
-          onChange={setStatusFilter}
-          className={cn(itemClassName)}
-          inputClassName={cn(inputClassName)}
-          labelClassName={cn(labelClassName, "w-28")}
-        />
-
         <MultipleValueFilter
           options={DEFAULT_GENRES.map((genre) => ({
             label: genre.label,
@@ -81,6 +49,19 @@ const TableFilters = ({
           className={cn(itemClassName)}
           inputClassName={cn(inputClassName)}
           labelClassName={cn(labelClassName)}
+        />
+        <MultipleValueFilter
+          options={AlbumStatusValues.map((status) => ({
+            label: status.label,
+            value: status.value,
+          }))}
+          label="Album Status"
+          placeholder="Select album status"
+          value={status}
+          onChange={setStatusFilter}
+          className={cn(itemClassName)}
+          inputClassName={cn(inputClassName)}
+          labelClassName={cn(labelClassName, "w-28")}
         />
       </div>
       <Button className="rounded-full" size={"sm"} onClick={clearFilter}>

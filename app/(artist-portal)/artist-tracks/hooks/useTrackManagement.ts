@@ -45,7 +45,7 @@ const useTrackManagement = () => {
     const params = new URLSearchParams();
 
     // Chỉ thêm params có giá trị
-    if (debouncedTitle) params.set("title", debouncedTitle);
+    if (title) params.set("title", title);
     if (status.length > 0) params.set("status", status.join(","));
     if (albums.length > 0) params.set("albums", albums.join(","));
     if (uploadTime) params.set("uploadTime", uploadTime.toISOString());
@@ -54,16 +54,7 @@ const useTrackManagement = () => {
 
     // Cập nhật URL không reload trang
     router.replace(`${pathname}?${params.toString()}`);
-  }, [
-    albums,
-    current,
-    limit,
-    pathname,
-    router,
-    status,
-    debouncedTitle,
-    uploadTime,
-  ]);
+  }, [albums, current, limit, pathname, router, status, title, uploadTime]);
 
   // Gọi API để lấy danh sách tracks
   const { data, isLoading, isError, error } = useGetTracksQuery(

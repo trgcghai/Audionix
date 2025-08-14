@@ -14,11 +14,11 @@ import {
 import { cn } from "@/libs/utils";
 import { DataTablePagination } from "@/components/dataTable/DataTablePagination";
 import { DataTableViewOptions } from "@/components/dataTable/DataTableViewOptions";
-import DataTableFilterOptions from "@/components/dataTable/DataTableFilterOptions";
 import { useEffect, useState } from "react";
 import DataTableActionsOnSelected from "./DataTableActionsOnSelected";
 import useAlbumManagement from "@/app/(artist-portal)/artist-albums/hooks/useAlbumManagement";
 import TableContent from "@/components/dataTable/TableContent";
+import TableFilters from "@/app/(artist-portal)/artist-albums/components/table/filters";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -76,12 +76,11 @@ const AlbumTable = <TData, TValue>({
   return (
     <div className="space-y-4">
       {showFilterOptions && (
-        <DataTableFilterOptions
-          table={table}
-          className="space-y-4"
-          itemClassName="mb-4 w-full"
-          inputClassName="w-full"
-          labelClassName="text-md w-1/5"
+        <TableFilters
+          className="grid grid-cols-2 gap-x-12 gap-y-6"
+          itemClassName="flex items-center gap-4 mb-0"
+          inputClassName="flex-1 w-full rounded-full"
+          labelClassName="text-base w-1/8 capitalize"
         />
       )}
       <div

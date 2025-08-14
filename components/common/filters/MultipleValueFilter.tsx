@@ -1,11 +1,17 @@
-import { DEFAULT_GENRES } from "@/app/constant";
 import { Label } from "@/components/ui/label";
 import MultipleSelector, { Option } from "@/components/ui/MultipleSelector";
 import { cn } from "@/libs/utils";
 
-interface GenresSelectProps {
+interface MultipleValueFilterProps {
+  // The options to choose from
+  options: Option[];
+
+  // Values and onChange handler
   value: Option[];
   onChange: (e: Option[]) => void;
+
+  // Input props
+  label: string;
   placeholder?: string;
   disabled?: boolean;
   className?: string;
@@ -13,23 +19,23 @@ interface GenresSelectProps {
   inputClassName?: string;
 }
 
-const GenresSelect = ({
+const MultipleValueFilter = ({
+  options,
+  label,
   value,
   onChange,
-  placeholder = "Select genres",
+  placeholder,
   disabled,
   className,
   labelClassName,
   inputClassName,
-}: GenresSelectProps) => {
+}: MultipleValueFilterProps) => {
   return (
     <div className={cn(className)}>
-      <Label className={cn(labelClassName, "w-28")}>Genres</Label>
+      <Label className={cn(labelClassName)}>{label}</Label>
       <MultipleSelector
-        options={DEFAULT_GENRES.map((genre) => ({
-          label: genre.label,
-          value: genre.value,
-        }))}
+        creatable
+        options={options}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
@@ -39,4 +45,4 @@ const GenresSelect = ({
     </div>
   );
 };
-export default GenresSelect;
+export default MultipleValueFilter;

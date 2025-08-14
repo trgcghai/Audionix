@@ -95,7 +95,9 @@ export const Columns: ColumnDef<Track>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Genres" />
     ),
-    cell: ({ row }) => <GenresCell row={row} />,
+    cell: ({ row }) => (
+      <GenresCell<Track> row={row} getGenres={(data) => data.genres} />
+    ),
     meta: {
       label: "Genres",
       inputType: "text",

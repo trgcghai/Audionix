@@ -3,7 +3,6 @@
 import { ArtistAlbumItem } from "@/app/types/component";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef, Row } from "@tanstack/react-table";
-import { DataTableColumnHeader } from "../../../../../components/dataTable/ColumnHeader";
 import { useState } from "react";
 import {
   FileText,
@@ -39,6 +38,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useAppDispatch } from "@/hooks/redux";
 import { openViewDetail } from "@/store/slices/detailAlbumSlice";
+import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
 
 export const Columns: ColumnDef<ArtistAlbumItem>[] = [
   {
@@ -147,8 +147,8 @@ function RenderImageCell({ row }: { row: Row<ArtistAlbumItem> }) {
 
   if (!imageUrl || imageError) {
     return (
-      <div className="flex items-center justify-center h-[70px] w-[70px] text-xs rounded-lg border">
-        <ImageIcon className="h-4 w-4 text-muted-foreground" />
+      <div className="flex h-[70px] w-[70px] items-center justify-center rounded-lg border text-xs">
+        <ImageIcon className="text-muted-foreground h-4 w-4" />
       </div>
     );
   }
@@ -190,7 +190,7 @@ function RenderStatusCell({ row }: { row: Row<ArtistAlbumItem> }) {
                 ? "default"
                 : "destructive"
             }
-            className="rounded-full px-2 py-1 capitalize cursor-pointer"
+            className="cursor-pointer rounded-full px-2 py-1 capitalize"
           >
             {row.original.status}
           </Badge>
@@ -236,7 +236,7 @@ function RenderActionCell({ row }: { row: Row<ArtistAlbumItem> }) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="h-8 w-8 p-0 rounded-full">
+          <Button variant="outline" className="h-8 w-8 rounded-full p-0">
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
@@ -247,7 +247,7 @@ function RenderActionCell({ row }: { row: Row<ArtistAlbumItem> }) {
             onClick={handleViewDetail}
           >
             <div className="flex items-center gap-2">
-              <FileText className="h-4 w-4 mr-2" />
+              <FileText className="mr-2 h-4 w-4" />
               <span>View detail</span>
             </div>
           </DropdownMenuItem>
@@ -256,7 +256,7 @@ function RenderActionCell({ row }: { row: Row<ArtistAlbumItem> }) {
               href={`/artist-albums/update/${album.id}`}
               className="flex items-center gap-2"
             >
-              <Settings2 className="h-4 w-4 mr-2" />
+              <Settings2 className="mr-2 h-4 w-4" />
               <span>Edit</span>
             </Link>
           </DropdownMenuItem>
@@ -265,7 +265,7 @@ function RenderActionCell({ row }: { row: Row<ArtistAlbumItem> }) {
             className="cursor-pointer"
             onClick={() => setStatusDialogOpen(true)}
           >
-            <Trash2 className="h-4 w-4 mr-2" />
+            <Trash2 className="mr-2 h-4 w-4" />
             <span>Delete</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

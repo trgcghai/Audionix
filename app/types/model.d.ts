@@ -1,4 +1,4 @@
-import { TrackStatus } from "../enums";
+import { AlbumStatus, TrackStatus } from "../enums";
 
 export type Track = {
   _id: string;
@@ -109,6 +109,28 @@ export type Playlist = {
     },
   ];
   tracks: EmbbedTrack[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
+export type Album = {
+  _id: string;
+  title: string;
+  artist: string;
+  description: string;
+  status: AlbumStatus;
+  cover_images: [
+    {
+      url: string;
+      width: number;
+      height: number;
+      key: string;
+    },
+  ];
+  tracks: EmbbedTrack[];
+  genres: string[];
+  number_of_followers: number;
   createdAt: string;
   updatedAt: string;
   __v: number;

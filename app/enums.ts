@@ -5,3 +5,9 @@ export enum TrackStatus {
   HIDDEN = "hidden",
   DELETED = "deleted",
 }
+
+export enum AlbumStatus {
+  PUBLISHED = "published",
+  HIDDEN = "hidden",
+  DELETED = "deleted",
+}

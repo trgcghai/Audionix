@@ -32,7 +32,45 @@ const albumApi = api.injectEndpoints({
       }),
       invalidatesTags: ["Albums"],
     }),
+    deleteOne: builder.mutation({
+      query: (albumId) => ({
+        url: `/albums/${albumId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Albums"],
+    }),
+    deleteMultiples: builder.mutation({
+      query: (ids) => ({
+        url: `/albums`,
+        method: "DELETE",
+        data: { ids },
+      }),
+      invalidatesTags: ["Albums"],
+    }),
+    updateStatusOne: builder.mutation({
+      query: ({ albumId, status }) => ({
+        url: `/albums/${albumId}/status`,
+        method: "PATCH",
+        data: { status },
+      }),
+      invalidatesTags: ["Albums"],
+    }),
+    updateStatusMany: builder.mutation({
+      query: ({ ids, status }) => ({
+        url: `/albums/status`,
+        method: "PATCH",
+        data: { ids, status },
+      }),
+      invalidatesTags: ["Albums"],
+    }),
   }),
 });
 
-export const { useCreateAlbumMutation, useGetAlbumsQuery } = albumApi;
+export const {
+  useCreateAlbumMutation,
+  useGetAlbumsQuery,
+  useDeleteOneMutation,
+  useDeleteMultiplesMutation,
+  useUpdateStatusOneMutation,
+  useUpdateStatusManyMutation,
+} = albumApi;

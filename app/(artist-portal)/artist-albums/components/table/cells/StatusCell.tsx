@@ -6,21 +6,16 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
-import { ARTIST_ALBUM_STATUS_OPTIONS } from "@/app/constant";
 import { Album } from "@/app/types/model";
 import { AlbumStatus } from "@/app/enums";
+import StatusSelect from "@/app/(artist-portal)/artist-albums/components/StatusSelect";
+import useAlbumActions from "@/hooks/useAlbumActions";
 
 const StatusCell = ({ row }: { row: Row<Album> }) => {
   const [status, setStatus] = useState(row.original.status);
   const [statusDialogOpen, setStatusDialogOpen] = useState(false);
+  const { handleUpdateStatusOne } = useAlbumActions();
 
   const handleStatusChange = (value: string) => {
     setStatus(value as AlbumStatus);
@@ -28,8 +23,7 @@ const StatusCell = ({ row }: { row: Row<Album> }) => {
   };
 
   const handleStatusConfirm = () => {
-    console.log(`Changing status to: ${status}`);
-    console.log(`Selected rows:`, row.original);
+    handleUpdateStatusOne({ albumId: row.original._id, status });
     setStatusDialogOpen(false);
   };
 
@@ -39,7 +33,7 @@ const StatusCell = ({ row }: { row: Row<Album> }) => {
         <PopoverTrigger asChild>
           <Badge
             variant={
-              row.original.status === ARTIST_ALBUM_STATUS_OPTIONS[0]
+              row.original.status === AlbumStatus.PUBLISHED
                 ? "default"
                 : "destructive"
             }
@@ -49,18 +43,12 @@ const StatusCell = ({ row }: { row: Row<Album> }) => {
           </Badge>
         </PopoverTrigger>
         <PopoverContent align="end" className="w-48">
-          <Select value={status} onValueChange={handleStatusChange}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select status" />
-            </SelectTrigger>
-            <SelectContent>
-              {ARTIST_ALBUM_STATUS_OPTIONS.map((status) => (
-                <SelectItem key={status} value={status} className="capitalize">
-                  {status}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <StatusSelect
+            status={status}
+            handleStatusChange={handleStatusChange}
+            disabled={false}
+            className="w-full rounded-lg"
+          />
         </PopoverContent>
       </Popover>
 

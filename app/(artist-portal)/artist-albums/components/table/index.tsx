@@ -15,10 +15,10 @@ import { cn } from "@/libs/utils";
 import { DataTablePagination } from "@/components/dataTable/DataTablePagination";
 import { DataTableViewOptions } from "@/components/dataTable/DataTableViewOptions";
 import { useEffect, useState } from "react";
-import DataTableActionsOnSelected from "./DataTableActionsOnSelected";
 import useAlbumManagement from "@/app/(artist-portal)/artist-albums/hooks/useAlbumManagement";
 import TableContent from "@/components/dataTable/TableContent";
 import TableFilters from "@/app/(artist-portal)/artist-albums/components/table/filters";
+import DataTableActionsOnSelected from "@/app/(artist-portal)/artist-albums/components/table/actionsOnSelected";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

@@ -1,10 +1,21 @@
 import { createAlbumFormValues } from "@/app/(artist-portal)/artist-albums/components/form/schemas";
 import useToast from "@/hooks/useToast";
-import { useCreateAlbumMutation } from "@/services/albums/albumApi";
+import {
+  useCreateAlbumMutation,
+  useDeleteMultiplesMutation,
+  useDeleteOneMutation,
+  useUpdateStatusManyMutation,
+  useUpdateStatusOneMutation,
+} from "@/services/albums/albumApi";
 
 const useAlbumActions = () => {
   const { showSuccessToast, showErrorToast } = useToast();
   const [createAlbum, createState] = useCreateAlbumMutation();
+  const [deleteOne, deleteOneState] = useDeleteOneMutation();
+  const [deleteMultiples, deleteMultiplesState] = useDeleteMultiplesMutation();
+  const [updateStatusOne, updateStatusOneState] = useUpdateStatusOneMutation();
+  const [updateStatusMany, updateStatusManyState] =
+    useUpdateStatusManyMutation();
 
   const transformToPayload = (data: createAlbumFormValues) => {
     const formData = new FormData();
@@ -37,9 +48,69 @@ const useAlbumActions = () => {
     }
   };
 
+  const handleDeleteOne = async (id: string) => {
+    try {
+      await deleteOne(id).unwrap();
+      showSuccessToast("Album deleted successfully");
+    } catch (err) {
+      console.error("Error deleting album:", err);
+      showErrorToast("Failed to delete album");
+    }
+  };
+
+  const handleDeleteMultiple = async (ids: string[]) => {
+    try {
+      await deleteMultiples(ids).unwrap();
+      showSuccessToast("Albums deleted successfully");
+    } catch (err) {
+      console.error("Error deleting albums:", err);
+      showErrorToast("Failed to delete albums");
+    }
+  };
+
+  const handleUpdateStatusOne = async ({
+    albumId,
+    status,
+  }: {
+    albumId: string;
+    status: string;
+  }) => {
+    try {
+      await updateStatusOne({ albumId, status }).unwrap();
+      showSuccessToast("Album status updated successfully");
+    } catch (err) {
+      console.error("Error updating album status:", err);
+      showErrorToast("Failed to update album status");
+    }
+  };
+
+  const handleUpdateStatusMany = async ({
+    ids,
+    status,
+  }: {
+    ids: string[];
+    status: string;
+  }) => {
+    try {
+      await updateStatusMany({ ids, status }).unwrap();
+      showSuccessToast("Albums status updated successfully");
+    } catch (err) {
+      console.error("Error updating albums status:", err);
+      showErrorToast("Failed to update albums status");
+    }
+  };
+
   return {
     handleCreateAlbum,
     createState,
+    handleDeleteOne,
+    deleteOneState,
+    handleDeleteMultiple,
+    deleteMultiplesState,
+    handleUpdateStatusOne,
+    updateStatusOneState,
+    handleUpdateStatusMany,
+    updateStatusManyState,
   };
 };
 export default useAlbumActions;

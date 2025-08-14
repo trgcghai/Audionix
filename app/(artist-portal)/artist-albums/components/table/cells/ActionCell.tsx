@@ -13,14 +13,20 @@ import Link from "next/link";
 import { useAppDispatch } from "@/hooks/redux";
 import { openViewDetail } from "@/store/slices/detailAlbumSlice";
 import { Album } from "@/app/types/model";
+import useAlbumActions from "@/hooks/useAlbumActions";
 
 const ActionCell = ({ row }: { row: Row<Album> }) => {
   const album = row.original;
   const [statusDialogOpen, setStatusDialogOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const { handleDeleteOne } = useAlbumActions();
 
   const handleViewDetail = () => {
     dispatch(openViewDetail({ album }));
+  };
+
+  const handleDeleteAlbum = () => {
+    handleDeleteOne(album._id);
   };
 
   return (
@@ -64,10 +70,7 @@ const ActionCell = ({ row }: { row: Row<Album> }) => {
       <ConfirmDialog
         title="Confirm Deletion"
         description={`Are you absolutely sure to delete this album? This action cannot be undone.`}
-        onConfirm={() => {
-          console.log("Deleting album:", album);
-          setStatusDialogOpen(false);
-        }}
+        onConfirm={handleDeleteAlbum}
         onCancel={() => setStatusDialogOpen(false)}
         isOpen={statusDialogOpen}
         setIsOpen={setStatusDialogOpen}

@@ -5,6 +5,7 @@ import AlbumsSelect from "./AlbumsSelect";
 import StatusFilter from "./StatusFilter";
 import TitleFilter from "./TitleFilter";
 import UploadTimeSelect from "./UploadTimeSelect";
+import GenresSelect from "@/components/common/GenresSelect";
 
 interface TableFiltersProps {
   className?: string;
@@ -28,6 +29,8 @@ const TableFilters = ({
     setUploadTimeFilter,
     status,
     setStatusFilter,
+    genres,
+    setGenresFilter,
     clearFilter,
   } = useTrackManagement();
   return (
@@ -60,6 +63,14 @@ const TableFilters = ({
         <StatusFilter
           value={status}
           onChange={setStatusFilter}
+          className={cn(itemClassName)}
+          inputClassName={cn(inputClassName)}
+          labelClassName={cn(labelClassName)}
+        />
+
+        <GenresSelect
+          value={genres}
+          onChange={setGenresFilter}
           className={cn(itemClassName)}
           inputClassName={cn(inputClassName)}
           labelClassName={cn(labelClassName)}

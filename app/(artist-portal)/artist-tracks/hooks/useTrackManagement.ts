@@ -19,8 +19,16 @@ const useTrackManagement = () => {
   const pathname = usePathname();
 
   // State của filter
-  const { current, limit, title, debounceTitle, albums, uploadTime, status } =
-    useAppSelector((state) => state.trackManagement);
+  const {
+    current,
+    limit,
+    title,
+    debounceTitle,
+    albums,
+    uploadTime,
+    status,
+    genres,
+  } = useAppSelector((state) => state.trackManagement);
   const dispatch = useAppDispatch();
   const refTitle = useRef(title);
   const debouncedTitle = useDebounce(debounceTitle, 500);
@@ -63,6 +71,7 @@ const useTrackManagement = () => {
       current,
       limit,
       title: title ? title : undefined,
+      genres: genres.length > 0 ? genres.map((g) => g.value) : undefined,
       status: status.length > 0 ? status.map((s) => s.value) : undefined,
       albums:
         albums.length > 0 ? albums.map((album) => album.value) : undefined,
@@ -136,6 +145,14 @@ const useTrackManagement = () => {
     [dispatch, toFirstPage],
   );
 
+  const setGenresFilter = useCallback(
+    (genres: Option[]) => {
+      dispatch(setFilters({ genres }));
+      toFirstPage();
+    },
+    [dispatch, toFirstPage],
+  );
+
   const clearFilter = useCallback(() => {
     dispatch(clearFilters());
     toFirstPage();
@@ -162,6 +179,8 @@ const useTrackManagement = () => {
     setUploadTimeFilter,
     status,
     setStatusFilter,
+    genres,
+    setGenresFilter,
 
     debounceTitle,
 

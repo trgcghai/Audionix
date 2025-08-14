@@ -8,6 +8,7 @@ import { Track } from "@/app/types/model";
 import ImageCell from "./cells/ImageCell";
 import StatusCell from "./cells/StatusCell";
 import ActionCell from "./cells/ActionCell";
+import GenresCell from "@/app/(artist-portal)/artist-tracks/components/table/cells/GenresCell";
 
 export const Columns: ColumnDef<Track>[] = [
   {
@@ -48,6 +49,7 @@ export const Columns: ColumnDef<Track>[] = [
     id: "title",
     accessorKey: "title",
     enableColumnFilter: true,
+    enableSorting: false,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Track title" />
     ),
@@ -60,6 +62,7 @@ export const Columns: ColumnDef<Track>[] = [
     id: "album",
     accessorKey: "album.name",
     enableColumnFilter: true,
+    enableSorting: false,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Album Name" />
     ),
@@ -85,15 +88,42 @@ export const Columns: ColumnDef<Track>[] = [
     },
   },
   {
-    id: "uploadTime",
-    accessorKey: "uploadTime",
+    id: "genres",
+    accessorKey: "genres",
+    enableColumnFilter: true,
+    enableSorting: false,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Genres" />
+    ),
+    cell: ({ row }) => <GenresCell row={row} />,
+    meta: {
+      label: "Genres",
+      inputType: "text",
+    },
+  },
+  {
+    id: "createdAt",
+    accessorKey: "createdAt",
     enableColumnFilter: true,
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Upload Time" />
+      <DataTableColumnHeader column={column} title="Upload time" />
     ),
     cell: ({ row }) => formatUploadTime((row.original as Track).createdAt),
     meta: {
       label: "Upload Time",
+      inputType: "date",
+    },
+  },
+  {
+    id: "updatedAt",
+    accessorKey: "updatedAt",
+    enableColumnFilter: true,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Last update" />
+    ),
+    cell: ({ row }) => formatUploadTime((row.original as Track).updatedAt),
+    meta: {
+      label: "Last update",
       inputType: "date",
     },
   },

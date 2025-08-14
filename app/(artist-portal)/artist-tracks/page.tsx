@@ -1,7 +1,6 @@
 "use client";
 import { Columns } from "@/app/(artist-portal)/artist-tracks/components/table/Columns";
 import { TrackTable } from "@/app/(artist-portal)/artist-tracks/components/table";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import useTrackManagement from "@/app/(artist-portal)/artist-tracks/hooks/useTrackManagement";
 import LoaderSpin from "@/components/common/LoaderSpin";
 import ErrorMessage from "@/components/common/ErrorMessage";
@@ -11,7 +10,7 @@ const ArtistTrackPage = () => {
   const { tracks, isLoading, isError, error } = useTrackManagement();
 
   return (
-    <ScrollArea className="px-3">
+    <div className="px-3">
       <p className="mb-4 text-xl font-bold">Your tracks</p>
 
       {isLoading && <LoaderSpin fullScreen />}
@@ -25,7 +24,7 @@ const ArtistTrackPage = () => {
       )}
 
       <TrackTable columns={Columns} data={tracks} />
-    </ScrollArea>
+    </div>
   );
 };
 export default ArtistTrackPage;

@@ -6,6 +6,7 @@ interface TrackManagementState {
   limit: number;
   title: string;
   albums: Option[];
+  genres: Option[];
   uploadTime: Date | undefined; // ISO date string or null
   status: Option[];
   debounceTitle: string;
@@ -16,6 +17,7 @@ const initialState: TrackManagementState = {
   limit: 10,
   title: "",
   albums: [],
+  genres: [],
   uploadTime: undefined,
   status: [],
   debounceTitle: "",
@@ -36,12 +38,14 @@ export const trackManagementSlice = createSlice({
         albums?: Option[];
         uploadTime?: Date | undefined;
         status?: Option[];
+        genres?: Option[];
       }>,
     ) => {
       state.title = action.payload.title || "";
       state.albums = action.payload.albums || [];
       state.uploadTime = action.payload.uploadTime || undefined;
       state.status = action.payload.status || [];
+      state.genres = action.payload.genres || [];
     },
     setCurrentPage: (state, action: PayloadAction<number>) => {
       state.current = action.payload < 1 ? 1 : action.payload;

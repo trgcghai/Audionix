@@ -1,46 +1,16 @@
 "use client";
 
-import { ArtistAlbumItem } from "@/app/types/component";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ColumnDef, Row } from "@tanstack/react-table";
-import { useState } from "react";
-import {
-  FileText,
-  ImageIcon,
-  MoreHorizontal,
-  Settings2,
-  Trash2,
-} from "lucide-react";
-import Image from "next/image";
+import { ColumnDef } from "@tanstack/react-table";
 import { formatUploadTime } from "@/utils/formatUploadTime";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Badge } from "@/components/ui/badge";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import { ARTIST_ALBUM_STATUS_OPTIONS } from "@/app/constant";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { useAppDispatch } from "@/hooks/redux";
-import { openViewDetail } from "@/store/slices/detailAlbumSlice";
 import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
+import { Album } from "@/app/types/model";
+import StatusCell from "./cells/StatusCell";
+import ImageCell from "./cells/ImageCell";
+import ActionCell from "./cells/ActionCell";
 
-export const Columns: ColumnDef<ArtistAlbumItem>[] = [
+export const Columns: ColumnDef<Album>[] = [
   {
     id: "select",
     enableSorting: false,
@@ -72,10 +42,10 @@ export const Columns: ColumnDef<ArtistAlbumItem>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Album Image Cover" />
     ),
-    cell: RenderImageCell,
+    cell: ({ row }) => <ImageCell row={row} />,
   },
   {
-    accessorKey: "name",
+    accessorKey: "title",
     enableColumnFilter: true,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Album Name" />
@@ -86,33 +56,12 @@ export const Columns: ColumnDef<ArtistAlbumItem>[] = [
     },
   },
   {
-    accessorKey: "total_tracks",
-    enableColumnFilter: true,
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Total Tracks" />
-    ),
-    meta: {
-      label: "Total Tracks",
-      inputType: "number",
-    },
-    filterFn: (row, columnId, filterValue) => {
-      if (!filterValue) return true;
-
-      const rowValue = Number(row.getValue(columnId));
-      const filterVal = Number(filterValue);
-
-      if (isNaN(filterVal)) return true;
-
-      return rowValue === filterVal;
-    },
-  },
-  {
     accessorKey: "uploadTime",
     enableColumnFilter: true,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Upload Time" />
     ),
-    cell: ({ row }) => formatUploadTime(row.original.uploadTime),
+    cell: ({ row }) => formatUploadTime(row.original.createdAt),
     meta: {
       label: "Upload Time",
       inputType: "date",
@@ -129,7 +78,7 @@ export const Columns: ColumnDef<ArtistAlbumItem>[] = [
         className="flex items-center justify-center"
       />
     ),
-    cell: RenderStatusCell,
+    cell: ({ row }) => <StatusCell row={row} />,
     meta: {
       inputType: "select",
       options: ARTIST_ALBUM_STATUS_OPTIONS,
@@ -137,150 +86,6 @@ export const Columns: ColumnDef<ArtistAlbumItem>[] = [
   },
   {
     id: "actions",
-    cell: RenderActionCell,
+    cell: ({ row }) => <ActionCell row={row} />,
   },
 ];
-
-function RenderImageCell({ row }: { row: Row<ArtistAlbumItem> }) {
-  const imageUrl = row.original.images[0]?.url;
-  const [imageError, setImageError] = useState(false);
-
-  if (!imageUrl || imageError) {
-    return (
-      <div className="flex h-[70px] w-[70px] items-center justify-center rounded-lg border text-xs">
-        <ImageIcon className="text-muted-foreground h-4 w-4" />
-      </div>
-    );
-  }
-
-  return (
-    <Image
-      src={imageUrl}
-      alt={""}
-      width={70}
-      height={70}
-      className="rounded"
-      onError={() => setImageError(true)}
-    />
-  );
-}
-
-function RenderStatusCell({ row }: { row: Row<ArtistAlbumItem> }) {
-  const [status, setStatus] = useState(row.original.status);
-  const [statusDialogOpen, setStatusDialogOpen] = useState(false);
-
-  const handleStatusChange = (value: string) => {
-    setStatus(value);
-    setStatusDialogOpen(true);
-  };
-
-  const handleStatusConfirm = () => {
-    console.log(`Changing status to: ${status}`);
-    console.log(`Selected rows:`, row.original);
-    setStatusDialogOpen(false);
-  };
-
-  return (
-    <div className="flex items-center justify-center">
-      <Popover>
-        <PopoverTrigger asChild>
-          <Badge
-            variant={
-              row.original.status === ARTIST_ALBUM_STATUS_OPTIONS[0]
-                ? "default"
-                : "destructive"
-            }
-            className="cursor-pointer rounded-full px-2 py-1 capitalize"
-          >
-            {row.original.status}
-          </Badge>
-        </PopoverTrigger>
-        <PopoverContent align="end" className="w-48">
-          <Select value={status} onValueChange={handleStatusChange}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select status" />
-            </SelectTrigger>
-            <SelectContent>
-              {ARTIST_ALBUM_STATUS_OPTIONS.map((status) => (
-                <SelectItem key={status} value={status} className="capitalize">
-                  {status}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </PopoverContent>
-      </Popover>
-
-      <ConfirmDialog
-        title="Confirm Status Change"
-        description={`Are you sure you want to change the status of ${row.original.name} to "${status}"? This action can be reversed later.`}
-        onCancel={() => setStatusDialogOpen(false)}
-        onConfirm={handleStatusConfirm}
-        isOpen={statusDialogOpen}
-        setIsOpen={setStatusDialogOpen}
-      />
-    </div>
-  );
-}
-
-function RenderActionCell({ row }: { row: Row<ArtistAlbumItem> }) {
-  const album = row.original;
-  const [statusDialogOpen, setStatusDialogOpen] = useState(false);
-  const dispatch = useAppDispatch();
-
-  const handleViewDetail = () => {
-    dispatch(openViewDetail({ album }));
-  };
-
-  return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="h-8 w-8 rounded-full p-0">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuItem
-            variant="default"
-            className="cursor-pointer"
-            onClick={handleViewDetail}
-          >
-            <div className="flex items-center gap-2">
-              <FileText className="mr-2 h-4 w-4" />
-              <span>View detail</span>
-            </div>
-          </DropdownMenuItem>
-          <DropdownMenuItem variant="default" className="cursor-pointer">
-            <Link
-              href={`/artist-albums/update/${album.id}`}
-              className="flex items-center gap-2"
-            >
-              <Settings2 className="mr-2 h-4 w-4" />
-              <span>Edit</span>
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            variant="destructive"
-            className="cursor-pointer"
-            onClick={() => setStatusDialogOpen(true)}
-          >
-            <Trash2 className="mr-2 h-4 w-4" />
-            <span>Delete</span>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <ConfirmDialog
-        title="Confirm Deletion"
-        description={`Are you absolutely sure to delete album with name ${album.name} ? This action cannot be undone.`}
-        onConfirm={() => {
-          console.log("Deleting album:", album);
-          setStatusDialogOpen(false);
-        }}
-        onCancel={() => setStatusDialogOpen(false)}
-        isOpen={statusDialogOpen}
-        setIsOpen={setStatusDialogOpen}
-      />
-    </>
-  );
-}

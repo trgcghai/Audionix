@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef } from "react";
-import { useGetTracksQuery } from "@/services/tracks/trackApi";
+import { useGetAlbumsQuery } from "@/services/albums/albumApi";
 import { useDebounce } from "@/hooks/useDebounce";
 import { usePathname, useRouter } from "next/navigation";
 import { Option } from "@/components/ui/MultipleSelector";
@@ -11,16 +11,14 @@ import {
   setDebounceTitle,
   setFilters,
   setPageLimit,
-} from "@/store/slices/trackManagement";
+} from "@/store/slices/albumManagement";
 
-const useTrackManagement = () => {
-  // Router để cập nhật URL query params
+const useAlbumManagement = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  // State của filter
-  const { current, limit, title, debounceTitle, albums, uploadTime, status } =
-    useAppSelector((state) => state.trackManagement);
+  const { current, limit, title, debounceTitle, genres, uploadTime, status } =
+    useAppSelector((state) => state.albumManagement);
   const dispatch = useAppDispatch();
   const refTitle = useRef(title);
   const debouncedTitle = useDebounce(debounceTitle, 500);
@@ -32,22 +30,17 @@ const useTrackManagement = () => {
     }
   }, [debouncedTitle, dispatch]);
 
-  // Cập nhật URL query params khi state thay đổi
   useEffect(() => {
     const params = new URLSearchParams();
-
-    // Chỉ thêm params có giá trị
     if (debouncedTitle) params.set("title", debouncedTitle);
     if (status.length > 0) params.set("status", status.join(","));
-    if (albums.length > 0) params.set("albums", albums.join(","));
+    if (genres.length > 0) params.set("genres", genres.join(","));
     if (uploadTime) params.set("uploadTime", uploadTime.toISOString());
     if (current) params.set("current", current.toString());
     if (limit !== 10) params.set("limit", limit.toString());
-
-    // Cập nhật URL không reload trang
     router.replace(`${pathname}?${params.toString()}`);
   }, [
-    albums,
+    genres,
     current,
     limit,
     pathname,
@@ -57,23 +50,27 @@ const useTrackManagement = () => {
     uploadTime,
   ]);
 
-  // Gọi API để lấy danh sách tracks
-  const { data, isLoading, isError, error } = useGetTracksQuery(
+  console.log({
+    current,
+    limit,
+    title,
+    debounceTitle,
+    genres,
+    uploadTime,
+    status,
+  });
+
+  const { data, isLoading, isError, error } = useGetAlbumsQuery(
     {
       current,
       limit,
       title: title ? title : undefined,
       status: status.length > 0 ? status.map((s) => s.value) : undefined,
-      albums:
-        albums.length > 0 ? albums.map((album) => album.value) : undefined,
+      genres: genres.length > 0 ? genres.map((g) => g.value) : undefined,
     },
-    {
-      // Sử dụng refetchOnMountOrArgChange để đảm bảo dữ liệu luôn mới nhất
-      refetchOnMountOrArgChange: true,
-    },
+    { refetchOnMountOrArgChange: true },
   );
 
-  // Action chuyển trang
   const toNextPage = useCallback(() => {
     dispatch(setCurrentPage(current + 1));
   }, [dispatch, current]);
@@ -96,7 +93,6 @@ const useTrackManagement = () => {
     [dispatch],
   );
 
-  // Action thay đổi states value
   const setTitleFilter = useCallback(
     (title: string) => {
       dispatch(setDebounceTitle(title));
@@ -120,9 +116,9 @@ const useTrackManagement = () => {
     [dispatch, toFirstPage],
   );
 
-  const setAlbumsFilter = useCallback(
-    (albums: Option[]) => {
-      dispatch(setFilters({ albums }));
+  const setGenresFilter = useCallback(
+    (genres: Option[]) => {
+      dispatch(setFilters({ genres }));
       toFirstPage();
     },
     [dispatch, toFirstPage],
@@ -142,37 +138,32 @@ const useTrackManagement = () => {
   }, [dispatch, toFirstPage]);
 
   return {
-    // Data API
     isLoading,
     isError,
     error,
-    tracks: data?.data.items || [],
+    albums: data?.data.items || [],
     totalItems: data?.data.totalItems || 0,
     totalPages: data?.data.totalPages || 0,
     current: data?.data.current || current,
     limit: data?.data.limit || limit,
     setLimitFilter,
 
-    // State management
     title,
     setTitleFilter,
-    albums,
-    setAlbumsFilter,
+    genres,
+    setGenresFilter,
     uploadTime,
     setUploadTimeFilter,
     status,
     setStatusFilter,
 
     debounceTitle,
-
-    // Clear filters
     clearFilter,
 
-    // Pagination functions
     toNextPage,
     toPreviousPage,
     toFirstPage,
     toLastPage,
   };
 };
-export default useTrackManagement;
+export default useAlbumManagement;

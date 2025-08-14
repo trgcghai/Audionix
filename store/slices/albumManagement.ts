@@ -1,28 +1,28 @@
 import { Option } from "@/components/ui/MultipleSelector";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface TrackManagementState {
+interface AlbumManagementState {
   current: number;
   limit: number;
   title: string;
-  albums: Option[];
-  uploadTime: Date | undefined; // ISO date string or null
+  genres: Option[];
+  uploadTime: Date | undefined;
   status: Option[];
   debounceTitle: string;
 }
 
-const initialState: TrackManagementState = {
+const initialState: AlbumManagementState = {
   current: 1,
   limit: 10,
   title: "",
-  albums: [],
+  genres: [],
   uploadTime: undefined,
   status: [],
   debounceTitle: "",
 };
 
-export const trackManagementSlice = createSlice({
-  name: "trackManagement",
+export const albumManagementSlice = createSlice({
+  name: "albumManagement",
   initialState,
   reducers: {
     clearFilters: () => initialState,
@@ -33,13 +33,13 @@ export const trackManagementSlice = createSlice({
       state,
       action: PayloadAction<{
         title?: string;
-        albums?: Option[];
+        genres?: Option[];
         uploadTime?: Date | undefined;
         status?: Option[];
       }>,
     ) => {
       state.title = action.payload.title || "";
-      state.albums = action.payload.albums || [];
+      state.genres = action.payload.genres || [];
       state.uploadTime = action.payload.uploadTime || undefined;
       state.status = action.payload.status || [];
     },
@@ -58,6 +58,6 @@ export const {
   setFilters,
   setCurrentPage,
   setPageLimit,
-} = trackManagementSlice.actions;
+} = albumManagementSlice.actions;
 
-export default trackManagementSlice.reducer;
+export default albumManagementSlice.reducer;

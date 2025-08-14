@@ -24,16 +24,19 @@ const trackApi = api.injectEndpoints({
           title,
           albums,
         }) => {
-          const urlParams = new URLSearchParams();
-          if (current) urlParams.append("current", current.toString());
-          if (limit) urlParams.append("limit", limit.toString());
-          if (title) urlParams.append("title", title);
-          if (artist) urlParams.append("artist", artist);
-          if (genres) urlParams.append("genres", genres.join(","));
-          if (status) urlParams.append("status", status.join(","));
-          if (sort) urlParams.append("sort", sort);
-          if (albums) urlParams.append("albums", albums.join(","));
-          return { url: `/tracks?${urlParams.toString()}` };
+          return {
+            url: `/tracks`,
+            params: {
+              current: current && current < 1 ? 1 : current,
+              limit: limit && limit < 1 ? 10 : limit,
+              title,
+              artist,
+              genres: (genres && genres.join(",")) || undefined,
+              status: (status && status.join(",")) || undefined,
+              sort,
+              albums: (albums && albums.join(",")) || undefined,
+            },
+          };
         },
         providesTags: ["Tracks"],
       }),

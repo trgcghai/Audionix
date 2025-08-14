@@ -1,3 +1,15 @@
+import { PaginatedResponse } from "@/app/types/api";
 import { Album } from "@/app/types/model";
 
 export type CreateAlbumResponse = ApiResponse<Album>;
+
+export type FindAlbumsResponse = ApiResponse<PaginatedResponse<Album>>;
+
+export type FindAlbumsParams = {
+  current?: number;
+  limit?: number;
+  title?: string;
+  genres?: string[];
+  status?: string[];
+  sort?: string;
+};

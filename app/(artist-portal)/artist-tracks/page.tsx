@@ -8,9 +8,7 @@ import ErrorMessage from "@/components/common/ErrorMessage";
 import { ApiErrorResponse } from "@/app/types/api";
 
 const ArtistTrackPage = () => {
-  const { tracks, isLoading, isError, error, title } = useTrackManagement();
-
-  console.log({ title });
+  const { tracks, isLoading, isError, error } = useTrackManagement();
 
   return (
     <ScrollArea className="px-3">

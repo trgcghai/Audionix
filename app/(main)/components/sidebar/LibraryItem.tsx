@@ -1,12 +1,11 @@
-import { AlbumItem, ArtistItem } from "@/app/types/component";
-import { Playlist } from "@/app/types/model";
+import { Album, Artist, Playlist } from "@/app/types/model";
 import { Music } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
 
 interface LibraryItemProps {
-  data: Playlist | AlbumItem | ArtistItem;
+  data: Playlist | Album | Artist;
 }
 
 const LibraryItem = ({ data }: LibraryItemProps) => {
@@ -32,7 +31,7 @@ const LibraryItem = ({ data }: LibraryItemProps) => {
   return (
     <Link href={`/${data.type}s/${data._id}`}>
       <div className="flex cursor-pointer items-center gap-2 rounded-lg p-2 hover:bg-gray-500/30">
-        {data.cover_images.length != 0 ? (
+        {Array.isArray(data.cover_images) && data.cover_images.length > 0 ? (
           <Image
             src={data.cover_images?.[0]?.url || "/audionix_logo_short.png"}
             alt=""

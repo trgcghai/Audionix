@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef } from "react";
-import { useGetAlbumsQuery } from "@/services/albums/albumApi";
+import { useGetMyCreatedAlbumsQuery } from "@/services/albums/albumApi";
 import { useDebounce } from "@/hooks/useDebounce";
 import { usePathname, useRouter } from "next/navigation";
 import { Option } from "@/components/ui/MultipleSelector";
@@ -41,17 +41,7 @@ const useAlbumManagement = () => {
     router.replace(`${pathname}?${params.toString()}`);
   }, [genres, current, limit, pathname, router, status, title, uploadTime]);
 
-  console.log({
-    current,
-    limit,
-    title,
-    debounceTitle,
-    genres,
-    uploadTime,
-    status,
-  });
-
-  const { data, isLoading, isError, error } = useGetAlbumsQuery(
+  const { data, ...getAlbumState } = useGetMyCreatedAlbumsQuery(
     {
       current,
       limit,
@@ -129,9 +119,7 @@ const useAlbumManagement = () => {
   }, [dispatch, toFirstPage]);
 
   return {
-    isLoading,
-    isError,
-    error,
+    getAlbumState,
     albums: data?.data.items || [],
     totalItems: data?.data.totalItems || 0,
     totalPages: data?.data.totalPages || 0,

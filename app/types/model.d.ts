@@ -93,6 +93,24 @@ export type Account = {
   __v: number;
 };
 
+export type Artist = {
+  _id: string;
+  name: string;
+  cover_images: [
+    {
+      url: string;
+      width: number;
+      height: number;
+      key: string;
+    },
+  ];
+  type: "artist";
+  genres: string[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
 export type Playlist = {
   _id: string;
   title: string;
@@ -131,6 +149,7 @@ export type Album = {
   tracks: EmbbedTrack[];
   genres: string[];
   number_of_followers: number;
+  type: "album";
   createdAt: string;
   updatedAt: string;
   __v: number;

@@ -10,17 +10,35 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { mockAlbums, mockArtists } from "@/app/sampleData";
-import { Playlist } from "@/app/types/model";
+import { Album, Artist, Playlist } from "@/app/types/model";
 import CreatePlaylistButton from "@/app/(main)/components/sidebar/CreatePlaylistButton";
 import FilterButtons from "@/app/(main)/components/sidebar/FilterButtons";
 import LibraryItem from "@/app/(main)/components/sidebar/LibraryItem";
+import LoaderSpin from "@/components/common/LoaderSpin";
+import ErrorMessage from "@/components/common/ErrorMessage";
 
 interface SidebarProps {
-  playlists: Playlist[];
+  playlistData: {
+    playlists: Playlist[];
+    isLoading: boolean;
+    isError: boolean;
+    error: string;
+  };
+  albumData: {
+    albums: Album[];
+    isLoading: boolean;
+    isError: boolean;
+    error: string;
+  };
+  artistData: {
+    artists: Artist[];
+    isLoading: boolean;
+    isError: boolean;
+    error: string;
+  };
 }
 
-const MainSidebar = ({ playlists }: SidebarProps) => {
+const MainSidebar = ({ playlistData, albumData, artistData }: SidebarProps) => {
   const filterButtons = ["Playlists", "Artists", "Albums"];
   const [selectedFilter, setSelectedFilter] = useState<string>("");
 
@@ -52,27 +70,34 @@ const MainSidebar = ({ playlists }: SidebarProps) => {
       <CardContent className="px-4">
         <ScrollArea className="h-[600px] overflow-y-auto">
           <div className="flex flex-col gap-2">
+            {playlistData.isLoading && <LoaderSpin />}
+            {playlistData.isError && (
+              <ErrorMessage message={playlistData.error} />
+            )}
+            {albumData.isLoading && <LoaderSpin />}
+            {albumData.isError && <ErrorMessage message={albumData.error} />}
+
             {selectedFilter === "Playlists" &&
-              playlists.map((playlist) => (
+              (playlistData.playlists || []).map((playlist) => (
                 <LibraryItem key={playlist._id} data={playlist} />
               ))}
             {selectedFilter === "Albums" &&
-              mockAlbums.map((album) => (
+              (albumData.albums || []).map((album) => (
                 <LibraryItem key={album._id} data={album} />
               ))}
             {selectedFilter === "Artists" &&
-              mockArtists.map((artist) => (
+              (artistData.artists || []).map((artist) => (
                 <LibraryItem key={artist._id} data={artist} />
               ))}
             {!selectedFilter && (
               <>
-                {playlists.map((playlist) => (
+                {(playlistData.playlists || []).map((playlist) => (
                   <LibraryItem key={playlist._id} data={playlist} />
                 ))}
-                {mockAlbums.map((album) => (
+                {(albumData.albums || []).map((album) => (
                   <LibraryItem key={album._id} data={album} />
                 ))}
-                {mockArtists.map((artist) => (
+                {(artistData.artists || []).map((artist) => (
                   <LibraryItem key={artist._id} data={artist} />
                 ))}
               </>

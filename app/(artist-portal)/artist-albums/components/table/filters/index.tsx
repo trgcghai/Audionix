@@ -55,7 +55,7 @@ const TableFilters = ({
             label: status.label,
             value: status.value,
           }))}
-          label="Album Status"
+          label="Status"
           placeholder="Select album status"
           value={status}
           onChange={setStatusFilter}

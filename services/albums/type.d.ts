@@ -13,3 +13,9 @@ export type FindAlbumsParams = {
   status?: string[];
   sort?: string;
 };
+
+export type UpdateStatusOneParams = { albumId: string; status: string };
+
+export type UpdateStatusManyParams = { ids: string[]; status: string };
+
+export type FindMyFollowedAlbumsResponse = ApiResponse<{ albums: Album[] }>;

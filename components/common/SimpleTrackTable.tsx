@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import { Clock } from "lucide-react";
 import { Playlist, Track } from "@/app/types/model";
+import ErrorMessage from "@/components/common/ErrorMessage";
 
 const RenderHeaderByVariant = ({
   variant = "default",
@@ -59,6 +60,18 @@ const SimpleTrackTable = ({
   tracks,
   className,
 }: SimpleTrackTableProps) => {
+  if (tracks.length === 0) {
+    return (
+      <div className="flex w-full items-center justify-center">
+        <ErrorMessage
+          message="No tracks found"
+          severity="info"
+          variant="compact"
+        />
+      </div>
+    );
+  }
+
   return (
     <Table className={className}>
       {showHeader && <RenderHeaderByVariant variant={variant} />}

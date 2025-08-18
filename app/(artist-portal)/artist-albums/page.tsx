@@ -16,7 +16,7 @@ import useAlbumManagement from "@/app/(artist-portal)/artist-albums/hooks/useAlb
 const ArtistAlbumPage = () => {
   const { album, isOpen } = useDetailAlbumSlice();
   const dispatch = useAppDispatch();
-  const { albums, isLoading, isError, error } = useAlbumManagement();
+  const { albums, getAlbumState } = useAlbumManagement();
 
   useEffect(() => {
     return () => {
@@ -30,16 +30,18 @@ const ArtistAlbumPage = () => {
         <div className={`${isOpen ? "w-3/5" : "w-full"}`}>
           <p className="mb-4 text-xl font-bold">Your albums</p>
 
-          {isLoading && <LoaderSpin fullScreen />}
-          {isError && (
+          {getAlbumState.isLoading && <LoaderSpin fullScreen />}
+          {getAlbumState.isError && (
             <ErrorMessage
               message={
-                (error as ApiErrorResponse)?.message ||
-                "An error occurred while fetching tracks data. Please try again later"
+                (getAlbumState.error as ApiErrorResponse)?.message ||
+                "An error occurred while fetching album data. Please try again later"
               }
             />
           )}
-          <AlbumTable columns={Columns} data={albums} />
+          {getAlbumState.isSuccess && (
+            <AlbumTable columns={Columns} data={albums} />
+          )}
         </div>
 
         {isOpen && album && (

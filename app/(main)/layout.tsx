@@ -7,10 +7,11 @@ import Footer from "@/components/common/Footer";
 import QueueDrawer from "@/components/common/QueueDrawer";
 import { cn } from "@/libs/utils";
 import { useGetMyPlaylistsQuery } from "@/services/playlists/playlistApi";
-import LoaderSpin from "@/components/common/LoaderSpin";
-import ErrorMessage from "@/components/common/ErrorMessage";
 import MainSidebar from "@/app/(main)/components/sidebar";
 import { useQueueDrawer } from "@/store/slices/queueDrawerSlice";
+import { useGetMyFollowedAlbumsQuery } from "@/services/albums/albumApi";
+import { ApiErrorResponse } from "@/app/types/api";
+import { useGetMyFollowedArtistsQuery } from "@/services/artists/artistApi";
 
 const Layout = ({
   children,
@@ -18,15 +19,25 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   const { isOpen: isDrawerOpen } = useQueueDrawer();
-  const { data, isLoading, isError } = useGetMyPlaylistsQuery({});
+  const {
+    data: playlists,
+    isLoading: isLoadingPlaylists,
+    isError: isErrorPlaylists,
+    error: errorPlaylists,
+  } = useGetMyPlaylistsQuery({});
+  const {
+    data: followedAlbums,
+    isLoading: isLoadingFollowed,
+    isError: isErrorFollowed,
+    error: errorFollowed,
+  } = useGetMyFollowedAlbumsQuery({});
 
-  if (isLoading) {
-    return <LoaderSpin />;
-  }
-
-  if (isError) {
-    return;
-  }
+  const {
+    data: followedArtists,
+    isLoading: isLoadingFollowedArtists,
+    isError: isErrorFollowedArtists,
+    error: errorFollowedArtists,
+  } = useGetMyFollowedArtistsQuery({});
 
   return (
     <div className="grid h-screen grid-cols-12 grid-rows-12">
@@ -34,9 +45,34 @@ const Layout = ({
         <MainHeader />
       </div>
       <div className="col-span-3 row-span-11 -mt-5 p-4">
-        {isLoading && <LoaderSpin />}
-        {isError && <ErrorMessage message="Failed to load your playlists" />}
-        {data && <MainSidebar playlists={data?.data.items} />}
+        {playlists && (
+          <MainSidebar
+            playlistData={{
+              playlists: playlists?.data?.items || [],
+              isLoading: isLoadingPlaylists,
+              isError: isErrorPlaylists,
+              error:
+                (errorPlaylists as ApiErrorResponse)?.message ||
+                "Failed to load your playlists",
+            }}
+            albumData={{
+              albums: followedAlbums?.data?.albums || [],
+              isLoading: isLoadingFollowed,
+              isError: isErrorFollowed,
+              error:
+                (errorFollowed as ApiErrorResponse)?.message ||
+                "Failed to load your followed albums",
+            }}
+            artistData={{
+              artists: followedArtists?.data?.artists || [],
+              isLoading: isLoadingFollowedArtists,
+              isError: isErrorFollowedArtists,
+              error:
+                (errorFollowedArtists as ApiErrorResponse)?.message ||
+                "Failed to load your followed artists",
+            }}
+          />
+        )}
       </div>
       <div
         className={cn(

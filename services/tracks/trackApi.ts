@@ -2,6 +2,7 @@ import { ApiResponse } from "@/app/types/api";
 import { api } from "../api";
 import {
   CreateTrackResponse,
+  FindTrackByIdResponse,
   FindTrackParams,
   FindTrackResponse,
   UpdateMultipleStatusParams,
@@ -85,6 +86,41 @@ const trackApi = api.injectEndpoints({
         }),
         invalidatesTags: ["Tracks"],
       }),
+      getTrackById: builder.query<FindTrackByIdResponse, string>({
+        query: (id) => ({
+          url: `/tracks/${id}`,
+        }),
+        providesTags: ["Tracks"],
+      }),
+      getSimilarTrack: builder.query<FindTrackResponse, string>({
+        query: (id) => ({
+          url: `/tracks/${id}/similar`,
+        }),
+        providesTags: ["Tracks"],
+      }),
+      getTrackByArtist: builder.query<FindTrackResponse, string>({
+        query: (artistId) => ({
+          url: `/artists/${artistId}/tracks`,
+        }),
+        providesTags: ["Tracks"],
+      }),
+      getMyCreatedTrack: builder.query<FindTrackResponse, FindTrackParams>({
+        query: ({ current, genres, limit, sort, status, title, albums }) => {
+          return {
+            url: `/artists/me/tracks`,
+            params: {
+              current: current && current < 1 ? 1 : current,
+              limit: limit && limit < 1 ? 10 : limit,
+              title,
+              genres: (genres && genres.join(",")) || undefined,
+              status: (status && status.join(",")) || undefined,
+              sort,
+              albums: (albums && albums.join(",")) || undefined,
+            },
+          };
+        },
+        providesTags: ["Tracks"],
+      }),
     };
   },
 });
@@ -96,4 +132,8 @@ export const {
   useDeleteTracksMutation,
   useChangeOneTrackStatusMutation,
   useChangeTracksStatusMutation,
+  useGetTrackByIdQuery,
+  useGetSimilarTrackQuery,
+  useGetTrackByArtistQuery,
+  useGetMyCreatedTrackQuery,
 } = trackApi;

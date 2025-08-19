@@ -2,29 +2,85 @@
 import ControlSection from "@/components/common/ControlSection";
 import HeroSection from "@/components/common/HeroSection";
 import MediaList from "@/components/common/MediaList";
-import { mockAlbums, mockTracks } from "@/app/sampleData";
 import { Separator } from "@/components/ui/separator";
 import { Dot } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import SimpleTrackTable from "@/components/common/SimpleTrackTable";
+import { useParams } from "next/navigation";
+import {
+  useGetSimilarTrackQuery,
+  useGetTrackByArtistQuery,
+  useGetTrackByIdQuery,
+} from "@/services/tracks/trackApi";
+import LoaderSpin from "@/components/common/LoaderSpin";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import { ApiErrorResponse } from "@/app/types/api";
+import { formatTrackDuration } from "@/utils/formatTrackDuration";
+import { format } from "date-fns";
+import { useGetAlbumByArtistQuery } from "@/services/albums/albumApi";
 
 const DetailTrackPage = () => {
   const [isLiked, setIsLiked] = useState(false);
+  const { id } = useParams<{ id: string }>();
+  const {
+    data: trackData,
+    isError: isTrackError,
+    isLoading: isTrackLoading,
+    error: trackError,
+  } = useGetTrackByIdQuery(id);
+  const { data: similarTracksData } = useGetSimilarTrackQuery(id);
+
+  const track = useMemo(() => {
+    return trackData && trackData.data;
+  }, [trackData]);
+
+  const { data: albumData } = useGetAlbumByArtistQuery(
+    track?.artist._id || "",
+    { skip: !track?.artist._id },
+  );
+  const { data: artistTracksData } = useGetTrackByArtistQuery(
+    track?.artist._id || "",
+    { skip: !track?.artist._id },
+  );
+
+  if (isTrackLoading) {
+    return (
+      <div className="flex items-center justify-center">
+        <LoaderSpin />
+      </div>
+    );
+  }
+
+  if (isTrackError) {
+    return (
+      <div className="flex items-center justify-center">
+        <ErrorMessage
+          message={
+            (trackError as ApiErrorResponse)?.message ||
+            "Failed to load track data"
+          }
+        />
+      </div>
+    );
+  }
+
   return (
     <div>
-      <HeroSection
-        data={mockTracks[0]}
-        extraInfo={
-          <>
-            <p>Artist</p>
-            <Dot />
-            <p>Length</p>
-            <Dot />
-            <p>Year released</p>
-          </>
-        }
-      />
+      {track && (
+        <HeroSection
+          data={track}
+          extraInfo={
+            <>
+              <p>{track.artist.name}</p>
+              <Dot />
+              <p>{formatTrackDuration(track.duration_ms)}</p>
+              <Dot />
+              <p>{format(new Date(track.createdAt), "yyyy")}</p>
+            </>
+          }
+        />
+      )}
 
       <Separator className="my-4" />
 
@@ -36,35 +92,42 @@ const DetailTrackPage = () => {
         variant="track"
       />
 
-      <div className="mt-8 flex items-center gap-4">
+      <div className="mt-8 flex items-center gap-2">
         <Image
           src={"/audionix_logo_short.png"}
           alt=""
-          width={90}
-          height={90}
+          width={70}
+          height={70}
           className={"rounded-full"}
         />
         <div className="">
-          <p className="text-foreground text-sm font-semibold capitalize">
-            Artist
-          </p>
-          <p className="text-lg font-bold capitalize">Artist name</p>
+          <p className="text-muted-foreground text-sm capitalize">Artist</p>
+          <p className="text-base capitalize">{track?.artist.name || "-"}</p>
         </div>
       </div>
 
       <div className="mt-12">
-        <p className="px-3 text-xl font-bold">Popular tracks by artist</p>
-        <SimpleTrackTable tracks={mockTracks} showHeader={false} />
+        <p className="px-2 text-lg font-bold capitalize">
+          Popular tracks by artist
+        </p>
+        <SimpleTrackTable
+          tracks={artistTracksData ? artistTracksData.data.items : []}
+          showHeader={false}
+        />
       </div>
 
       <div className="mt-12">
-        <p className="px-3 text-xl font-bold">Popular albums by artist</p>
-        <MediaList data={mockAlbums} />
+        <p className="px-2 text-lg font-bold capitalize">
+          Popular albums by artist
+        </p>
+        <MediaList data={albumData ? albumData.data.items : []} />
       </div>
 
       <div className="mt-12">
-        <p className="px-3 text-xl font-bold">Fan also like</p>
-        <MediaList data={mockTracks} />
+        <p className="px-2 text-lg font-bold capitalize">Fan also like</p>
+        <MediaList
+          data={similarTracksData ? similarTracksData.data.items : []}
+        />
       </div>
     </div>
   );

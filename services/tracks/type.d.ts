@@ -3,6 +3,8 @@ import { Track } from "@/app/types/model";
 
 export type FindTrackResponse = ApiResponse<PaginatedResponse<Track>>;
 
+export type FindTrackByIdResponse = ApiResponse<Track>;
+
 export type FindTrackParams = {
   current?: number;
   limit?: number;

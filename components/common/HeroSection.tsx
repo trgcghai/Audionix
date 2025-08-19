@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { AlbumItem, ArtistItem, TrackItem } from "../../app/types/component";
+import { AlbumItem, ArtistItem } from "../../app/types/component";
 import { ReactNode, useMemo } from "react";
 import {
   Dialog,
@@ -11,12 +11,12 @@ import {
 } from "@/components/ui/dialog";
 import EditPlaylistForm from "../../app/(main)/playlists/components/form/EditPlaylistForm";
 import { Dot, ImageIcon, Music } from "lucide-react";
-import { Playlist } from "@/app/types/model";
+import { Playlist, Track } from "@/app/types/model";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import formatTotalTime from "@/utils/formatTotalTime";
 
 interface HeroSectionProps {
-  data: AlbumItem | ArtistItem | Playlist | TrackItem;
+  data: AlbumItem | ArtistItem | Playlist | Track;
   extraInfo?: ReactNode;
 }
 

@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef } from "react";
-import { useGetTracksQuery } from "@/services/tracks/trackApi";
+import { useGetMyCreatedTrackQuery } from "@/services/tracks/trackApi";
 import { useDebounce } from "@/hooks/useDebounce";
 import { usePathname, useRouter } from "next/navigation";
 import { Option } from "@/components/ui/MultipleSelector";
@@ -57,7 +57,7 @@ const useTrackManagement = () => {
   }, [albums, current, limit, pathname, router, status, title, uploadTime]);
 
   // Gọi API để lấy danh sách tracks
-  const { data, isLoading, isError, error } = useGetTracksQuery(
+  const { data, isLoading, isError, error } = useGetMyCreatedTrackQuery(
     {
       current,
       limit,

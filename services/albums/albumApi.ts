@@ -107,6 +107,13 @@ const albumApi = api.injectEndpoints({
       },
       providesTags: ["Albums"],
     }),
+    getAlbumByArtist: builder.query<FindAlbumsResponse, string>({
+      query: (artistId) => ({
+        url: `/artists/${artistId}/albums`,
+        method: "GET",
+      }),
+      providesTags: ["Albums"],
+    }),
   }),
 });
 
@@ -120,4 +127,5 @@ export const {
   useUpdateStatusManyMutation,
   useGetMyFollowedAlbumsQuery,
   useGetLatestAlbumsQuery,
+  useGetAlbumByArtistQuery,
 } = albumApi;

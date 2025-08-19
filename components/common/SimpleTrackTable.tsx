@@ -66,7 +66,7 @@ const SimpleTrackTable = ({
         <ErrorMessage
           message="No tracks found"
           severity="info"
-          variant="compact"
+          variant="inline"
         />
       </div>
     );

@@ -77,10 +77,10 @@ export default function Home() {
           error={(errorLatest as ApiErrorResponse)?.message}
         />
       )}
-      {popularArtists && popularArtists.data && (
+      {popularArtists && popularArtists.data.items && (
         <MediaList
           title={"Popular artists"}
-          data={popularArtists.data}
+          data={popularArtists.data.items}
           isLoading={isLoadingPopular}
           isError={isErrorPopular}
           error={(errorPopular as ApiErrorResponse)?.message}

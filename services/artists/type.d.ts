@@ -13,6 +13,6 @@ export type FindArtistParams = {
   sort?: string;
 };
 
-export type FindPopularArtistResponse = ApiResponse<
-  (Artist & { totalFollowers: number })[]
->;
+export type FindPopularArtistResponse = ApiResponse<{
+  items: (Artist & { totalFollowers: number })[];
+}>;

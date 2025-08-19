@@ -6,7 +6,6 @@ import { Separator } from "@/components/ui/separator";
 import { Dot } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import SimpleTrackTable from "@/components/common/SimpleTrackTable";
 import { useParams } from "next/navigation";
 import {
   useGetSimilarTrackQuery,
@@ -110,10 +109,7 @@ const DetailTrackPage = () => {
         <p className="px-2 text-lg font-bold capitalize">
           Popular tracks by artist
         </p>
-        <SimpleTrackTable
-          tracks={artistTracksData ? artistTracksData.data.items : []}
-          showHeader={false}
-        />
+        <MediaList data={artistTracksData ? artistTracksData.data.items : []} />
       </div>
 
       <div className="mt-12">

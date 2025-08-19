@@ -135,7 +135,18 @@ export type Playlist = {
 export type Album = {
   _id: string;
   title: string;
-  artist: string;
+  artist: {
+    _id: string;
+    name: string;
+    cover_images: [
+      {
+        url: string;
+        width: number;
+        height: number;
+        key: string;
+      },
+    ];
+  };
   description: string;
   status: AlbumStatus;
   cover_images: [

@@ -5,6 +5,8 @@ export type CreateAlbumResponse = ApiResponse<Album>;
 
 export type FindAlbumsResponse = ApiResponse<PaginatedResponse<Album>>;
 
+export type FindAlbumsByIdResponse = ApiResponse<Album>;
+
 export type FindAlbumsParams = {
   current?: number;
   limit?: number;

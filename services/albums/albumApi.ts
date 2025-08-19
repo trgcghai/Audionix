@@ -1,5 +1,6 @@
 import {
   CreateAlbumResponse,
+  FindAlbumsByIdResponse,
   FindAlbumsParams,
   FindAlbumsResponse,
   FindMyFollowedAlbumsResponse,
@@ -114,6 +115,13 @@ const albumApi = api.injectEndpoints({
       }),
       providesTags: ["Albums"],
     }),
+    getAlbumById: builder.query<FindAlbumsByIdResponse, string>({
+      query: (id) => ({
+        url: `/albums/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Albums"],
+    }),
   }),
 });
 
@@ -128,4 +136,5 @@ export const {
   useGetMyFollowedAlbumsQuery,
   useGetLatestAlbumsQuery,
   useGetAlbumByArtistQuery,
+  useGetAlbumByIdQuery,
 } = albumApi;

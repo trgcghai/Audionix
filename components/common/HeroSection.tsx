@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { AlbumItem, ArtistItem } from "../../app/types/component";
+import { AlbumItem } from "../../app/types/component";
 import { ReactNode, useMemo } from "react";
 import {
   Dialog,
@@ -11,12 +11,13 @@ import {
 } from "@/components/ui/dialog";
 import EditPlaylistForm from "../../app/(main)/playlists/components/form/EditPlaylistForm";
 import { Dot, ImageIcon, Music } from "lucide-react";
-import { Playlist, Track } from "@/app/types/model";
+import { Artist, Playlist, Track } from "@/app/types/model";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import formatTotalTime from "@/utils/formatTotalTime";
+import { cn } from "@/libs/utils";
 
 interface HeroSectionProps {
-  data: AlbumItem | ArtistItem | Playlist | Track;
+  data: AlbumItem | Artist | Playlist | Track;
   extraInfo?: ReactNode;
 }
 
@@ -30,13 +31,16 @@ const HeroSection = ({ data, extraInfo }: HeroSectionProps) => {
   if (data.type !== "playlist") {
     return (
       <div className="flex cursor-default items-end gap-4">
-        {data ? (
+        {data && data?.cover_images.length > 0 ? (
           <Image
             src={data?.cover_images[0].url}
             alt=""
             width={220}
             height={220}
-            className={data.type === "artist" ? "rounded-full" : "rounded-lg"}
+            className={cn(
+              "aspect-square object-cover",
+              data.type === "artist" ? "rounded-full" : "rounded-lg",
+            )}
           />
         ) : (
           <div className="bg-muted flex h-[220px] w-[220px] items-center justify-center rounded-lg">

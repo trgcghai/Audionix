@@ -34,9 +34,7 @@ const RenderByVariant = ({
   } = usePlaylistAction();
 
   const albumName = useMemo(() => {
-    return track.albums && track.albums.length > 0
-      ? track.albums[0].title
-      : "-";
+    return track.albums && track.albums.length > 0 ? track.albums[0].title : "";
   }, [track.albums]);
 
   const handleAddToPlaylist = (e: React.MouseEvent<HTMLButtonElement>) => {

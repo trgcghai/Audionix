@@ -149,7 +149,9 @@ const MediaList = ({
 
   return (
     <div className={className}>
-      <p className="px-2 text-xl font-semibold dark:text-white">{title}</p>
+      <p className="px-2 text-xl font-semibold capitalize dark:text-white">
+        {title}
+      </p>
       <div className="mt-1 grid grid-cols-7">
         {data.length === 0 && (
           <div className="col-span-7 flex w-full items-center justify-center">

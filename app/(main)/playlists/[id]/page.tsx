@@ -24,7 +24,7 @@ const DetailPlaylistPage = () => {
     data: playlistData,
     isLoading: playlistLoading,
     isError: playlistError,
-  } = useGetPlaylistByIdQuery(id);
+  } = useGetPlaylistByIdQuery(id, { skip: !id });
 
   const playlist = useMemo(() => {
     return playlistData && playlistData.data;

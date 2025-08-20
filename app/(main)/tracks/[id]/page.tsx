@@ -1,9 +1,7 @@
 "use client";
 import ControlSection from "@/components/common/ControlSection";
-import HeroSection from "@/components/common/HeroSection";
-import MediaList from "@/components/common/MediaList";
+import MediaList from "@/app/(main)/components/MediaList";
 import { Separator } from "@/components/ui/separator";
-import { Dot } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { useParams } from "next/navigation";
@@ -15,9 +13,8 @@ import {
 import LoaderSpin from "@/components/common/LoaderSpin";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { ApiErrorResponse } from "@/app/types/api";
-import { formatTrackDuration } from "@/utils/formatTrackDuration";
-import { format } from "date-fns";
 import { useGetAlbumByArtistQuery } from "@/services/albums/albumApi";
+import { TrackHeroSection } from "@/app/(main)/components/heroSection";
 
 const DetailTrackPage = () => {
   const [isLiked, setIsLiked] = useState(false);
@@ -66,20 +63,7 @@ const DetailTrackPage = () => {
 
   return (
     <div>
-      {track && (
-        <HeroSection
-          data={track}
-          extraInfo={
-            <>
-              <p>{track.artist.name}</p>
-              <Dot />
-              <p>{formatTrackDuration(track.duration_ms)}</p>
-              <Dot />
-              <p>{format(new Date(track.createdAt), "yyyy")}</p>
-            </>
-          }
-        />
-      )}
+      {track && <TrackHeroSection track={track} />}
 
       <Separator className="my-4" />
 

@@ -1,11 +1,8 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Dot } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import MediaList from "@/components/common/MediaList";
-import HeroSection from "@/components/common/HeroSection";
+import MediaList from "@/app/(main)/components/MediaList";
 import SimpleTrackTable from "@/components/common/SimpleTrackTable";
 import { useParams } from "next/navigation";
 import {
@@ -17,6 +14,7 @@ import ErrorMessage from "@/components/common/ErrorMessage";
 import { ApiErrorResponse } from "@/app/types/api";
 import { useGetTrackByArtistQuery } from "@/services/tracks/trackApi";
 import { useGetAlbumByArtistQuery } from "@/services/albums/albumApi";
+import { ArtistHeroSection } from "@/app/(main)/components/heroSection";
 
 const DetailArtistPage = () => {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -67,25 +65,10 @@ const DetailArtistPage = () => {
   return (
     <div className="">
       {artist && (
-        <HeroSection
-          data={artist}
-          extraInfo={
-            <>
-              <Button
-                variant="default"
-                className="rounded-full"
-                onClick={() => {
-                  setIsFollowing(true);
-                }}
-              >
-                {isFollowing ? "Following" : "Follow"}
-              </Button>
-              <Dot />
-              <p>Artist total tracks</p>
-              <Dot />
-              <p>Artist total albums</p>
-            </>
-          }
+        <ArtistHeroSection
+          artist={artist}
+          isFollowing={isFollowing}
+          onFollow={() => setIsFollowing(!isFollowing)}
         />
       )}
       <Separator className="my-4" />

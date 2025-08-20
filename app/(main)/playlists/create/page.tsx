@@ -1,10 +1,10 @@
-import HeroSection from "@/components/common/HeroSection";
 import { PlaylistItem } from "@/app/types/component";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Plus, Repeat, CornerDownLeft } from "lucide-react";
 import SimpleTrackTable from "@/components/common/SimpleTrackTable";
+import { PlaylistHeroSection } from "@/app/(main)/components/heroSection";
 
 const CreatePlaylistPage = () => {
   const newPlaylist: PlaylistItem = {
@@ -22,7 +22,7 @@ const CreatePlaylistPage = () => {
 
   return (
     <div>
-      <HeroSection data={newPlaylist} />
+      <PlaylistHeroSection playlist={newPlaylist} />
 
       <Separator className="my-4" />
 

@@ -1,6 +1,5 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
-import HeroSection from "@/components/common/HeroSection";
 import { useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import SearchTrack from "@/app/(main)/playlists/components/SearchTrack";
@@ -14,6 +13,7 @@ import { ApiErrorResponse } from "@/app/types/api";
 import TracksList from "@/app/(main)/playlists/components/TracksList";
 import usePlaylistAction from "@/hooks/usePlaylistAction";
 import SimpleTrackTable from "@/components/common/SimpleTrackTable";
+import { PlaylistHeroSection } from "@/app/(main)/components/heroSection";
 
 const DetailPlaylistPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -64,7 +64,7 @@ const DetailPlaylistPage = () => {
 
   return (
     <div>
-      {playlist && <HeroSection data={playlist} />}
+      {playlist && <PlaylistHeroSection playlist={playlist} />}
       <Separator className="my-4" />
       {/* display play button and control section such as delete,... */}
       <ControlSection

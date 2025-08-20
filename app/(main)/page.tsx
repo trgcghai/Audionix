@@ -1,5 +1,5 @@
 "use client";
-import MediaList from "@/components/common/MediaList";
+import MediaList from "@/app/(main)/components/MediaList";
 import { useGetTracksQuery } from "@/services/tracks/trackApi";
 import { ApiErrorResponse } from "@/app/types/api";
 import { useGetMyPlaylistsQuery } from "@/services/playlists/playlistApi";

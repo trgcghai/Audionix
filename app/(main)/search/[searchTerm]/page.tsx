@@ -1,5 +1,5 @@
 "use client";
-import MediaList from "@/components/common/MediaList";
+import MediaList from "@/app/(main)/components/MediaList";
 import { mockAlbums, mockArtists, mockPlaylists } from "@/app/sampleData";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";

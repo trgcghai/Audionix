@@ -1,9 +1,7 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
-import { Dot } from "lucide-react";
 import { useMemo, useState } from "react";
-import MediaList from "@/components/common/MediaList";
-import HeroSection from "@/components/common/HeroSection";
+import MediaList from "@/app/(main)/components/MediaList";
 import ControlSection from "@/components/common/ControlSection";
 import SimpleTrackTable from "@/components/common/SimpleTrackTable";
 import { useParams } from "next/navigation";
@@ -11,8 +9,7 @@ import { useGetAlbumByIdQuery } from "@/services/albums/albumApi";
 import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
-import formatTotalTime from "@/utils/formatTotalTime";
-import { EmbbedTrack } from "@/app/types/model";
+import { AlbumHeroSection } from "@/app/(main)/components/heroSection";
 
 const DetailAlbumPage = () => {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -51,28 +48,7 @@ const DetailAlbumPage = () => {
 
   return (
     <div>
-      {album && (
-        <HeroSection
-          data={album}
-          extraInfo={
-            <>
-              <p>{album?.artist.name}</p>
-              <Dot />
-              <p>{album?.tracks.length} items</p>
-              <Dot />
-              <p>
-                {formatTotalTime(
-                  album.tracks.reduce(
-                    (prev: number, curr: EmbbedTrack) =>
-                      prev + parseInt(curr.duration_ms),
-                    0,
-                  ),
-                )}
-              </p>
-            </>
-          }
-        />
-      )}
+      {album && <AlbumHeroSection album={album} />}
 
       <Separator className="my-4" />
 

@@ -17,6 +17,7 @@ import {
   Mic,
   Settings,
   User,
+  User2,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useMemo } from "react";
@@ -59,13 +60,12 @@ export default function UserPopover({ user }: UserPopoverProps) {
           className="flex h-auto items-center gap-3 px-3 py-2"
         >
           <Avatar className="h-8 w-8">
-            <AvatarImage src={"/audionix_logo_short.png"} alt={user.username} />
+            <AvatarImage
+              src={(user.avatar && user.avatar[0].url) || ""}
+              alt={user.username}
+            />
             <AvatarFallback className="text-sm">
-              {user.username
-                .split(" ")
-                .map((n) => n[0])
-                .join("")
-                .toUpperCase()}
+              <User2 />
             </AvatarFallback>
           </Avatar>
           <span className="text-sm font-medium">{user.username}</span>
@@ -77,15 +77,11 @@ export default function UserPopover({ user }: UserPopoverProps) {
           <div className="flex items-center gap-3">
             <Avatar className="h-12 w-12">
               <AvatarImage
-                src={"/audionix_logo_short.png"}
+                src={(user.avatar && user.avatar[0].url) || ""}
                 alt={user.username}
               />
               <AvatarFallback className="text-lg">
-                {user.username
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")
-                  .toUpperCase()}
+                <User2 />
               </AvatarFallback>
             </Avatar>
             <div className="min-w-0 flex-1">

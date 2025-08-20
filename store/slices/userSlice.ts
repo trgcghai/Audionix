@@ -6,6 +6,16 @@ export interface UserSliceState {
   roles: string[];
   isAuthenticated: boolean;
   username: string;
+  avatar:
+    | [
+        {
+          url: string;
+          width: number;
+          height: number;
+          key: string;
+        },
+      ]
+    | null;
 }
 
 const initialState: UserSliceState = {
@@ -13,6 +23,7 @@ const initialState: UserSliceState = {
   roles: [],
   isAuthenticated: false,
   username: "",
+  avatar: null,
 };
 
 export const userSlice = createSlice({
@@ -25,12 +36,21 @@ export const userSlice = createSlice({
         email: string;
         roles: string[];
         username: string;
+        avatar: [
+          {
+            url: string;
+            width: number;
+            height: number;
+            key: string;
+          },
+        ];
       }>,
     ) => {
-      const { email, roles, username } = action.payload;
+      const { email, roles, username, avatar } = action.payload;
       state.email = email;
       state.roles = roles;
       state.username = username;
+      state.avatar = avatar;
       state.isAuthenticated = true;
     },
     clearUser: (state) => {

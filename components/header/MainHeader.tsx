@@ -1,16 +1,12 @@
 "use client";
 
-import { Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ModeToggle } from "@/components/common/theme/ModeToggle";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/libs/utils";
 import LinkLogo from "../common/LinkLogo";
-import Link from "next/link";
-import UserPopover from "./UserPopover";
-import { useUserSlice } from "@/store/slices/userSlice";
+import UserInfo from "@/components/header/UserInfo";
+import SearchSection from "@/components/header/SearchSection";
 
 export default function MainHeader({
   className = "",
@@ -20,15 +16,12 @@ export default function MainHeader({
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 
-  const user = useUserSlice();
-
   const handleSearch = (e: React.KeyboardEvent) => {
     if (e.key !== "Enter") return;
     if (!searchTerm.trim()) return;
 
     router.push(`/search/${searchTerm}`);
   };
-
   return (
     <header
       className={cn(
@@ -43,35 +36,17 @@ export default function MainHeader({
           </div>
 
           {showSearch && (
-            <div className="relative hidden md:flex">
-              <Search className="absolute top-3.5 left-2.5 h-5 w-5 text-gray-400" />
-              <Input
-                type="search"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyDown={handleSearch}
-                placeholder="What do you want to play ?"
-                className="placeholder:text-md h-9 w-[180px] rounded-full p-6 pl-9 lg:w-[400px]"
-              />
-            </div>
+            <SearchSection
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              handleSearch={handleSearch}
+            />
           )}
 
           <div className="flex items-center space-x-2">
             <ModeToggle />
 
-            {!user.isAuthenticated && (
-              <>
-                <Link href="/auth/login">
-                  <Button variant="outline" className="rounded-full">
-                    Log In
-                  </Button>
-                </Link>
-                <Link href="/auth/register">
-                  <Button className="rounded-full">Register</Button>
-                </Link>
-              </>
-            )}
-            {user.isAuthenticated && <UserPopover user={user} />}
+            <UserInfo />
           </div>
         </div>
       </div>

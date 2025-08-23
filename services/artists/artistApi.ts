@@ -11,10 +11,17 @@ import {
 const artistApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllArtists: builder.query<FindArtistResponse, FindArtistParams>({
-      query: () => {
+      query: ({ limit, current, genres, name, sort }) => {
         return {
           url: "/artists",
           method: "GET",
+          params: {
+            limit: limit && limit < 1 ? 10 : limit,
+            current: current && current < 1 ? 1 : current,
+            genres: (genres && genres.join(",")) || undefined,
+            name,
+            sort,
+          },
         };
       },
       providesTags: ["Artists"],
@@ -23,24 +30,35 @@ const artistApi = api.injectEndpoints({
       FindMyFollowedArtistResponse,
       FindArtistParams
     >({
-      query: () => {
+      query: ({ limit, current, genres, name, sort }) => {
         return {
           url: "/users/me/following/artists",
           method: "GET",
+          params: {
+            limit: limit && limit < 1 ? 10 : limit,
+            current: current && current < 1 ? 1 : current,
+            genres: (genres && genres.join(",")) || undefined,
+            name,
+            sort,
+          },
         };
       },
       providesTags: ["Artists"],
     }),
     getPopularArtists: builder.query<
       FindPopularArtistResponse,
-      { limit: number }
+      FindArtistParams
     >({
-      query: ({ limit }) => {
+      query: ({ limit, current, genres, name, sort }) => {
         return {
-          url: "/artists",
+          url: "/artists/popular",
           method: "GET",
           params: {
-            limit,
+            limit: limit && limit < 1 ? 10 : limit,
+            current: current && current < 1 ? 1 : current,
+            genres: (genres && genres.join(",")) || undefined,
+            name,
+            sort,
           },
         };
       },
@@ -59,11 +77,17 @@ const artistApi = api.injectEndpoints({
       FindArtistResponse,
       FindSimilarArtistParams
     >({
-      query: ({ id, ...params }) => {
+      query: ({ id, current, genres, limit, name, sort }) => {
         return {
-          url: `/artists/${id}/related-artists`,
+          url: `/artists/${id}/ `,
           method: "GET",
-          params,
+          params: {
+            limit: limit && limit < 1 ? 10 : limit,
+            current: current && current < 1 ? 1 : current,
+            genres: (genres && genres.join(",")) || undefined,
+            name,
+            sort,
+          },
         };
       },
       providesTags: ["Artists"],

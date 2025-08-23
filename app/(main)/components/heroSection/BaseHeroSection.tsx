@@ -34,8 +34,18 @@ const BaseHeroSection = ({
           )}
         />
       ) : (
-        <div className="bg-muted flex h-[220px] w-[220px] items-center justify-center rounded-lg">
-          <ImageIcon className="h-20 w-20" />
+        <div
+          className={cn(
+            "bg-muted flex h-[220px] w-[220px] items-center justify-center",
+            isRoundImage ? "rounded-full" : "rounded-lg",
+          )}
+        >
+          <ImageIcon
+            className={cn(
+              "h-20 w-20",
+              isRoundImage ? "rounded-full" : "rounded-lg",
+            )}
+          />
         </div>
       )}
       {children}

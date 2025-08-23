@@ -32,13 +32,29 @@ const ArtistHeroSection = ({
       coverUrl={artist?.cover_images[0]?.url || ""}
       showCoverImage={!!artist?.cover_images.length}
     >
-      <Button variant="default" className="rounded-full" onClick={onFollow}>
-        {isFollowing ? "Following" : "Follow"}
-      </Button>
-      <Dot />
-      <p>Artist total tracks</p>
-      <Dot />
-      <p>Artist total albums</p>
+      <div className="flex flex-col items-start justify-end gap-6">
+        <p className="text-foreground text-sm font-semibold capitalize">
+          Artist
+        </p>
+        <p className="text-start text-7xl font-bold capitalize">
+          {artist?.name || ""}
+        </p>
+        <div className="text-muted-foreground flex flex-col items-start gap-2 text-sm">
+          <div className="flex items-center gap-2">
+            <Button
+              variant="default"
+              className="rounded-full"
+              onClick={onFollow}
+            >
+              {isFollowing ? "Following" : "Follow"}
+            </Button>
+            <Dot />
+            <p>Artist total tracks</p>
+            <Dot />
+            <p>Artist total albums</p>
+          </div>
+        </div>
+      </div>
     </BaseHeroSection>
   );
 };
@@ -94,11 +110,23 @@ const TrackHeroSection = ({ track }: { track: Track }) => {
       coverUrl={track?.cover_images[0]?.url || ""}
       showCoverImage={!!track?.cover_images.length}
     >
-      <p>{track.artist.name}</p>
-      <Dot />
-      <p>{formatTrackDuration(track.duration_ms)}</p>
-      <Dot />
-      <p>{format(new Date(track.createdAt), "yyyy")}</p>
+      <div className="flex flex-col items-start justify-end gap-6">
+        <p className="text-foreground text-sm font-semibold capitalize">
+          Track
+        </p>
+        <p className="text-start text-7xl font-bold capitalize">
+          {track?.title || ""}
+        </p>
+        <div className="text-muted-foreground flex flex-col items-start gap-2 text-sm">
+          <div className="flex items-center gap-2">
+            <p>{track.artist.name}</p>
+            <Dot />
+            <p>{formatTrackDuration(track.duration_ms)}</p>
+            <Dot />
+            <p>{format(new Date(track.createdAt), "yyyy")}</p>
+          </div>
+        </div>
+      </div>
     </BaseHeroSection>
   );
 };
@@ -110,19 +138,31 @@ const AlbumHeroSection = ({ album }: { album: Album }) => {
       coverUrl={album?.cover_images[0]?.url || ""}
       showCoverImage={!!album?.cover_images.length}
     >
-      <p>{album?.artist.name}</p>
-      <Dot />
-      <p>{album?.tracks.length} items</p>
-      <Dot />
-      <p>
-        {formatTotalTime(
-          album.tracks.reduce(
-            (prev: number, curr: EmbbedTrack) =>
-              prev + parseInt(curr.duration_ms),
-            0,
-          ),
-        )}
-      </p>
+      <div className="flex flex-col items-start justify-end gap-6">
+        <p className="text-foreground text-sm font-semibold capitalize">
+          Album
+        </p>
+        <p className="text-start text-7xl font-bold capitalize">
+          {album?.title || ""}
+        </p>
+        <div className="text-muted-foreground flex flex-col items-start gap-2 text-sm">
+          <div className="flex items-center gap-2">
+            <p>{album?.artist.name}</p>
+            <Dot />
+            <p>{album?.tracks.length} items</p>
+            <Dot />
+            <p>
+              {formatTotalTime(
+                album.tracks.reduce(
+                  (prev: number, curr: EmbbedTrack) =>
+                    prev + parseInt(curr.duration_ms),
+                  0,
+                ),
+              )}
+            </p>
+          </div>
+        </div>
+      </div>
     </BaseHeroSection>
   );
 };

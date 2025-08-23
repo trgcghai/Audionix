@@ -1,5 +1,4 @@
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
-import { TrackItem } from "@/app/types/component";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -18,6 +17,7 @@ import {
   Repeat,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { TrackItem } from "@/app/types/component";
 
 const MediaControl = ({ track }: { track: TrackItem }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -49,7 +49,7 @@ const MediaControl = ({ track }: { track: TrackItem }) => {
   }, [isPlaying, track.duration_ms, currentTime]);
 
   return (
-    <div className="flex flex-col items-center gap-2 max-w-md w-2/4">
+    <div className="flex w-2/4 max-w-md flex-col items-center gap-2">
       <div className="flex items-center gap-2">
         <TooltipProvider delayDuration={300}>
           <Tooltip>
@@ -77,13 +77,13 @@ const MediaControl = ({ track }: { track: TrackItem }) => {
         <Button
           variant="default"
           size="icon"
-          className="h-10 w-10 rounded-full border-primary"
+          className="border-primary h-10 w-10 rounded-full"
           onClick={togglePlay}
         >
           {isPlaying ? (
             <Pause className="h-5 w-5" fill="currentColor" />
           ) : (
-            <Play className="h-5 w-5 ml-0.5" fill="currentColor" />
+            <Play className="ml-0.5 h-5 w-5" fill="currentColor" />
           )}
         </Button>
 
@@ -112,8 +112,8 @@ const MediaControl = ({ track }: { track: TrackItem }) => {
       </div>
 
       {/* Progress bar */}
-      <div className="flex items-center w-full gap-2">
-        <span className="text-xs  w-10 text-right">
+      <div className="flex w-full items-center gap-2">
+        <span className="w-10 text-right text-xs">
           {formatTrackDuration(currentTime)}
         </span>
         <Slider
@@ -124,7 +124,7 @@ const MediaControl = ({ track }: { track: TrackItem }) => {
           step={1000}
           onValueChange={(value) => setCurrentTime(value[0])}
         />
-        <span className="text-xs  w-10">
+        <span className="w-10 text-xs">
           {formatTrackDuration(track.duration_ms)}
         </span>
       </div>

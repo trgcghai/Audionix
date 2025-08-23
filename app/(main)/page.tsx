@@ -11,38 +11,41 @@ import {
   useGetMyFollowedArtistsQuery,
   useGetPopularArtistsQuery,
 } from "@/services/artists/artistApi";
+import { useUserSlice } from "@/store/slices/userSlice";
 
 export default function Home() {
+  const { isAuthenticated } = useUserSlice();
+
+  // cái này phải public
   const {
     data: trackData,
     isLoading: trackLoading,
     isError: trackError,
     error: trackErrorData,
-  } = useGetTracksQuery({
-    limit: 7,
-  });
+  } = useGetTracksQuery({ limit: 7 });
 
   const {
     data: playlists,
     isLoading: isLoadingPlaylists,
     isError: isErrorPlaylists,
     error: errorPlaylists,
-  } = useGetMyPlaylistsQuery({ limit: 7 });
+  } = useGetMyPlaylistsQuery({ limit: 7 }, { skip: !isAuthenticated });
 
   const {
     data: followedAlbums,
     isLoading: isLoadingFollowed,
     isError: isErrorFollowed,
     error: errorFollowed,
-  } = useGetMyFollowedAlbumsQuery({});
+  } = useGetMyFollowedAlbumsQuery({}, { skip: !isAuthenticated });
 
   const {
     data: followedArtists,
     isLoading: isLoadingFollowedArtists,
     isError: isErrorFollowedArtists,
     error: errorFollowedArtists,
-  } = useGetMyFollowedArtistsQuery({ limit: 7 });
+  } = useGetMyFollowedArtistsQuery({ limit: 7 }, { skip: !isAuthenticated });
 
+  // cái này phải public
   const {
     data: latestAlbums,
     isLoading: isLoadingLatest,
@@ -50,6 +53,7 @@ export default function Home() {
     error: errorLatest,
   } = useGetLatestAlbumsQuery({ limit: 7 });
 
+  // cái này phải public
   const {
     data: popularArtists,
     isLoading: isLoadingPopular,

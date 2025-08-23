@@ -12,6 +12,7 @@ import { useQueueDrawer } from "@/store/slices/queueDrawerSlice";
 import { useGetMyFollowedAlbumsQuery } from "@/services/albums/albumApi";
 import { ApiErrorResponse } from "@/app/types/api";
 import { useGetMyFollowedArtistsQuery } from "@/services/artists/artistApi";
+import { useUserSlice } from "@/store/slices/userSlice";
 
 const Layout = ({
   children,
@@ -19,25 +20,26 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   const { isOpen: isDrawerOpen } = useQueueDrawer();
+  const { isAuthenticated } = useUserSlice();
   const {
     data: playlists,
     isLoading: isLoadingPlaylists,
     isError: isErrorPlaylists,
     error: errorPlaylists,
-  } = useGetMyPlaylistsQuery({});
+  } = useGetMyPlaylistsQuery({}, { skip: !isAuthenticated });
   const {
     data: followedAlbums,
     isLoading: isLoadingFollowed,
     isError: isErrorFollowed,
     error: errorFollowed,
-  } = useGetMyFollowedAlbumsQuery({});
+  } = useGetMyFollowedAlbumsQuery({}, { skip: !isAuthenticated });
 
   const {
     data: followedArtists,
     isLoading: isLoadingFollowedArtists,
     isError: isErrorFollowedArtists,
     error: errorFollowedArtists,
-  } = useGetMyFollowedArtistsQuery({});
+  } = useGetMyFollowedArtistsQuery({}, { skip: !isAuthenticated });
 
   return (
     <div className="grid h-screen grid-cols-12 grid-rows-12">
@@ -45,34 +47,32 @@ const Layout = ({
         <MainHeader />
       </div>
       <div className="col-span-3 row-span-11 -mt-5 p-4">
-        {playlists && (
-          <MainSidebar
-            playlistData={{
-              playlists: playlists?.data?.items || [],
-              isLoading: isLoadingPlaylists,
-              isError: isErrorPlaylists,
-              error:
-                (errorPlaylists as ApiErrorResponse)?.message ||
-                "Failed to load your playlists",
-            }}
-            albumData={{
-              albums: followedAlbums?.data?.albums || [],
-              isLoading: isLoadingFollowed,
-              isError: isErrorFollowed,
-              error:
-                (errorFollowed as ApiErrorResponse)?.message ||
-                "Failed to load your followed albums",
-            }}
-            artistData={{
-              artists: followedArtists?.data?.artists || [],
-              isLoading: isLoadingFollowedArtists,
-              isError: isErrorFollowedArtists,
-              error:
-                (errorFollowedArtists as ApiErrorResponse)?.message ||
-                "Failed to load your followed artists",
-            }}
-          />
-        )}
+        <MainSidebar
+          playlistData={{
+            playlists: playlists?.data?.items || [],
+            isLoading: isLoadingPlaylists,
+            isError: isErrorPlaylists,
+            error:
+              (errorPlaylists as ApiErrorResponse)?.message ||
+              "Failed to load your playlists",
+          }}
+          albumData={{
+            albums: followedAlbums?.data?.albums || [],
+            isLoading: isLoadingFollowed,
+            isError: isErrorFollowed,
+            error:
+              (errorFollowed as ApiErrorResponse)?.message ||
+              "Failed to load your followed albums",
+          }}
+          artistData={{
+            artists: followedArtists?.data?.artists || [],
+            isLoading: isLoadingFollowedArtists,
+            isError: isErrorFollowedArtists,
+            error:
+              (errorFollowedArtists as ApiErrorResponse)?.message ||
+              "Failed to load your followed artists",
+          }}
+        />
       </div>
       <div
         className={cn(

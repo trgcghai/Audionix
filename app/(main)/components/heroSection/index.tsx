@@ -42,11 +42,11 @@ const ArtistHeroSection = ({
         <div className="text-muted-foreground flex flex-col items-start gap-2 text-sm">
           <div className="flex items-center gap-2">
             <Button
-              variant="default"
+              variant={isFollowing ? "outline" : "default"}
               className="rounded-full"
               onClick={onFollow}
             >
-              {isFollowing ? "Following" : "Follow"}
+              {isFollowing ? "Unfollow" : "Follow"}
             </Button>
             <Dot />
             <p>Artist total tracks</p>

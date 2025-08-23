@@ -1,6 +1,6 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MediaList from "@/app/(main)/components/MediaList";
 import SimpleTrackTable from "@/components/common/SimpleTrackTable";
@@ -15,10 +15,15 @@ import { ApiErrorResponse } from "@/app/types/api";
 import { useGetTrackByArtistQuery } from "@/services/tracks/trackApi";
 import { useGetAlbumByArtistQuery } from "@/services/albums/albumApi";
 import { ArtistHeroSection } from "@/app/(main)/components/heroSection";
+import useUserActions from "@/hooks/useUserActions";
+import { useCheckIfUserIsFollowingArtistsQuery } from "@/services/users/userApi";
 
 const DetailArtistPage = () => {
-  const [isFollowing, setIsFollowing] = useState(false);
+  const { handleFollowArtist, handleUnfollowArtist } = useUserActions();
   const { id } = useParams<{ id: string }>();
+  const { data: followData } = useCheckIfUserIsFollowingArtistsQuery([id], {
+    skip: !id,
+  });
   const {
     data: artistData,
     isLoading: isArtistLoading,
@@ -67,8 +72,14 @@ const DetailArtistPage = () => {
       {artist && (
         <ArtistHeroSection
           artist={artist}
-          isFollowing={isFollowing}
-          onFollow={() => setIsFollowing(!isFollowing)}
+          isFollowing={followData?.data.result[0].isFollowing || false}
+          onFollow={() => {
+            if (followData?.data.result[0].isFollowing) {
+              handleUnfollowArtist(artist._id);
+            } else {
+              handleFollowArtist(artist._id);
+            }
+          }}
         />
       )}
       <Separator className="my-4" />

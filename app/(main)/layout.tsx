@@ -49,7 +49,7 @@ const Layout = ({
       <div className="col-span-3 row-span-11 -mt-5 p-4">
         <MainSidebar
           playlistData={{
-            playlists: playlists?.data?.items || [],
+            items: playlists?.data?.items || [],
             isLoading: isLoadingPlaylists,
             isError: isErrorPlaylists,
             error:
@@ -57,7 +57,7 @@ const Layout = ({
               "Failed to load your playlists",
           }}
           albumData={{
-            albums: followedAlbums?.data?.albums || [],
+            items: followedAlbums?.data?.albums || [],
             isLoading: isLoadingFollowed,
             isError: isErrorFollowed,
             error:
@@ -65,7 +65,7 @@ const Layout = ({
               "Failed to load your followed albums",
           }}
           artistData={{
-            artists: followedArtists?.data?.artists || [],
+            items: followedArtists?.data?.artists || [],
             isLoading: isLoadingFollowedArtists,
             isError: isErrorFollowedArtists,
             error:

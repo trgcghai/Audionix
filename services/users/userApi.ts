@@ -1,4 +1,5 @@
 import { api } from "@/services/api";
+import { CheckUserFollowArtistResponse } from "@/services/users/type";
 
 const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -7,14 +8,71 @@ const userApi = api.injectEndpoints({
         return {
           url: `/users/me/following/artists`,
           method: "PUT",
-          body: {
+          data: {
             artistId,
           },
         };
       },
       invalidatesTags: ["Artists"],
     }),
+    unfollowArtist: builder.mutation<void, string>({
+      query: (artistId) => {
+        return {
+          url: `/users/me/following/artists`,
+          method: "DELETE",
+          data: {
+            artistId,
+          },
+        };
+      },
+      invalidatesTags: ["Artists"],
+    }),
+    followAlbum: builder.mutation<void, string>({
+      query: (albumId) => {
+        return {
+          url: `/users/me/following/albums`,
+          method: "PUT",
+          data: {
+            albumId,
+          },
+        };
+      },
+      invalidatesTags: ["Albums"],
+    }),
+    unfollowAlbum: builder.mutation<void, string>({
+      query: (albumId) => {
+        return {
+          url: `/users/me/following/albums`,
+          method: "DELETE",
+          data: {
+            albumId,
+          },
+        };
+      },
+      invalidatesTags: ["Albums"],
+    }),
+    checkIfUserIsFollowingArtists: builder.query<
+      CheckUserFollowArtistResponse,
+      string[]
+    >({
+      query: (artistIds) => {
+        return {
+          url: `/users/me/following/artists/contains`,
+          method: "GET",
+          params: {
+            artistIds: artistIds.join(","),
+          },
+        };
+      },
+      providesTags: ["Artists"],
+    }),
   }),
 });
 
-export const { useFollowArtistMutation } = userApi;
+export const {
+  useFollowArtistMutation,
+  useUnfollowArtistMutation,
+  useFollowAlbumMutation,
+  useUnfollowAlbumMutation,
+  useCheckIfUserIsFollowingArtistsQuery,
+} = userApi;

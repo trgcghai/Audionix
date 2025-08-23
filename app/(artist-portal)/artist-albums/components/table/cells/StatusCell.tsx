@@ -1,16 +1,16 @@
-import { Row } from "@tanstack/react-table";
-import { useState } from "react";
+import StatusSelect from "@/app/(artist-portal)/artist-albums/components/StatusSelect";
+import { AlbumStatus } from "@/app/enums";
+import { Album } from "@/app/types/model";
+import ConfirmDialog from "@/components/dialog/ConfirmDialog";
+import { Badge } from "@/components/ui/badge";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Badge } from "@/components/ui/badge";
-import ConfirmDialog from "@/components/dialog/ConfirmDialog";
-import { Album } from "@/app/types/model";
-import { AlbumStatus } from "@/app/enums";
-import StatusSelect from "@/app/(artist-portal)/artist-albums/components/StatusSelect";
 import useAlbumActions from "@/hooks/useAlbumActions";
+import { Row } from "@tanstack/react-table";
+import { useState } from "react";
 
 const StatusCell = ({ row }: { row: Row<Album> }) => {
   const [status, setStatus] = useState(row.original.status);

@@ -1,7 +1,7 @@
-import { type Metadata } from "next";
 import { ThemeProvider } from "@/components/common/theme/theme-provider";
-import { Geist, Geist_Mono } from "next/font/google";
 import ReduxProvider from "@/store/ReduxProvider";
+import { type Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 
 import "./globals.css";

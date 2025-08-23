@@ -1,10 +1,10 @@
-import { useAppDispatch } from "@/hooks/redux";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useAppDispatch } from "@/hooks/redux";
+import { closeQueueDrawer } from "@/store/slices/queueDrawerSlice";
 import { XIcon } from "lucide-react";
 import TrackInfo from "./TrackInfo";
-import { closeQueueDrawer } from "@/store/slices/queueDrawerSlice";
 
 const QueueDrawer = () => {
   const dispatch = useAppDispatch();

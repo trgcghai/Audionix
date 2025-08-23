@@ -1,5 +1,10 @@
 "use client";
+import { DEFAULT_GENRES } from "@/app/constant";
 import { mockAlbums } from "@/app/sampleData";
+import { ApiErrorResponse } from "@/app/types/api";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import LoaderSpin from "@/components/common/LoaderSpin";
+import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -10,15 +15,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import ConfirmDialog from "@/components/dialog/ConfirmDialog";
-import { useCreateTrackForm } from "../../hooks/useCreateTrackForm";
-import { ImageUploadField } from "./ImageUploadField";
-import { AudioUploadField } from "./AudioUploadField";
-import ErrorMessage from "@/components/common/ErrorMessage";
 import MultipleSelector from "@/components/ui/MultipleSelector";
-import { DEFAULT_GENRES } from "@/app/constant";
-import LoaderSpin from "@/components/common/LoaderSpin";
-import { ApiErrorResponse } from "@/app/types/api";
+import { useCreateTrackForm } from "../../hooks/useCreateTrackForm";
+import { AudioUploadField } from "./AudioUploadField";
+import { ImageUploadField } from "./ImageUploadField";
 
 const UploadTrackForm = () => {
   const {

@@ -6,16 +6,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ArtistAlbumItem } from "../../app/types/component";
-import { useAppDispatch } from "../../hooks/redux";
+import { Separator } from "@/components/ui/separator";
+import { hideViewDetail } from "@/store/slices/detailAlbumSlice";
 import { ImageIcon, XIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import { formatUploadTime } from "../../utils/formatUploadTime";
 import { TrackTable } from "../../app/(artist-portal)/artist-tracks/components/table";
 import { TrackInAlbumColumns } from "../../app/(artist-portal)/artist-tracks/components/table/Columns";
-import { Separator } from "@/components/ui/separator";
-import { hideViewDetail } from "@/store/slices/detailAlbumSlice";
+import { ArtistAlbumItem } from "../../app/types/component";
+import { useAppDispatch } from "../../hooks/redux";
+import { formatUploadTime } from "../../utils/formatUploadTime";
 
 const DetailAlbumCard = ({ album }: { album: ArtistAlbumItem }) => {
   const dispatch = useAppDispatch();

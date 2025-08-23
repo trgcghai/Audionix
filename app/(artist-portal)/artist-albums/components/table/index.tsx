@@ -11,14 +11,14 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 
-import { cn } from "@/libs/utils";
+import DataTableActionsOnSelected from "@/app/(artist-portal)/artist-albums/components/table/actionsOnSelected";
+import TableFilters from "@/app/(artist-portal)/artist-albums/components/table/filters";
+import useAlbumManagement from "@/app/(artist-portal)/artist-albums/hooks/useAlbumManagement";
 import { DataTablePagination } from "@/components/dataTable/DataTablePagination";
 import { DataTableViewOptions } from "@/components/dataTable/DataTableViewOptions";
-import { useEffect, useState } from "react";
-import useAlbumManagement from "@/app/(artist-portal)/artist-albums/hooks/useAlbumManagement";
 import TableContent from "@/components/dataTable/TableContent";
-import TableFilters from "@/app/(artist-portal)/artist-albums/components/table/filters";
-import DataTableActionsOnSelected from "@/app/(artist-portal)/artist-albums/components/table/actionsOnSelected";
+import { cn } from "@/libs/utils";
+import { useEffect, useState } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

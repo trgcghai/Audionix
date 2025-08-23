@@ -1,4 +1,4 @@
-import { formatTrackDuration } from "@/utils/formatTrackDuration";
+import { TrackItem } from "@/app/types/component";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -8,16 +8,16 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/libs/utils";
+import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import {
-  Shuffle,
-  SkipBack,
   Pause,
   Play,
-  SkipForward,
   Repeat,
+  Shuffle,
+  SkipBack,
+  SkipForward,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { TrackItem } from "@/app/types/component";
 
 const MediaControl = ({ track }: { track: TrackItem }) => {
   const [isPlaying, setIsPlaying] = useState(false);

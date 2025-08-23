@@ -1,4 +1,10 @@
 "use client";
+import CreatePlaylistButton from "@/app/(main)/components/sidebar/CreatePlaylistButton";
+import FilterButtons from "@/app/(main)/components/sidebar/FilterButtons";
+import LibraryItem from "@/app/(main)/components/sidebar/LibraryItem";
+import { Album, Artist, Playlist } from "@/app/types/model";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import LoaderSpin from "@/components/common/LoaderSpin";
 import {
   Card,
   CardContent,
@@ -7,15 +13,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Album, Artist, Playlist } from "@/app/types/model";
-import CreatePlaylistButton from "@/app/(main)/components/sidebar/CreatePlaylistButton";
-import FilterButtons from "@/app/(main)/components/sidebar/FilterButtons";
-import LibraryItem from "@/app/(main)/components/sidebar/LibraryItem";
-import LoaderSpin from "@/components/common/LoaderSpin";
-import ErrorMessage from "@/components/common/ErrorMessage";
 
 type DataSection<T> = {
   items: T[];

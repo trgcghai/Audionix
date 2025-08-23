@@ -1,4 +1,3 @@
-import { useAppDispatch } from "@/hooks/redux";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -7,12 +6,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Mic, VolumeX, Volume2, List } from "lucide-react";
-import { useState } from "react";
+import { useAppDispatch } from "@/hooks/redux";
 import {
   toggleQueueDrawer,
   useQueueDrawer,
 } from "@/store/slices/queueDrawerSlice";
+import { List, Mic, Volume2, VolumeX } from "lucide-react";
+import { useState } from "react";
 
 const RightControl = () => {
   const [volume, setVolume] = useState(70);

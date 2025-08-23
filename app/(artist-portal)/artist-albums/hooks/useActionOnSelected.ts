@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
-import { Table } from "@tanstack/react-table";
 import { Album } from "@/app/types/model";
+import { Table } from "@tanstack/react-table";
+import { useState } from "react";
 
 export const useActionOnSelected = <TData>(table: Table<TData>) => {
   const [selectedStatus, setSelectedStatus] = useState<string | undefined>();

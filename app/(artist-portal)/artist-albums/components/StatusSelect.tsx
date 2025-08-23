@@ -1,4 +1,4 @@
-import { cn } from "@/libs/utils";
+import { AlbumStatusValues } from "@/app/constant";
 import {
   Select,
   SelectContent,
@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { AlbumStatusValues } from "@/app/constant";
+import { cn } from "@/libs/utils";
 
 interface AlbumStatusProps {
   status: string;

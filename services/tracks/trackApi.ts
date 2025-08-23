@@ -1,4 +1,5 @@
 import { ApiResponse } from "@/app/types/api";
+import { Track } from "@/app/types/model";
 import { api } from "../api";
 import {
   CreateTrackResponse,
@@ -9,7 +10,6 @@ import {
   UpdateMultipleStatusResponse,
   UpdateOneStatusParams,
 } from "./type";
-import { Track } from "@/app/types/model";
 
 const trackApi = api.injectEndpoints({
   endpoints: (builder) => {

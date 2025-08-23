@@ -1,20 +1,20 @@
 "use client";
-import ControlSection from "@/components/common/ControlSection";
+import { TrackControlSection } from "@/app/(main)/components/controlSection";
+import { TrackHeroSection } from "@/app/(main)/components/heroSection";
 import MediaList from "@/app/(main)/components/MediaList";
+import { ApiErrorResponse } from "@/app/types/api";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import LoaderSpin from "@/components/common/LoaderSpin";
 import { Separator } from "@/components/ui/separator";
-import Image from "next/image";
-import { useMemo, useState } from "react";
-import { useParams } from "next/navigation";
+import { useGetAlbumByArtistQuery } from "@/services/albums/albumApi";
 import {
   useGetSimilarTrackQuery,
   useGetTrackByArtistQuery,
   useGetTrackByIdQuery,
 } from "@/services/tracks/trackApi";
-import LoaderSpin from "@/components/common/LoaderSpin";
-import ErrorMessage from "@/components/common/ErrorMessage";
-import { ApiErrorResponse } from "@/app/types/api";
-import { useGetAlbumByArtistQuery } from "@/services/albums/albumApi";
-import { TrackHeroSection } from "@/app/(main)/components/heroSection";
+import Image from "next/image";
+import { useParams } from "next/navigation";
+import { useMemo, useState } from "react";
 
 const DetailTrackPage = () => {
   const [isLiked, setIsLiked] = useState(false);
@@ -67,12 +67,11 @@ const DetailTrackPage = () => {
 
       <Separator className="my-4" />
 
-      <ControlSection
+      <TrackControlSection
         onPlay={() => console.log("Play track")}
         onAddToPlaylist={() => console.log("Add to playlist")}
         onLike={() => setIsLiked(!isLiked)}
         isLiked={isLiked}
-        variant="track"
       />
 
       <div className="mt-8 flex items-center gap-2">

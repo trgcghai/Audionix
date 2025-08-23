@@ -1,4 +1,4 @@
-import { format, parseISO } from 'date-fns';
+import { format, parseISO } from "date-fns";
 
 /**
  * Formats an ISO date string to "HH:mm dd/MM/yyyy" format
@@ -8,9 +8,9 @@ import { format, parseISO } from 'date-fns';
 export const formatUploadTime = (dateString: string): string => {
   try {
     const date = parseISO(dateString);
-    return format(date, 'HH:mm MM/dd/yyyy');
+    return format(date, "HH:mm MM/dd/yyyy");
   } catch (error) {
-    console.error('Error formatting date:', error);
-    return 'Invalid date';
+    console.error("Error formatting date:", error);
+    return "Invalid date";
   }
 };

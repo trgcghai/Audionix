@@ -1,4 +1,12 @@
 "use client";
+import { ImageUploadField } from "@/app/(artist-portal)/artist-albums/components/form/ImageUploadField";
+import useCreateAlbumForm from "@/app/(artist-portal)/artist-albums/hooks/useCreateAlbumForm";
+import { DEFAULT_GENRES } from "@/app/constant";
+import { ApiErrorResponse } from "@/app/types/api";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import LoaderSpin from "@/components/common/LoaderSpin";
+import ConfirmDialog from "@/components/dialog/ConfirmDialog";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -8,16 +16,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { DEFAULT_GENRES } from "@/app/constant";
-import ConfirmDialog from "@/components/dialog/ConfirmDialog";
-import useCreateAlbumForm from "@/app/(artist-portal)/artist-albums/hooks/useCreateAlbumForm";
-import { ImageUploadField } from "@/app/(artist-portal)/artist-albums/components/form/ImageUploadField";
-import { Textarea } from "@/components/ui/textarea";
 import MultipleSelector from "@/components/ui/MultipleSelector";
-import ErrorMessage from "@/components/common/ErrorMessage";
-import { ApiErrorResponse } from "@/app/types/api";
-import LoaderSpin from "@/components/common/LoaderSpin";
+import { Textarea } from "@/components/ui/textarea";
 
 const EditAlbumForm = () => {
   const {

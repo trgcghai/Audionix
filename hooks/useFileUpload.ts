@@ -27,7 +27,7 @@ export const useFileUploadWithPreview = ({
         setError(false);
       }
     },
-    [onFileChange]
+    [onFileChange],
   );
 
   const dropzone = useDropzone({

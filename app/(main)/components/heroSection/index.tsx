@@ -1,7 +1,7 @@
 import BaseHeroSection from "@/app/(main)/components/heroSection/BaseHeroSection";
-import { Album, Artist, EmbbedTrack, Track } from "@/app/types/model";
+import EditPlaylistForm from "@/app/(main)/playlists/components/form/EditPlaylistForm";
+import { Album, Artist, EmbbedTrack, Playlist, Track } from "@/app/types/model";
 import { Button } from "@/components/ui/button";
-import { Dot } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -9,11 +9,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Playlist } from "@/app/types/model";
 import formatTotalTime from "@/utils/formatTotalTime";
-import EditPlaylistForm from "@/app/(main)/playlists/components/form/EditPlaylistForm";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { format } from "date-fns";
+import { Dot } from "lucide-react";
 
 interface HeroSectionProps {
   artist: Artist;
@@ -168,8 +167,8 @@ const AlbumHeroSection = ({ album }: { album: Album }) => {
 };
 
 export {
+  AlbumHeroSection,
   ArtistHeroSection,
   PlaylistHeroSection,
   TrackHeroSection,
-  AlbumHeroSection,
 };

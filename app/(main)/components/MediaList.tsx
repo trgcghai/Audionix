@@ -1,9 +1,9 @@
+import { Album, Artist, Playlist, Track } from "@/app/types/model";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import LoaderSpin from "@/components/common/LoaderSpin";
+import { Music, User2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Album, Artist, Playlist, Track } from "@/app/types/model";
-import LoaderSpin from "@/components/common/LoaderSpin";
-import ErrorMessage from "@/components/common/ErrorMessage";
-import { Music, User2 } from "lucide-react";
 
 const PlaylistCard = ({ playlist }: { playlist: Playlist }) => {
   return (

@@ -1,8 +1,8 @@
+import { Album } from "@/app/types/model";
 import { Row } from "@tanstack/react-table";
-import { useState } from "react";
 import { ImageIcon } from "lucide-react";
 import Image from "next/image";
-import { Album } from "@/app/types/model";
+import { useState } from "react";
 
 const ImageCell = ({ row }: { row: Row<Album> }) => {
   const imageUrl = row.original.cover_images[0]?.url;

@@ -1,6 +1,6 @@
 "use client";
-import SignUpForm from "../components/sign-up-form";
 import { useRegister } from "@/hooks/useAuthUser";
+import SignUpForm from "../components/sign-up-form";
 
 const SignUpPage = () => {
   const { handleRegister, isLoading, isError, error } = useRegister();

@@ -1,17 +1,17 @@
 "use client";
-import { Columns } from "@/app/(artist-portal)/artist-albums/components/table/Columns";
 import AlbumTable from "@/app/(artist-portal)/artist-albums/components/table";
-import { useAppDispatch } from "@/hooks/redux";
+import { Columns } from "@/app/(artist-portal)/artist-albums/components/table/Columns";
+import useAlbumManagement from "@/app/(artist-portal)/artist-albums/hooks/useAlbumManagement";
+import { ApiErrorResponse } from "@/app/types/api";
 import DetailAlbumCard from "@/components/common/DetailAlbumCard";
-import { useEffect } from "react";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import LoaderSpin from "@/components/common/LoaderSpin";
+import { useAppDispatch } from "@/hooks/redux";
 import {
   hideViewDetail,
   useDetailAlbumSlice,
 } from "@/store/slices/detailAlbumSlice";
-import LoaderSpin from "@/components/common/LoaderSpin";
-import ErrorMessage from "@/components/common/ErrorMessage";
-import { ApiErrorResponse } from "@/app/types/api";
-import useAlbumManagement from "@/app/(artist-portal)/artist-albums/hooks/useAlbumManagement";
+import { useEffect } from "react";
 
 const ArtistAlbumPage = () => {
   const { album, isOpen } = useDetailAlbumSlice();

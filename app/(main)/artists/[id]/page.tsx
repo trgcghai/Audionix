@@ -1,22 +1,22 @@
 "use client";
-import { Separator } from "@/components/ui/separator";
-import { useMemo } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArtistHeroSection } from "@/app/(main)/components/heroSection";
 import MediaList from "@/app/(main)/components/MediaList";
+import { ApiErrorResponse } from "@/app/types/api";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import LoaderSpin from "@/components/common/LoaderSpin";
 import SimpleTrackTable from "@/components/common/SimpleTrackTable";
-import { useParams } from "next/navigation";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import useUserActions from "@/hooks/useUserActions";
+import { useGetAlbumByArtistQuery } from "@/services/albums/albumApi";
 import {
   useGetArtistByIdQuery,
   useGetSimilarArtistQuery,
 } from "@/services/artists/artistApi";
-import LoaderSpin from "@/components/common/LoaderSpin";
-import ErrorMessage from "@/components/common/ErrorMessage";
-import { ApiErrorResponse } from "@/app/types/api";
 import { useGetTrackByArtistQuery } from "@/services/tracks/trackApi";
-import { useGetAlbumByArtistQuery } from "@/services/albums/albumApi";
-import { ArtistHeroSection } from "@/app/(main)/components/heroSection";
-import useUserActions from "@/hooks/useUserActions";
 import { useCheckIfUserIsFollowingArtistsQuery } from "@/services/users/userApi";
+import { useParams } from "next/navigation";
+import { useMemo } from "react";
 
 const DetailArtistPage = () => {
   const { handleFollowArtist, handleUnfollowArtist } = useUserActions();

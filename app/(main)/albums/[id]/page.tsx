@@ -1,18 +1,20 @@
 "use client";
-import { Separator } from "@/components/ui/separator";
-import { useMemo, useState } from "react";
+import { AlbumControlSection } from "@/app/(main)/components/controlSection";
+import { AlbumHeroSection } from "@/app/(main)/components/heroSection";
 import MediaList from "@/app/(main)/components/MediaList";
-import ControlSection from "@/components/common/ControlSection";
-import SimpleTrackTable from "@/components/common/SimpleTrackTable";
-import { useParams } from "next/navigation";
-import { useGetAlbumByIdQuery } from "@/services/albums/albumApi";
 import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
-import { AlbumHeroSection } from "@/app/(main)/components/heroSection";
+import SimpleTrackTable from "@/components/common/SimpleTrackTable";
+import { Separator } from "@/components/ui/separator";
+import useUserActions from "@/hooks/useUserActions";
+import { useGetAlbumByIdQuery } from "@/services/albums/albumApi";
+import { useCheckIfUserIsFollowingAlbumsQuery } from "@/services/users/userApi";
+import { useParams } from "next/navigation";
+import { useMemo } from "react";
 
 const DetailAlbumPage = () => {
-  const [isFollowing, setIsFollowing] = useState(false);
+  const { handleFollowAlbum, handleUnfollowAlbum } = useUserActions();
   const { id } = useParams<{ id: string }>();
   const {
     data: albumData,
@@ -20,6 +22,9 @@ const DetailAlbumPage = () => {
     isError: isAlbumError,
     error: albumError,
   } = useGetAlbumByIdQuery(id, { skip: !id });
+  const { data: followData } = useCheckIfUserIsFollowingAlbumsQuery([id], {
+    skip: !id,
+  });
 
   const album = useMemo(() => {
     return albumData && albumData.data;
@@ -52,11 +57,16 @@ const DetailAlbumPage = () => {
 
       <Separator className="my-4" />
 
-      <ControlSection
+      <AlbumControlSection
+        isFollowing={followData?.data.result[0].isFollowing || false}
         onPlay={() => console.log("Play album")}
-        onFollow={() => setIsFollowing(!isFollowing)}
-        variant="album"
-        isFollowing={isFollowing}
+        onFollow={() => {
+          if (followData?.data.result[0].isFollowing) {
+            handleUnfollowAlbum(album._id);
+          } else {
+            handleFollowAlbum(album._id);
+          }
+        }}
       />
 
       <SimpleTrackTable tracks={[]} />

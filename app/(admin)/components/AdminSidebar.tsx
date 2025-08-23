@@ -1,10 +1,10 @@
 "use client";
 
-import * as React from "react";
-import { Settings } from "lucide-react";
-import { Sidebar, SidebarContent, SidebarRail } from "@/components/ui/sidebar";
 import LinkLogo from "@/components/common/LinkLogo";
 import { NavMain } from "@/components/ui/nav-main";
+import { Sidebar, SidebarContent, SidebarRail } from "@/components/ui/sidebar";
+import { Settings } from "lucide-react";
+import * as React from "react";
 
 const navItems = [
   {

@@ -1,7 +1,7 @@
 // hooks/useToast.ts
+import { useTheme } from "next-themes";
 import { useMemo } from "react";
 import { Slide, toast, ToastOptions } from "react-toastify";
-import { useTheme } from "next-themes";
 import "react-toastify/dist/ReactToastify.css";
 
 // Custom CSS cho react-toastify - thêm vào file CSS riêng

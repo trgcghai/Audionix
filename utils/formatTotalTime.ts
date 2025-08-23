@@ -1,4 +1,4 @@
-import { intervalToDuration, formatDuration } from "date-fns";
+import { formatDuration, intervalToDuration } from "date-fns";
 
 const formatTotalTime = (ms: number) => {
   if (ms == 0) return "0 seconds";

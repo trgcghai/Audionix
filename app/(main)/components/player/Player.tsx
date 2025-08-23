@@ -1,9 +1,9 @@
 "use client";
 
-import RightControl from "./RightControl";
-import MediaControl from "./MediaControl";
-import TrackInfo from "@/components/common/TrackInfo";
 import { mockTracks } from "@/app/sampleData";
+import TrackInfo from "@/components/common/TrackInfo";
+import MediaControl from "./MediaControl";
+import RightControl from "./RightControl";
 
 const Player = () => {
   return (

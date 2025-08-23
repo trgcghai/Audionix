@@ -11,10 +11,10 @@ import {
   useRegisterMutation,
   useVerifyMutation,
 } from "@/services/auth/authApi";
-import { useState } from "react";
-import { useAppDispatch } from "./redux";
 import { clearUser, setUser } from "@/store/slices/userSlice";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useAppDispatch } from "./redux";
 
 const useRegister = () => {
   const [register, { isLoading, isError }] = useRegisterMutation();
@@ -140,4 +140,4 @@ const useLogout = () => {
   return { handleLogout, isLoading, isError };
 };
 
-export { useRegister, useLogin, useOtp, useLogout };
+export { useLogin, useLogout, useOtp, useRegister };

@@ -1,10 +1,10 @@
 "use client";
-import { Columns } from "@/app/(artist-portal)/artist-tracks/components/table/Columns";
 import { TrackTable } from "@/app/(artist-portal)/artist-tracks/components/table";
+import { Columns } from "@/app/(artist-portal)/artist-tracks/components/table/Columns";
 import useTrackManagement from "@/app/(artist-portal)/artist-tracks/hooks/useTrackManagement";
-import LoaderSpin from "@/components/common/LoaderSpin";
-import ErrorMessage from "@/components/common/ErrorMessage";
 import { ApiErrorResponse } from "@/app/types/api";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import LoaderSpin from "@/components/common/LoaderSpin";
 
 const ArtistTrackPage = () => {
   const { tracks, isLoading, isError, error } = useTrackManagement();

@@ -1,8 +1,6 @@
 "use client";
 import MediaList from "@/app/(main)/components/MediaList";
-import { useGetTracksQuery } from "@/services/tracks/trackApi";
 import { ApiErrorResponse } from "@/app/types/api";
-import { useGetMyPlaylistsQuery } from "@/services/playlists/playlistApi";
 import {
   useGetLatestAlbumsQuery,
   useGetMyFollowedAlbumsQuery,
@@ -11,6 +9,8 @@ import {
   useGetMyFollowedArtistsQuery,
   useGetPopularArtistsQuery,
 } from "@/services/artists/artistApi";
+import { useGetMyPlaylistsQuery } from "@/services/playlists/playlistApi";
+import { useGetTracksQuery } from "@/services/tracks/trackApi";
 import { useUserSlice } from "@/store/slices/userSlice";
 
 export default function Home() {

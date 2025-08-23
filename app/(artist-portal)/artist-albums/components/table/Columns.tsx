@@ -1,15 +1,15 @@
 "use client";
 
-import { Checkbox } from "@/components/ui/checkbox";
-import { ColumnDef } from "@tanstack/react-table";
-import { formatUploadTime } from "@/utils/formatUploadTime";
-import { ARTIST_ALBUM_STATUS_OPTIONS } from "@/app/constant";
-import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
-import { Album } from "@/app/types/model";
-import StatusCell from "./cells/StatusCell";
-import ImageCell from "./cells/ImageCell";
-import ActionCell from "./cells/ActionCell";
 import GenresCell from "@/app/(artist-portal)/artist-tracks/components/table/cells/GenresCell";
+import { ARTIST_ALBUM_STATUS_OPTIONS } from "@/app/constant";
+import { Album } from "@/app/types/model";
+import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
+import { Checkbox } from "@/components/ui/checkbox";
+import { formatUploadTime } from "@/utils/formatUploadTime";
+import { ColumnDef } from "@tanstack/react-table";
+import ActionCell from "./cells/ActionCell";
+import ImageCell from "./cells/ImageCell";
+import StatusCell from "./cells/StatusCell";
 
 export const Columns: ColumnDef<Album>[] = [
   {

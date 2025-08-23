@@ -1,5 +1,6 @@
 import { SimpleTrackTablesVariant } from "@/app/types/component";
-import TrackRow from "./TrackRow";
+import { Playlist, Track } from "@/app/types/model";
+import ErrorMessage from "@/components/common/ErrorMessage";
 import {
   Table,
   TableBody,
@@ -8,8 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Clock } from "lucide-react";
-import { Playlist, Track } from "@/app/types/model";
-import ErrorMessage from "@/components/common/ErrorMessage";
+import TrackRow from "./TrackRow";
 
 const RenderHeaderByVariant = ({
   variant = "default",

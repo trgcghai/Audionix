@@ -1,7 +1,7 @@
+import { cn } from "@/libs/utils";
+import { ImageIcon } from "lucide-react";
 import Image from "next/image";
 import { ReactNode } from "react";
-import { ImageIcon } from "lucide-react";
-import { cn } from "@/libs/utils";
 
 export interface BaseHeroSectionProps {
   title: string;

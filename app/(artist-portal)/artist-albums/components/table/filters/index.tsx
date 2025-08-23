@@ -1,7 +1,7 @@
 import useAlbumManagement from "@/app/(artist-portal)/artist-albums/hooks/useAlbumManagement";
-import TitleFilter from "@/components/common/filters/TitleFilter";
 import { AlbumStatusValues, DEFAULT_GENRES } from "@/app/constant";
 import MultipleValueFilter from "@/components/common/filters/MultipleValueFilter";
+import TitleFilter from "@/components/common/filters/TitleFilter";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/libs/utils";
 

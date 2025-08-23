@@ -1,5 +1,12 @@
 "use client";
 
+import DataTableActionsOnSelected from "@/app/(artist-portal)/artist-tracks/components/table/actionsOnSelected";
+import TableFilters from "@/app/(artist-portal)/artist-tracks/components/table/filters";
+import useTrackManagement from "@/app/(artist-portal)/artist-tracks/hooks/useTrackManagement";
+import { DataTablePagination } from "@/components/dataTable/DataTablePagination";
+import { DataTableViewOptions } from "@/components/dataTable/DataTableViewOptions";
+import TableContent from "@/components/dataTable/TableContent";
+import { cn } from "@/libs/utils";
 import {
   ColumnDef,
   getCoreRowModel,
@@ -10,14 +17,7 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
-import { DataTablePagination } from "@/components/dataTable/DataTablePagination";
-import { DataTableViewOptions } from "@/components/dataTable/DataTableViewOptions";
-import TableContent from "@/components/dataTable/TableContent";
-import DataTableActionsOnSelected from "@/app/(artist-portal)/artist-tracks/components/table/actionsOnSelected";
-import TableFilters from "@/app/(artist-portal)/artist-tracks/components/table/filters";
-import { cn } from "@/libs/utils";
 import { useEffect, useState } from "react";
-import useTrackManagement from "@/app/(artist-portal)/artist-tracks/hooks/useTrackManagement";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

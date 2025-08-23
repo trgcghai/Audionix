@@ -8,3 +8,12 @@ export type CheckUserFollowArtistResponse = ApiResponse<{
     },
   ];
 }>;
+
+export type CheckUserFollowAlbumResponse = ApiResponse<{
+  result: [
+    {
+      albumId: string;
+      isFollowing: boolean;
+    },
+  ];
+}>;

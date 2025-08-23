@@ -1,4 +1,5 @@
 "use client";
+import ErrorMessage from "@/components/common/ErrorMessage";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,12 +21,11 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { cn } from "@/libs/utils";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { OtpFormValues, otpSchema } from "../schemas";
-import { useEffect, useState } from "react";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
-import ErrorMessage from "@/components/common/ErrorMessage";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { OtpFormValues, otpSchema } from "../schemas";
 
 interface OtpFormProps extends Omit<React.ComponentProps<"div">, "onSubmit"> {
   onSubmit: (data: OtpFormValues) => void;

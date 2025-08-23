@@ -1,19 +1,19 @@
-import { Row } from "@tanstack/react-table";
-import { useState } from "react";
-import { FileText, MoreHorizontal, Settings2, Trash2 } from "lucide-react";
+import { Album } from "@/app/types/model";
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { useAppDispatch } from "@/hooks/redux";
-import { openViewDetail } from "@/store/slices/detailAlbumSlice";
-import { Album } from "@/app/types/model";
 import useAlbumActions from "@/hooks/useAlbumActions";
+import { openViewDetail } from "@/store/slices/detailAlbumSlice";
+import { Row } from "@tanstack/react-table";
+import { FileText, MoreHorizontal, Settings2, Trash2 } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
 const ActionCell = ({ row }: { row: Row<Album> }) => {
   const album = row.original;

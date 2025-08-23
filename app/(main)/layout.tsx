@@ -1,17 +1,17 @@
 "use client";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import MainHeader from "@/components/header/MainHeader";
 import Player from "@/app/(main)/components/player/Player";
-import { Separator } from "@/components/ui/separator";
+import MainSidebar from "@/app/(main)/components/sidebar";
+import { ApiErrorResponse } from "@/app/types/api";
 import Footer from "@/components/common/Footer";
 import QueueDrawer from "@/components/common/QueueDrawer";
+import MainHeader from "@/components/header/MainHeader";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/libs/utils";
-import { useGetMyPlaylistsQuery } from "@/services/playlists/playlistApi";
-import MainSidebar from "@/app/(main)/components/sidebar";
-import { useQueueDrawer } from "@/store/slices/queueDrawerSlice";
 import { useGetMyFollowedAlbumsQuery } from "@/services/albums/albumApi";
-import { ApiErrorResponse } from "@/app/types/api";
 import { useGetMyFollowedArtistsQuery } from "@/services/artists/artistApi";
+import { useGetMyPlaylistsQuery } from "@/services/playlists/playlistApi";
+import { useQueueDrawer } from "@/store/slices/queueDrawerSlice";
 import { useUserSlice } from "@/store/slices/userSlice";
 
 const Layout = ({

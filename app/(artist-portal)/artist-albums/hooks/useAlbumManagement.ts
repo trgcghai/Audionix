@@ -1,10 +1,8 @@
 "use client";
-import { useCallback, useEffect, useRef } from "react";
-import { useGetMyCreatedAlbumsQuery } from "@/services/albums/albumApi";
-import { useDebounce } from "@/hooks/useDebounce";
-import { usePathname, useRouter } from "next/navigation";
 import { Option } from "@/components/ui/MultipleSelector";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useGetMyCreatedAlbumsQuery } from "@/services/albums/albumApi";
 import {
   clearFilters,
   setCurrentPage,
@@ -12,6 +10,8 @@ import {
   setFilters,
   setPageLimit,
 } from "@/store/slices/albumManagement";
+import { usePathname, useRouter } from "next/navigation";
+import { useCallback, useEffect, useRef } from "react";
 
 const useAlbumManagement = () => {
   const router = useRouter();

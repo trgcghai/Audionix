@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { AxiosError, InternalAxiosRequestConfig } from "axios";
 import axios from "axios";
-import type { InternalAxiosRequestConfig, AxiosError } from "axios";
 
 // ============================================================
 // Cấu hình mặc định cho các request

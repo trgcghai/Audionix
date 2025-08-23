@@ -1,12 +1,12 @@
 "use client";
 
 import { ModeToggle } from "@/components/common/theme/ModeToggle";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { cn } from "@/libs/utils";
-import LinkLogo from "../common/LinkLogo";
-import UserInfo from "@/components/header/UserInfo";
 import SearchSection from "@/components/header/SearchSection";
+import UserInfo from "@/components/header/UserInfo";
+import { cn } from "@/libs/utils";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import LinkLogo from "../common/LinkLogo";
 
 export default function MainHeader({
   className = "",

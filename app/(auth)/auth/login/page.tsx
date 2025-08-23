@@ -1,6 +1,6 @@
 "use client";
-import { LoginForm } from "../components/login-form";
 import { useLogin } from "@/hooks/useAuthUser";
+import { LoginForm } from "../components/login-form";
 
 export default function LoginPage() {
   const { handleLogin, isLoading, isError, error } = useLogin();

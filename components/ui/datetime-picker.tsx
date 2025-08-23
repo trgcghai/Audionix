@@ -12,8 +12,8 @@ import {
   Calendar as CalendarIcon,
   ChevronLeft,
   ChevronRight,
+  Clock,
 } from "lucide-react";
-import { Clock } from "lucide-react";
 import * as React from "react";
 import { useImperativeHandle, useRef } from "react";
 
@@ -903,5 +903,5 @@ const DateTimePicker = React.forwardRef<
 
 DateTimePicker.displayName = "DateTimePicker";
 
-export { DateTimePicker, TimePickerInput, TimePicker };
-export type { TimePickerType, DateTimePickerProps, DateTimePickerRef };
+export { DateTimePicker, TimePicker, TimePickerInput };
+export type { DateTimePickerProps, DateTimePickerRef, TimePickerType };

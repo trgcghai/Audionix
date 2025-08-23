@@ -1,9 +1,9 @@
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import MainHeader from "@/components/header/MainHeader";
-import { Separator } from "@/components/ui/separator";
-import Footer from "@/components/common/Footer";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import ArtistSidebar from "@/app/(artist-portal)/components/ArtistSidebar";
+import Footer from "@/components/common/Footer";
+import MainHeader from "@/components/header/MainHeader";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 export default function ArtistPortalLayout({
   children,

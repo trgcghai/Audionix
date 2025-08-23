@@ -7,7 +7,7 @@ const UpdateTrackPage = () => {
   const { id } = useParams();
   const track = useMemo(
     () => mockArtistTracks.find((track) => track.id === id),
-    [id]
+    [id],
   );
   return <div className="w-4xl mx-auto">{track?.name}</div>;
 };

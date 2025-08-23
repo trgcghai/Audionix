@@ -1,5 +1,8 @@
 import { api } from "@/services/api";
-import { CheckUserFollowArtistResponse } from "@/services/users/type";
+import {
+  CheckUserFollowAlbumResponse,
+  CheckUserFollowArtistResponse,
+} from "@/services/users/type";
 
 const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -66,6 +69,21 @@ const userApi = api.injectEndpoints({
       },
       providesTags: ["Artists"],
     }),
+    checkIfUserIsFollowingAlbums: builder.query<
+      CheckUserFollowAlbumResponse,
+      string[]
+    >({
+      query: (albumIds) => {
+        return {
+          url: `/users/me/following/albums/contains`,
+          method: "GET",
+          params: {
+            albumIds: albumIds.join(","),
+          },
+        };
+      },
+      providesTags: ["Albums"],
+    }),
   }),
 });
 
@@ -75,4 +93,5 @@ export const {
   useFollowAlbumMutation,
   useUnfollowAlbumMutation,
   useCheckIfUserIsFollowingArtistsQuery,
+  useCheckIfUserIsFollowingAlbumsQuery,
 } = userApi;

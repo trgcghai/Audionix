@@ -1,10 +1,10 @@
 "use client";
 import MediaList from "@/app/(main)/components/MediaList";
 import { mockAlbums, mockArtists, mockPlaylists } from "@/app/sampleData";
+import SimpleTrackTable from "@/components/common/SimpleTrackTable";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import SimpleTrackTable from "@/components/common/SimpleTrackTable";
 
 const Page = () => {
   const { searchTerm } = useParams();

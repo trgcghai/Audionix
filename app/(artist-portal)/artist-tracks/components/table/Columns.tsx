@@ -1,14 +1,14 @@
+import GenresCell from "@/app/(artist-portal)/artist-tracks/components/table/cells/GenresCell";
+import { TrackStatusValues } from "@/app/constant";
+import { Track } from "@/app/types/model";
+import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
+import { Checkbox } from "@/components/ui/checkbox";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import { ColumnDef } from "@tanstack/react-table";
-import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
-import { Checkbox } from "@/components/ui/checkbox";
-import { TrackStatusValues } from "@/app/constant";
-import { Track } from "@/app/types/model";
+import ActionCell from "./cells/ActionCell";
 import ImageCell from "./cells/ImageCell";
 import StatusCell from "./cells/StatusCell";
-import ActionCell from "./cells/ActionCell";
-import GenresCell from "@/app/(artist-portal)/artist-tracks/components/table/cells/GenresCell";
 
 export const Columns: ColumnDef<Track>[] = [
   {

@@ -1,10 +1,8 @@
 "use client";
-import { useCallback, useEffect, useRef } from "react";
-import { useGetMyCreatedTrackQuery } from "@/services/tracks/trackApi";
-import { useDebounce } from "@/hooks/useDebounce";
-import { usePathname, useRouter } from "next/navigation";
 import { Option } from "@/components/ui/MultipleSelector";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useGetMyCreatedTrackQuery } from "@/services/tracks/trackApi";
 import {
   clearFilters,
   setCurrentPage,
@@ -12,6 +10,8 @@ import {
   setFilters,
   setPageLimit,
 } from "@/store/slices/trackManagement";
+import { usePathname, useRouter } from "next/navigation";
+import { useCallback, useEffect, useRef } from "react";
 
 const useTrackManagement = () => {
   // Router để cập nhật URL query params

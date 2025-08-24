@@ -66,7 +66,8 @@ const albumApi = api.injectEndpoints({
         method: "DELETE",
         data: { ids },
       }),
-      invalidatesTags: ["Albums"],
+      invalidatesTags: (_, __, ids) =>
+        ids.map((id) => ({ type: "Albums", id })),
     }),
     updateStatusOne: builder.mutation<unknown, UpdateStatusOneParams>({
       query: ({ albumId, status }) => ({
@@ -74,7 +75,8 @@ const albumApi = api.injectEndpoints({
         method: "PATCH",
         data: { status },
       }),
-      invalidatesTags: ["Albums"],
+      invalidatesTags: (_, error, { albumId }) =>
+        error ? [] : [{ type: "Albums", id: albumId }],
     }),
     updateStatusMany: builder.mutation<unknown, UpdateStatusManyParams>({
       query: ({ ids, status }) => ({
@@ -82,7 +84,8 @@ const albumApi = api.injectEndpoints({
         method: "PATCH",
         data: { ids, status },
       }),
-      invalidatesTags: ["Albums"],
+      invalidatesTags: (_, __, { ids }) =>
+        ids.map((id) => ({ type: "Albums", id })),
     }),
     getMyFollowedAlbums: builder.query<FindMyFollowedAlbumsResponse, unknown>({
       query: () => ({

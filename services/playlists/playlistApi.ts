@@ -2,10 +2,16 @@ import { ApiResponse } from "@/app/types/api";
 import { Playlist } from "@/app/types/model";
 import { api } from "@/services/api";
 import {
+  AddMultipleTracksParams,
   AddTracksParams,
   AddTracksResponse,
+  CheckTracksParams,
+  CheckTracksResponse,
   FindPlaylistParams,
   FindPlaylistResponse,
+  RemoveMultipleTracksParams,
+  RemoveTracksParams,
+  RemoveTracksResponse,
 } from "@/services/playlists/type";
 
 const playlistApi = api.injectEndpoints({
@@ -65,19 +71,80 @@ const playlistApi = api.injectEndpoints({
             method: "PUT",
             data: { trackIds },
           }),
-          invalidatesTags: (_, __, { id }) => [{ type: "Playlists", id }],
+          invalidatesTags: ["Playlists"],
         },
       ),
       removeTracksFromPlaylist: builder.mutation<
-        ApiResponse<Playlist>,
-        AddTracksParams
+        RemoveTracksResponse,
+        RemoveTracksParams
       >({
         query: ({ id, trackIds }) => ({
           url: `/playlists/${id}/tracks`,
           method: "DELETE",
           data: { trackIds },
         }),
-        invalidatesTags: (_, __, { id }) => [{ type: "Playlists", id }],
+        invalidatesTags: ["Playlists"],
+      }),
+      addTracksToPlaylists: builder.mutation<
+        AddTracksResponse,
+        AddMultipleTracksParams
+      >({
+        query: ({ playlistIds, trackIds }) => ({
+          url: `/playlists/tracks`,
+          method: "PUT",
+          data: { playlistIds, trackIds },
+        }),
+        invalidatesTags: ["Playlists"],
+      }),
+      removeTracksFromPlaylists: builder.mutation<
+        RemoveTracksResponse,
+        RemoveMultipleTracksParams
+      >({
+        query: ({ playlistIds, trackIds }) => ({
+          url: `/playlists/tracks`,
+          method: "DELETE",
+          data: { playlistIds, trackIds },
+        }),
+        invalidatesTags: ["Playlists"],
+      }),
+      addTracksToLiked: builder.mutation<AddTracksResponse, string[]>({
+        query: (trackIds) => ({
+          url: `/playlists/liked/tracks`,
+          method: "PUT",
+          data: { trackIds },
+        }),
+        invalidatesTags: ["Playlists"],
+      }),
+      removeTracksFromLiked: builder.mutation<RemoveTracksResponse, string[]>({
+        query: (trackIds) => ({
+          url: `/playlists/liked/tracks`,
+          method: "DELETE",
+          data: { trackIds },
+        }),
+        invalidatesTags: ["Playlists"],
+      }),
+      checkTracksInPlaylist: builder.query<
+        CheckTracksResponse,
+        CheckTracksParams
+      >({
+        query: ({ id, trackIds }) => ({
+          url: `/playlists/${id}/tracks/contains`,
+          method: "GET",
+          params: {
+            trackIds: trackIds.join(","),
+          },
+        }),
+        providesTags: ["Playlists"],
+      }),
+      checkTracksInLiked: builder.query<CheckTracksResponse, string[]>({
+        query: (trackIds) => ({
+          url: `/playlists/liked/tracks/contains`,
+          method: "GET",
+          params: {
+            trackIds: trackIds.join(","),
+          },
+        }),
+        providesTags: ["Playlists"],
       }),
     };
   },
@@ -91,4 +158,10 @@ export const {
   useDeletePlaylistMutation,
   useAddTracksToPlaylistMutation,
   useRemoveTracksFromPlaylistMutation,
+  useAddTracksToPlaylistsMutation,
+  useRemoveTracksFromPlaylistsMutation,
+  useAddTracksToLikedMutation,
+  useRemoveTracksFromLikedMutation,
+  useCheckTracksInPlaylistQuery,
+  useCheckTracksInLikedQuery,
 } = playlistApi;

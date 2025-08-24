@@ -18,13 +18,42 @@ export type AddTracksParams = {
   trackIds: string[];
 };
 
+export type RemoveTracksParams = AddTracksParams;
+
+export type AddMultipleTracksParams = {
+  playlistIds: string[];
+  trackIds: string[];
+};
+
+export type RemoveMultipleTracksParams = AddMultipleTracksParams;
+
 export type AddTracksResponse = ApiResponse<{
-  _id: string;
-  result: {
-    acknowledged: boolean;
-    modifiedCount: number;
-    upsertedId?: string;
-    upsertedCount?: number;
-    matchedCount: number;
+  success: boolean;
+  message: string;
+  stats: {
+    tracksAdded: number;
+    playlistsModified: number;
+    playlistsAttempted: number;
   };
 }>;
+
+export type RemoveTracksResponse = AddTracksResponse;
+
+export type CheckTracksResponse = ApiResponse<{
+  playlistId: string;
+  playlistTitle: string;
+  results: {
+    trackId: string;
+    inPlaylist: boolean;
+  }[];
+  summary: {
+    total: number;
+    inPlaylist: number;
+    notInPlaylist: number;
+  };
+}>;
+
+export type CheckTracksParams = {
+  id: string;
+  trackIds: string[];
+};

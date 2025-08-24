@@ -39,7 +39,7 @@ export default function RootLayout({
         >
           <ReduxProvider>{children}</ReduxProvider>
         </ThemeProvider>
-        <ToastContainer />
+        <ToastContainer className={"text-sm !text-foreground"} />
       </body>
     </html>
   );

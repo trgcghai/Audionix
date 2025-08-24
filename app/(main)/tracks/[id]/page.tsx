@@ -2,11 +2,14 @@
 import { TrackControlSection } from "@/app/(main)/components/controlSection";
 import { TrackHeroSection } from "@/app/(main)/components/heroSection";
 import MediaList from "@/app/(main)/components/MediaList";
+import AddToPlaylistDialog from "@/app/(main)/tracks/components/AddToPlaylistDialog";
 import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
 import { Separator } from "@/components/ui/separator";
+import usePlaylistAction from "@/hooks/usePlaylistAction";
 import { useGetAlbumByArtistQuery } from "@/services/albums/albumApi";
+import { useCheckTracksInLikedQuery } from "@/services/playlists/playlistApi";
 import {
   useGetSimilarTrackQuery,
   useGetTrackByArtistQuery,
@@ -17,8 +20,16 @@ import { useParams } from "next/navigation";
 import { useMemo, useState } from "react";
 
 const DetailTrackPage = () => {
-  const [isLiked, setIsLiked] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const { handleAddTracksToLiked, handleRemoveTracksFromLiked } =
+    usePlaylistAction();
   const { id } = useParams<{ id: string }>();
+  const { data: likedData } = useCheckTracksInLikedQuery(
+    [id, "68a8400db134bde81be84757"],
+    {
+      skip: !id,
+    },
+  );
   const {
     data: trackData,
     isError: isTrackError,
@@ -39,6 +50,8 @@ const DetailTrackPage = () => {
     track?.artist._id || "",
     { skip: !track?.artist._id },
   );
+
+  console.log(likedData);
 
   if (isTrackLoading) {
     return (
@@ -69,9 +82,15 @@ const DetailTrackPage = () => {
 
       <TrackControlSection
         onPlay={() => console.log("Play track")}
-        onAddToPlaylist={() => console.log("Add to playlist")}
-        onLike={() => setIsLiked(!isLiked)}
-        isLiked={isLiked}
+        onAddToPlaylist={() => setDialogOpen(true)}
+        isLiked={likedData?.data.results[0].inPlaylist || false}
+        onLike={() => {
+          if (likedData?.data.results[0].inPlaylist) {
+            handleRemoveTracksFromLiked([id]);
+          } else {
+            handleAddTracksToLiked([id]);
+          }
+        }}
       />
 
       <div className="mt-8 flex items-center gap-2">
@@ -108,6 +127,12 @@ const DetailTrackPage = () => {
           data={similarTracksData ? similarTracksData.data.items : []}
         />
       </div>
+
+      <AddToPlaylistDialog
+        trackId={id}
+        isOpen={dialogOpen}
+        onOpenChange={setDialogOpen}
+      />
     </div>
   );
 };

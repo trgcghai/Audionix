@@ -1,5 +1,3 @@
-"use client";
-
 import LinkLogo from "@/components/common/LinkLogo";
 import { NavMain } from "@/components/ui/nav-main";
 import { Sidebar, SidebarContent, SidebarRail } from "@/components/ui/sidebar";

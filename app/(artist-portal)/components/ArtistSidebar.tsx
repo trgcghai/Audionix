@@ -1,5 +1,3 @@
-"use client";
-
 import { NavMain } from "@/components/ui/nav-main";
 import { Sidebar, SidebarContent, SidebarRail } from "@/components/ui/sidebar";
 import { Disc, Music2 } from "lucide-react";

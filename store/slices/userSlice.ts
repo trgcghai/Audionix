@@ -36,7 +36,7 @@ export const userSlice = createSlice({
         email: string;
         roles: string[];
         username: string;
-        avatar: [
+        avatar?: [
           {
             url: string;
             width: number;
@@ -50,8 +50,10 @@ export const userSlice = createSlice({
       state.email = email;
       state.roles = roles;
       state.username = username;
-      state.avatar = avatar;
       state.isAuthenticated = true;
+      if (avatar) {
+        state.avatar = avatar;
+      }
     },
     clearUser: (state) => {
       state.email = "";

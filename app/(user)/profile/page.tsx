@@ -1,7 +1,14 @@
-const UserProfilePage = () => (
-  <div className="mx-auto w-full max-w-5xl px-4 py-8">
-    <p>User profile</p>
-  </div>
-);
+import PasswordCard from "@/app/(user)/profile/components/PasswordCard";
+import UserInformationCard from "@/app/(user)/profile/components/UserInformationCard";
 
-export default UserProfilePage;
+const ProfilePage = () => {
+  return (
+    <div className="space-y-6">
+      <UserInformationCard />
+
+      <PasswordCard />
+    </div>
+  );
+};
+
+export default ProfilePage;

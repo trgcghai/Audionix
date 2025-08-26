@@ -1,7 +1,7 @@
 import { ApiResponse } from "@/app/types/api";
+import { Account } from "@/app/types/model";
 import { api } from "../api";
 import { LoginPayload, RegisterPayload } from "./type";
-import { Account } from "@/app/types/model";
 
 const authApi = api.injectEndpoints({
   endpoints: (build) => ({

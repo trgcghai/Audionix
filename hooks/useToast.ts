@@ -1,64 +1,26 @@
-// hooks/useToast.ts
+import { useTheme } from "next-themes";
 import { useMemo } from "react";
 import { Slide, toast, ToastOptions } from "react-toastify";
-import { useTheme } from "next-themes";
 import "react-toastify/dist/ReactToastify.css";
-
-// Custom CSS cho react-toastify - thêm vào file CSS riêng
-// Có thể đặt trong file styles/toast.css và import
-/*
-.Toastify__toast {
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-md);
-}
-
-.Toastify__toast--success {
-  background-color: var(--accent);
-  color: var(--accent-foreground);
-}
-
-.Toastify__toast--error {
-  background-color: var(--destructive);
-  color: var(--destructive-foreground);
-}
-
-.Toastify__toast--info {
-  background-color: var(--primary);
-  color: var(--primary-foreground);
-}
-
-.Toastify__progress-bar--success {
-  background-color: var(--accent-foreground);
-}
-
-.Toastify__progress-bar--error {
-  background-color: var(--destructive-foreground);
-}
-
-.Toastify__progress-bar--info {
-  background-color: var(--primary-foreground);
-}
-*/
 
 const useToast = () => {
   const { theme } = useTheme();
 
   const baseConfig: ToastOptions = useMemo(() => {
     return {
-      position: "top-right",
-      autoClose: 2000,
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
+      pauseOnHover: false,
+      draggable: false,
       progress: undefined,
-      // Tự động áp dụng theme dựa trên theme hiện tại của ứng dụng
-      theme: theme === "light" ? "light" : "dark",
+      theme,
       transition: Slide,
       // Thêm các style tùy chỉnh cho từng loại toast
       style: {
         borderRadius: "var(--radius)",
         boxShadow: "var(--shadow-md)",
+        color: "var(--foreground)",
       },
     };
   }, [theme]);

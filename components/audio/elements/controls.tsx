@@ -1,6 +1,5 @@
 "use client";
 
-import { PlaybackState, useAudio } from "@omi3/audio/react";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import {
@@ -10,6 +9,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/libs/utils";
+import { PlaybackState, useAudio } from "@omi3/audio/react";
 import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 

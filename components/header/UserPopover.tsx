@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { useLogout } from "@/hooks/useAuthUser";
+import { UserSliceState } from "@/store/slices/userSlice";
 import {
   ChevronDown,
   Headphones,
@@ -16,16 +17,13 @@ import {
   Mic,
   Settings,
   User,
+  User2,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useMemo } from "react";
 
 interface UserPopoverProps {
-  user: {
-    username: string;
-    email: string;
-    avatar?: string;
-  };
+  user: UserSliceState;
 }
 
 export default function UserPopover({ user }: UserPopoverProps) {
@@ -63,15 +61,11 @@ export default function UserPopover({ user }: UserPopoverProps) {
         >
           <Avatar className="h-8 w-8">
             <AvatarImage
-              src={user.avatar || "/placeholder.svg"}
+              src={(user.avatar && user.avatar[0].url) || ""}
               alt={user.username}
             />
             <AvatarFallback className="text-sm">
-              {user.username
-                .split(" ")
-                .map((n) => n[0])
-                .join("")
-                .toUpperCase()}
+              <User2 />
             </AvatarFallback>
           </Avatar>
           <span className="text-sm font-medium">{user.username}</span>
@@ -83,15 +77,11 @@ export default function UserPopover({ user }: UserPopoverProps) {
           <div className="flex items-center gap-3">
             <Avatar className="h-12 w-12">
               <AvatarImage
-                src={user.avatar || "/placeholder.svg"}
+                src={(user.avatar && user.avatar[0].url) || ""}
                 alt={user.username}
               />
               <AvatarFallback className="text-lg">
-                {user.username
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")
-                  .toUpperCase()}
+                <User2 />
               </AvatarFallback>
             </Avatar>
             <div className="min-w-0 flex-1">

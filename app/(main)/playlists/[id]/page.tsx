@@ -1,19 +1,19 @@
 "use client";
-import { Separator } from "@/components/ui/separator";
-import HeroSection from "@/components/common/HeroSection";
-import { useMemo, useState } from "react";
-import { useParams } from "next/navigation";
+import { PlaylistControlSection } from "@/app/(main)/components/controlSection";
+import { PlaylistHeroSection } from "@/app/(main)/components/heroSection";
 import SearchTrack from "@/app/(main)/playlists/components/SearchTrack";
-import { useGetPlaylistByIdQuery } from "@/services/playlists/playlistApi";
-import LoaderSpin from "@/components/common/LoaderSpin";
-import ErrorMessage from "@/components/common/ErrorMessage";
-import { useDebounce } from "@/hooks/useDebounce";
-import ControlSection from "@/app/(main)/playlists/components/ControlSection";
-import { useGetTracksQuery } from "@/services/tracks/trackApi";
-import { ApiErrorResponse } from "@/app/types/api";
 import TracksList from "@/app/(main)/playlists/components/TracksList";
-import usePlaylistAction from "@/hooks/usePlaylistAction";
+import { ApiErrorResponse } from "@/app/types/api";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import LoaderSpin from "@/components/common/LoaderSpin";
 import SimpleTrackTable from "@/components/common/SimpleTrackTable";
+import { Separator } from "@/components/ui/separator";
+import { useDebounce } from "@/hooks/useDebounce";
+import usePlaylistAction from "@/hooks/usePlaylistAction";
+import { useGetPlaylistByIdQuery } from "@/services/playlists/playlistApi";
+import { useGetTracksQuery } from "@/services/tracks/trackApi";
+import { useParams } from "next/navigation";
+import { useMemo, useState } from "react";
 
 const DetailPlaylistPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,7 +24,7 @@ const DetailPlaylistPage = () => {
     data: playlistData,
     isLoading: playlistLoading,
     isError: playlistError,
-  } = useGetPlaylistByIdQuery(id);
+  } = useGetPlaylistByIdQuery(id, { skip: !id });
 
   const playlist = useMemo(() => {
     return playlistData && playlistData.data;
@@ -64,18 +64,19 @@ const DetailPlaylistPage = () => {
 
   return (
     <div>
-      {playlist && <HeroSection data={playlist} />}
+      {playlist && <PlaylistHeroSection playlist={playlist} />}
+
       <Separator className="my-4" />
-      {/* display play button and control section such as delete,... */}
-      <ControlSection
+
+      <PlaylistControlSection
         onPlay={() => console.log("Play playlist")}
         onDelete={() => handleDeletePlaylist(id)}
       />
-      {/* display search bar to add tracks to playlist */}
+
       {playlist && playlist.tracks.length === 0 && (
         <SearchTrack searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       )}
-      {/* display search result to add to playlist */}
+
       {searchTerm && (
         <TracksList
           tracks={recommendTrackData?.data.items || []}
@@ -86,7 +87,7 @@ const DetailPlaylistPage = () => {
           error={(recommendErrorData as ApiErrorResponse)?.message}
         />
       )}
-      {/* display recommendations to add to playlist */}
+
       {!searchTerm && playlist && playlist.tracks.length === 0 && (
         <TracksList
           tracks={recommendTrackData?.data.items || []}
@@ -96,7 +97,7 @@ const DetailPlaylistPage = () => {
           error={(recommendErrorData as ApiErrorResponse)?.message}
         />
       )}
-      {/* display tracks in playlist if playlist already have some */}
+
       {playlist && playlist.tracks.length !== 0 && (
         <SimpleTrackTable tracks={playlist.tracks} />
       )}

@@ -1,10 +1,10 @@
-import { TrackStatus } from "../enums";
+import { AlbumStatus, TrackStatus } from "../enums";
 
 export type Track = {
   _id: string;
   title: string;
   type: "track";
-  duration_ms: string;
+  duration_ms: number;
   cover_images: [
     {
       url: string;
@@ -93,6 +93,24 @@ export type Account = {
   __v: number;
 };
 
+export type Artist = {
+  _id: string;
+  name: string;
+  cover_images: [
+    {
+      url: string;
+      width: number;
+      height: number;
+      key: string;
+    },
+  ];
+  type: "artist";
+  genres: string[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
 export type Playlist = {
   _id: string;
   title: string;
@@ -109,6 +127,40 @@ export type Playlist = {
     },
   ];
   tracks: EmbbedTrack[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
+export type Album = {
+  _id: string;
+  title: string;
+  artist: {
+    _id: string;
+    name: string;
+    cover_images: [
+      {
+        url: string;
+        width: number;
+        height: number;
+        key: string;
+      },
+    ];
+  };
+  description: string;
+  status: AlbumStatus;
+  cover_images: [
+    {
+      url: string;
+      width: number;
+      height: number;
+      key: string;
+    },
+  ];
+  tracks: EmbbedTrack[];
+  genres: string[];
+  number_of_followers: number;
+  type: "album";
   createdAt: string;
   updatedAt: string;
   __v: number;

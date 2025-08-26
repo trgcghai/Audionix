@@ -1,10 +1,10 @@
 "use client";
 
-import { type Music, useAudio } from "@omi3/audio/react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/libs/utils";
-import React, { useRef, useEffect, useState } from "react";
+import { type Music, useAudio } from "@omi3/audio/react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 type AudioFileInputProps = React.ComponentProps<typeof Input> & {

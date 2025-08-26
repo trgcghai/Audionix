@@ -1,6 +1,5 @@
 "use client";
 
-import { useAudio } from "@omi3/audio/react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,9 +7,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Slider } from "@/components/ui/slider";
+import { cn } from "@/libs/utils";
+import { useAudio } from "@omi3/audio/react";
 import { Volume, Volume1, Volume2, VolumeX } from "lucide-react";
 import { useCallback } from "react";
-import { cn } from "@/libs/utils";
 
 type AudioVolumeProps = React.ComponentProps<typeof DropdownMenu> & {
   className?: string;

@@ -1,10 +1,14 @@
 import { PlaylistFormValues } from "@/app/(main)/playlists/schema";
 import useToast from "@/hooks/useToast";
 import {
+  useAddTracksToLikedMutation,
   useAddTracksToPlaylistMutation,
+  useAddTracksToPlaylistsMutation,
   useCreatePlaylistMutation,
   useDeletePlaylistMutation,
+  useRemoveTracksFromLikedMutation,
   useRemoveTracksFromPlaylistMutation,
+  useRemoveTracksFromPlaylistsMutation,
   useUpdatePlaylistMutation,
 } from "@/services/playlists/playlistApi";
 import { usePathname, useRouter } from "next/navigation";
@@ -20,6 +24,14 @@ const usePlaylistAction = () => {
     useAddTracksToPlaylistMutation();
   const [removeTracksFromPlaylist, removeTracksState] =
     useRemoveTracksFromPlaylistMutation();
+  const [addTracksToPlaylists, addMultipleTracksState] =
+    useAddTracksToPlaylistsMutation();
+  const [removeTracksFromPlaylists, removeMultipleTracksState] =
+    useRemoveTracksFromPlaylistsMutation();
+  const [addTracksToLiked, addTracksToLikedState] =
+    useAddTracksToLikedMutation();
+  const [removeTracksFromLiked, removeTracksFromLikedState] =
+    useRemoveTracksFromLikedMutation();
 
   const transformToUpdatePayload = (formData: PlaylistFormValues): FormData => {
     const payload = new FormData();
@@ -109,6 +121,62 @@ const usePlaylistAction = () => {
     }
   };
 
+  const handleAddTracksToPlaylists = async ({
+    playlistIds,
+    trackIds,
+  }: {
+    playlistIds: string[];
+    trackIds: string[];
+  }) => {
+    if (playlistIds.length === 0 || trackIds.length === 0) return;
+    try {
+      await addTracksToPlaylists({ playlistIds, trackIds }).unwrap();
+      showSuccessToast("Added tracks to playlists successfully");
+    } catch (error) {
+      console.error("Failed to add tracks to playlists:", error);
+      showErrorToast("Failed to add tracks to playlists");
+    }
+  };
+
+  const handleRemoveTracksFromPlaylists = async ({
+    playlistIds,
+    trackIds,
+  }: {
+    playlistIds: string[];
+    trackIds: string[];
+  }) => {
+    if (playlistIds.length === 0 || trackIds.length === 0) return;
+    try {
+      await removeTracksFromPlaylists({ playlistIds, trackIds }).unwrap();
+      showSuccessToast("Removed tracks from playlists successfully");
+    } catch (error) {
+      console.error("Failed to remove tracks from playlists:", error);
+      showErrorToast("Failed to remove tracks from playlists");
+    }
+  };
+
+  const handleAddTracksToLiked = async (trackIds: string[]) => {
+    if (trackIds.length === 0) return;
+    try {
+      await addTracksToLiked(trackIds).unwrap();
+      showSuccessToast("Added tracks to liked successfully");
+    } catch (error) {
+      console.error("Failed to add tracks to liked:", error);
+      showErrorToast("Failed to add tracks to liked");
+    }
+  };
+
+  const handleRemoveTracksFromLiked = async (trackIds: string[]) => {
+    if (trackIds.length === 0) return;
+    try {
+      await removeTracksFromLiked(trackIds).unwrap();
+      showSuccessToast("Removed tracks from liked successfully");
+    } catch (error) {
+      console.error("Failed to remove tracks from liked:", error);
+      showErrorToast("Failed to remove tracks from liked");
+    }
+  };
+
   const getCurrrentPlaylistId = () => {
     const match = pathname.match(/playlists\/([^/]+)/);
     return match ? match[1] : "";
@@ -125,6 +193,14 @@ const usePlaylistAction = () => {
     addTracksState,
     handleRemoveTracksFromPlaylist,
     removeTracksState,
+    handleAddTracksToPlaylists,
+    addMultipleTracksState,
+    handleRemoveTracksFromPlaylists,
+    removeMultipleTracksState,
+    handleAddTracksToLiked,
+    addTracksToLikedState,
+    handleRemoveTracksFromLiked,
+    removeTracksFromLikedState,
     getCurrrentPlaylistId,
   };
 };

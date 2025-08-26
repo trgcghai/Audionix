@@ -1,32 +1,45 @@
 "use client";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import MainHeader from "@/components/header/MainHeader";
 import Player from "@/app/(main)/components/player/Player";
-import { Separator } from "@/components/ui/separator";
-import Footer from "@/components/common/Footer";
-import { useAppSelector } from "@/hooks/redux";
-import QueueDrawer from "@/components/common/QueueDrawer";
-import { cn } from "@/libs/utils";
-import { useGetMyPlaylistsQuery } from "@/services/playlists/playlistApi";
-import LoaderSpin from "@/components/common/LoaderSpin";
-import ErrorMessage from "@/components/common/ErrorMessage";
 import MainSidebar from "@/app/(main)/components/sidebar";
+import { ApiErrorResponse } from "@/app/types/api";
+import Footer from "@/components/common/Footer";
+import QueueDrawer from "@/components/common/QueueDrawer";
+import MainHeader from "@/components/header/MainHeader";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/libs/utils";
+import { useGetMyFollowedAlbumsQuery } from "@/services/albums/albumApi";
+import { useGetMyFollowedArtistsQuery } from "@/services/artists/artistApi";
+import { useGetMyPlaylistsQuery } from "@/services/playlists/playlistApi";
+import { useQueueDrawer } from "@/store/slices/queueDrawerSlice";
+import { useUserSlice } from "@/store/slices/userSlice";
 
 const Layout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const { isOpen: isDrawerOpen } = useAppSelector((state) => state.queueDrawer);
-  const { data, isLoading, isError } = useGetMyPlaylistsQuery({});
+  const { isOpen: isDrawerOpen } = useQueueDrawer();
+  const { isAuthenticated } = useUserSlice();
+  const {
+    data: playlists,
+    isLoading: isLoadingPlaylists,
+    isError: isErrorPlaylists,
+    error: errorPlaylists,
+  } = useGetMyPlaylistsQuery({}, { skip: !isAuthenticated });
+  const {
+    data: followedAlbums,
+    isLoading: isLoadingFollowed,
+    isError: isErrorFollowed,
+    error: errorFollowed,
+  } = useGetMyFollowedAlbumsQuery({}, { skip: !isAuthenticated });
 
-  if (isLoading) {
-    return <LoaderSpin />;
-  }
-
-  if (isError) {
-    return;
-  }
+  const {
+    data: followedArtists,
+    isLoading: isLoadingFollowedArtists,
+    isError: isErrorFollowedArtists,
+    error: errorFollowedArtists,
+  } = useGetMyFollowedArtistsQuery({}, { skip: !isAuthenticated });
 
   return (
     <div className="grid h-screen grid-cols-12 grid-rows-12">
@@ -34,9 +47,32 @@ const Layout = ({
         <MainHeader />
       </div>
       <div className="col-span-3 row-span-11 -mt-5 p-4">
-        {isLoading && <LoaderSpin />}
-        {isError && <ErrorMessage message="Failed to load your playlists" />}
-        {data && <MainSidebar playlists={data?.data.items} />}
+        <MainSidebar
+          playlistData={{
+            items: playlists?.data?.items || [],
+            isLoading: isLoadingPlaylists,
+            isError: isErrorPlaylists,
+            error:
+              (errorPlaylists as ApiErrorResponse)?.message ||
+              "Failed to load your playlists",
+          }}
+          albumData={{
+            items: followedAlbums?.data?.albums || [],
+            isLoading: isLoadingFollowed,
+            isError: isErrorFollowed,
+            error:
+              (errorFollowed as ApiErrorResponse)?.message ||
+              "Failed to load your followed albums",
+          }}
+          artistData={{
+            items: followedArtists?.data?.artists || [],
+            isLoading: isLoadingFollowedArtists,
+            isError: isErrorFollowedArtists,
+            error:
+              (errorFollowedArtists as ApiErrorResponse)?.message ||
+              "Failed to load your followed artists",
+          }}
+        />
       </div>
       <div
         className={cn(

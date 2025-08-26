@@ -1,5 +1,10 @@
 "use client";
+import { DEFAULT_GENRES } from "@/app/constant";
 import { mockAlbums } from "@/app/sampleData";
+import { ApiErrorResponse } from "@/app/types/api";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import LoaderSpin from "@/components/common/LoaderSpin";
+import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -10,38 +15,24 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import ConfirmDialog from "@/components/dialog/ConfirmDialog";
-import { createTrackValues } from "./schemas";
-import { useCreateTrackForm } from "../../hooks/useCreateTrackForm";
-import { ImageUploadField } from "./ImageUploadField";
-import { AudioUploadField } from "./AudioUploadField";
-import ErrorMessage from "@/components/common/ErrorMessage";
 import MultipleSelector from "@/components/ui/MultipleSelector";
-import { DEFAULT_GENRES } from "@/app/constant";
-import LoaderSpin from "@/components/common/LoaderSpin";
+import { useCreateTrackForm } from "../../hooks/useCreateTrackForm";
+import { AudioUploadField } from "./AudioUploadField";
+import { ImageUploadField } from "./ImageUploadField";
 
-interface UploadTrackFormProps {
-  onSubmit: (data: createTrackValues) => void;
-  isLoading?: boolean;
-  isError?: boolean;
-  error?: string;
-}
-
-const UploadTrackForm = ({
-  onSubmit,
-  isLoading,
-  isError,
-  error,
-}: UploadTrackFormProps) => {
+const UploadTrackForm = () => {
   const {
     form,
     dialogOpen,
+    isLoading,
+    isError,
+    error,
     setDialogOpen,
     handleSubmit,
     handleReset,
     openConfirmDialog,
     closeConfirmDialog,
-  } = useCreateTrackForm({ onSubmit });
+  } = useCreateTrackForm();
 
   return (
     <Form {...form}>
@@ -91,6 +82,7 @@ const UploadTrackForm = ({
                   {...field}
                   placeholder="Track title"
                   disabled={isLoading}
+                  className="!bg-transparent"
                 />
               </FormControl>
               <FormMessage />
@@ -153,7 +145,10 @@ const UploadTrackForm = ({
 
         {isError && (
           <ErrorMessage
-            message={error || "An error occurred while uploading the track."}
+            message={
+              (error as ApiErrorResponse)?.message ||
+              "An error occurred while uploading the track."
+            }
           />
         )}
 

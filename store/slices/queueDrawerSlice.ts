@@ -1,3 +1,4 @@
+import { useAppSelector } from "@/hooks/redux";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface QueueDrawerState {
@@ -24,6 +25,10 @@ export const queueDrawerSlice = createSlice({
   },
 });
 
-export const { openQueueDrawer, closeQueueDrawer, toggleQueueDrawer } = queueDrawerSlice.actions;
+export const { openQueueDrawer, closeQueueDrawer, toggleQueueDrawer } =
+  queueDrawerSlice.actions;
+
+export const useQueueDrawer = () =>
+  useAppSelector((state) => state.queueDrawer);
 
 export default queueDrawerSlice.reducer;

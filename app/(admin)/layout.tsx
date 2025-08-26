@@ -1,9 +1,9 @@
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import AdminSidebar from "@/app/(admin)/components/AdminSidebar";
-import MainHeader from "@/components/header/MainHeader";
 import Footer from "@/components/common/Footer";
+import MainHeader from "@/components/header/MainHeader";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 const AdmindashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (

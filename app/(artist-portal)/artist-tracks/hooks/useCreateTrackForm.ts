@@ -1,16 +1,14 @@
-import { useForm } from "react-hook-form";
+import useTrackActions from "@/hooks/useTrackActions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import {
   createTrackSchema,
   createTrackValues,
 } from "../components/form/schemas";
 
-interface useCreateTrackFormProps {
-  onSubmit?: (data: createTrackValues) => void;
-}
-
-export const useCreateTrackForm = ({ onSubmit }: useCreateTrackFormProps) => {
+export const useCreateTrackForm = () => {
+  const { handleCreateTrack, createState } = useTrackActions();
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const form = useForm<createTrackValues>({
@@ -25,7 +23,13 @@ export const useCreateTrackForm = ({ onSubmit }: useCreateTrackFormProps) => {
   });
 
   const handleSubmit = async (data: createTrackValues) => {
-    await onSubmit?.(data);
+    try {
+      await handleCreateTrack(data);
+      form.reset();
+    } catch (error) {
+      console.error("Error creating track:", error);
+    }
+
     setDialogOpen(false);
 
     form.reset({
@@ -59,6 +63,9 @@ export const useCreateTrackForm = ({ onSubmit }: useCreateTrackFormProps) => {
   return {
     form,
     dialogOpen,
+    isLoading: createState.isLoading,
+    isError: createState.isError,
+    error: createState.error,
     setDialogOpen,
     handleSubmit,
     handleReset,

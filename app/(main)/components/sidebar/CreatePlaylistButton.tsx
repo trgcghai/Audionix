@@ -1,7 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import { Bot, Music, Plus } from "lucide-react";
-import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,6 +6,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import usePlaylistAction from "@/hooks/usePlaylistAction";
+import { motion } from "framer-motion";
+import { Bot, Music, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const iconVariants = {

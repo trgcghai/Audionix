@@ -1,8 +1,8 @@
 "use client";
 
-import { useAudioTime, PlaybackState, useAudio } from "@omi3/audio/react";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/libs/utils";
+import { PlaybackState, useAudio, useAudioTime } from "@omi3/audio/react";
 import { formatDuration, formatSecondsToISO8601 } from "@omi3/utils";
 import { useEffect, useState } from "react";
 

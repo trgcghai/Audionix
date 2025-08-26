@@ -1,10 +1,9 @@
-"use client";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/libs/utils";
 import { ArrowLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Page = () => {
-  const router = useRouter();
   return (
     <div className="flex h-screen items-center px-4 py-12 sm:px-6 md:px-8 lg:px-12 xl:px-16">
       <div className="w-full space-y-6 text-center">
@@ -17,15 +16,20 @@ const Page = () => {
             moved.
           </p>
         </div>
-        <Button
-          variant={"default"}
-          size={"lg"}
-          className="rounded-full text-base"
-          onClick={() => router.back()}
-        >
-          <ArrowLeft className="h-7 w-7" />
-          <p>Return to website</p>
-        </Button>
+        <div className="flex justify-center">
+          <Link
+            href="/"
+            className={cn(
+              buttonVariants({ variant: "default" }),
+              "rounded-full",
+            )}
+          >
+            <div>
+              <ArrowLeft className="h-7 w-7" />
+            </div>
+            <p>Return to home page</p>
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -7,23 +6,27 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Mic, VolumeX, Volume2, List } from "lucide-react";
+import { useAppDispatch } from "@/hooks/redux";
+import {
+  toggleQueueDrawer,
+  useQueueDrawer,
+} from "@/store/slices/queueDrawerSlice";
+import { List, Mic, Volume2, VolumeX } from "lucide-react";
 import { useState } from "react";
-import { toggleQueueDrawer } from "@/store/slices/queueDrawerSlice";
 
 const RightControl = () => {
   const [volume, setVolume] = useState(70);
   const [isMuted, setIsMuted] = useState(false);
 
   const dispatch = useAppDispatch();
-  const { isOpen: isDrawerOpen } = useAppSelector((state) => state.queueDrawer);
+  const { isOpen: isDrawerOpen } = useQueueDrawer();
 
   const handleOpenQueueDrawer = () => {
     dispatch(toggleQueueDrawer());
   };
 
   return (
-    <div className="flex items-center gap-2 w-1/4 justify-end">
+    <div className="flex w-1/4 items-center justify-end gap-2">
       <TooltipProvider delayDuration={300}>
         <Tooltip>
           <TooltipTrigger asChild>

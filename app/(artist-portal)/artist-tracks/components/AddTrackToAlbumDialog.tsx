@@ -56,7 +56,7 @@ const AddTrackToAlbumDialog = ({
           <SelectContent>
             {mockArtistAlbums.map((album) => {
               return (
-                <SelectItem key={album.id} value={album.id}>
+                <SelectItem key={album._id} value={album._id}>
                   {album.name}
                 </SelectItem>
               );

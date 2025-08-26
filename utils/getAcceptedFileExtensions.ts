@@ -1,5 +1,5 @@
 const getAcceptedFileExtensions = (
-  acceptObj: Record<string, string[]>
+  acceptObj: Record<string, string[]>,
 ): string => {
   return Object.values(acceptObj)
     .flat()

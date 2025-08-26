@@ -1,16 +1,16 @@
 "use client";
-import { Music } from "lucide-react";
-import { AUDIO_FILE_ACCEPT_TYPES } from "@/app/constant";
-import getAcceptedFileExtensions from "@/utils/getAcceptedFileExtensions";
-import { ControllerRenderProps } from "react-hook-form";
 import { createTrackValues } from "@/app/(artist-portal)/artist-tracks/components/form/schemas";
+import { AUDIO_FILE_ACCEPT_TYPES } from "@/app/constant";
 import {
   FileInput,
   FileUploader,
   FileUploaderContent,
   FileUploaderItem,
 } from "@/components/common/FileUploader";
+import getAcceptedFileExtensions from "@/utils/getAcceptedFileExtensions";
+import { Music } from "lucide-react";
 import { DropzoneOptions } from "react-dropzone";
+import { ControllerRenderProps } from "react-hook-form";
 
 interface AudioUploadFieldProps {
   field: ControllerRenderProps<createTrackValues, "audio">;

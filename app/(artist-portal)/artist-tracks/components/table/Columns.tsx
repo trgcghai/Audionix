@@ -1,40 +1,14 @@
-"use client";
-
+import GenresCell from "@/app/(artist-portal)/artist-tracks/components/table/cells/GenresCell";
+import { TrackStatusValues } from "@/app/constant";
+import { Track } from "@/app/types/model";
+import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
+import { Checkbox } from "@/components/ui/checkbox";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { formatUploadTime } from "@/utils/formatUploadTime";
-import { TrackInArtistAlbum } from "@/app/types/component";
-import { ColumnDef, Row } from "@tanstack/react-table";
-import Image from "next/image";
-import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { TrackStatusValues } from "@/app/constant";
-import {
-  ImageIcon,
-  MoreHorizontal,
-  PlusCircle,
-  Settings2,
-  Trash2,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import ConfirmDialog from "@/components/dialog/ConfirmDialog";
-import { useState } from "react";
-import Link from "next/link";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import AddTrackToAlbumDialog from "../AddTrackToAlbumDialog";
-import { TrackStatus } from "@/app/enums";
-import { Track } from "@/app/types/model";
-import StatusSelect from "../StatusSelect";
+import { ColumnDef } from "@tanstack/react-table";
+import ActionCell from "./cells/ActionCell";
+import ImageCell from "./cells/ImageCell";
+import StatusCell from "./cells/StatusCell";
 
 export const Columns: ColumnDef<Track>[] = [
   {
@@ -69,12 +43,13 @@ export const Columns: ColumnDef<Track>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Track Image Cover" />
     ),
-    cell: RenderImageCell,
+    cell: ({ row }) => <ImageCell row={row} />,
   },
   {
     id: "title",
     accessorKey: "title",
     enableColumnFilter: true,
+    enableSorting: false,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Track title" />
     ),
@@ -87,12 +62,14 @@ export const Columns: ColumnDef<Track>[] = [
     id: "album",
     accessorKey: "album.name",
     enableColumnFilter: true,
+    enableSorting: false,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Album Name" />
     ),
     cell: ({ row }) => {
-      const album = row.original.album;
-      return album ? album.name : "-";
+      const title =
+        row.original.albums.length > 0 ? row.original.albums[0].title : "-";
+      return title;
     },
     meta: {
       label: "Album",
@@ -111,15 +88,44 @@ export const Columns: ColumnDef<Track>[] = [
     },
   },
   {
-    id: "uploadTime",
-    accessorKey: "uploadTime",
+    id: "genres",
+    accessorKey: "genres",
+    enableColumnFilter: true,
+    enableSorting: false,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Genres" />
+    ),
+    cell: ({ row }) => (
+      <GenresCell<Track> row={row} getGenres={(data) => data.genres} />
+    ),
+    meta: {
+      label: "Genres",
+      inputType: "text",
+    },
+  },
+  {
+    id: "createdAt",
+    accessorKey: "createdAt",
     enableColumnFilter: true,
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Upload Time" />
+      <DataTableColumnHeader column={column} title="Upload time" />
     ),
     cell: ({ row }) => formatUploadTime((row.original as Track).createdAt),
     meta: {
       label: "Upload Time",
+      inputType: "date",
+    },
+  },
+  {
+    id: "updatedAt",
+    accessorKey: "updatedAt",
+    enableColumnFilter: true,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Last update" />
+    ),
+    cell: ({ row }) => formatUploadTime((row.original as Track).updatedAt),
+    meta: {
+      label: "Last update",
       inputType: "date",
     },
   },
@@ -135,7 +141,7 @@ export const Columns: ColumnDef<Track>[] = [
         className="flex items-center justify-center"
       />
     ),
-    cell: RenderStatusCell,
+    cell: ({ row }) => <StatusCell row={row} />,
     meta: {
       inputType: "select",
       options: TrackStatusValues,
@@ -143,145 +149,12 @@ export const Columns: ColumnDef<Track>[] = [
   },
   {
     id: "actions",
-    cell: RenderActionCell,
+    cell: ({ row }) => <ActionCell row={row} />,
   },
 ];
 
-export const TrackInAlbumColumns: ColumnDef<TrackInArtistAlbum>[] =
-  Columns.filter((item) =>
+export const TrackInAlbumColumns: ColumnDef<Track>[] = [
+  ...Columns.filter((item) =>
     ["select", "coverImage", "name", "duration"].includes(item.id || ""),
-  ).map((item) => item as TrackInArtistAlbum);
-
-function RenderStatusCell({ row }: { row: Row<Track> }) {
-  const [status, setStatus] = useState(row.original.status as string);
-  const [statusDialogOpen, setStatusDialogOpen] = useState(false);
-
-  const handleStatusChange = (value: string) => {
-    setStatus(value);
-    setStatusDialogOpen(true);
-  };
-
-  const handleStatusConfirm = () => {
-    console.log(`Changing status to: ${status}`);
-    console.log(`Selected rows:`, row.original);
-    setStatusDialogOpen(false);
-  };
-
-  return (
-    <div className="flex items-center justify-center">
-      <Popover>
-        <PopoverTrigger asChild>
-          <Badge
-            variant={
-              row.original.status !== TrackStatus.HIDDEN
-                ? "default"
-                : "destructive"
-            }
-            className="cursor-pointer rounded-full px-2 py-1 capitalize"
-          >
-            {row.original.status}
-          </Badge>
-        </PopoverTrigger>
-        <PopoverContent align="end" className="w-48">
-          <StatusSelect
-            status={status}
-            handleStatusChange={handleStatusChange}
-          />
-        </PopoverContent>
-      </Popover>
-
-      <ConfirmDialog
-        title="Confirm Status Change"
-        description={`Are you sure you want to change the status of this track to "${status}"?`}
-        onCancel={() => setStatusDialogOpen(false)}
-        onConfirm={handleStatusConfirm}
-        isOpen={statusDialogOpen}
-        setIsOpen={setStatusDialogOpen}
-      />
-    </div>
-  );
-}
-
-function RenderImageCell({ row }: { row: Row<Track> }) {
-  const imageUrl = row.original.cover_images[0]?.url;
-  const [imageError, setImageError] = useState(false);
-
-  if (!imageUrl || imageError) {
-    return (
-      <div className="flex h-[70px] w-[70px] items-center justify-center rounded-lg border text-xs">
-        <ImageIcon className="text-muted-foreground h-4 w-4" />
-      </div>
-    );
-  }
-
-  return (
-    <Image
-      src={imageUrl}
-      alt={""}
-      width={70}
-      height={70}
-      className="rounded"
-      onError={() => setImageError(true)}
-    />
-  );
-}
-
-function RenderActionCell({ row }: { row: Row<Track> }) {
-  const track = row.original;
-  const [deleteDialog, setDeleteDialog] = useState(false);
-  const [addToAlbumDialog, setAddToAlbumDialog] = useState(false);
-
-  return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="h-8 w-8 rounded-full p-0">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuItem variant="default" className="cursor-pointer">
-            <Link
-              href={`/artist-tracks/update/${track._id}`}
-              className="flex items-center gap-2"
-            >
-              <Settings2 className="mr-2 h-4 w-4" />
-              <span>Edit</span>
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="cursor-pointer"
-            onClick={() => setAddToAlbumDialog(true)}
-          >
-            <PlusCircle className="mr-1 h-4 w-4" />
-            Add to album
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            variant="destructive"
-            className="cursor-pointer"
-            onClick={() => setDeleteDialog(true)}
-          >
-            <Trash2 className="mr-2 h-4 w-4" />
-            <span>Delete</span>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <AddTrackToAlbumDialog
-        tracks={[track as Track]}
-        statusDialogOpen={addToAlbumDialog}
-        setStatusDialogOpen={setAddToAlbumDialog}
-      />
-      <ConfirmDialog
-        title="Confirm Deletion"
-        description={`Are you absolutely sure to delete this track ? This action cannot be undone.`}
-        onConfirm={() => {
-          console.log("Deleting track:", track);
-          setDeleteDialog(false);
-        }}
-        onCancel={() => setDeleteDialog(false)}
-        isOpen={deleteDialog}
-        setIsOpen={setDeleteDialog}
-      />
-    </>
-  );
-}
+  ),
+];

@@ -1,6 +1,14 @@
 "use client";
-import Link from "next/link";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import LoaderSpin from "@/components/common/LoaderSpin";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -10,19 +18,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { cn } from "@/libs/utils";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
 import { SignUpFormValues, signUpSchema } from "../schemas";
-import ErrorMessage from "@/components/common/ErrorMessage";
-import LoaderSpin from "@/components/common/LoaderSpin";
 
 interface SignUpFormProps
   extends Omit<React.ComponentProps<"div">, "onSubmit"> {

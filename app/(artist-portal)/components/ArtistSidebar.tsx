@@ -1,9 +1,9 @@
 "use client";
 
-import * as React from "react";
-import { Disc, Music2 } from "lucide-react";
-import { Sidebar, SidebarContent, SidebarRail } from "@/components/ui/sidebar";
 import { NavMain } from "@/components/ui/nav-main";
+import { Sidebar, SidebarContent, SidebarRail } from "@/components/ui/sidebar";
+import { Disc, Music2 } from "lucide-react";
+import * as React from "react";
 
 const navItems = [
   {

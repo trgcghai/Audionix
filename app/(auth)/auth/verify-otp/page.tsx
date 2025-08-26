@@ -1,8 +1,8 @@
 "use client";
-import OtpForm from "../components/otp-form";
+import { useOtp } from "@/hooks/useAuthUser";
 import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
-import { useOtp } from "@/hooks/useAuthUser";
+import OtpForm from "../components/otp-form";
 
 const VerifyOtpPage = () => {
   const searchParams = useSearchParams();

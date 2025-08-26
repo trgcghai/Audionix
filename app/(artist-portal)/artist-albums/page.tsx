@@ -1,17 +1,22 @@
 "use client";
-import { Columns } from "@/app/(artist-portal)/artist-albums/components/table/Columns";
 import AlbumTable from "@/app/(artist-portal)/artist-albums/components/table";
-import { mockArtistAlbums } from "@/app/sampleData";
-import { ScrollArea } from "@/components/ui/scroll-area";
-
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { Columns } from "@/app/(artist-portal)/artist-albums/components/table/Columns";
+import useAlbumManagement from "@/app/(artist-portal)/artist-albums/hooks/useAlbumManagement";
+import { ApiErrorResponse } from "@/app/types/api";
 import DetailAlbumCard from "@/components/common/DetailAlbumCard";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import LoaderSpin from "@/components/common/LoaderSpin";
+import { useAppDispatch } from "@/hooks/redux";
+import {
+  hideViewDetail,
+  useDetailAlbumSlice,
+} from "@/store/slices/detailAlbumSlice";
 import { useEffect } from "react";
-import { hideViewDetail } from "@/store/slices/detailAlbumSlice";
 
 const ArtistAlbumPage = () => {
-  const { album, isOpen } = useAppSelector((state) => state.detailAlbum);
+  const { album, isOpen } = useDetailAlbumSlice();
   const dispatch = useAppDispatch();
+  const { albums, getAlbumState } = useAlbumManagement();
 
   useEffect(() => {
     return () => {
@@ -20,19 +25,23 @@ const ArtistAlbumPage = () => {
   }, [dispatch]);
 
   return (
-    <ScrollArea className="px-3 h-full">
+    <div className="h-full px-3">
       <div className="flex items-start gap-10">
         <div className={`${isOpen ? "w-3/5" : "w-full"}`}>
-          <p className="text-xl font-bold mb-4">Your albums</p>
+          <p className="mb-4 text-xl font-bold">Your albums</p>
 
-          <AlbumTable
-            columns={Columns}
-            data={[
-              ...mockArtistAlbums,
-              ...mockArtistAlbums,
-              ...mockArtistAlbums,
-            ]}
-          />
+          {getAlbumState.isLoading && <LoaderSpin fullScreen />}
+          {getAlbumState.isError && (
+            <ErrorMessage
+              message={
+                (getAlbumState.error as ApiErrorResponse)?.message ||
+                "An error occurred while fetching album data. Please try again later"
+              }
+            />
+          )}
+          {getAlbumState.isSuccess && (
+            <AlbumTable columns={Columns} data={albums} />
+          )}
         </div>
 
         {isOpen && album && (
@@ -41,7 +50,7 @@ const ArtistAlbumPage = () => {
           </div>
         )}
       </div>
-    </ScrollArea>
+    </div>
   );
 };
 export default ArtistAlbumPage;

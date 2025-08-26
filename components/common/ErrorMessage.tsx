@@ -1,5 +1,5 @@
-import { AlertCircle, RefreshCw } from "lucide-react";
 import { cn } from "@/libs/utils";
+import { AlertCircle, RefreshCw } from "lucide-react";
 import { Button } from "../ui/button";
 
 type ErrorVariant = "default" | "compact" | "inline" | "card";
@@ -71,4 +71,4 @@ const ErrorMessage = ({
 };
 
 export default ErrorMessage;
-export type { ErrorVariant, ErrorSeverity, ErrorMessageProps };
+export type { ErrorMessageProps, ErrorSeverity, ErrorVariant };

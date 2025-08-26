@@ -1,12 +1,23 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import DataTableActionsOnSelected from "@/app/(artist-portal)/artist-tracks/components/table/actionsOnSelected";
+import TableFilters from "@/app/(artist-portal)/artist-tracks/components/table/filters";
+import useTrackManagement from "@/app/(artist-portal)/artist-tracks/hooks/useTrackManagement";
 import { DataTablePagination } from "@/components/dataTable/DataTablePagination";
 import { DataTableViewOptions } from "@/components/dataTable/DataTableViewOptions";
-import DataTableFilterOptions from "@/components/dataTable/DataTableFilterOptions";
-import DataTableActionsOnSelected from "./DataTableActionsOnSelected";
-import { useTrackTable } from "../../hooks/useTrackTable";
 import TableContent from "@/components/dataTable/TableContent";
+import { cn } from "@/libs/utils";
+import {
+  ColumnDef,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  SortingState,
+  useReactTable,
+  VisibilityState,
+} from "@tanstack/react-table";
+import { useEffect, useState } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -23,29 +34,76 @@ export function TrackTable<TData, TValue>({
   showViewOptions = true,
   showFilterOptions = true,
 }: DataTableProps<TData, TValue>) {
-  const { table, hasSelectedRows } = useTrackTable({ columns, data });
+  const [hasSelectedRows, setHasSelectedRows] = useState(false);
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
+
+  const table = useReactTable({
+    data,
+    columns,
+    onSortingChange: setSorting,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnVisibility,
+      rowSelection,
+    },
+  });
+
+  const {
+    current,
+    limit,
+    totalPages,
+    setLimitFilter,
+    toFirstPage,
+    toLastPage,
+    toNextPage,
+    toPreviousPage,
+  } = useTrackManagement();
+
+  useEffect(() => {
+    const selectedRows = table.getSelectedRowModel().rows;
+    setHasSelectedRows(selectedRows.length > 0);
+  }, [table, rowSelection]);
 
   return (
     <div className="space-y-4">
       {showFilterOptions && (
-        <DataTableFilterOptions
-          table={table}
-          className="space-y-4"
-          itemClassName="mb-4 w-full"
-          inputClassName="w-full"
-          labelClassName="text-md w-1/5"
+        <TableFilters
+          className="grid grid-cols-2 gap-x-12 gap-y-6"
+          itemClassName="flex items-center gap-4 mb-0"
+          inputClassName="flex-1 w-full rounded-full"
+          labelClassName="text-base w-1/8 capitalize"
         />
       )}
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          {showActions && hasSelectedRows && (
-            <DataTableActionsOnSelected table={table} />
-          )}
-        </div>
+      <div
+        className={cn(
+          "mb-4 flex items-center justify-end",
+          showActions && hasSelectedRows && "justify-between",
+        )}
+      >
+        {showActions && hasSelectedRows && (
+          <DataTableActionsOnSelected table={table} />
+        )}
         {showViewOptions && <DataTableViewOptions table={table} />}
       </div>
       <TableContent table={table} columns={columns} />
-      <DataTablePagination table={table} />
+      <DataTablePagination
+        current={current}
+        limit={limit}
+        totalPages={totalPages}
+        setLimit={setLimitFilter}
+        onGoToFirst={toFirstPage}
+        onGoToPrevious={toPreviousPage}
+        onGoToNext={toNextPage}
+        onGoToLast={toLastPage}
+      />
     </div>
   );
 }

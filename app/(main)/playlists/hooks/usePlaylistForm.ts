@@ -26,8 +26,6 @@ const usePlaylistForm = ({ data }: UsePlaylistFormProps) => {
       form.setError("root", { message: "Playlist ID is required" });
     }
 
-    console.log("PlaylistFormValues", formData);
-
     try {
       await handleUpdatePlaylist(data?._id as string, formData);
     } catch (error) {

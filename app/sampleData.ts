@@ -831,11 +831,11 @@ const mockArtistAlbums: ArtistAlbumItem[] = [
 ];
 
 export {
+  mockAlbums,
+  mockArtistAlbums,
+  mockArtists,
+  mockArtistTracks,
   mockData,
   mockPlaylists,
-  mockAlbums,
-  mockArtists,
   mockTracks,
-  mockArtistTracks,
-  mockArtistAlbums,
 };

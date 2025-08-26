@@ -1,5 +1,5 @@
-import { Loader2 } from "lucide-react";
 import { cn } from "@/libs/utils";
+import { Loader2 } from "lucide-react";
 
 type LoaderSize = "xs" | "sm" | "md" | "lg" | "xl";
 type LoaderVariant =
@@ -67,7 +67,7 @@ const LoaderSpin = ({
     fullScreen && "fixed inset-0 z-50",
     overlay && "bg-white/80 backdrop-blur-sm",
     withText ? "flex-col gap-2" : "flex-row gap-2",
-    containerClassName
+    containerClassName,
   );
 
   // Loader classes
@@ -75,7 +75,7 @@ const LoaderSpin = ({
     "animate-spin",
     sizeClasses[size],
     variantClasses[variant],
-    loaderClassName
+    loaderClassName,
   );
 
   // Text classes
@@ -83,7 +83,7 @@ const LoaderSpin = ({
     "font-medium",
     textSizeClasses[size],
     variantClasses[variant],
-    textClassName
+    textClassName,
   );
 
   return (
@@ -97,4 +97,4 @@ const LoaderSpin = ({
 export default LoaderSpin;
 
 // Export types for reuse
-export type { LoaderSize, LoaderVariant, LoaderSpinProps };
+export type { LoaderSize, LoaderSpinProps, LoaderVariant };

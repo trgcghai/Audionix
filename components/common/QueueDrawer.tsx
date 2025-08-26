@@ -1,16 +1,13 @@
-import { useAppDispatch } from "@/hooks/redux";
-import { mockTracks } from "@/app/sampleData";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useAppDispatch } from "@/hooks/redux";
+import { closeQueueDrawer } from "@/store/slices/queueDrawerSlice";
 import { XIcon } from "lucide-react";
 import TrackInfo from "./TrackInfo";
-import { useMemo } from "react";
-import { closeQueueDrawer } from "@/store/slices/queueDrawerSlice";
 
 const QueueDrawer = () => {
   const dispatch = useAppDispatch();
-  const activeTrack = useMemo(() => mockTracks[0], []);
 
   const handleCloseDrawer = () => {
     dispatch(closeQueueDrawer());
@@ -36,18 +33,18 @@ const QueueDrawer = () => {
       <CardContent className="">
         <div className="mb-8">
           <p className="mb-2 text-lg font-semibold">Now playing</p>
-          <TrackInfo track={activeTrack} active={true} />
+          <TrackInfo active={true} />
         </div>
 
         <div>
           <p className="mb-2 text-lg font-semibold">Next from your queue</p>
           <ScrollArea className="h-[530px] overflow-y-auto">
             <div className="space-y-6">
-              {[...mockTracks, ...mockTracks, ...mockTracks].map(
+              {/* {[...mockTracks, ...mockTracks, ...mockTracks].map(
                 (track, index) => (
-                  <TrackInfo key={track.id + index} track={track} />
+                  <TrackInfo key={track._id + index} track={track} />
                 ),
-              )}
+              )} */}
             </div>
           </ScrollArea>
         </div>

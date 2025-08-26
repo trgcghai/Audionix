@@ -1,11 +1,10 @@
-import EditAlbumForm from "@/app/(artist-portal)/artist-albums/components/EditAlbumForm";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import EditAlbumForm from "@/app/(artist-portal)/artist-albums/components/form/EditAlbumForm";
 
 const CreateNewAlbumPage = () => {
   return (
-    <ScrollArea className="w-4xl mx-auto">
+    <div className="mx-auto w-4xl">
       <EditAlbumForm />
-    </ScrollArea>
+    </div>
   );
 };
 export default CreateNewAlbumPage;

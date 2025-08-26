@@ -1,19 +1,21 @@
 "use client";
 
 import LoaderSpin from "@/components/common/LoaderSpin";
+import { useUserSlice } from "@/store/slices/userSlice";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 const ArtistPortalPage = () => {
   const router = useRouter();
-  const hasRedirected = useRef(false); // đảm bảo chỉ redirect 1 lần
+  const { roles } = useUserSlice();
 
   useEffect(() => {
-    if (!hasRedirected.current) {
-      hasRedirected.current = true;
+    if (roles && roles.includes("artist")) {
       router.push("/artist-tracks");
+    } else {
+      router.push("/");
     }
-  }, [router]);
+  }, [roles, router]);
 
   return <LoaderSpin />;
 };

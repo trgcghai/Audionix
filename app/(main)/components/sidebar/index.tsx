@@ -59,7 +59,7 @@ const MainSidebar = ({ playlistData, albumData, artistData }: SidebarProps) => {
       <CardHeader>
         <CardTitle>
           <div className="flex items-center justify-between">
-            <p>Your library</p>
+            <p className="text-lg">Your library</p>
             <CreatePlaylistButton />
           </div>
         </CardTitle>

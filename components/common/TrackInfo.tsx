@@ -1,13 +1,29 @@
-import { Track } from "@/app/types/model";
+import { Button } from "@/components/ui/button";
+import usePlaylistAction from "@/hooks/usePlaylistAction";
+import { useCheckTracksInLikedQuery } from "@/services/playlists/playlistApi";
+import { PlayingTrack } from "@/store/slices/queueDrawerSlice";
+import { Heart } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
-const TrackInfo = ({
-  track,
-  active = false,
-}: {
-  track?: Track;
-  active?: boolean;
-}) => {
+const TrackInfo = ({ track }: { track: PlayingTrack; active?: boolean }) => {
+  const { data: likedData } = useCheckTracksInLikedQuery([track._id], {
+    skip: !track._id,
+  });
+
+  const { handleAddTracksToLiked, handleRemoveTracksFromLiked } =
+    usePlaylistAction();
+
+  const isLiked = likedData?.data.results[0]?.inPlaylist || false;
+
+  const handleLikeToggle = () => {
+    if (isLiked) {
+      handleRemoveTracksFromLiked([track._id]);
+    } else {
+      handleAddTracksToLiked([track._id]);
+    }
+  };
+
   if (!track) {
     return null;
   }
@@ -21,16 +37,32 @@ const TrackInfo = ({
         height={50}
         className="rounded shadow-sm"
       />
-      <div className="min-w-0">
-        <p
-          className={`text-md truncate ${active ? "text-primary font-semibold" : ""}`}
+      <div className="flex flex-col">
+        <Link
+          href={`/tracks/${track._id}`}
+          className="hover:underline line-clamp-1"
         >
           {track.title}
-        </p>
-        <p className="text-muted-foreground truncate text-sm">
-          {track.artist?.name}
-        </p>
+        </Link>
+        <Link
+          href={`/artists/${track.artist._id}`}
+          className="text-sm text-muted-foreground hover:underline"
+        >
+          {track.artist.name}
+        </Link>
       </div>
+
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={handleLikeToggle}
+        className="ml-2"
+      >
+        <Heart
+          className={`h-4 w-4 ${isLiked ? "text-primary" : ""}`}
+          fill={isLiked ? "var(--primary)" : "none"}
+        />
+      </Button>
     </div>
   );
 };

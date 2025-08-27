@@ -54,7 +54,7 @@ export type EmbbedTrack = {
   _id: string;
   title: string;
   type: "track";
-  duration_ms: string;
+  duration_ms: number;
   cover_images: [
     {
       url: string;

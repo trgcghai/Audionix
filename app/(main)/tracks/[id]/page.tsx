@@ -7,6 +7,7 @@ import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
 import { Separator } from "@/components/ui/separator";
+import { usePlayer } from "@/hooks/usePlayer";
 import usePlaylistAction from "@/hooks/usePlaylistAction";
 import { useGetAlbumByArtistQuery } from "@/services/albums/albumApi";
 import { useCheckTracksInLikedQuery } from "@/services/playlists/playlistApi";
@@ -20,6 +21,7 @@ import { useParams } from "next/navigation";
 import { useMemo, useState } from "react";
 
 const DetailTrackPage = () => {
+  const { playTrack } = usePlayer();
   const [dialogOpen, setDialogOpen] = useState(false);
   const { handleAddTracksToLiked, handleRemoveTracksFromLiked } =
     usePlaylistAction();
@@ -51,8 +53,6 @@ const DetailTrackPage = () => {
     { skip: !track?.artist._id },
   );
 
-  console.log(likedData);
-
   if (isTrackLoading) {
     return (
       <div className="flex items-center justify-center">
@@ -61,7 +61,7 @@ const DetailTrackPage = () => {
     );
   }
 
-  if (isTrackError) {
+  if (isTrackError || !track) {
     return (
       <div className="flex items-center justify-center">
         <ErrorMessage
@@ -76,12 +76,12 @@ const DetailTrackPage = () => {
 
   return (
     <div>
-      {track && <TrackHeroSection track={track} />}
+      <TrackHeroSection track={track} />
 
       <Separator className="my-4" />
 
       <TrackControlSection
-        onPlay={() => console.log("Play track")}
+        onPlay={() => playTrack(track)}
         onAddToPlaylist={() => setDialogOpen(true)}
         isLiked={likedData?.data.results[0].inPlaylist || false}
         onLike={() => {

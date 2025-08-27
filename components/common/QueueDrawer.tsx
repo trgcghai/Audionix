@@ -18,7 +18,7 @@ const QueueDrawer = () => {
       <CardHeader>
         <CardTitle>
           <div className="flex items-center justify-between">
-            <p>Your queue</p>
+            <p className="text-lg">Your queue</p>
             <Button
               variant={"ghost"}
               size="icon"

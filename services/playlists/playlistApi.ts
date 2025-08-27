@@ -18,6 +18,19 @@ const playlistApi = api.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => {
     return {
+      getPlaylists: builder.query<FindPlaylistResponse, FindPlaylistParams>({
+        query: ({ current = 1, limit = 10, sort, status, title }) => ({
+          url: "/playlists",
+          method: "GET",
+          params: {
+            current,
+            limit,
+            sort,
+            status,
+            title,
+          },
+        }),
+      }),
       getPlaylistById: builder.query<ApiResponse<Playlist>, string>({
         query: (id: string) => ({
           url: `/playlists/${id}`,
@@ -151,6 +164,7 @@ const playlistApi = api.injectEndpoints({
 });
 
 export const {
+  useGetPlaylistsQuery,
   useGetMyPlaylistsQuery,
   useCreatePlaylistMutation,
   useGetPlaylistByIdQuery,

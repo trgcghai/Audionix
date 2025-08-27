@@ -149,7 +149,7 @@ const MediaList = ({
 
   return (
     <div className={className}>
-      <p className="px-2 text-xl font-semibold capitalize dark:text-white">
+      <p className="px-2 text-lg font-semibold capitalize dark:text-white">
         {title}
       </p>
       <div className="mt-1 grid grid-cols-7">

@@ -9,6 +9,7 @@ import LoaderSpin from "@/components/common/LoaderSpin";
 import SimpleTrackTable from "@/components/common/SimpleTrackTable";
 import { Separator } from "@/components/ui/separator";
 import { useDebounce } from "@/hooks/useDebounce";
+import { usePlayer } from "@/hooks/usePlayer";
 import usePlaylistAction from "@/hooks/usePlaylistAction";
 import { useGetPlaylistByIdQuery } from "@/services/playlists/playlistApi";
 import { useGetTracksQuery } from "@/services/tracks/trackApi";
@@ -16,6 +17,7 @@ import { useParams } from "next/navigation";
 import { useMemo, useState } from "react";
 
 const DetailPlaylistPage = () => {
+  const { playPlaylist } = usePlayer();
   const { id } = useParams<{ id: string }>();
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
@@ -69,7 +71,7 @@ const DetailPlaylistPage = () => {
       <Separator className="my-4" />
 
       <PlaylistControlSection
-        onPlay={() => console.log("Play playlist")}
+        onPlay={() => playlist && playPlaylist(playlist)}
         onDelete={() => handleDeletePlaylist(id)}
       />
 

@@ -1,4 +1,3 @@
-import { TrackItem } from "@/app/types/component";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -7,46 +6,104 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { cn } from "@/libs/utils";
+import {
+  cycleLoopMode,
+  playNext,
+  playPrevious,
+  setIsPlaying,
+  toggleShuffle,
+} from "@/store/slices/queueDrawerSlice";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import {
   Pause,
   Play,
   Repeat,
+  Repeat1,
   Shuffle,
   SkipBack,
   SkipForward,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const MediaControl = ({ track }: { track: TrackItem }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+interface MediaControlProps {
+  audioRef: React.RefObject<HTMLAudioElement | null>;
+}
+
+const MediaControl = ({ audioRef }: MediaControlProps) => {
+  const dispatch = useAppDispatch();
+  const { currentTrack, loopMode, shuffle, isPlaying } = useAppSelector(
+    (state) => state.queueDrawer,
+  );
   const [currentTime, setCurrentTime] = useState(0);
-  const [isRepeat, setIsRepeat] = useState(false);
-  const [isShuffle, setIsShuffle] = useState(false);
+  const [duration, setDuration] = useState(0);
+
+  // Update time display and handle metadata
+  useEffect(() => {
+    const audioElement = audioRef.current;
+    if (!audioElement) return;
+
+    const handleTimeUpdate = () => {
+      setCurrentTime(audioElement.currentTime * 1000);
+    };
+
+    const handleLoadedMetadata = () => {
+      setDuration(audioElement.duration * 1000);
+    };
+
+    const handleEnded = () => {
+      if (loopMode === "one") {
+        audioElement.currentTime = 0;
+        audioElement.play().catch(console.error);
+      } else {
+        dispatch(playNext());
+      }
+    };
+
+    audioElement.addEventListener("timeupdate", handleTimeUpdate);
+    audioElement.addEventListener("loadedmetadata", handleLoadedMetadata);
+    audioElement.addEventListener("ended", handleEnded);
+
+    return () => {
+      audioElement.removeEventListener("timeupdate", handleTimeUpdate);
+      audioElement.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audioElement.removeEventListener("ended", handleEnded);
+    };
+  }, [audioRef, dispatch, loopMode]);
 
   const togglePlay = () => {
-    setIsPlaying(!isPlaying);
+    if (!audioRef.current || !currentTrack) return;
+    dispatch(setIsPlaying(!isPlaying));
   };
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
+  const handleSeek = (value: number[]) => {
+    if (!audioRef.current) return;
+    const seekTime = value[0];
+    audioRef.current.currentTime = seekTime / 1000;
+    setCurrentTime(seekTime);
+  };
 
-    if (isPlaying && currentTime < track.duration_ms) {
-      interval = setInterval(() => {
-        setCurrentTime((prev) => {
-          if (prev >= track.duration_ms) {
-            clearInterval(interval);
-            setIsPlaying(false);
-            return 0;
-          }
-          return prev + 1000;
-        });
-      }, 1000);
+  const handleNextTrack = () => {
+    dispatch(playNext());
+  };
+
+  const handlePreviousTrack = () => {
+    // If we're more than 3 seconds into the track, restart it
+    if (audioRef.current && audioRef.current.currentTime > 3) {
+      audioRef.current.currentTime = 0;
+    } else {
+      dispatch(playPrevious());
     }
+  };
 
-    return () => clearInterval(interval);
-  }, [isPlaying, track.duration_ms, currentTime]);
+  const handleCycleLoopMode = () => {
+    dispatch(cycleLoopMode());
+  };
+
+  const handleToggleShuffle = () => {
+    dispatch(toggleShuffle());
+  };
 
   return (
     <div className="flex w-2/4 max-w-md flex-col items-center gap-2">
@@ -57,20 +114,26 @@ const MediaControl = ({ track }: { track: TrackItem }) => {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setIsShuffle(!isShuffle)}
+                disabled={!currentTrack}
+                onClick={handleToggleShuffle}
               >
                 <Shuffle
-                  className={cn("h-4 w-4", isShuffle ? "text-primary" : "")}
+                  className={cn("h-4 w-4", shuffle ? "text-primary" : "")}
                 />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="top">
-              {isShuffle ? "Disable shuffle" : "Enable shuffle"}
+              {shuffle ? "Disable shuffle" : "Enable shuffle"}
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
 
-        <Button variant="ghost" size="icon">
+        <Button
+          variant="ghost"
+          size="icon"
+          disabled={!currentTrack}
+          onClick={handlePreviousTrack}
+        >
           <SkipBack className="h-5 w-5" />
         </Button>
 
@@ -78,6 +141,7 @@ const MediaControl = ({ track }: { track: TrackItem }) => {
           variant="default"
           size="icon"
           className="border-primary h-10 w-10 rounded-full"
+          disabled={!currentTrack}
           onClick={togglePlay}
         >
           {isPlaying ? (
@@ -87,7 +151,12 @@ const MediaControl = ({ track }: { track: TrackItem }) => {
           )}
         </Button>
 
-        <Button variant="ghost" size="icon">
+        <Button
+          variant="ghost"
+          size="icon"
+          disabled={!currentTrack}
+          onClick={handleNextTrack}
+        >
           <SkipForward className="h-5 w-5" />
         </Button>
 
@@ -97,35 +166,48 @@ const MediaControl = ({ track }: { track: TrackItem }) => {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setIsRepeat(!isRepeat)}
+                disabled={!currentTrack}
+                onClick={handleCycleLoopMode}
               >
-                <Repeat
-                  className={cn("h-4 w-4", isRepeat ? "text-primary" : "")}
-                />
+                {loopMode === "one" ? (
+                  <Repeat1 className="h-4 w-4 text-primary" />
+                ) : (
+                  <Repeat
+                    className={cn(
+                      "h-4 w-4",
+                      loopMode === "all" ? "text-primary" : "",
+                    )}
+                  />
+                )}
               </Button>
             </TooltipTrigger>
             <TooltipContent side="top">
-              {isRepeat ? "Disable repeat" : "Enable repeat"}
+              {loopMode === "off"
+                ? "Enable repeat all"
+                : loopMode === "all"
+                  ? "Enable repeat one"
+                  : "Disable repeat"}
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
       </div>
 
       {/* Progress bar */}
-      <div className="flex w-full items-center gap-2">
+      <div className="flex w-full items-center gap-2 mb-2">
         <span className="w-10 text-right text-xs">
-          {formatTrackDuration(currentTime)}
+          {currentTrack && formatTrackDuration(currentTime)}
         </span>
         <Slider
           className="w-full"
-          defaultValue={[0]}
           value={[currentTime]}
-          max={track.duration_ms}
+          max={duration || currentTrack?.duration_ms}
           step={1000}
-          onValueChange={(value) => setCurrentTime(value[0])}
+          onValueChange={handleSeek}
+          disabled={!currentTrack}
         />
         <span className="w-10 text-xs">
-          {formatTrackDuration(track.duration_ms)}
+          {currentTrack &&
+            formatTrackDuration(duration || currentTrack.duration_ms)}
         </span>
       </div>
     </div>

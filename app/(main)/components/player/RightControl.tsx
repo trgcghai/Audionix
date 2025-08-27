@@ -8,20 +8,31 @@ import {
 } from "@/components/ui/tooltip";
 import { useAppDispatch } from "@/hooks/redux";
 import {
+  setMuted,
+  setVolume,
   toggleQueueDrawer,
   useQueueDrawer,
 } from "@/store/slices/queueDrawerSlice";
 import { List, Mic, Volume2, VolumeX } from "lucide-react";
-import { useState } from "react";
 
 const RightControl = () => {
-  const [volume, setVolume] = useState(70);
-  const [isMuted, setIsMuted] = useState(false);
-
   const dispatch = useAppDispatch();
-  const { isOpen: isDrawerOpen } = useQueueDrawer();
+  const { isOpen: isDrawerOpen, volume, muted } = useQueueDrawer();
 
-  const handleOpenQueueDrawer = () => {
+  const handleVolumeChange = (value: number[]) => {
+    dispatch(setVolume(value[0]));
+
+    // If volume is adjusted while muted, unmute
+    if (muted && value[0] > 0) {
+      dispatch(setMuted(false));
+    }
+  };
+
+  const toggleMute = () => {
+    dispatch(setMuted(!muted));
+  };
+
+  const handleToggleQueue = () => {
     dispatch(toggleQueueDrawer());
   };
 
@@ -42,7 +53,7 @@ const RightControl = () => {
               variant={isDrawerOpen ? "default" : "ghost"}
               size="icon"
               className="h-8 w-8"
-              onClick={handleOpenQueueDrawer}
+              onClick={handleToggleQueue}
             >
               <List className="h-4 w-4" />
             </Button>
@@ -55,9 +66,9 @@ const RightControl = () => {
               variant="ghost"
               size="icon"
               className="h-8 w-8"
-              onClick={() => setIsMuted(!isMuted)}
+              onClick={toggleMute}
             >
-              {isMuted ? (
+              {muted ? (
                 <VolumeX className="h-4 w-4" />
               ) : (
                 <Volume2 className="h-4 w-4" />
@@ -65,7 +76,7 @@ const RightControl = () => {
             </Button>
           </TooltipTrigger>
           <TooltipContent side="top">
-            {isMuted ? "Unmute" : "Mute"}
+            {muted ? "Unmute" : "Mute"}
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -73,13 +84,10 @@ const RightControl = () => {
       <Slider
         className="w-24"
         defaultValue={[70]}
-        value={[isMuted ? 0 : volume]}
+        value={[muted ? 0 : isFinite(volume) ? volume : 100]}
         max={100}
         step={1}
-        onValueChange={(value) => {
-          setVolume(value[0]);
-          setIsMuted(value[0] === 0);
-        }}
+        onValueChange={handleVolumeChange}
       />
     </div>
   );

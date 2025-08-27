@@ -22,23 +22,13 @@ const UserForm = () => {
           </Button>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="firstName">First Name</Label>
-          <Input
-            id="firstName"
-            defaultValue="John"
-            className="bg-input border-border"
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="lastName">Last Name</Label>
-          <Input
-            id="lastName"
-            defaultValue="Doe"
-            className="bg-input border-border"
-          />
-        </div>
+      <div className="space-y-2">
+        <Label htmlFor="username">Username</Label>
+        <Input
+          id="username"
+          defaultValue="John Doe"
+          className="bg-input border-border"
+        />
       </div>
       <div className="space-y-2">
         <Label htmlFor="email">Email</Label>

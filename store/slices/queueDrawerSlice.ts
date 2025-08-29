@@ -1,3 +1,4 @@
+import { Volume } from "@/app/enums";
 import { useAppSelector } from "@/hooks/redux";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -50,7 +51,7 @@ const initialState: QueueDrawerState = {
   loopMode: "off",
   shuffle: false,
   isPlaying: false,
-  volume: 100,
+  volume: Volume.DEFAULT,
   muted: false,
 };
 

@@ -6,15 +6,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { useAudioPlayer } from "@/hooks/usePlayer";
 import { cn } from "@/libs/utils";
-import {
-  cycleLoopMode,
-  playNext,
-  playPrevious,
-  setIsPlaying,
-  toggleShuffle,
-} from "@/store/slices/queueDrawerSlice";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import {
   Pause,
@@ -25,85 +18,22 @@ import {
   SkipBack,
   SkipForward,
 } from "lucide-react";
-import { useEffect, useState } from "react";
 
-interface MediaControlProps {
-  audioRef: React.RefObject<HTMLAudioElement | null>;
-}
-
-const MediaControl = ({ audioRef }: MediaControlProps) => {
-  const dispatch = useAppDispatch();
-  const { currentTrack, loopMode, shuffle, isPlaying } = useAppSelector(
-    (state) => state.queueDrawer,
-  );
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-
-  // Update time display and handle metadata
-  useEffect(() => {
-    const audioElement = audioRef.current;
-    if (!audioElement) return;
-
-    const handleTimeUpdate = () => {
-      setCurrentTime(audioElement.currentTime * 1000);
-    };
-
-    const handleLoadedMetadata = () => {
-      setDuration(audioElement.duration * 1000);
-    };
-
-    const handleEnded = () => {
-      if (loopMode === "one") {
-        audioElement.currentTime = 0;
-        audioElement.play().catch(console.error);
-      } else {
-        dispatch(playNext());
-      }
-    };
-
-    audioElement.addEventListener("timeupdate", handleTimeUpdate);
-    audioElement.addEventListener("loadedmetadata", handleLoadedMetadata);
-    audioElement.addEventListener("ended", handleEnded);
-
-    return () => {
-      audioElement.removeEventListener("timeupdate", handleTimeUpdate);
-      audioElement.removeEventListener("loadedmetadata", handleLoadedMetadata);
-      audioElement.removeEventListener("ended", handleEnded);
-    };
-  }, [audioRef, dispatch, loopMode]);
-
-  const togglePlay = () => {
-    if (!audioRef.current || !currentTrack) return;
-    dispatch(setIsPlaying(!isPlaying));
-  };
-
-  const handleSeek = (value: number[]) => {
-    if (!audioRef.current) return;
-    const seekTime = value[0];
-    audioRef.current.currentTime = seekTime / 1000;
-    setCurrentTime(seekTime);
-  };
-
-  const handleNextTrack = () => {
-    dispatch(playNext());
-  };
-
-  const handlePreviousTrack = () => {
-    // If we're more than 3 seconds into the track, restart it
-    if (audioRef.current && audioRef.current.currentTime > 3) {
-      audioRef.current.currentTime = 0;
-    } else {
-      dispatch(playPrevious());
-    }
-  };
-
-  const handleCycleLoopMode = () => {
-    dispatch(cycleLoopMode());
-  };
-
-  const handleToggleShuffle = () => {
-    dispatch(toggleShuffle());
-  };
+const MediaControl = () => {
+  const {
+    currentTrack,
+    isPlaying,
+    loopMode,
+    shuffle,
+    currentTime,
+    duration,
+    togglePlay,
+    handleSeek,
+    handleNextTrack,
+    handlePreviousTrack,
+    handleToggleShuffle,
+    handleCycleLoopMode,
+  } = useAudioPlayer();
 
   return (
     <div className="flex w-2/4 max-w-md flex-col items-center gap-2">

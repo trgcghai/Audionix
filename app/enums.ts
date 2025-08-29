@@ -11,3 +11,9 @@ export enum AlbumStatus {
   HIDDEN = "hidden",
   DELETED = "deleted",
 }
+
+export enum Volume {
+  MIN = 0,
+  MAX = 10,
+  DEFAULT = 5,
+}

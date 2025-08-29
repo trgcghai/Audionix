@@ -1,3 +1,4 @@
+import { Volume } from "@/app/enums";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -7,9 +8,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useAppDispatch } from "@/hooks/redux";
+import { useAudioPlayer } from "@/hooks/usePlayer";
 import {
-  setMuted,
-  setVolume,
   toggleQueueDrawer,
   useQueueDrawer,
 } from "@/store/slices/queueDrawerSlice";
@@ -17,20 +17,9 @@ import { List, Mic, Volume2, VolumeX } from "lucide-react";
 
 const RightControl = () => {
   const dispatch = useAppDispatch();
-  const { isOpen: isDrawerOpen, volume, muted } = useQueueDrawer();
-
-  const handleVolumeChange = (value: number[]) => {
-    dispatch(setVolume(value[0]));
-
-    // If volume is adjusted while muted, unmute
-    if (muted && value[0] > 0) {
-      dispatch(setMuted(false));
-    }
-  };
-
-  const toggleMute = () => {
-    dispatch(setMuted(!muted));
-  };
+  const { isOpen } = useQueueDrawer();
+  const { muted, volume, handleToggleMute, handleVolumeChange } =
+    useAudioPlayer();
 
   const handleToggleQueue = () => {
     dispatch(toggleQueueDrawer());
@@ -50,7 +39,7 @@ const RightControl = () => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
-              variant={isDrawerOpen ? "default" : "ghost"}
+              variant={isOpen ? "default" : "ghost"}
               size="icon"
               className="h-8 w-8"
               onClick={handleToggleQueue}
@@ -66,7 +55,7 @@ const RightControl = () => {
               variant="ghost"
               size="icon"
               className="h-8 w-8"
-              onClick={toggleMute}
+              onClick={handleToggleMute}
             >
               {muted ? (
                 <VolumeX className="h-4 w-4" />
@@ -83,9 +72,10 @@ const RightControl = () => {
 
       <Slider
         className="w-24"
-        defaultValue={[70]}
-        value={[muted ? 0 : isFinite(volume) ? volume : 100]}
-        max={100}
+        defaultValue={[Volume.DEFAULT]}
+        value={[muted ? 0 : isFinite(volume) ? volume : Volume.DEFAULT]}
+        max={Volume.MAX}
+        min={Volume.MIN}
         step={1}
         onValueChange={handleVolumeChange}
       />

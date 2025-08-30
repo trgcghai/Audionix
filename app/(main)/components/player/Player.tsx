@@ -18,29 +18,50 @@ const Player = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (audioRef.current) {
+    if (audioRef.current && currentTrack && currentTrack.file.url) {
       // Set default volume and track info
       audioRef.current.volume = Volume.DEFAULT;
-      audioRef.current.src = currentTrack?.file.url || "";
+      audioRef.current.src = currentTrack.file.url;
+
+      // if the status is already playing, play the track immediately
       if (isPlaying) {
         audioRef.current.play().catch((error) => {
           console.error("Error playing audio:", error);
         });
       }
     }
-  }, [currentTrack, isPlaying]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTrack]);
 
+  // Handle play/pause status separately
+  useEffect(() => {
+    if (audioRef.current && currentTrack) {
+      if (isPlaying) {
+        audioRef.current.play().catch((error) => {
+          console.error("Error playing audio:", error);
+        });
+      } else {
+        audioRef.current.pause();
+        // NOT reset currentTime = 0 here
+      }
+    }
+  }, [isPlaying, currentTrack]);
+
+  // Update currentTime state on time update
   const handleTimeUpdate = () => {
     if (audioRef.current) {
       setCurrentTime(audioRef.current.currentTime);
     }
   };
 
+  // Handle audio ended event
   const handleEnded = () => {
     if (audioRef.current) {
+      // check if replay is needed (need to replay when the loop mode is "one" or "all" with one item)
       const isPlayAgainNeeded =
         loopMode === "one" || (loopMode === "all" && hasOneItem);
 
+      // If need to replay the audio, reset currentTime of audioRef
       if (isPlayAgainNeeded) {
         audioRef.current.currentTime = 0;
         audioRef.current.play().catch((error) => {

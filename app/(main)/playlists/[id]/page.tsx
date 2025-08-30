@@ -17,7 +17,7 @@ import { useParams } from "next/navigation";
 import { useMemo, useState } from "react";
 
 const DetailPlaylistPage = () => {
-  const { playPlaylist } = usePlayer();
+  const { playTracks } = usePlayer();
   const { id } = useParams<{ id: string }>();
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
@@ -71,7 +71,7 @@ const DetailPlaylistPage = () => {
       <Separator className="my-4" />
 
       <PlaylistControlSection
-        onPlay={() => playlist && playPlaylist(playlist)}
+        onPlay={() => playlist && playTracks(playlist.tracks)}
         onDelete={() => handleDeletePlaylist(id)}
       />
 

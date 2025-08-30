@@ -48,7 +48,7 @@ export const usePlayer = () => {
   };
 
   // Play an album or playlist
-  const playTracks = (tracks: Track[]) => {
+  const playTracks = (tracks: (Track | EmbbedTrack)[]) => {
     if (!tracks || tracks.length === 0) return;
 
     const playingTracks = tracks.map(convertToPlayingTrack);

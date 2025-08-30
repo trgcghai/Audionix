@@ -14,6 +14,6 @@ export enum AlbumStatus {
 
 export enum Volume {
   MIN = 0,
-  MAX = 10,
-  DEFAULT = 5,
+  MAX = 0.1,
+  DEFAULT = 0.07,
 }

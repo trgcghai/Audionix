@@ -1,14 +1,21 @@
 import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useAudioPlayer } from "@/hooks/usePlayer";
+import { useAppDispatch } from "@/hooks/redux";
+import { usePlayer } from "@/hooks/usePlayer";
 import { cn } from "@/libs/utils";
-import { formatTrackDuration } from "@/utils/formatTrackDuration";
+import {
+  cycleLoopMode,
+  playNext,
+  playPrevious,
+  setIsPlaying,
+  toggleShuffle,
+  useQueueDrawer,
+} from "@/store/slices/queueDrawerSlice";
 import {
   Pause,
   Play,
@@ -19,21 +26,43 @@ import {
   SkipForward,
 } from "lucide-react";
 
-const MediaControl = () => {
-  const {
-    currentTrack,
-    isPlaying,
-    loopMode,
-    shuffle,
-    currentTime,
-    duration,
-    togglePlay,
-    handleSeek,
-    handleNextTrack,
-    handlePreviousTrack,
-    handleToggleShuffle,
-    handleCycleLoopMode,
-  } = useAudioPlayer();
+const MediaControl = ({
+  audioRef,
+}: {
+  audioRef: React.RefObject<HTMLAudioElement | null>;
+}) => {
+  const dispatch = useAppDispatch();
+  const { shuffle, isPlaying, loopMode } = useQueueDrawer();
+  const { currentTrack, hasNext, hasPrevious, hasOneItem } = usePlayer();
+
+  const handleToggleShuffle = () => {
+    dispatch(toggleShuffle());
+  };
+
+  const handlePreviousTrack = () => {
+    dispatch(playPrevious());
+  };
+
+  const handleNextTrack = () => {
+    dispatch(playNext());
+  };
+
+  const togglePlay = () => {
+    dispatch(setIsPlaying(!isPlaying));
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play().catch((error) => {
+          console.error("Error playing audio:", error);
+        });
+      }
+    }
+  };
+
+  const handleCycleLoopMode = () => {
+    dispatch(cycleLoopMode());
+  };
 
   return (
     <div className="flex w-2/4 max-w-md flex-col items-center gap-2">
@@ -44,7 +73,7 @@ const MediaControl = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                disabled={!currentTrack}
+                disabled={!currentTrack || hasOneItem}
                 onClick={handleToggleShuffle}
               >
                 <Shuffle
@@ -61,7 +90,7 @@ const MediaControl = () => {
         <Button
           variant="ghost"
           size="icon"
-          disabled={!currentTrack}
+          disabled={!currentTrack || !hasPrevious}
           onClick={handlePreviousTrack}
         >
           <SkipBack className="h-5 w-5" />
@@ -84,7 +113,7 @@ const MediaControl = () => {
         <Button
           variant="ghost"
           size="icon"
-          disabled={!currentTrack}
+          disabled={!currentTrack || !hasNext}
           onClick={handleNextTrack}
         >
           <SkipForward className="h-5 w-5" />
@@ -120,25 +149,6 @@ const MediaControl = () => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-      </div>
-
-      {/* Progress bar */}
-      <div className="flex w-full items-center gap-2 mb-2">
-        <span className="w-10 text-right text-xs">
-          {currentTrack && formatTrackDuration(currentTime)}
-        </span>
-        <Slider
-          className="w-full"
-          value={[currentTime]}
-          max={duration || currentTrack?.duration_ms}
-          step={1000}
-          onValueChange={handleSeek}
-          disabled={!currentTrack}
-        />
-        <span className="w-10 text-xs">
-          {currentTrack &&
-            formatTrackDuration(duration || currentTrack.duration_ms)}
-        </span>
       </div>
     </div>
   );

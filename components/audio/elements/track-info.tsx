@@ -38,7 +38,7 @@ export function AudioTrackInfo({ className, ...props }: AudioTrackInfoProps) {
   if (isLoading) {
     return (
       <div
-        className={cn("flex w-full items-center space-x-2 truncate", className)}
+        className={cn("flex items-center space-x-2 truncate", className)}
         {...props}
         data-state="loading"
         aria-live="polite"
@@ -57,7 +57,7 @@ export function AudioTrackInfo({ className, ...props }: AudioTrackInfoProps) {
     return (
       <div
         className={cn(
-          "text-destructive flex w-full items-center space-x-2 truncate",
+          "text-destructive flex items-center space-x-2 truncate",
           className,
         )}
         {...props}
@@ -78,7 +78,7 @@ export function AudioTrackInfo({ className, ...props }: AudioTrackInfoProps) {
   if (!currentMusic) {
     return (
       <div
-        className={cn("flex w-full items-center space-x-2 truncate", className)}
+        className={cn("flex items-center space-x-2 truncate", className)}
         {...props}
         data-state="empty"
       >
@@ -96,7 +96,7 @@ export function AudioTrackInfo({ className, ...props }: AudioTrackInfoProps) {
 
   return (
     <div
-      className={cn("flex w-full items-center space-x-2 truncate", className)}
+      className={cn("flex items-center space-x-2 truncate", className)}
       itemScope={itemScope}
       itemType={itemType}
       {...props}

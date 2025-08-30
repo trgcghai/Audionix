@@ -16,6 +16,7 @@ import {
   useGetTrackByArtistQuery,
   useGetTrackByIdQuery,
 } from "@/services/tracks/trackApi";
+import { User2 } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useMemo, useState } from "react";
@@ -26,12 +27,9 @@ const DetailTrackPage = () => {
   const { handleAddTracksToLiked, handleRemoveTracksFromLiked } =
     usePlaylistAction();
   const { id } = useParams<{ id: string }>();
-  const { data: likedData } = useCheckTracksInLikedQuery(
-    [id, "68a8400db134bde81be84757"],
-    {
-      skip: !id,
-    },
-  );
+  const { data: likedData } = useCheckTracksInLikedQuery([id], {
+    skip: !id,
+  });
   const {
     data: trackData,
     isError: isTrackError,
@@ -94,13 +92,19 @@ const DetailTrackPage = () => {
       />
 
       <div className="mt-8 flex items-center gap-2">
-        <Image
-          src={"/audionix_logo_short.png"}
-          alt=""
-          width={70}
-          height={70}
-          className={"rounded-full"}
-        />
+        {track.artist.cover_images.length > 0 ? (
+          <Image
+            src={"/audionix_logo_short.png"}
+            alt=""
+            width={70}
+            height={70}
+            className={"rounded-full"}
+          />
+        ) : (
+          <div className="bg-muted flex h-[55px] w-[55px] items-center justify-center rounded-full">
+            <User2 className="h-5 w-5" />
+          </div>
+        )}
         <div className="">
           <p className="text-muted-foreground text-sm capitalize">Artist</p>
           <p className="text-base capitalize">{track?.artist.name || "-"}</p>

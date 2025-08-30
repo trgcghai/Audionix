@@ -1,4 +1,3 @@
-import { Volume } from "@/app/enums";
 import { useAppSelector } from "@/hooks/redux";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -34,25 +33,19 @@ type LoopMode = "off" | "all" | "one";
 interface QueueDrawerState {
   isOpen: boolean;
   queue: PlayingTrack[];
-  originalQueue: PlayingTrack[];
-  currentTrack: PlayingTrack | null;
+  currentTrackIndex: number;
   loopMode: LoopMode;
   shuffle: boolean;
   isPlaying: boolean;
-  volume: number;
-  muted: boolean;
 }
 
 const initialState: QueueDrawerState = {
   isOpen: false,
   queue: [],
-  originalQueue: [],
-  currentTrack: null,
+  currentTrackIndex: 0,
   loopMode: "off",
   shuffle: false,
   isPlaying: false,
-  volume: Volume.DEFAULT,
-  muted: false,
 };
 
 export const queueDrawerSlice = createSlice({
@@ -73,71 +66,35 @@ export const queueDrawerSlice = createSlice({
     // Queue
     addTracksToQueue: (
       state,
-      action: PayloadAction<{ tracks: PlayingTrack[]; clearQueue?: boolean }>,
+      action: PayloadAction<PlayingTrack | PlayingTrack[]>,
     ) => {
-      const validTracks = action.payload.tracks.filter(
-        (track) => track._id && track.file?.url, // Basic validation
-      );
-      if (validTracks.length === 0) return;
-
-      let newTracks: PlayingTrack[] = [];
-      if (state.queue && state.queue.length > 0) {
-        newTracks = action.payload.tracks.filter(
-          (track) => !state.queue.some((t) => t._id === track._id), // Avoid duplicates
-        );
+      if (Array.isArray(action.payload)) {
+        state.queue.push(...action.payload);
       } else {
-        newTracks = action.payload.tracks;
-      }
-      if (action.payload.clearQueue) {
-        state.queue = newTracks;
-        state.currentTrack = newTracks[0];
-      } else {
-        state.queue.push(...newTracks);
-        if (!state.currentTrack) {
-          state.currentTrack = newTracks[0];
-        }
+        state.queue.push(action.payload);
       }
     },
 
     removeTrackFromQueue: (state, action: PayloadAction<string>) => {
+      if (state.queue.length === 0) return;
+
       state.queue = state.queue.filter((t) => t._id !== action.payload);
-      if (state.currentTrack?._id === action.payload) {
-        state.currentTrack = state.queue[0] || null;
-      }
     },
 
     clearQueue: (state) => {
       state.queue = [];
-      state.currentTrack = null;
+      state.currentTrackIndex = -1;
     },
 
     setCurrentTrack: (state, action: PayloadAction<PlayingTrack>) => {
-      state.currentTrack = action.payload;
+      state.currentTrackIndex = state.queue.findIndex(
+        (track) => track._id === action.payload._id,
+      );
     },
 
     // Shuffle
     toggleShuffle: (state) => {
       state.shuffle = !state.shuffle;
-      if (state.shuffle) {
-        // Save original queue if not already saved
-        if (state.originalQueue.length === 0) {
-          state.originalQueue = [...state.queue];
-        }
-        // Create shuffled queue
-        const shuffled = [...state.queue].sort(() => Math.random() - 0.5);
-        state.queue = shuffled;
-        if (state.currentTrack) {
-          // Ensure current track is in the shuffled queue
-          state.queue = [
-            state.currentTrack,
-            ...shuffled.filter((t) => t._id !== state.currentTrack?._id),
-          ];
-        }
-      } else {
-        // Restore original queue
-        state.queue = [...state.originalQueue];
-        state.originalQueue = []; // Reset original queue
-      }
     },
 
     // Loop
@@ -149,68 +106,76 @@ export const queueDrawerSlice = createSlice({
 
     // Play control
     playNext: (state) => {
-      if (!state.currentTrack) return;
+      if (state.queue.length === 0) return;
 
-      const index = state.queue.findIndex(
-        (t) => t._id === state.currentTrack?._id,
-      );
+      console.log(state.loopMode);
 
-      if (state.loopMode === "one") {
-        return;
-      }
+      if (state.loopMode === "one") return;
 
-      if (state.shuffle) {
-        const remaining = state.queue.filter(
-          (t) => t._id !== state.currentTrack?._id,
-        );
-        if (remaining.length > 0) {
-          const random =
-            remaining[Math.floor(Math.random() * remaining.length)];
-          state.currentTrack = random;
-        } else if (state.loopMode === "all") {
-          state.queue = [...state.originalQueue].sort(
-            () => Math.random() - 0.5,
-          );
-          state.currentTrack = state.queue[0] || null;
+      if (state.loopMode === "off") {
+        if (state.currentTrackIndex == state.queue.length - 1) {
+          state.currentTrackIndex = -1;
+          state.isPlaying = false;
         } else {
-          state.currentTrack = null;
+          state.currentTrackIndex++;
         }
+
         return;
       }
 
-      if (index >= 0 && index < state.queue.length - 1) {
-        state.currentTrack = state.queue[index + 1];
-      } else if (state.loopMode === "all") {
-        state.currentTrack = state.queue[0] || null;
-      } else {
-        state.currentTrack = null;
+      if (state.loopMode === "all") {
+        if (state.shuffle) {
+          let randInt = -1;
+          do {
+            randInt = Math.floor(Math.random() * state.queue.length);
+          } while (randInt === state.currentTrackIndex);
+          state.currentTrackIndex = randInt;
+        } else {
+          if (state.queue.length === 1) return;
+
+          if (state.currentTrackIndex == state.queue.length - 1) {
+            state.currentTrackIndex = 0;
+          } else {
+            state.currentTrackIndex++;
+          }
+        }
       }
     },
 
     playPrevious: (state) => {
-      if (!state.currentTrack) return;
+      if (state.queue.length === 0) return;
 
-      const index = state.queue.findIndex(
-        (t) => t._id === state.currentTrack?._id,
-      );
-      if (index > 0) {
-        state.currentTrack = state.queue[index - 1];
-      } else if (state.loopMode === "all") {
-        state.currentTrack = state.queue[state.queue.length - 1]; // quay về bài cuối
+      if (state.loopMode === "one") return;
+
+      if (state.loopMode === "off") {
+        if (state.currentTrackIndex == 0) return;
+
+        state.currentTrackIndex--;
+        return;
+      }
+
+      if (state.loopMode === "all") {
+        if (state.shuffle) {
+          let randInt = -1;
+          do {
+            randInt = Math.floor(Math.random() * state.queue.length);
+          } while (randInt === state.currentTrackIndex);
+          state.currentTrackIndex = randInt;
+        } else {
+          if (state.queue.length === 1) return;
+
+          if (state.currentTrackIndex == 0) {
+            state.currentTrackIndex = state.queue.length - 1;
+          } else {
+            state.currentTrackIndex--;
+          }
+        }
       }
     },
 
     // player actions
     setIsPlaying: (state, action: PayloadAction<boolean>) => {
       state.isPlaying = action.payload;
-    },
-
-    setVolume: (state, action: PayloadAction<number>) => {
-      state.volume = action.payload;
-    },
-
-    setMuted: (state, action: PayloadAction<boolean>) => {
-      state.muted = action.payload;
     },
   },
 });
@@ -228,8 +193,6 @@ export const {
   setCurrentTrack,
   toggleShuffle,
   setIsPlaying,
-  setVolume,
-  setMuted,
 } = queueDrawerSlice.actions;
 
 export const useQueueDrawer = () =>

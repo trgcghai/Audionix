@@ -1,11 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/libs/utils";
 import { useAudio } from "@omi3/audio/react";
@@ -18,12 +14,11 @@ type AudioVolumeProps = React.ComponentProps<typeof DropdownMenu> & {
   sliderProps?: React.ComponentProps<typeof Slider>;
 };
 
-export function AudioVolume({
+export const AudioVolume = ({
   className,
   triggerClassName,
   sliderProps,
-  ...props
-}: AudioVolumeProps) {
+}: AudioVolumeProps) => {
   const { volume, isMuted, isEngineInitialized, setVolume } = useAudio();
 
   const handleVolumeChange = useCallback(
@@ -52,45 +47,41 @@ export function AudioVolume({
   const volumePercentage = Math.round((isMuted ? 0 : volume) * 100);
   const currentVolume = isMuted ? 0 : volume;
   const isDisabled = !isEngineInitialized;
+
+  const toggleMuted = useCallback(() => {
+    if (isEngineInitialized) {
+      setVolume(isMuted ? currentVolume : 0);
+    }
+  }, [isEngineInitialized, isMuted, currentVolume, setVolume]);
+
   return (
-    <DropdownMenu {...props}>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className={cn("hidden md:flex", triggerClassName)}
-          disabled={isDisabled}
-          aria-label={`Volume Control: ${volumePercentage}%${isMuted ? " (Muted)" : ""}`}
-          data-state={isMuted ? "muted" : volume === 0 ? "zero" : "active"}
-        >
-          {getVolumeIcon()}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        side="top"
-        align="center"
-        className={cn("w-48 p-3", className)}
-        onCloseAutoFocus={(e) => e.preventDefault()}
+    <div
+      className="flex items-center space-x-2"
+      data-state={isDisabled ? "disabled" : "enabled"}
+    >
+      <Button
+        variant="ghost"
+        size="icon"
+        className={cn("hidden md:flex", triggerClassName)}
+        disabled={isDisabled}
+        onClick={toggleMuted}
+        aria-label={`Volume Control: ${volumePercentage}%${isMuted ? " (Muted)" : ""}`}
+        data-state={isMuted ? "muted" : volume === 0 ? "zero" : "active"}
       >
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-muted-foreground text-sm">Volume</span>
-            <span className="text-sm font-medium tabular-nums">
-              {volumePercentage}%
-            </span>
-          </div>
-          <Slider
-            value={[currentVolume]}
-            max={1}
-            step={0.01}
-            onValueChange={handleVolumeChange}
-            disabled={isDisabled}
-            className={cn("w-full", sliderProps?.className)}
-            aria-label="Volume Control Slider"
-            {...sliderProps}
-          />
-        </div>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        {getVolumeIcon()}
+      </Button>
+      <div className={cn("flex items-center gap-2", className)}>
+        <Slider
+          value={[currentVolume]}
+          max={1}
+          step={0.01}
+          onValueChange={handleVolumeChange}
+          disabled={isDisabled}
+          className={cn("w-20", sliderProps?.className)}
+          aria-label="Volume Control Slider"
+          {...sliderProps}
+        />
+      </div>
+    </div>
   );
-}
+};

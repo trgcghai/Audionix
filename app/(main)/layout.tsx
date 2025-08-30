@@ -13,6 +13,7 @@ import { useGetMyFollowedArtistsQuery } from "@/services/artists/artistApi";
 import { useGetMyPlaylistsQuery } from "@/services/playlists/playlistApi";
 import { useQueueDrawer } from "@/store/slices/queueDrawerSlice";
 import { useUserSlice } from "@/store/slices/userSlice";
+import { AudioProvider } from "@omi3/audio/react";
 
 const Layout = ({
   children,
@@ -82,7 +83,7 @@ const Layout = ({
         )}
       >
         <ScrollArea className="bg-card text-card-foreground h-full rounded-xl border p-4 shadow-sm">
-          {children}
+          <AudioProvider>{children}</AudioProvider>
 
           <Separator className="my-12" />
 

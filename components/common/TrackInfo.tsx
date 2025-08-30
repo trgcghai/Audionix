@@ -1,18 +1,24 @@
 import { Button } from "@/components/ui/button";
+import { useAppDispatch } from "@/hooks/redux";
 import usePlaylistAction from "@/hooks/usePlaylistAction";
 import { cn } from "@/libs/utils";
 import { useCheckTracksInLikedQuery } from "@/services/playlists/playlistApi";
-import { PlayingTrack } from "@/store/slices/queueDrawerSlice";
-import { Heart } from "lucide-react";
+import {
+  PlayingTrack,
+  removeTrackFromQueue,
+} from "@/store/slices/queueDrawerSlice";
+import { Heart, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 const TrackInfo = ({
   track,
   active,
+  showRemove = false,
 }: {
   track: PlayingTrack;
   active?: boolean;
+  showRemove?: boolean;
 }) => {
   const { data: likedData } = useCheckTracksInLikedQuery(
     track?._id ? [track._id] : [],
@@ -20,6 +26,7 @@ const TrackInfo = ({
       skip: !track || !track._id,
     },
   );
+  const dispatch = useAppDispatch();
 
   const { handleAddTracksToLiked, handleRemoveTracksFromLiked } =
     usePlaylistAction();
@@ -32,6 +39,10 @@ const TrackInfo = ({
     } else {
       handleAddTracksToLiked([track._id]);
     }
+  };
+
+  const handleRemoveFromQueue = () => {
+    dispatch(removeTrackFromQueue(track._id));
   };
 
   if (!track) {
@@ -62,17 +73,29 @@ const TrackInfo = ({
         </div>
       </Link>
 
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={handleLikeToggle}
-        className="ml-2"
-      >
-        <Heart
-          className={`h-4 w-4 ${isLiked ? "text-primary" : ""}`}
-          fill={isLiked ? "var(--primary)" : "none"}
-        />
-      </Button>
+      <div className="flex items-center gap-2">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleLikeToggle}
+          className="ml-2"
+        >
+          <Heart
+            className={`h-4 w-4 ${isLiked ? "text-primary" : ""}`}
+            fill={isLiked ? "var(--primary)" : "none"}
+          />
+        </Button>
+        {showRemove && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleRemoveFromQueue}
+            className="ml-2"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

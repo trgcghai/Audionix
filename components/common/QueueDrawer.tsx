@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAppDispatch } from "@/hooks/redux";
-import { useAudioPlayer } from "@/hooks/usePlayer";
+import { usePlayer } from "@/hooks/usePlayer";
 import {
   closeQueueDrawer,
   useQueueDrawer,
@@ -15,7 +15,7 @@ import TrackInfo from "./TrackInfo";
 const QueueDrawer = () => {
   const dispatch = useAppDispatch();
   const { queue } = useQueueDrawer();
-  const { currentTrack } = useAudioPlayer();
+  const { currentTrack } = usePlayer();
 
   const handleCloseDrawer = () => {
     dispatch(closeQueueDrawer());
@@ -60,7 +60,7 @@ const QueueDrawer = () => {
             <ScrollArea className="h-[530px] overflow-y-auto">
               <div className="space-y-6">
                 {nextPlayings.map((track) => (
-                  <TrackInfo key={track._id} track={track} />
+                  <TrackInfo key={track._id} track={track} showRemove />
                 ))}
               </div>
             </ScrollArea>

@@ -92,6 +92,10 @@ export const queueDrawerSlice = createSlice({
       );
     },
 
+    setCurrentTrackIndex: (state, action: PayloadAction<number>) => {
+      state.currentTrackIndex = action.payload;
+    },
+
     // Shuffle
     toggleShuffle: (state) => {
       state.shuffle = !state.shuffle;
@@ -107,8 +111,6 @@ export const queueDrawerSlice = createSlice({
     // Play control
     playNext: (state) => {
       if (state.queue.length === 0) return;
-
-      console.log(state.loopMode);
 
       if (state.loopMode === "one") return;
 
@@ -191,6 +193,7 @@ export const {
   playPrevious,
   removeTrackFromQueue,
   setCurrentTrack,
+  setCurrentTrackIndex,
   toggleShuffle,
   setIsPlaying,
 } = queueDrawerSlice.actions;

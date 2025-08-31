@@ -97,3 +97,5 @@ export const DEFAULT_GENRES: Option[] = [
     label: "Indie",
   },
 ];
+
+export const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB

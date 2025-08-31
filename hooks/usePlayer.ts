@@ -4,7 +4,7 @@ import {
   addTracksToQueue,
   clearQueue,
   PlayingTrack,
-  setCurrentTrack,
+  setCurrentTrackIndex,
   setIsPlaying,
   useQueueDrawer,
 } from "@/store/slices/queueDrawerSlice";
@@ -32,8 +32,7 @@ export const usePlayer = () => {
   const dispatch = useAppDispatch();
   const { currentTrackIndex, loopMode, queue, shuffle } = useQueueDrawer();
 
-  const currentTrack =
-    queue && currentTrackIndex ? queue[currentTrackIndex] : null;
+  const currentTrack = queue[currentTrackIndex];
   const hasNext =
     shuffle ||
     loopMode === "all" ||
@@ -46,7 +45,7 @@ export const usePlayer = () => {
     const playingTrack = convertToPlayingTrack(track);
     dispatch(clearQueue());
     dispatch(addTracksToQueue(playingTrack));
-    dispatch(setCurrentTrack(playingTrack));
+    dispatch(setCurrentTrackIndex(0));
     dispatch(setIsPlaying(true));
   };
 
@@ -57,7 +56,7 @@ export const usePlayer = () => {
     const playingTracks = tracks.map(convertToPlayingTrack);
     dispatch(clearQueue());
     dispatch(addTracksToQueue(playingTracks));
-    dispatch(setCurrentTrack(playingTracks[0]));
+    dispatch(setCurrentTrackIndex(0));
     dispatch(setIsPlaying(true));
   };
 

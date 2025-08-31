@@ -61,7 +61,7 @@ const ArtistHeroSection = ({
 const PlaylistHeroSection = ({ playlist }: { playlist: Playlist }) => {
   return (
     <Dialog>
-      <DialogTrigger className="block">
+      <DialogTrigger className="w-full">
         <BaseHeroSection
           title={playlist?.title || ""}
           coverUrl={playlist?.cover_images[0]?.url || ""}

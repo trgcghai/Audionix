@@ -73,7 +73,7 @@ const MediaControl = ({
               <Button
                 variant="ghost"
                 size="icon"
-                disabled={!currentTrack || hasOneItem}
+                disabled={hasOneItem}
                 onClick={handleToggleShuffle}
               >
                 <Shuffle
@@ -90,7 +90,7 @@ const MediaControl = ({
         <Button
           variant="ghost"
           size="icon"
-          disabled={!currentTrack || !hasPrevious}
+          disabled={!hasPrevious}
           onClick={handlePreviousTrack}
         >
           <SkipBack className="h-5 w-5" />
@@ -113,7 +113,7 @@ const MediaControl = ({
         <Button
           variant="ghost"
           size="icon"
-          disabled={!currentTrack || !hasNext}
+          disabled={!hasNext}
           onClick={handleNextTrack}
         >
           <SkipForward className="h-5 w-5" />

@@ -2,9 +2,9 @@ import useTrackManagement from "@/app/(artist-portal)/artist-tracks/hooks/useTra
 import { DEFAULT_GENRES, TrackStatusValues } from "@/app/constant";
 import { mockAlbums } from "@/app/sampleData";
 import MultipleValueFilter from "@/components/common/filters/MultipleValueFilter";
+import TitleFilter from "@/components/common/filters/TitleFilter";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/libs/utils";
-import TitleFilter from "../../../../../../components/common/filters/TitleFilter";
 
 interface TableFiltersProps {
   className?: string;
@@ -32,13 +32,13 @@ const TableFilters = ({
   } = useTrackManagement();
   return (
     <>
-      <div className={cn("space-y-4", className)}>
+      <div className={cn("", className)}>
         <TitleFilter
           value={debounceTitle}
           onChange={setTitleFilter}
           className={cn(itemClassName)}
           inputClassName={cn(inputClassName)}
-          labelClassName={cn(labelClassName)}
+          labelClassName={cn(labelClassName, "w-1/8")}
         />
 
         <MultipleValueFilter
@@ -66,7 +66,7 @@ const TableFilters = ({
           onChange={setStatusFilter}
           className={cn(itemClassName)}
           inputClassName={cn(inputClassName)}
-          labelClassName={cn(labelClassName, "w-28")}
+          labelClassName={cn(labelClassName)}
         />
 
         <MultipleValueFilter

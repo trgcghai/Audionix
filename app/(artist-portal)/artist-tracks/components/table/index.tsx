@@ -79,7 +79,7 @@ export function TrackTable<TData, TValue>({
           className="grid grid-cols-2 gap-x-12 gap-y-6"
           itemClassName="flex items-center gap-4 mb-0"
           inputClassName="flex-1 w-full rounded-full"
-          labelClassName="text-base w-1/8 capitalize"
+          labelClassName="text-base w-1/7 capitalize"
         />
       )}
       <div

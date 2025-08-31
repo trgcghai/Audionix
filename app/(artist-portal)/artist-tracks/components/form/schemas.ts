@@ -1,3 +1,4 @@
+import { MAX_FILE_SIZE } from "@/app/constant";
 import z from "zod";
 
 const optionSchema = z.object({
@@ -15,21 +16,23 @@ export const createTrackSchema = z.object({
   cover_image: z
     .array(
       z
-        .instanceof(File, { message: "Cover image is required" })
-        .refine((file) => file.size < 10 * 1024 * 1024, {
+        .instanceof(File, { message: "Cover image must be a valid file" })
+        .refine((file) => file.size <= MAX_FILE_SIZE, {
           message: "Cover image must be less than 10MB",
         }),
+      { message: "Cover image is required" },
     )
-    .min(1, "Cover image is required"),
+    .min(1, { message: "Cover image is required" }),
   audio: z
     .array(
       z
-        .instanceof(File, { message: "Audio file is required" })
-        .refine((file) => file.size < 10 * 1024 * 1024, {
+        .instanceof(File, { message: "Audio file must be a valid file" })
+        .refine((file) => file.size <= MAX_FILE_SIZE, {
           message: "Audio file must be less than 10MB",
         }),
+      { message: "Audio file is required" },
     )
-    .min(1, "Audio file is required"),
+    .min(1, { message: "Audio file is required" }),
   genres: z
     .array(optionSchema, { message: "At least one genre is required" })
     .min(1, "At least one genre is required"),

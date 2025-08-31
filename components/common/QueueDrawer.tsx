@@ -14,17 +14,24 @@ import TrackInfo from "./TrackInfo";
 
 const QueueDrawer = () => {
   const dispatch = useAppDispatch();
-  const { queue } = useQueueDrawer();
+  const { queue, currentTrackIndex, loopMode } = useQueueDrawer();
   const { currentTrack } = usePlayer();
 
   const handleCloseDrawer = () => {
     dispatch(closeQueueDrawer());
   };
 
-  const nextPlayings = useMemo(
-    () => queue.filter((track) => track._id !== currentTrack?._id),
-    [currentTrack, queue],
-  );
+  const nextPlayings = useMemo(() => {
+    if (!queue || queue.length === 0) return [];
+
+    const result = queue.slice(currentTrackIndex + 1);
+
+    if (loopMode === "all") {
+      result.push(...queue.slice(0, currentTrackIndex + 1));
+    }
+
+    return result;
+  }, [currentTrackIndex, loopMode, queue]);
 
   const hasNextPlayings = useMemo(
     () => nextPlayings && nextPlayings.length > 0,

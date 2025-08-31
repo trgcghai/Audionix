@@ -36,7 +36,7 @@ const BaseHeroSection = ({
       ) : (
         <div
           className={cn(
-            "bg-muted flex aspect-square w-1/2 items-center justify-center",
+            "bg-muted flex aspect-square items-center w-1/5 justify-center",
             isRoundImage ? "rounded-full" : "rounded-lg",
           )}
         >

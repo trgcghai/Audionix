@@ -18,7 +18,7 @@ const PlaylistCard = ({ playlist }: { playlist: Playlist }) => {
           alt=""
           width={200}
           height={200}
-          className="aspect-square rounded-lg object-cover"
+          className="aspect-square rounded-lg object-cover w-full h-full"
         />
       ) : (
         <div className="bg-muted flex aspect-square w-full items-center justify-center rounded-lg">
@@ -45,7 +45,7 @@ const AlbumCard = ({ album }: { album: Album }) => {
           alt=""
           width={200}
           height={200}
-          className="aspect-square rounded-lg object-cover"
+          className="aspect-square rounded-lg object-cover w-full h-full"
         />
       ) : (
         <div className="bg-muted flex aspect-square w-full items-center justify-center rounded-lg">
@@ -72,7 +72,7 @@ const TrackCard = ({ track }: { track: Track }) => {
           alt=""
           width={200}
           height={200}
-          className="aspect-square rounded-lg object-cover"
+          className="aspect-square rounded-lg object-cover w-full h-full"
         />
       ) : (
         <div className="bg-muted flex aspect-square w-full items-center justify-center rounded-lg">

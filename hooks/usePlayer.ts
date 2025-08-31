@@ -32,11 +32,14 @@ export const usePlayer = () => {
   const dispatch = useAppDispatch();
   const { currentTrackIndex, loopMode, queue, shuffle } = useQueueDrawer();
 
-  const currentTrack = queue[currentTrackIndex];
+  const currentTrack =
+    queue && currentTrackIndex ? queue[currentTrackIndex] : null;
   const hasNext =
-    shuffle || loopMode === "all" || currentTrackIndex < queue.length - 1;
+    shuffle ||
+    loopMode === "all" ||
+    currentTrackIndex < (queue ? queue.length : 0) - 1;
   const hasPrevious = shuffle || loopMode === "all" || currentTrackIndex > 0;
-  const hasOneItem = queue.length === 1;
+  const hasOneItem = (queue ? queue.length : 0) === 1;
 
   // Play a single track
   const playTrack = (track: Track) => {

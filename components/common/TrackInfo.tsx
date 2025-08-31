@@ -16,7 +16,7 @@ const TrackInfo = ({
   active,
   showRemove = false,
 }: {
-  track: PlayingTrack;
+  track: PlayingTrack | null;
   active?: boolean;
   showRemove?: boolean;
 }) => {
@@ -35,14 +35,14 @@ const TrackInfo = ({
 
   const handleLikeToggle = () => {
     if (isLiked) {
-      handleRemoveTracksFromLiked([track._id]);
+      handleRemoveTracksFromLiked([track?._id || ""]);
     } else {
-      handleAddTracksToLiked([track._id]);
+      handleAddTracksToLiked([track?._id || ""]);
     }
   };
 
   const handleRemoveFromQueue = () => {
-    dispatch(removeTrackFromQueue(track._id));
+    dispatch(removeTrackFromQueue(track?._id || ""));
   };
 
   if (!track) {

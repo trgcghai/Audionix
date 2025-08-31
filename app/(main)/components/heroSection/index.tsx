@@ -80,7 +80,7 @@ const PlaylistHeroSection = ({ playlist }: { playlist: Playlist }) => {
                 <p>
                   {formatTotalTime(
                     playlist.tracks.reduce(
-                      (prev, curr) => prev + parseInt(curr.duration_ms),
+                      (prev, curr) => prev + curr.duration_ms,
                       0,
                     ),
                   )}
@@ -153,8 +153,7 @@ const AlbumHeroSection = ({ album }: { album: Album }) => {
             <p>
               {formatTotalTime(
                 album.tracks.reduce(
-                  (prev: number, curr: EmbbedTrack) =>
-                    prev + parseInt(curr.duration_ms),
+                  (prev: number, curr: EmbbedTrack) => prev + curr.duration_ms,
                   0,
                 ),
               )}

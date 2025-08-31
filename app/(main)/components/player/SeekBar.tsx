@@ -11,7 +11,7 @@ const SeekBar = ({
   currentTime: number;
 }) => {
   const { currentTrack } = usePlayer();
-  const duration = currentTrack?.duration_ms / 1000;
+  const duration = currentTrack ? currentTrack?.duration_ms / 1000 : 0;
 
   const [isDragging, setIsDragging] = useState(false);
   const [internalTime, setInternalTime] = useState(currentTime);

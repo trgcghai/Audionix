@@ -55,7 +55,7 @@ const Layout = ({
             isError: isErrorPlaylists,
             error:
               (errorPlaylists as ApiErrorResponse)?.message ||
-              "Failed to load your playlists",
+              "Failed to load your library",
           }}
           albumData={{
             items: followedAlbums?.data?.albums || [],
@@ -63,7 +63,7 @@ const Layout = ({
             isError: isErrorFollowed,
             error:
               (errorFollowed as ApiErrorResponse)?.message ||
-              "Failed to load your followed albums",
+              "Failed to load your library",
           }}
           artistData={{
             items: followedArtists?.data?.artists || [],
@@ -71,7 +71,7 @@ const Layout = ({
             isError: isErrorFollowedArtists,
             error:
               (errorFollowedArtists as ApiErrorResponse)?.message ||
-              "Failed to load your followed artists",
+              "Failed to load your library",
           }}
         />
       </div>

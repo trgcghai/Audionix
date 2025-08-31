@@ -29,14 +29,14 @@ const BaseHeroSection = ({
           width={220}
           height={220}
           className={cn(
-            "aspect-square object-cover",
+            "aspect-square object-cover w-1/5",
             isRoundImage ? "rounded-full" : "rounded-lg",
           )}
         />
       ) : (
         <div
           className={cn(
-            "bg-muted flex h-[220px] w-[220px] items-center justify-center",
+            "bg-muted flex aspect-square w-1/2 items-center justify-center",
             isRoundImage ? "rounded-full" : "rounded-lg",
           )}
         >

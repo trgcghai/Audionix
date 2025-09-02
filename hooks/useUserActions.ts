@@ -1,9 +1,11 @@
+import { ProfileFormValues } from "@/app/(user)/profile/components/form/schema";
 import useToast from "@/hooks/useToast";
 import {
   useFollowAlbumMutation,
   useFollowArtistMutation,
   useUnfollowAlbumMutation,
   useUnfollowArtistMutation,
+  useUpdateUserProfileMutation,
 } from "@/services/users/userApi";
 
 const useUserActions = () => {
@@ -11,7 +13,17 @@ const useUserActions = () => {
   const [unfollowArtist, unfollowArtistState] = useUnfollowArtistMutation();
   const [followAlbum, followAlbumState] = useFollowAlbumMutation();
   const [unfollowAlbum, unfollowAlbumState] = useUnfollowAlbumMutation();
+  const [updateProfile, updateProfileState] = useUpdateUserProfileMutation();
   const { showErrorToast, showSuccessToast } = useToast();
+
+  const transformToPayload = (formData: ProfileFormValues) => {
+    const payload = new FormData();
+    payload.append("username", formData.username);
+    if (formData.avatar) {
+      payload.append("avatar", formData.avatar);
+    }
+    return payload;
+  };
 
   const handleFollowArtist = async (artistId: string) => {
     try {
@@ -53,6 +65,17 @@ const useUserActions = () => {
     }
   };
 
+  const handleUpdateProfile = async (formData: ProfileFormValues) => {
+    try {
+      const payload = transformToPayload(formData);
+      await updateProfile(payload).unwrap();
+      showSuccessToast("Successfully updated profile");
+    } catch (error) {
+      console.error("Failed to update profile:", error);
+      showErrorToast("Failed to update profile. Please try again later.");
+    }
+  };
+
   return {
     handleFollowArtist,
     followArtistState,
@@ -62,6 +85,8 @@ const useUserActions = () => {
     followAlbumState,
     handleUnfollowAlbum,
     unfollowAlbumState,
+    handleUpdateProfile,
+    updateProfileState,
   };
 };
 export default useUserActions;

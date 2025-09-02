@@ -165,3 +165,19 @@ export type Album = {
   updatedAt: string;
   __v: number;
 };
+
+export type User = {
+  _id: string;
+  email: string;
+  username: string;
+  avatar: {
+    url: string;
+    key: string;
+  }[];
+  liked_songs: string;
+  followed_artists: string[];
+  followed_albums: string[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};

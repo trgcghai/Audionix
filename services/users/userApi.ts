@@ -2,6 +2,7 @@ import { api } from "@/services/api";
 import {
   CheckUserFollowAlbumResponse,
   CheckUserFollowArtistResponse,
+  UpdateUserResponse,
 } from "@/services/users/type";
 
 const userApi = api.injectEndpoints({
@@ -84,6 +85,16 @@ const userApi = api.injectEndpoints({
       },
       providesTags: ["Albums"],
     }),
+    updateUserProfile: builder.mutation<UpdateUserResponse, FormData>({
+      query: (formData) => {
+        return {
+          url: `/users/me`,
+          method: "PUT",
+          data: formData,
+        };
+      },
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
@@ -94,4 +105,5 @@ export const {
   useUnfollowAlbumMutation,
   useCheckIfUserIsFollowingArtistsQuery,
   useCheckIfUserIsFollowingAlbumsQuery,
+  useUpdateUserProfileMutation,
 } = userApi;

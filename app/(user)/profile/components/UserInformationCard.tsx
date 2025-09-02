@@ -1,4 +1,7 @@
+"use client";
 import UserForm from "@/app/(user)/profile/components/form/UserForm";
+import { ApiErrorResponse } from "@/app/types/api";
+import ErrorMessage from "@/components/common/ErrorMessage";
 import {
   Card,
   CardContent,
@@ -6,8 +9,28 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useGetMyProfileQuery } from "@/services/users/userApi";
+
+const UserFormSkeleton = () => (
+  <div className="space-y-6">
+    {/* Avatar skeleton */}
+    <div className="flex items-center gap-4">
+      <Skeleton className="h-20 w-20 rounded-full" />
+      <div className="flex-1 space-y-2">
+        <Skeleton className="h-4 w-1/2" />
+        <Skeleton className="h-4 w-1/3" />
+      </div>
+    </div>
+    {/* Form fields skeleton */}
+    <Skeleton className="h-10 w-full" />
+    <Skeleton className="h-10 w-full" />
+    <Skeleton className="h-10 w-1/2" />
+  </div>
+);
 
 const UserInformationCard = () => {
+  const { data, isLoading, isError, error, isSuccess } = useGetMyProfileQuery();
   return (
     <Card className="bg-card border-border">
       <CardHeader>
@@ -19,7 +42,18 @@ const UserInformationCard = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        <UserForm />
+        {isError && (
+          <ErrorMessage
+            message={
+              (error as ApiErrorResponse).message ||
+              "An error occurred while fetching user data."
+            }
+          />
+        )}
+
+        {isLoading && <UserFormSkeleton />}
+
+        {isSuccess && <UserForm user={data?.data.item} />}
       </CardContent>
     </Card>
   );

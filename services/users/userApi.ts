@@ -2,6 +2,7 @@ import { api } from "@/services/api";
 import {
   CheckUserFollowAlbumResponse,
   CheckUserFollowArtistResponse,
+  GetMyProfileResponse,
   UpdateUserResponse,
 } from "@/services/users/type";
 
@@ -95,6 +96,15 @@ const userApi = api.injectEndpoints({
       },
       invalidatesTags: ["User"],
     }),
+    getMyProfile: builder.query<GetMyProfileResponse, void>({
+      query: () => {
+        return {
+          url: `/users/me`,
+          method: "GET",
+        };
+      },
+      providesTags: ["User"],
+    }),
   }),
 });
 
@@ -106,4 +116,5 @@ export const {
   useCheckIfUserIsFollowingArtistsQuery,
   useCheckIfUserIsFollowingAlbumsQuery,
   useUpdateUserProfileMutation,
+  useGetMyProfileQuery,
 } = userApi;

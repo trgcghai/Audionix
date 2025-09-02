@@ -170,10 +170,14 @@ export type User = {
   _id: string;
   email: string;
   username: string;
-  avatar: {
-    url: string;
-    key: string;
-  }[];
+  avatar: [
+    {
+      url: string;
+      width: number;
+      height: number;
+      key: string;
+    },
+  ];
   liked_songs: string;
   followed_artists: string[];
   followed_albums: string[];

@@ -32,24 +32,26 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (
       state,
-      action: PayloadAction<{
-        email: string;
-        roles: string[];
-        username: string;
-        avatar?: [
-          {
-            url: string;
-            width: number;
-            height: number;
-            key: string;
-          },
-        ];
-      }>,
+      action: PayloadAction<
+        Partial<{
+          email: string;
+          roles: string[];
+          username: string;
+          avatar?: [
+            {
+              url: string;
+              width: number;
+              height: number;
+              key: string;
+            },
+          ];
+        }>
+      >,
     ) => {
       const { email, roles, username, avatar } = action.payload;
-      state.email = email;
-      state.roles = roles;
-      state.username = username;
+      if (email) state.email = email;
+      if (roles) state.roles = roles;
+      if (username) state.username = username;
       state.isAuthenticated = true;
       if (avatar) {
         state.avatar = avatar;

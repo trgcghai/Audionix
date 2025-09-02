@@ -1,4 +1,5 @@
 import { ProfileFormValues } from "@/app/(user)/profile/components/form/schema";
+import { useAppDispatch } from "@/hooks/redux";
 import useToast from "@/hooks/useToast";
 import {
   useFollowAlbumMutation,
@@ -7,6 +8,7 @@ import {
   useUnfollowArtistMutation,
   useUpdateUserProfileMutation,
 } from "@/services/users/userApi";
+import { setUser } from "@/store/slices/userSlice";
 
 const useUserActions = () => {
   const [followArtist, followArtistState] = useFollowArtistMutation();
@@ -15,6 +17,7 @@ const useUserActions = () => {
   const [unfollowAlbum, unfollowAlbumState] = useUnfollowAlbumMutation();
   const [updateProfile, updateProfileState] = useUpdateUserProfileMutation();
   const { showErrorToast, showSuccessToast } = useToast();
+  const dispatch = useAppDispatch();
 
   const transformToPayload = (formData: ProfileFormValues) => {
     const payload = new FormData();
@@ -68,8 +71,18 @@ const useUserActions = () => {
   const handleUpdateProfile = async (formData: ProfileFormValues) => {
     try {
       const payload = transformToPayload(formData);
-      await updateProfile(payload).unwrap();
+      const { data } = await updateProfile(payload).unwrap();
       showSuccessToast("Successfully updated profile");
+      const {
+        result: { avatar, email, username },
+      } = data;
+      dispatch(
+        setUser({
+          email,
+          username,
+          avatar,
+        }),
+      );
     } catch (error) {
       console.error("Failed to update profile:", error);
       showErrorToast("Failed to update profile. Please try again later.");

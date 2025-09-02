@@ -1,7 +1,7 @@
-"use client";
 import ImageUpload from "@/app/(user)/profile/components/form/ImageUpload";
 import useUserForm from "@/app/(user)/profile/hooks/useUserForm";
 import { ApiErrorResponse } from "@/app/types/api";
+import { User } from "@/app/types/model";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,17 +14,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useUserSlice } from "@/store/slices/userSlice";
 
-const UserForm = () => {
-  const user = useUserSlice();
+interface UserFormProps {
+  user: User;
+}
+
+const UserForm = ({ user }: UserFormProps) => {
   const { form, onSubmit, isError, error, isLoading } = useUserForm({
     user: {
       username: user.username,
     },
   });
-
-  console.log(isError);
 
   return (
     <Form {...form}>

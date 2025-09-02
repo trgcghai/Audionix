@@ -23,3 +23,7 @@ export type UpdateUserResponse = ApiResponse<{
   message: string;
   result: User;
 }>;
+
+export type GetMyProfileResponse = ApiResponse<{
+  item: User;
+}>;

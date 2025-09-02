@@ -58,7 +58,17 @@ const QueueDrawer = () => {
       <CardContent className="">
         <div className="mb-8">
           <p className="mb-2 text-lg font-semibold">Now playing</p>
-          <TrackInfo active={true} track={currentTrack!} />
+          {currentTrack ? (
+            <TrackInfo active={true} track={currentTrack} />
+          ) : (
+            <ErrorMessage
+              severity="info"
+              showIcon={false}
+              message="No track is currently playing"
+              variant="inline"
+              className="text-base"
+            />
+          )}
         </div>
 
         <div>

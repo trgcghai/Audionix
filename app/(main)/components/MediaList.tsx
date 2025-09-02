@@ -1,9 +1,16 @@
 import { Album, Artist, Playlist, Track } from "@/app/types/model";
 import ErrorMessage from "@/components/common/ErrorMessage";
-import LoaderSpin from "@/components/common/LoaderSpin";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Music, User2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+
+const MediaSkeleton = () => (
+  <div className="rounded-lg p-2">
+    <Skeleton className="aspect-square w-full h-full rounded-lg" />
+    <Skeleton className="mt-2 h-4 w-3/4" />
+  </div>
+);
 
 const PlaylistCard = ({ playlist }: { playlist: Playlist }) => {
   return (
@@ -99,7 +106,7 @@ const ArtistCard = ({ artist }: { artist: Artist }) => {
           alt=""
           width={200}
           height={200}
-          className="aspect-square rounded-full object-cover"
+          className="aspect-square rounded-full object-cover w-full h-full"
         />
       ) : (
         <div className="bg-muted flex aspect-square w-full items-center justify-center rounded-full">
@@ -135,8 +142,21 @@ const MediaList = ({
   isError,
   isLoading,
 }: MediaListProps): React.ReactNode => {
+  const skeletonCount = 7;
+
   if (isLoading) {
-    return <LoaderSpin />;
+    return (
+      <div className={className}>
+        <p className="px-2 text-lg font-semibold capitalize dark:text-white">
+          {title}
+        </p>
+        <div className="mt-1 grid grid-cols-7 gap-2">
+          {Array.from({ length: skeletonCount }).map((_, idx) => (
+            <MediaSkeleton key={idx} />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   if (isError) {

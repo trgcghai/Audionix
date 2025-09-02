@@ -69,7 +69,7 @@ export default function Home() {
           data={trackData.data.items}
           isLoading={trackLoading}
           isError={trackError}
-          error={(trackErrorData as ApiErrorResponse)?.message}
+          error={(trackErrorData as ApiErrorResponse)?.data?.message}
         />
       )}
       {latestAlbums && latestAlbums.data.items && (
@@ -78,7 +78,7 @@ export default function Home() {
           data={latestAlbums.data.items}
           isLoading={isLoadingLatest}
           isError={isErrorLatest}
-          error={(errorLatest as ApiErrorResponse)?.message}
+          error={(errorLatest as ApiErrorResponse)?.data?.message}
         />
       )}
       {popularArtists && popularArtists.data.items && (
@@ -87,7 +87,7 @@ export default function Home() {
           data={popularArtists.data.items}
           isLoading={isLoadingPopular}
           isError={isErrorPopular}
-          error={(errorPopular as ApiErrorResponse)?.message}
+          error={(errorPopular as ApiErrorResponse)?.data?.message}
         />
       )}
       {playlists && playlists.data.items && (
@@ -96,7 +96,7 @@ export default function Home() {
           data={playlists.data.items}
           isLoading={isLoadingPlaylists}
           isError={isErrorPlaylists}
-          error={(errorPlaylists as ApiErrorResponse)?.message}
+          error={(errorPlaylists as ApiErrorResponse)?.data?.message}
         />
       )}
       {followedAlbums && followedAlbums.data.albums && (
@@ -105,7 +105,7 @@ export default function Home() {
           data={followedAlbums.data.albums.slice(0, 7)}
           isLoading={isLoadingFollowed}
           isError={isErrorFollowed}
-          error={(errorFollowed as ApiErrorResponse)?.message}
+          error={(errorFollowed as ApiErrorResponse)?.data?.message}
         />
       )}
       {followedArtists && followedArtists.data.artists && (
@@ -114,7 +114,7 @@ export default function Home() {
           data={followedArtists.data.artists}
           isLoading={isLoadingFollowedArtists}
           isError={isErrorFollowedArtists}
-          error={(errorFollowedArtists as ApiErrorResponse)?.message}
+          error={(errorFollowedArtists as ApiErrorResponse)?.data?.message}
         />
       )}
     </div>

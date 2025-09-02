@@ -9,3 +9,8 @@ export type RegisterPayload = {
   email: string;
   password: string;
 };
+
+export type UpdatePasswordPayload = {
+  newPassword: string;
+  oldPassword: string;
+};

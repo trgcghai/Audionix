@@ -54,7 +54,7 @@ const Layout = ({
             isLoading: isLoadingPlaylists,
             isError: isErrorPlaylists,
             error:
-              (errorPlaylists as ApiErrorResponse)?.message ||
+              (errorPlaylists as ApiErrorResponse)?.data?.message ||
               "Failed to load your library",
           }}
           albumData={{
@@ -62,7 +62,7 @@ const Layout = ({
             isLoading: isLoadingFollowed,
             isError: isErrorFollowed,
             error:
-              (errorFollowed as ApiErrorResponse)?.message ||
+              (errorFollowed as ApiErrorResponse)?.data?.message ||
               "Failed to load your library",
           }}
           artistData={{
@@ -70,7 +70,7 @@ const Layout = ({
             isLoading: isLoadingFollowedArtists,
             isError: isErrorFollowedArtists,
             error:
-              (errorFollowedArtists as ApiErrorResponse)?.message ||
+              (errorFollowedArtists as ApiErrorResponse)?.data?.message ||
               "Failed to load your library",
           }}
         />

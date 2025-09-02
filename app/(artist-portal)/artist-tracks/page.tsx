@@ -17,7 +17,7 @@ const ArtistTrackPage = () => {
       {isError && (
         <ErrorMessage
           message={
-            (error as ApiErrorResponse)?.message ||
+            (error as ApiErrorResponse)?.data?.message ||
             "An error occurred while fetching tracks data. Please try again later"
           }
         />

@@ -14,7 +14,6 @@ import { useGetMyProfileQuery } from "@/services/users/userApi";
 
 const UserFormSkeleton = () => (
   <div className="space-y-6">
-    {/* Avatar skeleton */}
     <div className="flex items-center gap-4">
       <Skeleton className="h-20 w-20 rounded-full" />
       <div className="flex-1 space-y-2">
@@ -22,7 +21,6 @@ const UserFormSkeleton = () => (
         <Skeleton className="h-4 w-1/3" />
       </div>
     </div>
-    {/* Form fields skeleton */}
     <Skeleton className="h-10 w-full" />
     <Skeleton className="h-10 w-full" />
     <Skeleton className="h-10 w-1/2" />
@@ -45,7 +43,7 @@ const UserInformationCard = () => {
         {isError && (
           <ErrorMessage
             message={
-              (error as ApiErrorResponse).message ||
+              (error as ApiErrorResponse)?.data?.message ||
               "An error occurred while fetching user data."
             }
           />

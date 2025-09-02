@@ -1,7 +1,7 @@
 import { ApiResponse } from "@/app/types/api";
 import { Account } from "@/app/types/model";
 import { api } from "../api";
-import { LoginPayload, RegisterPayload } from "./type";
+import { LoginPayload, RegisterPayload, UpdatePasswordPayload } from "./type";
 
 const authApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -52,6 +52,15 @@ const authApi = api.injectEndpoints({
       }),
       providesTags: ["User"],
     }),
+    updatePassword: build.mutation<ApiResponse<unknown>, UpdatePasswordPayload>(
+      {
+        query: (data) => ({
+          url: "/auth/accounts/password",
+          method: "PUT",
+          data,
+        }),
+      },
+    ),
   }),
 });
 
@@ -62,4 +71,5 @@ export const {
   useResendOtpMutation,
   useLogoutMutation,
   useProfileQuery,
+  useUpdatePasswordMutation,
 } = authApi;

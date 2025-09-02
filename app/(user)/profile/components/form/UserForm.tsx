@@ -76,7 +76,7 @@ const UserForm = ({ user }: UserFormProps) => {
             <ErrorMessage
               variant="inline"
               message={
-                (error as ApiErrorResponse).message ||
+                (error as ApiErrorResponse)?.data?.message ||
                 "An error occurred while updating."
               }
             />

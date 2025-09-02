@@ -8,13 +8,16 @@ export type ApiResponse<T> = {
 };
 
 export type ApiErrorResponse = {
-  statusCode: number;
-  status: "success" | "error";
-  error: string;
-  message: string;
-  metadata: {
-    timestamp: string;
+  data: {
+    statusCode: number;
+    status: "success" | "error";
+    error: string;
+    message: string;
+    metadata: {
+      timestamp: string;
+    };
   };
+  status: number;
 };
 
 export type PaginatedResponse<T> = {

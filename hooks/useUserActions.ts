@@ -1,6 +1,10 @@
-import { ProfileFormValues } from "@/app/(user)/profile/components/form/schema";
+import {
+  PasswordFormValues,
+  ProfileFormValues,
+} from "@/app/(user)/profile/components/form/schemas";
 import { useAppDispatch } from "@/hooks/redux";
 import useToast from "@/hooks/useToast";
+import { useUpdatePasswordMutation } from "@/services/auth/authApi";
 import {
   useFollowAlbumMutation,
   useFollowArtistMutation,
@@ -16,6 +20,7 @@ const useUserActions = () => {
   const [followAlbum, followAlbumState] = useFollowAlbumMutation();
   const [unfollowAlbum, unfollowAlbumState] = useUnfollowAlbumMutation();
   const [updateProfile, updateProfileState] = useUpdateUserProfileMutation();
+  const [updatePassword, updatePasswordState] = useUpdatePasswordMutation();
   const { showErrorToast, showSuccessToast } = useToast();
   const dispatch = useAppDispatch();
 
@@ -89,6 +94,19 @@ const useUserActions = () => {
     }
   };
 
+  const handleUpdatePassword = async (formData: PasswordFormValues) => {
+    try {
+      await updatePassword({
+        newPassword: formData.newPassword,
+        oldPassword: formData.currentPassword,
+      }).unwrap();
+      showSuccessToast("Successfully updated password");
+    } catch (error) {
+      console.error("Failed to update password:", error);
+      showErrorToast("Failed to update password. Please try again later.");
+    }
+  };
+
   return {
     handleFollowArtist,
     followArtistState,
@@ -100,6 +118,8 @@ const useUserActions = () => {
     unfollowAlbumState,
     handleUpdateProfile,
     updateProfileState,
+    handleUpdatePassword,
+    updatePasswordState,
   };
 };
 export default useUserActions;

@@ -45,7 +45,7 @@ const DetailAlbumPage = () => {
       <div className="flex items-center justify-center">
         <ErrorMessage
           message={
-            (albumError as ApiErrorResponse)?.message ||
+            (albumError as ApiErrorResponse)?.data?.message ||
             "Failed to load album data"
           }
         />

@@ -64,7 +64,7 @@ const DetailTrackPage = () => {
       <div className="flex items-center justify-center">
         <ErrorMessage
           message={
-            (trackError as ApiErrorResponse)?.message ||
+            (trackError as ApiErrorResponse)?.data?.message ||
             "Failed to load track data"
           }
         />

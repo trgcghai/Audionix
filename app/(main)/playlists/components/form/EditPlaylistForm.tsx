@@ -35,7 +35,7 @@ const EditPlaylistForm = ({ data }: EditPlaylistFormProps) => {
           <div className="col-span-3 row-span-1">
             <ErrorMessage
               message={
-                (error as ApiErrorResponse).message ||
+                (error as ApiErrorResponse)?.data?.message ||
                 "An error occurred while saving."
               }
             />

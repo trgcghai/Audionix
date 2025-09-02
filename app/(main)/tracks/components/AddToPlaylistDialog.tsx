@@ -100,7 +100,7 @@ const AddToPlaylistDialog = ({
           {isError && (
             <ErrorMessage
               message={
-                (error as ApiErrorResponse)?.message ||
+                (error as ApiErrorResponse)?.data?.message ||
                 "Không thể tải danh sách playlist"
               }
             />

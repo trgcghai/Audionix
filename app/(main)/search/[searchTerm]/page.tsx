@@ -118,7 +118,7 @@ const Page = () => {
       {isError && (
         <ErrorMessage
           message={
-            (error as ApiErrorResponse)?.message ||
+            (error as ApiErrorResponse)?.data?.message ||
             "Unknown error occurred. Please try again later."
           }
         />

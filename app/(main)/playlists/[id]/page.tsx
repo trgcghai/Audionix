@@ -86,7 +86,7 @@ const DetailPlaylistPage = () => {
           description={`Found ${recommendTrackData?.data.items.length} results for "${debouncedSearchTerm}"`}
           isLoading={recommendLoading}
           isError={recommendError}
-          error={(recommendErrorData as ApiErrorResponse)?.message}
+          error={(recommendErrorData as ApiErrorResponse)?.data?.message}
         />
       )}
 
@@ -96,7 +96,7 @@ const DetailPlaylistPage = () => {
           title="Recommended tracks"
           isLoading={recommendLoading}
           isError={recommendError}
-          error={(recommendErrorData as ApiErrorResponse)?.message}
+          error={(recommendErrorData as ApiErrorResponse)?.data?.message}
         />
       )}
 

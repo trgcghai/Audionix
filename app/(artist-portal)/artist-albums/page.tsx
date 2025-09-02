@@ -34,7 +34,7 @@ const ArtistAlbumPage = () => {
           {getAlbumState.isError && (
             <ErrorMessage
               message={
-                (getAlbumState.error as ApiErrorResponse)?.message ||
+                (getAlbumState.error as ApiErrorResponse)?.data?.message ||
                 "An error occurred while fetching album data. Please try again later"
               }
             />

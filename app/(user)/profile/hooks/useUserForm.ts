@@ -1,4 +1,4 @@
-import { ProfileFormValues } from "@/app/(user)/profile/components/form/schema";
+import { ProfileFormValues } from "@/app/(user)/profile/components/form/schemas";
 import useUserActions from "@/hooks/useUserActions";
 import { useForm } from "react-hook-form";
 

@@ -59,7 +59,7 @@ const DetailArtistPage = () => {
       <div className="flex items-center justify-center">
         <ErrorMessage
           message={
-            (artistError as ApiErrorResponse)?.message ||
+            (artistError as ApiErrorResponse)?.data?.message ||
             "Failed to load artist data"
           }
         />

@@ -3,6 +3,7 @@ import CheckPasswordStrength from "@/app/(user)/profile/components/CheckPassword
 import usePasswordForm from "@/app/(user)/profile/hooks/usePasswordForm";
 import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
+import LoaderSpin from "@/components/common/LoaderSpin";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -98,11 +99,11 @@ const UpdatePasswordForm = () => {
             Cancel
           </Button>
           <Button
-            className="bg-primary text-primary-foreground hover:bg-primary/90"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 min-w-32"
             type="submit"
             disabled={isLoading}
           >
-            Save Changes
+            {isLoading ? <LoaderSpin /> : "Save Changes"}
           </Button>
         </div>
       </form>

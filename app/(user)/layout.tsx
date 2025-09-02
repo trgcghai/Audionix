@@ -6,10 +6,10 @@ const layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-background p-8">
       <Sidebar />
 
-      <main className="flex-1 p-8 w-full">
+      <main className="flex-1  w-full">
         <div className="max-w-4xl mx-auto">{children}</div>
       </main>
     </div>

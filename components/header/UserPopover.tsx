@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -19,6 +19,7 @@ import {
   User,
   User2,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
@@ -49,9 +50,11 @@ export default function UserPopover({ user }: UserPopoverProps) {
           className="flex h-auto items-center gap-3 px-3 py-2"
         >
           <Avatar className="h-8 w-8">
-            <AvatarImage
+            <Image
               src={(user.avatar && user.avatar[0].url) || ""}
               alt={user.username}
+              fill
+              objectFit="cover"
             />
             <AvatarFallback className="text-sm">
               <User2 />
@@ -65,9 +68,11 @@ export default function UserPopover({ user }: UserPopoverProps) {
         <div className="p-4">
           <div className="flex items-center gap-3">
             <Avatar className="h-12 w-12">
-              <AvatarImage
+              <Image
                 src={(user.avatar && user.avatar[0].url) || ""}
                 alt={user.username}
+                layout="fill"
+                objectFit="cover"
               />
               <AvatarFallback className="text-lg">
                 <User2 />

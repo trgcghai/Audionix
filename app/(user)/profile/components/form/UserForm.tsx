@@ -3,6 +3,7 @@ import useUserForm from "@/app/(user)/profile/hooks/useUserForm";
 import { ApiErrorResponse } from "@/app/types/api";
 import { User } from "@/app/types/model";
 import ErrorMessage from "@/components/common/ErrorMessage";
+import LoaderSpin from "@/components/common/LoaderSpin";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -37,7 +38,7 @@ const UserForm = ({ user }: UserFormProps) => {
               <ImageUpload
                 value={field.value}
                 onChange={field.onChange}
-                initialPreview={user.avatar ? user.avatar[0].url : ""}
+                initialPreview={user.avatar ? user.avatar[0]?.url : ""}
                 disabled={isLoading}
               />
             )}
@@ -94,11 +95,11 @@ const UserForm = ({ user }: UserFormProps) => {
             Cancel
           </Button>
           <Button
-            className="bg-primary text-primary-foreground hover:bg-primary/90"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 min-w-32"
             type="submit"
             disabled={isLoading}
           >
-            Save Changes
+            {isLoading ? <LoaderSpin /> : "Save Changes"}
           </Button>
         </div>
       </form>

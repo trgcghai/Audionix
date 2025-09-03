@@ -30,7 +30,7 @@ const UserForm = ({ user }: UserFormProps) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="flex items-center gap-6">
+        <div className="flex justify-center items-center gap-6">
           <FormField
             control={form.control}
             name="avatar"

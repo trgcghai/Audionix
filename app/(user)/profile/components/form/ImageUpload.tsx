@@ -74,13 +74,13 @@ const ImageUpload = ({
                 <Image
                   src={preview}
                   alt="Avatar Preview"
-                  width={120}
-                  height={120}
+                  width={250}
+                  height={250}
                   className="aspect-square rounded-full object-cover border border-muted"
                   onError={handlePreviewError}
                 />
               ) : (
-                <div className="bg-muted flex aspect-square w-[120px] h-[120px] items-center justify-center rounded-full border border-muted">
+                <div className="bg-muted flex aspect-square w-[250px] h-[250px] items-center justify-center rounded-full border border-muted">
                   <User2 className="h-16 w-16 text-muted-foreground" />
                 </div>
               )}

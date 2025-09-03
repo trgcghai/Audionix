@@ -53,8 +53,9 @@ export default function UserPopover({ user }: UserPopoverProps) {
             <Image
               src={(user.avatar && user.avatar[0].url) || ""}
               alt={user.username}
-              fill
-              objectFit="cover"
+              width={(user.avatar && user.avatar[0].width) || 500}
+              height={(user.avatar && user.avatar[0].height) || 500}
+              className="rounded-full object-cover aspect-square"
             />
             <AvatarFallback className="text-sm">
               <User2 />
@@ -71,8 +72,9 @@ export default function UserPopover({ user }: UserPopoverProps) {
               <Image
                 src={(user.avatar && user.avatar[0].url) || ""}
                 alt={user.username}
-                layout="fill"
-                objectFit="cover"
+                width={(user.avatar && user.avatar[0].width) || 500}
+                height={(user.avatar && user.avatar[0].height) || 500}
+                className="rounded-full object-cover aspect-square"
               />
               <AvatarFallback className="text-lg">
                 <User2 />

@@ -38,7 +38,6 @@ const TracksList = ({
       {description && <p className="text-gray-500">{description}</p>}
       <SimpleTrackTable
         tracks={tracks}
-        showHeader={false}
         variant="addToPlaylist"
         className="mt-4"
       />

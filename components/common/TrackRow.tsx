@@ -13,7 +13,6 @@ import usePlaylistAction from "@/hooks/usePlaylistAction";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import { Ellipsis, Trash2 } from "lucide-react";
-import Image from "next/image";
 import { useMemo } from "react";
 
 interface TrackRowProps {
@@ -34,7 +33,9 @@ const RenderByVariant = ({
   } = usePlaylistAction();
 
   const albumName = useMemo(() => {
-    return track.albums && track.albums.length > 0 ? track.albums[0].title : "";
+    return track.albums && track.albums.length > 0
+      ? track.albums[0].title
+      : "-";
   }, [track.albums]);
 
   const handleAddToPlaylist = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -60,13 +61,6 @@ const RenderByVariant = ({
         </TableCell>
         <TableCell>
           <div className="flex items-center gap-2">
-            <Image
-              src={track.cover_images[0].url}
-              alt={track.title}
-              width={40}
-              height={40}
-              className="aspect-square rounded object-cover"
-            />
             <div>
               <p className="text-sm font-semibold">{track.title}</p>
               <p className="text-sm text-gray-500">{track.artist.name}</p>
@@ -94,35 +88,28 @@ const RenderByVariant = ({
       <TableCell className="w-6 rounded-tl-lg rounded-bl-lg">
         <p className="text-sm text-gray-500">{index}</p>
       </TableCell>
-      <TableCell>
+      <TableCell className="w-1/2">
         <div className="flex items-center gap-2">
-          <Image
-            src={track.cover_images[0].url}
-            alt={track.title}
-            width={40}
-            height={40}
-            className="aspect-square rounded object-cover"
-          />
           <div>
             <p className="text-sm font-semibold">{track.title}</p>
             <p className="text-sm text-gray-500">{track.artist.name}</p>
           </div>
         </div>
       </TableCell>
-      <TableCell>
+      <TableCell className="w-1/10">
         <p className="text-sm font-medium">{albumName}</p>
       </TableCell>
-      <TableCell>
+      <TableCell className="w-1/5">
         <p className="text-sm font-medium">
           {"timeAdded" in track ? formatUploadTime(track.timeAdded!) : ""}
         </p>
       </TableCell>
-      <TableCell className="rounded-tr-lg rounded-br-lg">
+      <TableCell className="w-1/10">
         <p className="text-sm font-medium">
           {formatTrackDuration(track.duration_ms)}
         </p>
       </TableCell>
-      <TableCell className="rounded-tr-lg rounded-br-lg">
+      <TableCell className="w-10 rounded-tr-lg rounded-br-lg">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button

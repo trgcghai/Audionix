@@ -1,5 +1,6 @@
 "use client";
 import MediaList from "@/app/(main)/components/MediaList";
+import { ITEM_PER_MEDIA_ROW } from "@/app/constant";
 import { ApiErrorResponse } from "@/app/types/api";
 import {
   useGetLatestAlbumsQuery,
@@ -22,14 +23,17 @@ export default function Home() {
     isLoading: trackLoading,
     isError: trackError,
     error: trackErrorData,
-  } = useGetTracksQuery({ limit: 7 });
+  } = useGetTracksQuery({ limit: ITEM_PER_MEDIA_ROW });
 
   const {
     data: playlists,
     isLoading: isLoadingPlaylists,
     isError: isErrorPlaylists,
     error: errorPlaylists,
-  } = useGetMyPlaylistsQuery({ limit: 7 }, { skip: !isAuthenticated });
+  } = useGetMyPlaylistsQuery(
+    { limit: ITEM_PER_MEDIA_ROW },
+    { skip: !isAuthenticated },
+  );
 
   const {
     data: followedAlbums,
@@ -43,7 +47,10 @@ export default function Home() {
     isLoading: isLoadingFollowedArtists,
     isError: isErrorFollowedArtists,
     error: errorFollowedArtists,
-  } = useGetMyFollowedArtistsQuery({ limit: 7 }, { skip: !isAuthenticated });
+  } = useGetMyFollowedArtistsQuery(
+    { limit: ITEM_PER_MEDIA_ROW },
+    { skip: !isAuthenticated },
+  );
 
   // cái này phải public
   const {
@@ -51,7 +58,7 @@ export default function Home() {
     isLoading: isLoadingLatest,
     isError: isErrorLatest,
     error: errorLatest,
-  } = useGetLatestAlbumsQuery({ limit: 7 });
+  } = useGetLatestAlbumsQuery({ limit: ITEM_PER_MEDIA_ROW });
 
   // cái này phải public
   const {
@@ -59,7 +66,7 @@ export default function Home() {
     isLoading: isLoadingPopular,
     isError: isErrorPopular,
     error: errorPopular,
-  } = useGetPopularArtistsQuery({ limit: 7 });
+  } = useGetPopularArtistsQuery({ limit: ITEM_PER_MEDIA_ROW });
 
   return (
     <div className="space-y-8 first:mt-2">

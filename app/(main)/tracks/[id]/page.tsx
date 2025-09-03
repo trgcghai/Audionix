@@ -3,6 +3,7 @@ import { TrackControlSection } from "@/app/(main)/components/controlSection";
 import { TrackHeroSection } from "@/app/(main)/components/heroSection";
 import MediaList from "@/app/(main)/components/MediaList";
 import AddToPlaylistDialog from "@/app/(main)/tracks/components/AddToPlaylistDialog";
+import { ITEM_PER_MEDIA_ROW } from "@/app/constant";
 import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
@@ -36,18 +37,21 @@ const DetailTrackPage = () => {
     isLoading: isTrackLoading,
     error: trackError,
   } = useGetTrackByIdQuery(id);
-  const { data: similarTracksData } = useGetSimilarTrackQuery(id);
+  const { data: similarTracksData } = useGetSimilarTrackQuery(
+    { id, limit: ITEM_PER_MEDIA_ROW },
+    { skip: !id },
+  );
 
   const track = useMemo(() => {
     return trackData && trackData.data;
   }, [trackData]);
 
   const { data: albumData } = useGetAlbumByArtistQuery(
-    track?.artist._id || "",
+    { artistId: track?.artist._id || "", limit: ITEM_PER_MEDIA_ROW },
     { skip: !track?.artist._id },
   );
   const { data: artistTracksData } = useGetTrackByArtistQuery(
-    track?.artist._id || "",
+    { artistId: track?.artist._id || "", limit: ITEM_PER_MEDIA_ROW },
     { skip: !track?.artist._id },
   );
 

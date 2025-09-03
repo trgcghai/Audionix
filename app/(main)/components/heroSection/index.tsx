@@ -66,6 +66,8 @@ const PlaylistHeroSection = ({ playlist }: { playlist: Playlist }) => {
           title={playlist?.title || ""}
           coverUrl={playlist?.cover_images[0]?.url || ""}
           showCoverImage={!!playlist?.cover_images.length}
+          width={playlist?.cover_images[0]?.width}
+          height={playlist?.cover_images[0]?.height}
         >
           <div className="flex flex-col items-start justify-end gap-6">
             <p className="text-foreground text-sm font-semibold capitalize">

@@ -1,5 +1,6 @@
 import {
   CreateAlbumResponse,
+  FindAlbumByArtistParams,
   FindAlbumsByIdResponse,
   FindAlbumsParams,
   FindAlbumsResponse,
@@ -111,10 +112,14 @@ const albumApi = api.injectEndpoints({
       },
       providesTags: ["Albums"],
     }),
-    getAlbumByArtist: builder.query<FindAlbumsResponse, string>({
-      query: (artistId) => ({
+    getAlbumByArtist: builder.query<
+      FindAlbumsResponse,
+      FindAlbumByArtistParams
+    >({
+      query: ({ artistId, ...params }) => ({
         url: `/artists/${artistId}/albums`,
         method: "GET",
+        params,
       }),
       providesTags: ["Albums"],
     }),

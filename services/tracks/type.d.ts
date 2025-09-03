@@ -16,6 +16,14 @@ export type FindTrackParams = {
   albums?: string[];
 };
 
+export type FindSimilarTrackParams = {
+  id: string;
+} & FindTrackParams;
+
+export type FindTrackByArtistParams = {
+  artistId: string;
+} & FindTrackParams;
+
 export type CreateTrackResponse = ApiResponse<{ result: Track }>;
 
 export type UpdateOneStatusParams = {

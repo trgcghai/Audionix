@@ -16,6 +16,10 @@ export type FindAlbumsParams = {
   sort?: string;
 };
 
+export type FindAlbumByArtistParams = {
+  artistId: string;
+} & FindAlbumsParams;
+
 export type UpdateStatusOneParams = { albumId: string; status: string };
 
 export type UpdateStatusManyParams = { ids: string[]; status: string };

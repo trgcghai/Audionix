@@ -3,6 +3,7 @@ import { PlaylistControlSection } from "@/app/(main)/components/controlSection";
 import { PlaylistHeroSection } from "@/app/(main)/components/heroSection";
 import SearchTrack from "@/app/(main)/playlists/components/SearchTrack";
 import TracksList from "@/app/(main)/playlists/components/TracksList";
+import { ITEM_PER_MEDIA_ROW } from "@/app/constant";
 import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
@@ -40,7 +41,7 @@ const DetailPlaylistPage = () => {
     error: recommendErrorData,
   } = useGetTracksQuery(
     {
-      limit: 6,
+      limit: ITEM_PER_MEDIA_ROW,
       title: debouncedSearchTerm,
     },
     {

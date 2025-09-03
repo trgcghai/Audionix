@@ -3,6 +3,8 @@ import { Track } from "@/app/types/model";
 import { api } from "../api";
 import {
   CreateTrackResponse,
+  FindSimilarTrackParams,
+  FindTrackByArtistParams,
   FindTrackByIdResponse,
   FindTrackParams,
   FindTrackResponse,
@@ -92,15 +94,22 @@ const trackApi = api.injectEndpoints({
         }),
         providesTags: ["Tracks"],
       }),
-      getSimilarTrack: builder.query<FindTrackResponse, string>({
-        query: (id) => ({
-          url: `/tracks/${id}/similar`,
-        }),
-        providesTags: ["Tracks"],
-      }),
-      getTrackByArtist: builder.query<FindTrackResponse, string>({
-        query: (artistId) => ({
+      getSimilarTrack: builder.query<FindTrackResponse, FindSimilarTrackParams>(
+        {
+          query: ({ id, ...params }) => ({
+            url: `/tracks/${id}/similar`,
+            params,
+          }),
+          providesTags: ["Tracks"],
+        },
+      ),
+      getTrackByArtist: builder.query<
+        FindTrackResponse,
+        FindTrackByArtistParams
+      >({
+        query: ({ artistId, ...params }) => ({
           url: `/artists/${artistId}/tracks`,
+          params,
         }),
         providesTags: ["Tracks"],
       }),

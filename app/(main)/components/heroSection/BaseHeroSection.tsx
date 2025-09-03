@@ -10,6 +10,8 @@ export interface BaseHeroSectionProps {
   isRoundImage?: boolean;
   children?: ReactNode;
   className?: string;
+  width?: number;
+  height?: number;
 }
 
 const BaseHeroSection = ({
@@ -19,6 +21,8 @@ const BaseHeroSection = ({
   isRoundImage = false,
   children,
   className,
+  width,
+  height,
 }: BaseHeroSectionProps) => {
   return (
     <div className={cn("flex items-end gap-4", className)}>
@@ -26,8 +30,8 @@ const BaseHeroSection = ({
         <Image
           src={coverUrl}
           alt={title}
-          width={220}
-          height={220}
+          width={width || 500}
+          height={height || 500}
           className={cn(
             "aspect-square object-cover w-1/5",
             isRoundImage ? "rounded-full" : "rounded-lg",

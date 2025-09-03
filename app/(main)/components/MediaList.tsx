@@ -1,3 +1,4 @@
+import { ITEM_PER_MEDIA_ROW } from "@/app/constant";
 import { Album, Artist, Playlist, Track } from "@/app/types/model";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -12,112 +13,121 @@ const MediaSkeleton = () => (
   </div>
 );
 
-const PlaylistCard = ({ playlist }: { playlist: Playlist }) => {
+type CardType = "playlist" | "album" | "track" | "artist";
+
+interface MediaCardProps {
+  type: CardType;
+  title: string;
+  image?: string;
+  link: string;
+  isArtist?: boolean;
+  artistName?: string;
+  width?: number;
+  height?: number;
+}
+
+const MediaCard = ({
+  type,
+  title,
+  image,
+  link,
+  isArtist = false,
+  artistName,
+  width,
+  height,
+}: MediaCardProps) => {
+  const isRound = type === "artist";
+  const fallbackIcon =
+    type === "artist" ? (
+      <User2 className="h-10 w-10" />
+    ) : (
+      <Music className="h-10 w-10" />
+    );
   return (
-    <div className="cursor-pointer rounded-lg p-2 hover:bg-gray-500/30">
-      {playlist.cover_images.length > 0 ? (
-        <Image
-          src={
-            playlist.cover_images.length > 0
-              ? playlist.cover_images[0].url
-              : "/audionix_logo_short.png"
-          }
-          alt=""
-          width={200}
-          height={200}
-          className="aspect-square rounded-lg object-cover w-full h-full"
-        />
-      ) : (
-        <div className="bg-muted flex aspect-square w-full items-center justify-center rounded-lg">
-          <Music className="h-10 w-10" />
-        </div>
-      )}
-      <p className="dark:text-foreground mt-2 text-sm capitalize">
-        {playlist.title}
-      </p>
-    </div>
+    <Link href={link}>
+      <div className="cursor-pointer rounded-lg p-2 hover:bg-gray-500/30 relative aspect-square w-full h-full">
+        {image ? (
+          <Image
+            src={image}
+            alt={title}
+            width={width || 500}
+            height={height || 500}
+            quality={100}
+            className={`aspect-square object-cover rounded-lg w-full h-full ${
+              isRound ? "rounded-full" : ""
+            }`}
+          />
+        ) : (
+          <div
+            className={`bg-muted flex aspect-square w-full items-center justify-center ${
+              isRound ? "rounded-full" : "rounded-lg"
+            }`}
+          >
+            {fallbackIcon}
+          </div>
+        )}
+        <p
+          className={`dark:text-foreground mt-2 text-sm capitalize ${
+            isArtist ? "text-center" : ""
+          }`}
+        >
+          {isArtist ? artistName : title}
+        </p>
+      </div>
+    </Link>
   );
 };
 
-const AlbumCard = ({ album }: { album: Album }) => {
-  return (
-    <div className="cursor-pointer rounded-lg p-2 hover:bg-gray-500/30">
-      {album.cover_images.length > 0 ? (
-        <Image
-          src={
-            album.cover_images.length > 0
-              ? album.cover_images[0].url
-              : "/audionix_logo_short.png"
-          }
-          alt=""
-          width={200}
-          height={200}
-          className="aspect-square rounded-lg object-cover w-full h-full"
-        />
-      ) : (
-        <div className="bg-muted flex aspect-square w-full items-center justify-center rounded-lg">
-          <Music className="h-10 w-10" />
-        </div>
-      )}
-      <p className="dark:text-foreground mt-2 text-sm capitalize">
-        {album.title}
-      </p>
-    </div>
-  );
-};
-
-const TrackCard = ({ track }: { track: Track }) => {
-  return (
-    <div className="cursor-pointer rounded-lg p-2 hover:bg-gray-500/30">
-      {track.cover_images.length > 0 ? (
-        <Image
-          src={
-            track.cover_images.length > 0
-              ? track.cover_images[0].url
-              : "/audionix_logo_short.png"
-          }
-          alt=""
-          width={200}
-          height={200}
-          className="aspect-square rounded-lg object-cover w-full h-full"
-        />
-      ) : (
-        <div className="bg-muted flex aspect-square w-full items-center justify-center rounded-lg">
-          <Music className="h-10 w-10" />
-        </div>
-      )}
-      <p className="dark:text-foreground mt-2 text-sm capitalize">
-        {track.title}
-      </p>
-    </div>
-  );
-};
-
-const ArtistCard = ({ artist }: { artist: Artist }) => {
-  return (
-    <div className="cursor-pointer rounded-lg p-2 hover:bg-gray-500/30">
-      {artist.cover_images.length > 0 ? (
-        <Image
-          src={
-            artist.cover_images.length > 0
-              ? artist.cover_images[0].url
-              : "/audionix_logo_short.png"
-          }
-          alt=""
-          width={200}
-          height={200}
-          className="aspect-square rounded-full object-cover w-full h-full"
-        />
-      ) : (
-        <div className="bg-muted flex aspect-square w-full items-center justify-center rounded-full">
-          <User2 className="h-10 w-10" />
-        </div>
-      )}
-      <p className="dark:text-foreground mt-2 text-center text-sm capitalize">
-        {artist.name}
-      </p>
-    </div>
-  );
+const getCardProps = (
+  item: Playlist | Album | Artist | Track,
+): MediaCardProps => {
+  switch (item.type) {
+    case "playlist":
+      return {
+        type: "playlist",
+        title: item.title,
+        image: item.cover_images?.[0]?.url || "",
+        link: `/playlists/${item._id}`,
+        width: item.cover_images?.[0]?.width,
+        height: item.cover_images?.[0]?.height,
+      };
+    case "album":
+      return {
+        type: "album",
+        title: item.title,
+        image: item.cover_images?.[0]?.url || "",
+        link: `/albums/${item._id}`,
+        width: item.cover_images?.[0]?.width,
+        height: item.cover_images?.[0]?.height,
+      };
+    case "track":
+      return {
+        type: "track",
+        title: item.title,
+        image: item.cover_images?.[0]?.url || "",
+        link: `/tracks/${item._id}`,
+        width: item.cover_images?.[0]?.width,
+        height: item.cover_images?.[0]?.height,
+      };
+    case "artist":
+      return {
+        type: "artist",
+        title: item.name,
+        image: item.cover_images?.[0]?.url || "",
+        link: `/artists/${item._id}`,
+        isArtist: true,
+        artistName: item.name,
+        width: item.cover_images?.[0]?.width,
+        height: item.cover_images?.[0]?.height,
+      };
+    default:
+      return {
+        type: "track",
+        title: "",
+        image: "",
+        link: "#",
+      };
+  }
 };
 
 interface MediaListProps {
@@ -142,7 +152,7 @@ const MediaList = ({
   isError,
   isLoading,
 }: MediaListProps): React.ReactNode => {
-  const skeletonCount = 7;
+  const skeletonCount = 6;
 
   if (isLoading) {
     return (
@@ -172,9 +182,11 @@ const MediaList = ({
       <p className="px-2 text-lg font-semibold capitalize dark:text-white">
         {title}
       </p>
-      <div className="mt-1 grid grid-cols-7">
+      <div className={`mt-1 grid grid-cols-${ITEM_PER_MEDIA_ROW}`}>
         {data.length === 0 && (
-          <div className="col-span-7 flex w-full items-center justify-center">
+          <div
+            className={`col-span-${ITEM_PER_MEDIA_ROW} flex w-full items-center justify-center`}
+          >
             <ErrorMessage
               message={"No media found"}
               variant="inline"
@@ -183,34 +195,7 @@ const MediaList = ({
           </div>
         )}
         {data.map((item, index) => {
-          if (item.type === "playlist") {
-            return (
-              <Link href={`/playlists/${item._id}`} key={item._id + index}>
-                <PlaylistCard
-                  key={item._id}
-                  playlist={item satisfies Playlist}
-                />
-              </Link>
-            );
-          } else if (item.type === "album") {
-            return (
-              <Link href={`/albums/${item._id}`} key={item._id + index}>
-                <AlbumCard key={item._id} album={item satisfies Album} />
-              </Link>
-            );
-          } else if (item.type === "artist") {
-            return (
-              <Link href={`/artists/${item._id}`} key={item._id + index}>
-                <ArtistCard key={item._id} artist={item satisfies Artist} />
-              </Link>
-            );
-          } else if (item.type === "track") {
-            return (
-              <Link href={`/tracks/${item._id}`} key={item._id + index}>
-                <TrackCard key={item._id} track={item satisfies Track} />
-              </Link>
-            );
-          }
+          return <MediaCard key={item._id + index} {...getCardProps(item)} />;
         })}
       </div>
     </div>

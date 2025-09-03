@@ -2,6 +2,7 @@
 import { AlbumControlSection } from "@/app/(main)/components/controlSection";
 import { AlbumHeroSection } from "@/app/(main)/components/heroSection";
 import MediaList from "@/app/(main)/components/MediaList";
+import { ITEM_PER_MEDIA_ROW } from "@/app/constant";
 import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
@@ -9,13 +10,16 @@ import SimpleTrackTable from "@/components/common/SimpleTrackTable";
 import { Separator } from "@/components/ui/separator";
 import { usePlayer } from "@/hooks/usePlayer";
 import useUserActions from "@/hooks/useUserActions";
-import { useGetAlbumByIdQuery } from "@/services/albums/albumApi";
+import {
+  useGetAlbumByArtistQuery,
+  useGetAlbumByIdQuery,
+} from "@/services/albums/albumApi";
 import { useCheckIfUserIsFollowingAlbumsQuery } from "@/services/users/userApi";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 
 const DetailAlbumPage = () => {
-  const { playAlbum } = usePlayer();
+  const { playTracks } = usePlayer();
   const { handleFollowAlbum, handleUnfollowAlbum } = useUserActions();
   const { id } = useParams<{ id: string }>();
   const {
@@ -27,10 +31,13 @@ const DetailAlbumPage = () => {
   const { data: followData } = useCheckIfUserIsFollowingAlbumsQuery([id], {
     skip: !id,
   });
-
   const album = useMemo(() => {
     return albumData && albumData.data;
   }, [albumData]);
+  const { data: similarAlbumData } = useGetAlbumByArtistQuery(
+    { artistId: album?.artist._id || "", limit: ITEM_PER_MEDIA_ROW },
+    { skip: !album?.artist._id },
+  );
 
   if (isAlbumLoading) {
     return (
@@ -61,7 +68,7 @@ const DetailAlbumPage = () => {
 
       <AlbumControlSection
         isFollowing={followData?.data.result[0].isFollowing || false}
-        onPlay={() => album && playAlbum(album)}
+        onPlay={() => album && playTracks(album.tracks)}
         onFollow={() => {
           if (followData?.data.result[0].isFollowing) {
             handleUnfollowAlbum(album._id);
@@ -71,11 +78,11 @@ const DetailAlbumPage = () => {
         }}
       />
 
-      <SimpleTrackTable tracks={[]} />
+      <SimpleTrackTable tracks={album?.tracks || []} />
 
       <MediaList
         className="mt-12"
-        data={[]}
+        data={similarAlbumData ? similarAlbumData.data.items : []}
         title={`More from ${album?.artist.name}`}
       />
     </div>

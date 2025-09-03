@@ -1,6 +1,7 @@
 "use client";
 import { ArtistHeroSection } from "@/app/(main)/components/heroSection";
 import MediaList from "@/app/(main)/components/MediaList";
+import { ITEM_PER_MEDIA_ROW } from "@/app/constant";
 import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
@@ -35,14 +36,20 @@ const DetailArtistPage = () => {
     return artistData && artistData.data;
   }, [artistData]);
 
-  const { data: tracksData } = useGetTrackByArtistQuery(artist?._id || "", {
-    skip: !artist?._id,
-  });
-  const { data: albumsData } = useGetAlbumByArtistQuery(artist?._id || "", {
-    skip: !artist?._id,
-  });
+  const { data: tracksData } = useGetTrackByArtistQuery(
+    { artistId: artist?._id || "", limit: ITEM_PER_MEDIA_ROW },
+    {
+      skip: !artist?._id,
+    },
+  );
+  const { data: albumsData } = useGetAlbumByArtistQuery(
+    { artistId: artist?._id || "", limit: ITEM_PER_MEDIA_ROW },
+    {
+      skip: !artist?._id,
+    },
+  );
   const { data: similarArtistsData } = useGetSimilarArtistQuery(
-    { id: artist?._id || "", limit: 7 },
+    { id: artist?._id || "", limit: ITEM_PER_MEDIA_ROW },
     { skip: !artist?._id },
   );
 

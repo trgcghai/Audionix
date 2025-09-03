@@ -68,7 +68,7 @@ export default function UserPopover({ user }: UserPopoverProps) {
       <PopoverContent className="w-64 p-0" align="end">
         <div className="p-4">
           <div className="flex items-center gap-3">
-            <Avatar className="h-12 w-12">
+            <Avatar className="h-14 w-14">
               <Image
                 src={(user.avatar && user.avatar[0].url) || ""}
                 alt={user.username}

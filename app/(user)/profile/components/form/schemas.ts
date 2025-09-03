@@ -1,3 +1,4 @@
+import { MAX_FILE_SIZE, MAX_FILE_SIZE_MB } from "@/app/constant";
 import { z } from "zod";
 
 export const profileSchema = z.object({
@@ -5,7 +6,12 @@ export const profileSchema = z.object({
     .string()
     .min(1, "Username is required")
     .max(100, "Username cannot exceed 100 characters"),
-  avatar: z.instanceof(File).optional(),
+  avatar: z
+    .instanceof(File, { message: "Avatar must be a valid file" })
+    .refine((value) => value.size < MAX_FILE_SIZE, {
+      message: `Avatar must be less than ${MAX_FILE_SIZE_MB}MB`,
+    })
+    .optional(),
 });
 
 export type ProfileFormValues = z.infer<typeof profileSchema>;

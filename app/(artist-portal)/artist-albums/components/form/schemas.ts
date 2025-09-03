@@ -1,3 +1,4 @@
+import { MAX_FILE_SIZE, MAX_FILE_SIZE_MB } from "@/app/constant";
 import z from "zod";
 
 const optionSchema = z.object({
@@ -16,8 +17,8 @@ export const createAlbumSchema = z.object({
     .array(
       z
         .instanceof(File, { message: "Cover image is required" })
-        .refine((file) => file.size < 10 * 1024 * 1024, {
-          message: "Cover image must be less than 10MB",
+        .refine((file) => file.size < MAX_FILE_SIZE, {
+          message: `Cover image must be less than ${MAX_FILE_SIZE_MB}MB`,
         }),
     )
     .min(1, "Cover image is required"),

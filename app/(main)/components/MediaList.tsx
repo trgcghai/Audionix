@@ -53,8 +53,8 @@ const MediaCard = ({
             width={width || 500}
             height={height || 500}
             quality={100}
-            className={`aspect-square object-cover rounded-lg w-full h-full ${
-              isRound ? "rounded-full" : ""
+            className={`aspect-square object-cover ${
+              isRound ? "rounded-full" : "rounded-lg"
             }`}
           />
         ) : (

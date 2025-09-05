@@ -20,7 +20,7 @@ export default function MainHeader({
     if (e.key !== "Enter") return;
     if (!searchTerm.trim()) return;
 
-    router.push(`/search/${searchTerm}`);
+    router.push(`/search?searchTerm=${searchTerm}`);
   };
   return (
     <header

@@ -1,7 +1,6 @@
 "use client";
 
 import { User } from "@/app/types/model";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -46,18 +45,19 @@ export default function UserPopover({ user, roles }: UserPopoverProps) {
           variant="ghost"
           className="flex h-auto items-center gap-3 px-3 py-2"
         >
-          <Avatar className="h-8 w-8">
+          {user.avatar.length > 0 ? (
             <Image
-              src={(user.avatar && user.avatar[0].url) || ""}
+              src={(user.avatar && user.avatar[0]?.url) || ""}
               alt={user.username}
-              width={(user.avatar && user.avatar[0].width) || 500}
-              height={(user.avatar && user.avatar[0].height) || 500}
-              className="rounded-full object-cover aspect-square"
+              width={(user.avatar && user.avatar[0]?.width) || 500}
+              height={(user.avatar && user.avatar[0]?.height) || 500}
+              className="rounded-full object-cover aspect-square h-8 w-8"
             />
-            <AvatarFallback className="text-sm">
-              <User2 />
-            </AvatarFallback>
-          </Avatar>
+          ) : (
+            <div className="rounded-full bg-primary flex h-8 w-8 items-center justify-center">
+              <User2 className="text-sm" />
+            </div>
+          )}
           <span className="text-sm font-medium">{user.username}</span>
           <ChevronDown className="text-muted-foreground h-4 w-4" />
         </Button>
@@ -65,18 +65,19 @@ export default function UserPopover({ user, roles }: UserPopoverProps) {
       <PopoverContent className="w-64 p-0" align="end">
         <div className="p-4">
           <div className="flex items-center gap-3">
-            <Avatar className="h-14 w-14">
+            {user.avatar.length > 0 ? (
               <Image
-                src={(user.avatar && user.avatar[0].url) || ""}
+                src={(user.avatar && user.avatar[0]?.url) || ""}
                 alt={user.username}
-                width={(user.avatar && user.avatar[0].width) || 500}
-                height={(user.avatar && user.avatar[0].height) || 500}
-                className="rounded-full object-cover aspect-square"
+                width={(user.avatar && user.avatar[0]?.width) || 500}
+                height={(user.avatar && user.avatar[0]?.height) || 500}
+                className="rounded-full object-cover aspect-square h-8 w-8"
               />
-              <AvatarFallback className="text-lg">
-                <User2 />
-              </AvatarFallback>
-            </Avatar>
+            ) : (
+              <div className="rounded-full bg-primary flex h-10 w-10 items-center justify-center">
+                <User2 className="text-sm" />
+              </div>
+            )}
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-semibold">{user.username}</p>
               <p className="text-muted-foreground truncate text-xs">
@@ -98,7 +99,7 @@ export default function UserPopover({ user, roles }: UserPopoverProps) {
               <span className="text-sm">Profile</span>
             </Button>
           </Link>
-          <Link href="/settings">
+          <Link href="/setting">
             <Button
               variant="ghost"
               className="h-auto w-full justify-start gap-2 px-3 py-2"

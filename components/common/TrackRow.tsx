@@ -1,6 +1,6 @@
 "use client";
-import { SimpleTrackTablesVariant } from "@/app/types/component";
 import { Playlist, Track } from "@/app/types/model";
+import { SimpleTrackTablesVariant } from "@/components/common/SimpleTrackTable";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,19 +13,19 @@ import usePlaylistAction from "@/hooks/usePlaylistAction";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import { Ellipsis, Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 
-interface TrackRowProps {
-  index: number;
-  track: Track | Playlist["tracks"][number];
-  variant?: SimpleTrackTablesVariant;
+interface RenderByVariantProps extends TrackRowProps {
+  onClick: () => void;
 }
 
 const RenderByVariant = ({
   index,
   track,
   variant = "default",
-}: TrackRowProps) => {
+  onClick,
+}: RenderByVariantProps) => {
   const {
     handleAddTracksToPlaylist,
     handleRemoveTracksFromPlaylist,
@@ -53,9 +53,35 @@ const RenderByVariant = ({
     });
   };
 
+  console.log(variant);
+
+  if (variant === "searchResult") {
+    return (
+      <TableRow className="rounded-lg border-b-0" onClick={onClick}>
+        <TableCell className="w-6 rounded-tl-lg rounded-bl-lg">
+          <p className="text-sm text-gray-500">{index}</p>
+        </TableCell>
+        <TableCell className="w-1/2">
+          <p className="text-sm font-semibold">{track.title}</p>
+        </TableCell>
+        <TableCell className="w-2/10">
+          <p className="text-sm font-medium">{albumName}</p>
+        </TableCell>
+        <TableCell className="w-2/10">
+          <p className="text-sm font-medium">{track.artist.name}</p>
+        </TableCell>
+        <TableCell className="w-1/10">
+          <p className="text-sm font-medium">
+            {formatTrackDuration(track.duration_ms)}
+          </p>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
   if (variant === "addToPlaylist") {
     return (
-      <TableRow className="rounded-lg border-b-0">
+      <TableRow className="rounded-lg border-b-0" onClick={onClick}>
         <TableCell className="w-6 rounded-tl-lg rounded-bl-lg">
           <p className="text-sm text-gray-500">{index}</p>
         </TableCell>
@@ -84,7 +110,7 @@ const RenderByVariant = ({
   }
 
   return (
-    <TableRow className="rounded-lg border-b-0">
+    <TableRow className="rounded-lg border-b-0" onClick={onClick}>
       <TableCell className="w-6 rounded-tl-lg rounded-bl-lg">
         <p className="text-sm text-gray-500">{index}</p>
       </TableCell>
@@ -135,7 +161,26 @@ const RenderByVariant = ({
 };
 
 const TrackRow = ({ index, track, variant = "default" }: TrackRowProps) => {
-  return <RenderByVariant index={index} track={track} variant={variant} />;
+  const router = useRouter();
+
+  const handleRowClick = () => {
+    router.push(`/tracks/${track._id}`);
+  };
+
+  return (
+    <RenderByVariant
+      index={index}
+      track={track}
+      variant={variant}
+      onClick={handleRowClick}
+    />
+  );
 };
+
+interface TrackRowProps {
+  index: number;
+  track: Track | Playlist["tracks"][number];
+  variant?: SimpleTrackTablesVariant;
+}
 
 export default TrackRow;

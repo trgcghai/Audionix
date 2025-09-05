@@ -106,6 +106,3 @@ export interface ArtistAlbumItem {
 }
 
 export type ArtistAlbumStatus = (typeof ARTIST_ALBUM_STATUS_OPTIONS)[number];
-
-export type SimpleTrackTablesVariant =
-  (typeof SIMPLE_TABLE_TRACKS_VARIANTS)[number];

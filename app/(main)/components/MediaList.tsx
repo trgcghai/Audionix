@@ -152,16 +152,14 @@ const MediaList = ({
   isError,
   isLoading,
 }: MediaListProps): React.ReactNode => {
-  const skeletonCount = 6;
-
   if (isLoading) {
     return (
       <div className={className}>
         <p className="px-2 text-lg font-semibold capitalize dark:text-white">
           {title}
         </p>
-        <div className="mt-1 grid grid-cols-7 gap-2">
-          {Array.from({ length: skeletonCount }).map((_, idx) => (
+        <div className={`mt-1 grid grid-cols-${ITEM_PER_MEDIA_ROW} gap-2`}>
+          {Array.from({ length: ITEM_PER_MEDIA_ROW }).map((_, idx) => (
             <MediaSkeleton key={idx} />
           ))}
         </div>

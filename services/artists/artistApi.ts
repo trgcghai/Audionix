@@ -79,7 +79,7 @@ const artistApi = api.injectEndpoints({
     >({
       query: ({ id, current, genres, limit, name, sort }) => {
         return {
-          url: `/artists/${id}`,
+          url: `/artists/${id}/similar`,
           method: "GET",
           params: {
             limit: limit && limit < 1 ? 10 : limit,

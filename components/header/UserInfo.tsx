@@ -6,8 +6,6 @@ import Link from "next/link";
 const UserInfo = () => {
   const { isAuthenticated, roles, user } = useUserSlice();
 
-  console.log({ isAuthenticated, roles, user });
-
   return (
     <>
       {!isAuthenticated && (

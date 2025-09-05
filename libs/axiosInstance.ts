@@ -70,6 +70,17 @@ const performLogout = async () => {
 };
 
 // ============================================================
+// Interceptor: Xử lý lỗi 401, set isAuthenticated trong slice về false
+// ============================================================
+const handle401CodeWithoutRefresh = async () => {
+  const { store } = await import("@/store/store");
+  const { setIsAuthenticated } = await import("@/store/slices/userSlice");
+
+  // Clear Redux state
+  store.dispatch(setIsAuthenticated(false));
+};
+
+// ============================================================
 // Interceptor: Xử lý lỗi 401 và errorCode UNAUTHORIZED
 // ============================================================
 
@@ -92,6 +103,9 @@ axiosClient.interceptors.response.use(
         "Refresh token is invalid or expired";
 
     if (isUnauthorized && !originalRequest._retry) {
+      // xử lý unauthorized trước khi handle tới refresh token
+      handle401CodeWithoutRefresh();
+
       // Nếu refresh token đã hết hạn, logout ngay
       if (isRefreshTokenExpired) {
         console.log("Refresh token expired, logging out...");

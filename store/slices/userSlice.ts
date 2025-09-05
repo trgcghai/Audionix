@@ -63,10 +63,13 @@ export const userSlice = createSlice({
       state.username = "";
       state.isAuthenticated = false;
     },
+    setIsAuthenticated: (state, action: PayloadAction<boolean>) => {
+      state.isAuthenticated = action.payload;
+    },
   },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
+export const { setUser, clearUser, setIsAuthenticated } = userSlice.actions;
 
 export const useUserSlice = () => useAppSelector((state) => state.user);
 

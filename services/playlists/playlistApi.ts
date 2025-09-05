@@ -159,6 +159,13 @@ const playlistApi = api.injectEndpoints({
         }),
         providesTags: ["Playlists"],
       }),
+      getMyLikedSongs: builder.query<ApiResponse<Playlist>, unknown>({
+        query: () => ({
+          url: `/users/me/playlists/liked`,
+          method: "GET",
+        }),
+        providesTags: ["Playlists"],
+      }),
     };
   },
 });
@@ -178,4 +185,5 @@ export const {
   useRemoveTracksFromLikedMutation,
   useCheckTracksInPlaylistQuery,
   useCheckTracksInLikedQuery,
+  useGetMyLikedSongsQuery,
 } = playlistApi;

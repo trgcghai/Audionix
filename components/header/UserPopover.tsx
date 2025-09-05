@@ -1,5 +1,6 @@
 "use client";
 
+import { User } from "@/app/types/model";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,14 +10,12 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { useLogout } from "@/hooks/useAuthUser";
-import { UserSliceState } from "@/store/slices/userSlice";
 import {
   ChevronDown,
   Headphones,
   LogOut,
   Mic,
   Settings,
-  User,
   User2,
 } from "lucide-react";
 import Image from "next/image";
@@ -25,10 +24,11 @@ import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 
 interface UserPopoverProps {
-  user: UserSliceState;
+  user: User;
+  roles: string[];
 }
 
-export default function UserPopover({ user }: UserPopoverProps) {
+export default function UserPopover({ user, roles }: UserPopoverProps) {
   const { handleLogout } = useLogout();
   const pathname = usePathname();
 
@@ -37,10 +37,7 @@ export default function UserPopover({ user }: UserPopoverProps) {
     [pathname],
   );
 
-  const hasArtistRole = useMemo(
-    () => user.roles.includes("artist"),
-    [user.roles],
-  );
+  const hasArtistRole = useMemo(() => roles.includes("artist"), [roles]);
 
   return (
     <Popover>
@@ -97,7 +94,7 @@ export default function UserPopover({ user }: UserPopoverProps) {
               variant="ghost"
               className="h-auto w-full justify-start gap-2 px-3 py-2"
             >
-              <User className="h-4 w-4" />
+              <User2 className="h-4 w-4" />
               <span className="text-sm">Profile</span>
             </Button>
           </Link>

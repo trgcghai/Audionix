@@ -4,11 +4,13 @@ import { useUserSlice } from "@/store/slices/userSlice";
 import Link from "next/link";
 
 const UserInfo = () => {
-  const user = useUserSlice();
+  const { isAuthenticated, roles, user } = useUserSlice();
+
+  console.log({ isAuthenticated, roles, user });
 
   return (
     <>
-      {!user.isAuthenticated && (
+      {!isAuthenticated && (
         <>
           <Link href="/auth/login">
             <Button variant="outline" className="rounded-full">
@@ -20,7 +22,7 @@ const UserInfo = () => {
           </Link>
         </>
       )}
-      {user.isAuthenticated && <UserPopover user={user} />}
+      {isAuthenticated && user && <UserPopover user={user} roles={roles} />}
     </>
   );
 };

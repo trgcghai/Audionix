@@ -78,14 +78,10 @@ const useUserActions = () => {
       const payload = transformToPayload(formData);
       const { data } = await updateProfile(payload).unwrap();
       showSuccessToast("Successfully updated profile");
-      const {
-        result: { avatar, email, username },
-      } = data;
+      const { result: user } = data;
       dispatch(
         setUser({
-          email,
-          username,
-          avatar,
+          user,
         }),
       );
     } catch (error) {

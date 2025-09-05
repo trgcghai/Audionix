@@ -1,11 +1,16 @@
 import { ApiResponse } from "@/app/types/api";
 import { Account } from "@/app/types/model";
 import { api } from "../api";
-import { LoginPayload, RegisterPayload, UpdatePasswordPayload } from "./type";
+import {
+  LoginPayload,
+  LoginResponse,
+  RegisterPayload,
+  UpdatePasswordPayload,
+} from "./type";
 
 const authApi = api.injectEndpoints({
   endpoints: (build) => ({
-    login: build.mutation<ApiResponse<{ account: Account }>, LoginPayload>({
+    login: build.mutation<LoginResponse, LoginPayload>({
       query: (data) => ({
         url: "/auth/login",
         method: "POST",

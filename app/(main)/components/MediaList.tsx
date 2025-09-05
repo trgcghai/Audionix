@@ -152,6 +152,24 @@ const MediaList = ({
   isError,
   isLoading,
 }: MediaListProps): React.ReactNode => {
+  const gridColsClass = {
+    1: "grid-cols-1",
+    2: "grid-cols-2",
+    3: "grid-cols-3",
+    4: "grid-cols-4",
+    5: "grid-cols-5",
+    6: "grid-cols-6",
+  };
+
+  const colSpanClass = {
+    1: "col-span-1",
+    2: "col-span-2",
+    3: "col-span-3",
+    4: "col-span-4",
+    5: "col-span-5",
+    6: "col-span-6",
+  };
+
   if (isLoading) {
     return (
       <div className={className}>
@@ -180,10 +198,10 @@ const MediaList = ({
       <p className="px-2 text-lg font-semibold capitalize dark:text-white">
         {title}
       </p>
-      <div className={`mt-1 grid grid-cols-${ITEM_PER_MEDIA_ROW}`}>
+      <div className={`mt-1 grid ${gridColsClass[ITEM_PER_MEDIA_ROW]}`}>
         {data.length === 0 && (
           <div
-            className={`col-span-${ITEM_PER_MEDIA_ROW} flex w-full items-center justify-center`}
+            className={`${colSpanClass[ITEM_PER_MEDIA_ROW]} flex w-full items-center justify-center`}
           >
             <ErrorMessage
               message={"No media found"}

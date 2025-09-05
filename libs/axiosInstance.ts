@@ -104,7 +104,7 @@ axiosClient.interceptors.response.use(
 
     if (isUnauthorized && !originalRequest._retry) {
       // xử lý unauthorized trước khi handle tới refresh token
-      handle401CodeWithoutRefresh();
+      // handle401CodeWithoutRefresh();
 
       // Nếu refresh token đã hết hạn, logout ngay
       if (isRefreshTokenExpired) {

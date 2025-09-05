@@ -16,7 +16,7 @@ interface ErrorMessageProps {
 }
 
 const ErrorMessage = ({
-  message = "Đã có lỗi xảy ra khi tải dữ liệu. Vui lòng thử lại sau.",
+  message = "Failed when fetching data. Please try again later !!",
   variant = "default",
   severity = "error",
   showIcon = true,

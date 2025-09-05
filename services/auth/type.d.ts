@@ -14,3 +14,5 @@ export type UpdatePasswordPayload = {
   newPassword: string;
   oldPassword: string;
 };
+
+export type LoginResponse = ApiResponse<{ account: Account; user: User }>;

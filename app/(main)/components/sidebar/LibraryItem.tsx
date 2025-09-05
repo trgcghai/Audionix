@@ -27,9 +27,9 @@ const ItemImage = ({ data }: { data: LibraryItemData }) => {
       <Image
         src={data.cover_images[0]?.url || "/audionix_logo_short.png"}
         alt={getItemTitle(data)}
-        width={50}
-        height={50}
-        className={`aspect-square object-cover ${
+        width={data.cover_images[0]?.width || 200}
+        height={data.cover_images[0]?.height || 200}
+        className={`aspect-square object-cover h-[60px] w-[60px] ${
           isRounded ? "rounded-full" : "rounded-lg"
         }`}
       />
@@ -38,7 +38,7 @@ const ItemImage = ({ data }: { data: LibraryItemData }) => {
 
   return (
     <div
-      className={`bg-muted flex h-[55px] w-[55px] items-center justify-center ${
+      className={`bg-muted flex h-[60px] w-[60px] items-center justify-center ${
         isRounded ? "rounded-full" : "rounded-lg"
       }`}
     >

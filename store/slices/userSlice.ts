@@ -1,29 +1,17 @@
+import { User } from "@/app/types/model";
 import { useAppSelector } from "@/hooks/redux";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface UserSliceState {
-  email: string;
+  user: User | null;
   roles: string[];
   isAuthenticated: boolean;
-  username: string;
-  avatar:
-    | [
-        {
-          url: string;
-          width: number;
-          height: number;
-          key: string;
-        },
-      ]
-    | null;
 }
 
 const initialState: UserSliceState = {
-  email: "",
+  user: null,
   roles: [],
   isAuthenticated: false,
-  username: "",
-  avatar: null,
 };
 
 export const userSlice = createSlice({
@@ -32,44 +20,37 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (
       state,
-      action: PayloadAction<
-        Partial<{
-          email: string;
-          roles: string[];
-          username: string;
-          avatar?: [
-            {
-              url: string;
-              width: number;
-              height: number;
-              key: string;
-            },
-          ];
-        }>
-      >,
+      action: PayloadAction<Partial<{ user: User; roles: string[] }>>,
     ) => {
-      const { email, roles, username, avatar } = action.payload;
-      if (email) state.email = email;
-      if (roles) state.roles = roles;
-      if (username) state.username = username;
-      state.isAuthenticated = true;
-      if (avatar) {
-        state.avatar = avatar;
+      const { user, roles } = action.payload;
+      if (user) {
+        state.user = user;
       }
+      if (roles) {
+        state.roles = roles;
+      }
+      state.isAuthenticated = true;
     },
     clearUser: (state) => {
-      state.email = "";
-      state.roles = [];
-      state.username = "";
+      state.user = null;
       state.isAuthenticated = false;
+      state.roles = [];
     },
     setIsAuthenticated: (state, action: PayloadAction<boolean>) => {
       state.isAuthenticated = action.payload;
+      if (!action.payload) {
+        state.user = null;
+        state.roles = [];
+      }
+    },
+    setRoles: (state, action: PayloadAction<string[]>) => {
+      state.roles = action.payload;
     },
   },
 });
 
-export const { setUser, clearUser, setIsAuthenticated } = userSlice.actions;
+export const { setUser, clearUser, setIsAuthenticated, setRoles } =
+  userSlice.actions;
 
 export const useUserSlice = () => useAppSelector((state) => state.user);
 

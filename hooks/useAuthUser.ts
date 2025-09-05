@@ -32,7 +32,7 @@ const useRegister = () => {
       const { data } = error as { data: ApiErrorResponse; status: number };
 
       setError(
-        data.message || "An unexpected error occurred. Please try again.",
+        data.data.message || "An unexpected error occurred. Please try again.",
       );
     }
   };
@@ -58,15 +58,15 @@ const useLogin = () => {
       if (result.status === "success") {
         const {
           data: {
-            account: { email, role, firstName, lastName },
+            account: { role },
+            user,
           },
         } = result;
 
         dispatch(
           setUser({
-            email,
+            user,
             roles: role,
-            username: `${firstName} ${lastName}`,
           }),
         );
 
@@ -76,7 +76,7 @@ const useLogin = () => {
       const { data } = error as { data: ApiErrorResponse; status: number };
 
       setError(
-        data.message || "An unexpected error occurred. Please try again.",
+        data.data.message || "An unexpected error occurred. Please try again.",
       );
     }
   };
@@ -105,7 +105,7 @@ const useOtp = (email: string) => {
       const { data } = error as { data: ApiErrorResponse; status: number };
 
       setError(
-        data.message || "An unexpected error occurred. Please try again.",
+        data.data.message || "An unexpected error occurred. Please try again.",
       );
     }
   };
@@ -127,10 +127,8 @@ const useLogout = () => {
     try {
       await logout().unwrap();
     } catch (error) {
-      console.error(
-        (error as { data: ApiErrorResponse }).data.message ||
-          "An unexpected error occurred during logout.",
-      );
+      const { data } = error as { data: ApiErrorResponse; status: number };
+      console.log(data.data.message);
     } finally {
       dispatch(clearUser());
       router.push("/auth/login");

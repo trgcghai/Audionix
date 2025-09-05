@@ -52,7 +52,6 @@ export default function Home() {
     { skip: !isAuthenticated },
   );
 
-  // cái này phải public
   const {
     data: latestAlbums,
     isLoading: isLoadingLatest,
@@ -60,7 +59,6 @@ export default function Home() {
     error: errorLatest,
   } = useGetLatestAlbumsQuery({ limit: ITEM_PER_MEDIA_ROW });
 
-  // cái này phải public
   const {
     data: popularArtists,
     isLoading: isLoadingPopular,
@@ -69,7 +67,7 @@ export default function Home() {
   } = useGetPopularArtistsQuery({ limit: ITEM_PER_MEDIA_ROW });
 
   return (
-    <div className="space-y-8 first:mt-2">
+    <div className="space-y-16 first:mt-2">
       {trackData && trackData.data.items && (
         <MediaList
           title={"You may have interest"}

@@ -16,14 +16,16 @@ import {
 } from "@/services/artists/artistApi";
 import { useGetTrackByArtistQuery } from "@/services/tracks/trackApi";
 import { useCheckIfUserIsFollowingArtistsQuery } from "@/services/users/userApi";
+import { useUserSlice } from "@/store/slices/userSlice";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 
 const DetailArtistPage = () => {
   const { handleFollowArtist, handleUnfollowArtist } = useUserActions();
   const { id } = useParams<{ id: string }>();
+  const { user, isAuthenticated } = useUserSlice();
   const { data: followData } = useCheckIfUserIsFollowingArtistsQuery([id], {
-    skip: !id,
+    skip: !id || !user || !isAuthenticated,
   });
   const {
     data: artistData,

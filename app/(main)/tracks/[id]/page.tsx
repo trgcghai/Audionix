@@ -17,6 +17,7 @@ import {
   useGetTrackByArtistQuery,
   useGetTrackByIdQuery,
 } from "@/services/tracks/trackApi";
+import { useUserSlice } from "@/store/slices/userSlice";
 import { User2 } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -28,8 +29,9 @@ const DetailTrackPage = () => {
   const { handleAddTracksToLiked, handleRemoveTracksFromLiked } =
     usePlaylistAction();
   const { id } = useParams<{ id: string }>();
+  const { user, isAuthenticated } = useUserSlice();
   const { data: likedData } = useCheckTracksInLikedQuery([id], {
-    skip: !id,
+    skip: !id || !user || !isAuthenticated,
   });
   const {
     data: trackData,

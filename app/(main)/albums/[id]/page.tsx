@@ -15,6 +15,7 @@ import {
   useGetAlbumByIdQuery,
 } from "@/services/albums/albumApi";
 import { useCheckIfUserIsFollowingAlbumsQuery } from "@/services/users/userApi";
+import { useUserSlice } from "@/store/slices/userSlice";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 
@@ -22,6 +23,7 @@ const DetailAlbumPage = () => {
   const { playTracks } = usePlayer();
   const { handleFollowAlbum, handleUnfollowAlbum } = useUserActions();
   const { id } = useParams<{ id: string }>();
+  const { user, isAuthenticated } = useUserSlice();
   const {
     data: albumData,
     isLoading: isAlbumLoading,
@@ -29,7 +31,7 @@ const DetailAlbumPage = () => {
     error: albumError,
   } = useGetAlbumByIdQuery(id, { skip: !id });
   const { data: followData } = useCheckIfUserIsFollowingAlbumsQuery([id], {
-    skip: !id,
+    skip: !id || !user || !isAuthenticated,
   });
   const album = useMemo(() => {
     return albumData && albumData.data;

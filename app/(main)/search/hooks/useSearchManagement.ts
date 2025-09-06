@@ -2,7 +2,7 @@ import { ITEM_PER_MEDIA_ROW } from "@/app/constant";
 import { useGetAlbumsQuery } from "@/services/albums/albumApi";
 import { useGetAllArtistsQuery } from "@/services/artists/artistApi";
 import { useGetTracksQuery } from "@/services/tracks/trackApi";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 interface props {
   searchTerm: string;
@@ -10,10 +10,7 @@ interface props {
 }
 
 const useSearchManagement = ({ searchTerm, type }: props) => {
-  const [currentTrack, setCurrentTrack] = useState(1);
-  const [currentAlbum, setCurrentAlbum] = useState(1);
-  const [currentArtist, setCurrentArtist] = useState(1);
-
+  const [current, setCurrent] = useState(1);
   const {
     data: tracks,
     isLoading: isLoadingTracks,
@@ -23,7 +20,7 @@ const useSearchManagement = ({ searchTerm, type }: props) => {
     {
       title: searchTerm,
       limit: 15,
-      current: currentTrack,
+      current,
     },
     {
       skip: !searchTerm || type !== "tracks",
@@ -39,7 +36,7 @@ const useSearchManagement = ({ searchTerm, type }: props) => {
     {
       title: searchTerm,
       limit: 4 * ITEM_PER_MEDIA_ROW,
-      current: currentAlbum,
+      current,
     },
     {
       skip: !searchTerm || type !== "albums",
@@ -55,7 +52,7 @@ const useSearchManagement = ({ searchTerm, type }: props) => {
     {
       name: searchTerm,
       limit: 4 * ITEM_PER_MEDIA_ROW,
-      current: currentArtist,
+      current,
     },
     {
       skip: !searchTerm || type !== "artists",
@@ -65,6 +62,17 @@ const useSearchManagement = ({ searchTerm, type }: props) => {
   const isLoading = isLoadingTracks || isLoadingAlbums || isLoadingArtists;
   const isError = isErrorTracks || isErrorAlbums || isErrorArtists;
   const error = errorTracks || errorAlbums || errorArtists;
+
+  const totalPages = useMemo(() => {
+    if (type === "tracks") return tracks?.data?.totalPages || 0;
+    if (type === "albums") return albums?.data?.totalPages || 0;
+    if (type === "artists") return artists?.data?.totalPages || 0;
+    return 0;
+  }, [tracks, albums, artists, type]);
+
+  useEffect(() => {
+    setCurrent(1);
+  }, [type, searchTerm]);
 
   return {
     // search results
@@ -76,12 +84,9 @@ const useSearchManagement = ({ searchTerm, type }: props) => {
     error,
 
     // pagination management
-    currentTrack,
-    setCurrentTrack,
-    currentAlbum,
-    setCurrentAlbum,
-    currentArtist,
-    setCurrentArtist,
+    current,
+    setCurrent,
+    totalPages,
   };
 };
 export default useSearchManagement;

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 
 const FILTERS = [
@@ -12,31 +12,31 @@ const FilterButtons = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   return (
-    <div className="flex items-center justify-start gap-2">
-      <Button
-        variant={!type ? "default" : "outline"}
-        className="text-md rounded-full font-medium dark:text-white"
-        onClick={() =>
-          router.push(`/search?searchTerm=${searchParams.get("searchTerm")}`)
-        }
-      >
-        All
-      </Button>
-      {FILTERS.map((filter) => (
-        <Button
-          key={filter.value}
-          variant={type === filter.value ? "default" : "outline"}
-          className="text-md rounded-full font-medium dark:text-white"
-          onClick={() => {
-            router.push(
-              `/search/${filter.value}?searchTerm=${searchParams.get("searchTerm")}`,
-            );
-          }}
+    <Tabs defaultValue={type || "all"} className="w-[400px]">
+      <TabsList>
+        <TabsTrigger
+          value="all"
+          onClick={() =>
+            router.push(`/search?searchTerm=${searchParams.get("searchTerm")}`)
+          }
         >
-          {filter.label}
-        </Button>
-      ))}
-    </div>
+          All
+        </TabsTrigger>
+        {FILTERS.map((filter) => (
+          <TabsTrigger
+            key={filter.value}
+            value={filter.value}
+            onClick={() =>
+              router.push(
+                `/search/${filter.value}?searchTerm=${searchParams.get("searchTerm")}`,
+              )
+            }
+          >
+            {filter.label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+    </Tabs>
   );
 };
 export default FilterButtons;

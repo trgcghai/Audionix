@@ -1,11 +1,11 @@
 "use client";
-import { ImageUploadField } from "@/app/(artist-portal)/artist/albums/components/form/ImageUploadField";
 import useCreateAlbumForm from "@/app/(artist-portal)/artist/albums/hooks/useCreateAlbumForm";
 import { DEFAULT_GENRES } from "@/app/constant";
 import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
+import { ImageUploadField } from "@/components/form/ImageUploadFieldForm";
 import { Button } from "@/components/ui/button";
 import {
   Form,

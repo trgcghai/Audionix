@@ -1,9 +1,9 @@
-import ImageUpload from "@/app/(user)/profile/components/form/ImageUpload";
 import useUserForm from "@/app/(user)/profile/hooks/useUserForm";
 import { ApiErrorResponse } from "@/app/types/api";
 import { User } from "@/app/types/model";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
+import ImageUpload from "@/components/form/ImageUpload";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -40,6 +40,7 @@ const UserForm = ({ user }: UserFormProps) => {
                 onChange={field.onChange}
                 initialPreview={user.avatar ? user.avatar[0]?.url : ""}
                 disabled={isLoading}
+                variant="user"
               />
             )}
           />

@@ -5,6 +5,7 @@ import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
+import { ImageUploadField } from "@/components/form/ImageUploadFieldForm";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -18,7 +19,6 @@ import { Input } from "@/components/ui/input";
 import MultipleSelector from "@/components/ui/MultipleSelector";
 import { useCreateTrackForm } from "../../hooks/useCreateTrackForm";
 import { AudioUploadField } from "./AudioUploadField";
-import { ImageUploadField } from "./ImageUploadField";
 
 const UploadTrackForm = () => {
   const {

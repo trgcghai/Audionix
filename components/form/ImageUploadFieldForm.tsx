@@ -1,6 +1,5 @@
 "use client";
 
-import { createAlbumFormValues } from "@/app/(artist-portal)/artist/albums/components/form/schemas";
 import { COVER_IMAGE_ACCEPT_TYPES } from "@/app/constant";
 import {
   FileInput,
@@ -12,13 +11,17 @@ import getAcceptedFileExtensions from "@/utils/getAcceptedFileExtensions";
 import { ImageIcon } from "lucide-react";
 import Image from "next/image";
 import { DropzoneOptions } from "react-dropzone";
-import { ControllerRenderProps } from "react-hook-form";
+import { ControllerRenderProps, FieldValues, Path } from "react-hook-form";
 
-interface ImageUploadFieldProps {
-  field: ControllerRenderProps<createAlbumFormValues, "cover_image">;
+interface ImageUploadFieldProps<T extends FieldValues> {
+  field: ControllerRenderProps<T, Path<T>>;
+  previewSize?: number;
 }
 
-export const ImageUploadField = ({ field }: ImageUploadFieldProps) => {
+export const ImageUploadField = <T extends FieldValues>({
+  field,
+  previewSize = 300,
+}: ImageUploadFieldProps<T>) => {
   const options = {
     multiple: false,
     maxFiles: 1,
@@ -47,7 +50,7 @@ export const ImageUploadField = ({ field }: ImageUploadFieldProps) => {
       )}
       {field.value && field.value.length > 0 && (
         <FileUploaderContent className="border-muted flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed p-4">
-          {field.value.map((file, index) => (
+          {field.value.map((file: File, index: number) => (
             <FileUploaderItem
               index={index}
               key={file.name}
@@ -57,8 +60,8 @@ export const ImageUploadField = ({ field }: ImageUploadFieldProps) => {
                 <Image
                   src={URL.createObjectURL(file)}
                   alt="Preview"
-                  width={300}
-                  height={300}
+                  width={previewSize}
+                  height={previewSize}
                   className="aspect-square rounded-lg object-cover"
                 />
               </div>

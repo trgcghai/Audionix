@@ -1,10 +1,10 @@
 "use client";
-import ImageUpload from "@/app/(main)/playlists/components/form/ImageUpload";
 import usePlaylistForm from "@/app/(main)/playlists/hooks/usePlaylistForm";
 import { ApiErrorResponse } from "@/app/types/api";
 import { Playlist } from "@/app/types/model";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
+import ImageUpload from "@/components/form/ImageUpload";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -52,6 +52,7 @@ const EditPlaylistForm = ({ data }: EditPlaylistFormProps) => {
                 onChange={field.onChange}
                 initialPreview={data?.cover_images[0]?.url || ""}
                 disabled={isLoading}
+                variant="playlist"
               />
             )}
           />

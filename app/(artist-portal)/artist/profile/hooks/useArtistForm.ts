@@ -1,5 +1,7 @@
 import { ArtistFormValues } from "@/app/(artist-portal)/artist/profile/components/form/schemas";
 import { Artist } from "@/app/types/model";
+import useArtistActions from "@/hooks/useArtistActions";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface UseArtistFormProps {
@@ -7,6 +9,9 @@ interface UseArtistFormProps {
 }
 
 const useArtistForm = ({ artist }: UseArtistFormProps) => {
+  const { handleUpdateMyArtistProfile, updateMyArtistState } =
+    useArtistActions();
+  const [dialogOpen, setDialogOpen] = useState(false);
   const form = useForm<ArtistFormValues>({
     defaultValues: {
       name: artist.name,
@@ -19,15 +24,28 @@ const useArtistForm = ({ artist }: UseArtistFormProps) => {
   });
 
   const onSubmit = async (data: ArtistFormValues) => {
-    console.log(data);
+    await handleUpdateMyArtistProfile(data);
+  };
+
+  const closeDialog = () => {
+    setDialogOpen(false);
+  };
+
+  const openDialog = () => {
+    setDialogOpen(true);
   };
 
   return {
     form,
     onSubmit,
-    isError: false,
-    isLoading: false,
-    error: null,
+    isError: updateMyArtistState.isError,
+    isLoading: updateMyArtistState.isLoading,
+    error: updateMyArtistState.error,
+
+    dialogOpen,
+    setDialogOpen,
+    closeDialog,
+    openDialog,
   };
 };
 

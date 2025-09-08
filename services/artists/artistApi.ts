@@ -6,6 +6,8 @@ import {
   FindMyFollowedArtistResponse,
   FindPopularArtistResponse,
   FindSimilarArtistParams,
+  UpdateArtistParams,
+  UpdateArtistResponse,
 } from "@/services/artists/type";
 
 const artistApi = api.injectEndpoints({
@@ -101,6 +103,29 @@ const artistApi = api.injectEndpoints({
       },
       providesTags: ["Artists"],
     }),
+    updateMyArtistProfile: builder.mutation<UpdateArtistResponse, FormData>({
+      query: (data) => {
+        return {
+          url: "/artists/me",
+          method: "PUT",
+          data,
+        };
+      },
+      invalidatesTags: ["Artists"],
+    }),
+    updateArtistProfile: builder.mutation<
+      UpdateArtistResponse,
+      UpdateArtistParams
+    >({
+      query: ({ id, formData }) => {
+        return {
+          url: `/artists/${id}`,
+          method: "PUT",
+          data: formData,
+        };
+      },
+      invalidatesTags: ["Artists"],
+    }),
   }),
 });
 
@@ -111,4 +136,6 @@ export const {
   useGetArtistByIdQuery,
   useGetSimilarArtistQuery,
   useGetMyArtistProfileQuery,
+  useUpdateMyArtistProfileMutation,
+  useUpdateArtistProfileMutation,
 } = artistApi;

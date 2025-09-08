@@ -22,3 +22,10 @@ export type FindPopularArtistResponse = ApiResponse<{
 export type FindSimilarArtistParams = {
   id: string;
 } & FindArtistParams;
+
+export type UpdateArtistResponse = ApiResponse<{ result: Artist }>;
+
+export type UpdateArtistParams = {
+  id: string;
+  formData: FormData;
+};

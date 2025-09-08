@@ -1,8 +1,10 @@
 import useArtistForm from "@/app/(artist-portal)/artist/profile/hooks/useArtistForm";
 import { DEFAULT_GENRES } from "@/app/constant";
+import { ApiErrorResponse } from "@/app/types/api";
 import { Artist } from "@/app/types/model";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
+import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import ImageUpload from "@/components/form/ImageUpload";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +23,17 @@ interface ArtistFormProps {
 }
 
 const ArtistForm = ({ artist }: ArtistFormProps) => {
-  const { form, onSubmit, isError, error, isLoading } = useArtistForm({
+  const {
+    form,
+    onSubmit,
+    isError,
+    error,
+    isLoading,
+    closeDialog,
+    openDialog,
+    setDialogOpen,
+    dialogOpen,
+  } = useArtistForm({
     artist,
   });
 
@@ -93,7 +105,7 @@ const ArtistForm = ({ artist }: ArtistFormProps) => {
         {isError && (
           <ErrorMessage
             variant="inline"
-            message={"An error occurred while updating."}
+            message={(error as ApiErrorResponse)?.data?.message}
           />
         )}
 
@@ -109,11 +121,20 @@ const ArtistForm = ({ artist }: ArtistFormProps) => {
           </Button>
           <Button
             className="min-w-32 rounded-full"
-            type="submit"
+            type="button"
             disabled={isLoading}
+            onClick={openDialog}
           >
             {isLoading ? <LoaderSpin /> : "Save Changes"}
           </Button>
+          <ConfirmDialog
+            title="Confirm update your artist profile ?"
+            description={`Are you sure you want to update your artist profile?`}
+            onConfirm={() => form.handleSubmit(onSubmit)()}
+            onCancel={closeDialog}
+            isOpen={dialogOpen}
+            setIsOpen={setDialogOpen}
+          />
         </div>
       </form>
     </Form>

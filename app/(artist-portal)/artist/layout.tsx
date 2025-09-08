@@ -24,7 +24,9 @@ export default function ArtistPortalLayout({
 
             <ScrollArea className="w-full flex-1 overflow-auto">
               <div className="h-full p-4">
-                <div className="px-3">{children}</div>
+                <div className="px-3 py-6 bg-card border rounded-lg">
+                  {children}
+                </div>
                 <Separator className="my-12" />
                 <Footer />
               </div>

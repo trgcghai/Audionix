@@ -2,7 +2,7 @@ import ArtistInformation from "@/app/(artist-portal)/artist/profile/components/A
 
 const ArtistProfile = () => {
   return (
-    <div>
+    <div className="mx-auto w-4xl">
       <ArtistInformation />
     </div>
   );

@@ -108,61 +108,63 @@ const ImageUpload = ({
   }
 
   if (variant === "user") {
-    <FormItem className="">
-      <FormControl>
-        <div
-          {...dropzone.getRootProps()}
-          className="relative flex flex-col items-center justify-center"
-        >
-          <Input
-            {...dropzone.getInputProps()}
-            onChange={handleFileInputChange}
-            disabled={disabled}
-            className="hidden"
-          />
-          <div className="relative group flex flex-col items-center justify-center">
-            {/* Avatar preview */}
-            <div className="relative">
-              {preview && !error ? (
-                <Image
-                  src={preview}
-                  alt="Avatar Preview"
-                  width={250}
-                  height={250}
-                  className="aspect-square rounded-full object-cover border border-muted"
-                  onError={handlePreviewError}
-                />
-              ) : (
-                <div className="bg-muted flex aspect-square w-[250px] h-[250px] items-center justify-center rounded-full border border-muted">
-                  <User2 className="h-16 w-16 text-muted-foreground" />
-                </div>
-              )}
-              {/* Remove button */}
-              {preview && !error && (
-                <button
-                  type="button"
-                  className="absolute top-2 right-2 z-10 rounded-full bg-background p-1 shadow hover:bg-muted"
-                  onClick={handleClear}
-                  tabIndex={-1}
-                >
-                  <XIcon className="h-4 w-4" />
-                </button>
-              )}
-            </div>
-            <div className="mt-3 flex flex-col items-center">
-              <span className="text-muted-foreground text-xs">
-                {error
-                  ? "Image failed to load. Please try again."
-                  : "Click or drop to change avatar"}
-              </span>
-              <span className="text-muted-foreground mt-1 text-xs">
-                {getAcceptedFileExtensions(COVER_IMAGE_ACCEPT_TYPES)} accepted
-              </span>
+    return (
+      <FormItem className="">
+        <FormControl>
+          <div
+            {...dropzone.getRootProps()}
+            className="relative flex flex-col items-center justify-center"
+          >
+            <Input
+              {...dropzone.getInputProps()}
+              onChange={handleFileInputChange}
+              disabled={disabled}
+              className="hidden"
+            />
+            <div className="relative group flex flex-col items-center justify-center">
+              {/* Avatar preview */}
+              <div className="relative">
+                {preview && !error ? (
+                  <Image
+                    src={preview}
+                    alt="Avatar Preview"
+                    width={250}
+                    height={250}
+                    className="aspect-square rounded-full object-cover border border-muted"
+                    onError={handlePreviewError}
+                  />
+                ) : (
+                  <div className="bg-muted flex aspect-square w-[250px] h-[250px] items-center justify-center rounded-full border border-muted">
+                    <User2 className="h-16 w-16 text-muted-foreground" />
+                  </div>
+                )}
+                {/* Remove button */}
+                {preview && !error && (
+                  <button
+                    type="button"
+                    className="absolute top-2 right-2 z-10 rounded-full bg-background p-1 shadow hover:bg-muted"
+                    onClick={handleClear}
+                    tabIndex={-1}
+                  >
+                    <XIcon className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+              <div className="mt-3 flex flex-col items-center">
+                <span className="text-muted-foreground text-xs">
+                  {error
+                    ? "Image failed to load. Please try again."
+                    : "Click or drop to change avatar"}
+                </span>
+                <span className="text-muted-foreground mt-1 text-xs">
+                  {getAcceptedFileExtensions(COVER_IMAGE_ACCEPT_TYPES)} accepted
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      </FormControl>
-    </FormItem>;
+        </FormControl>
+      </FormItem>
+    );
   }
 
   return null;

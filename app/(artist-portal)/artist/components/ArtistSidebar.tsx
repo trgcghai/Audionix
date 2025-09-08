@@ -55,7 +55,7 @@ export default function ArtistSidebar({
 }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarContent>
+      <SidebarContent className="!bg-card">
         <NavMain items={navItems} />
       </SidebarContent>
       <SidebarRail />

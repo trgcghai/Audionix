@@ -42,7 +42,7 @@ const UploadTrackForm = () => {
           name="cover_image"
           render={({ field }) => (
             <FormItem className="h-full w-full">
-              <FormLabel required className="text-md font-semibold">
+              <FormLabel required className="font-semibold">
                 Cover Image
               </FormLabel>
               <FormControl>
@@ -58,7 +58,7 @@ const UploadTrackForm = () => {
           name="audio"
           render={({ field }) => (
             <FormItem className="h-full w-full">
-              <FormLabel required className="text-md font-semibold">
+              <FormLabel required className="font-semibold">
                 Audio File
               </FormLabel>
               <FormControl>
@@ -74,7 +74,7 @@ const UploadTrackForm = () => {
           name="title"
           render={({ field }) => (
             <FormItem className="h-full w-full">
-              <FormLabel required className="text-md font-semibold">
+              <FormLabel required className="font-semibold">
                 Title
               </FormLabel>
               <FormControl>
@@ -95,7 +95,7 @@ const UploadTrackForm = () => {
           name="genres"
           render={({ field }) => (
             <FormItem className="h-full w-full">
-              <FormLabel required className="text-md font-semibold">
+              <FormLabel required className="font-semibold">
                 Genres
               </FormLabel>
               <FormControl>
@@ -117,7 +117,7 @@ const UploadTrackForm = () => {
           name="albums"
           render={({ field }) => (
             <FormItem className="h-full w-full">
-              <FormLabel className="text-md font-semibold">Album</FormLabel>
+              <FormLabel className="font-semibold">Album</FormLabel>
               <FormControl>
                 <MultipleSelector
                   {...field}
@@ -155,7 +155,7 @@ const UploadTrackForm = () => {
         <div className="flex items-center justify-end gap-4">
           <Button
             type="button"
-            variant="outline"
+            variant="destructive"
             className="rounded-full px-6 py-2"
             onClick={handleReset}
             disabled={isLoading}

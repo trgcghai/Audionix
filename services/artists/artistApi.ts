@@ -92,6 +92,15 @@ const artistApi = api.injectEndpoints({
       },
       providesTags: ["Artists"],
     }),
+    getMyArtistProfile: builder.query<FindArtistByIdResponse, void>({
+      query: () => {
+        return {
+          url: "/artists/me",
+          method: "GET",
+        };
+      },
+      providesTags: ["Artists"],
+    }),
   }),
 });
 
@@ -101,4 +110,5 @@ export const {
   useGetPopularArtistsQuery,
   useGetArtistByIdQuery,
   useGetSimilarArtistQuery,
+  useGetMyArtistProfileQuery,
 } = artistApi;

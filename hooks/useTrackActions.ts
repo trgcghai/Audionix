@@ -1,4 +1,4 @@
-import { createTrackValues } from "@/app/(artist-portal)/artist-tracks/components/form/schemas";
+import { createTrackValues } from "@/app/(artist-portal)/artist/tracks/components/form/schemas";
 import useToast from "@/hooks/useToast";
 import {
   useChangeOneTrackStatusMutation,

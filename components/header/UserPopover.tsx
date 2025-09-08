@@ -126,7 +126,7 @@ export default function UserPopover({ user, roles }: UserPopoverProps) {
                   </Button>
                 </Link>
               ) : (
-                <Link href="/artist-home">
+                <Link href="/artist">
                   <Button
                     variant="ghost"
                     className="h-auto w-full justify-start gap-2 px-3 py-2"

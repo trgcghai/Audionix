@@ -1,4 +1,4 @@
-import { createAlbumFormValues } from "@/app/(artist-portal)/artist-albums/components/form/schemas";
+import { createAlbumFormValues } from "@/app/(artist-portal)/artist/albums/components/form/schemas";
 import useToast from "@/hooks/useToast";
 import {
   useCreateAlbumMutation,

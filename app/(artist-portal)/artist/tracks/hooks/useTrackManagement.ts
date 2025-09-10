@@ -10,14 +10,9 @@ import {
   setFilters,
   setPageLimit,
 } from "@/store/slices/trackManagement";
-import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef } from "react";
 
 const useTrackManagement = () => {
-  // Router để cập nhật URL query params
-  const router = useRouter();
-  const pathname = usePathname();
-
   // State của filter
   const {
     current,
@@ -39,22 +34,6 @@ const useTrackManagement = () => {
       dispatch(setFilters({ title: debouncedTitle }));
     }
   }, [debouncedTitle, dispatch]);
-
-  // Cập nhật URL query params khi state thay đổi
-  useEffect(() => {
-    const params = new URLSearchParams();
-
-    // Chỉ thêm params có giá trị
-    if (title) params.set("title", title);
-    if (status.length > 0) params.set("status", status.join(","));
-    if (albums.length > 0) params.set("albums", albums.join(","));
-    if (uploadTime) params.set("uploadTime", uploadTime.toISOString());
-    if (current) params.set("current", current.toString());
-    if (limit !== 10) params.set("limit", limit.toString());
-
-    // Cập nhật URL không reload trang
-    router.replace(`${pathname}?${params.toString()}`);
-  }, [albums, current, limit, pathname, router, status, title, uploadTime]);
 
   // Gọi API để lấy danh sách tracks
   const { data, isLoading, isError, error } = useGetMyCreatedTrackQuery(

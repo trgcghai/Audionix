@@ -10,13 +10,9 @@ import {
   setFilters,
   setPageLimit,
 } from "@/store/slices/albumManagement";
-import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef } from "react";
 
 const useAlbumManagement = () => {
-  const router = useRouter();
-  const pathname = usePathname();
-
   const { current, limit, title, debounceTitle, genres, uploadTime, status } =
     useAppSelector((state) => state.albumManagement);
   const dispatch = useAppDispatch();
@@ -29,17 +25,6 @@ const useAlbumManagement = () => {
       dispatch(setFilters({ title: debouncedTitle }));
     }
   }, [debouncedTitle, dispatch]);
-
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (title) params.set("title", title);
-    if (status.length > 0) params.set("status", status.join(","));
-    if (genres.length > 0) params.set("genres", genres.join(","));
-    if (uploadTime) params.set("uploadTime", uploadTime.toISOString());
-    if (current) params.set("current", current.toString());
-    if (limit !== 10) params.set("limit", limit.toString());
-    router.replace(`${pathname}?${params.toString()}`);
-  }, [genres, current, limit, pathname, router, status, title, uploadTime]);
 
   const { data, ...getAlbumState } = useGetMyCreatedAlbumsQuery(
     {

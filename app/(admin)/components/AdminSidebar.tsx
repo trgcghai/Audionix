@@ -26,6 +26,46 @@ const navItems = [
         title: "Playlists",
         url: "/dashboard/playlists",
       },
+      {
+        title: "Artists",
+        url: "/dashboard/artists",
+      },
+      {
+        title: "Accounts",
+        url: "/dashboard/accounts",
+      },
+      {
+        title: "Genres",
+        url: "/dashboard/genres",
+      },
+    ],
+  },
+  {
+    title: "Support",
+    url: "#",
+    items: [
+      {
+        title: "FAQ",
+        url: "/dashboard/support/faq",
+      },
+      {
+        title: "Contact Us",
+        url: "/dashboard/support/contact",
+      },
+      {
+        title: "Email templates",
+        url: "/dashboard/support/email-templates/management",
+      },
+    ],
+  },
+  {
+    title: "Other",
+    url: "#",
+    items: [
+      {
+        title: "Footer items",
+        url: "/dashboard/footer",
+      },
     ],
   },
 ];

@@ -4,7 +4,7 @@ import { useUserSlice } from "@/store/slices/userSlice";
 import Link from "next/link";
 
 const UserInfo = () => {
-  const { isAuthenticated, roles, user } = useUserSlice();
+  const { isAuthenticated, user, roles } = useUserSlice();
 
   return (
     <>

@@ -1,5 +1,6 @@
 import { api } from "@/services/api";
 import {
+  CreateArtistResponse,
   FindArtistByIdResponse,
   FindArtistParams,
   FindArtistResponse,
@@ -126,6 +127,16 @@ const artistApi = api.injectEndpoints({
       },
       invalidatesTags: ["Artists"],
     }),
+    createArtistProfile: builder.mutation<CreateArtistResponse, FormData>({
+      query: (data) => {
+        return {
+          url: "/artists",
+          method: "POST",
+          data,
+        };
+      },
+      invalidatesTags: ["Artists"],
+    }),
   }),
 });
 
@@ -138,4 +149,5 @@ export const {
   useGetMyArtistProfileQuery,
   useUpdateMyArtistProfileMutation,
   useUpdateArtistProfileMutation,
+  useCreateArtistProfileMutation,
 } = artistApi;

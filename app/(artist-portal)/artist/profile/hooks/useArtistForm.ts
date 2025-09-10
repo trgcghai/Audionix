@@ -5,26 +5,36 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface UseArtistFormProps {
-  artist: Artist;
+  artist?: Artist;
 }
 
 const useArtistForm = ({ artist }: UseArtistFormProps) => {
-  const { handleUpdateMyArtistProfile, updateMyArtistState } =
-    useArtistActions();
+  const {
+    handleUpdateMyArtistProfile,
+    updateMyArtistState,
+    handleCreateArtistProfile,
+    createArtistState,
+  } = useArtistActions();
   const [dialogOpen, setDialogOpen] = useState(false);
   const form = useForm<ArtistFormValues>({
     defaultValues: {
-      name: artist.name,
-      genres: artist.genres.map((genre) => ({
-        label: genre.charAt(0).toUpperCase() + genre.slice(1),
-        value: genre,
-      })),
+      name: artist ? artist.name : "",
+      genres: artist
+        ? artist.genres.map((genre) => ({
+            label: genre.charAt(0).toUpperCase() + genre.slice(1),
+            value: genre,
+          }))
+        : [],
       cover_images: undefined,
     },
   });
 
   const onSubmit = async (data: ArtistFormValues) => {
-    await handleUpdateMyArtistProfile(data);
+    if (artist) {
+      await handleUpdateMyArtistProfile(data);
+    } else {
+      await handleCreateArtistProfile(data);
+    }
   };
 
   const closeDialog = () => {
@@ -38,9 +48,9 @@ const useArtistForm = ({ artist }: UseArtistFormProps) => {
   return {
     form,
     onSubmit,
-    isError: updateMyArtistState.isError,
-    isLoading: updateMyArtistState.isLoading,
-    error: updateMyArtistState.error,
+    isError: updateMyArtistState.isError || createArtistState.isError,
+    isLoading: updateMyArtistState.isLoading || createArtistState.isLoading,
+    error: updateMyArtistState.error || createArtistState.error,
 
     dialogOpen,
     setDialogOpen,

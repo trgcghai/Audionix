@@ -1,3 +1,4 @@
+"use client";
 import useArtistForm from "@/app/(artist-portal)/artist/profile/hooks/useArtistForm";
 import { DEFAULT_GENRES } from "@/app/constant";
 import { ApiErrorResponse } from "@/app/types/api";
@@ -17,12 +18,29 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import MultipleSelector from "@/components/ui/MultipleSelector";
+import { cn } from "@/libs/utils";
 
 interface ArtistFormProps {
-  artist: Artist;
+  artist?: Artist;
+  className?: string;
+  showCancelButton?: boolean;
+  submitButtonProps?: {
+    className?: string;
+    disabled?: boolean;
+    text?: string;
+  };
 }
 
-const ArtistForm = ({ artist }: ArtistFormProps) => {
+const ArtistForm = ({
+  artist,
+  className,
+  submitButtonProps = {
+    className: "",
+    disabled: false,
+    text: "Save changes",
+  },
+  showCancelButton = true,
+}: ArtistFormProps) => {
   const {
     form,
     onSubmit,
@@ -39,7 +57,10 @@ const ArtistForm = ({ artist }: ArtistFormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={cn("space-y-6", className)}
+      >
         <div className="flex justify-center items-center gap-6">
           <FormField
             control={form.control}
@@ -49,7 +70,9 @@ const ArtistForm = ({ artist }: ArtistFormProps) => {
                 value={field.value}
                 onChange={field.onChange}
                 initialPreview={
-                  artist.cover_images ? artist.cover_images[0]?.url : ""
+                  artist && artist.cover_images
+                    ? artist.cover_images[0]?.url
+                    : ""
                 }
                 disabled={isLoading}
                 variant="user"
@@ -110,26 +133,28 @@ const ArtistForm = ({ artist }: ArtistFormProps) => {
         )}
 
         <div className="flex justify-end gap-2">
+          {showCancelButton && (
+            <Button
+              className="rounded-full"
+              type="button"
+              variant="destructive"
+              onClick={() => form.reset()}
+              disabled={isLoading}
+            >
+              Cancel
+            </Button>
+          )}
           <Button
-            className="rounded-full"
+            className={cn("min-w-32 rounded-full", submitButtonProps.className)}
             type="button"
-            variant="destructive"
-            onClick={() => form.reset()}
-            disabled={isLoading}
-          >
-            Cancel
-          </Button>
-          <Button
-            className="min-w-32 rounded-full"
-            type="button"
-            disabled={isLoading}
+            disabled={isLoading || submitButtonProps.disabled}
             onClick={openDialog}
           >
-            {isLoading ? <LoaderSpin /> : "Save Changes"}
+            {isLoading ? <LoaderSpin /> : submitButtonProps.text}
           </Button>
           <ConfirmDialog
-            title="Confirm update your artist profile ?"
-            description={`Are you sure you want to update your artist profile?`}
+            title="Confirm to submit the form?"
+            description={`Are you sure you want to submit the form? Please check the information again before submit.`}
             onConfirm={() => form.handleSubmit(onSubmit)()}
             onCancel={closeDialog}
             isOpen={dialogOpen}

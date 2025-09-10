@@ -17,8 +17,6 @@ const ArtistInformation = () => {
   const { data, isLoading, isError, error, isSuccess } =
     useGetMyArtistProfileQuery();
 
-  console.log(data);
-
   return (
     <div className="px-3">
       <p className="mb-4 text-xl font-bold">Your artist profile</p>

@@ -29,3 +29,5 @@ export type UpdateArtistParams = {
   id: string;
   formData: FormData;
 };
+
+export type CreateArtistResponse = UpdateArtistResponse;

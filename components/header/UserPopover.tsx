@@ -32,11 +32,9 @@ export default function UserPopover({ user, roles }: UserPopoverProps) {
   const pathname = usePathname();
 
   const isAtArtistPortal = useMemo(
-    () => pathname.includes("/artist-"),
+    () => pathname.includes("/artist/"),
     [pathname],
   );
-
-  const hasArtistRole = useMemo(() => roles.includes("artist"), [roles]);
 
   return (
     <Popover>
@@ -112,34 +110,34 @@ export default function UserPopover({ user, roles }: UserPopoverProps) {
 
         <Separator />
 
-        {hasArtistRole && (
-          <>
-            <div className="p-1">
-              {isAtArtistPortal ? (
-                <Link href="/">
-                  <Button
-                    variant="ghost"
-                    className="h-auto w-full justify-start gap-2 px-3 py-2"
-                  >
-                    <Headphones className="h-4 w-4" />
-                    <span className="text-sm capitalize">Change to user</span>
-                  </Button>
-                </Link>
-              ) : (
-                <Link href="/artist">
-                  <Button
-                    variant="ghost"
-                    className="h-auto w-full justify-start gap-2 px-3 py-2"
-                  >
-                    <Mic className="h-4 w-4" />
-                    <span className="text-sm capitalize">Change to artist</span>
-                  </Button>
-                </Link>
-              )}
-            </div>
-            <Separator />
-          </>
-        )}
+        <div className="p-1">
+          {isAtArtistPortal ? (
+            <Link href="/">
+              <Button
+                variant="ghost"
+                className="h-auto w-full justify-start gap-2 px-3 py-2"
+              >
+                <Headphones className="h-4 w-4" />
+                <span className="text-sm capitalize">Change to user</span>
+              </Button>
+            </Link>
+          ) : (
+            <Link
+              href={
+                roles.includes("artist") ? "/artist" : "/artist-auth/register"
+              }
+            >
+              <Button
+                variant="ghost"
+                className="h-auto w-full justify-start gap-2 px-3 py-2"
+              >
+                <Mic className="h-4 w-4" />
+                <span className="text-sm capitalize">Change to artist</span>
+              </Button>
+            </Link>
+          )}
+        </div>
+        <Separator />
 
         <div className="p-1">
           <Button

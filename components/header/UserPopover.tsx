@@ -15,6 +15,7 @@ import {
   LogOut,
   Mic,
   Settings,
+  ShieldCheck,
   User2,
 } from "lucide-react";
 import Image from "next/image";
@@ -35,6 +36,8 @@ export default function UserPopover({ user, roles }: UserPopoverProps) {
     () => pathname.includes("/artist/"),
     [pathname],
   );
+
+  const hasAdminRole = useMemo(() => roles.includes("admin"), [roles]);
 
   return (
     <Popover>
@@ -133,6 +136,19 @@ export default function UserPopover({ user, roles }: UserPopoverProps) {
               >
                 <Mic className="h-4 w-4" />
                 <span className="text-sm capitalize">Change to artist</span>
+              </Button>
+            </Link>
+          )}
+          {hasAdminRole && (
+            <Link href="/admin/dashboard">
+              <Button
+                variant="ghost"
+                className="h-auto w-full justify-start gap-2 px-3 py-2"
+              >
+                <ShieldCheck className="h-4 w-4" />
+                <span className="text-sm capitalize">
+                  Go to admin dashboard
+                </span>
               </Button>
             </Link>
           )}

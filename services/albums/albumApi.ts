@@ -1,6 +1,7 @@
 import {
   CreateAlbumResponse,
   FindAlbumByArtistParams,
+  FindAlbumsAsOptionsResponse,
   FindAlbumsByIdResponse,
   FindAlbumsParams,
   FindAlbumsResponse,
@@ -130,6 +131,16 @@ const albumApi = api.injectEndpoints({
       }),
       providesTags: ["Albums"],
     }),
+    getMyAlbumsAsFilterOptions: builder.query<
+      FindAlbumsAsOptionsResponse,
+      unknown
+    >({
+      query: () => ({
+        url: `/albums/my-options`,
+        method: "GET",
+      }),
+      providesTags: ["Albums"],
+    }),
   }),
 });
 
@@ -145,4 +156,5 @@ export const {
   useGetLatestAlbumsQuery,
   useGetAlbumByArtistQuery,
   useGetAlbumByIdQuery,
+  useGetMyAlbumsAsFilterOptionsQuery,
 } = albumApi;

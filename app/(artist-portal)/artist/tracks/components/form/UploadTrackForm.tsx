@@ -1,6 +1,5 @@
 "use client";
 import { DEFAULT_GENRES } from "@/app/constant";
-import { mockAlbums } from "@/app/sampleData";
 import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
@@ -17,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import MultipleSelector from "@/components/ui/MultipleSelector";
+import { useGetMyAlbumsAsFilterOptionsQuery } from "@/services/albums/albumApi";
 import { useCreateTrackForm } from "../../hooks/useCreateTrackForm";
 import { AudioUploadField } from "./AudioUploadField";
 
@@ -33,6 +33,8 @@ const UploadTrackForm = () => {
     openConfirmDialog,
     closeConfirmDialog,
   } = useCreateTrackForm();
+
+  const { data } = useGetMyAlbumsAsFilterOptionsQuery({});
 
   return (
     <Form {...form}>
@@ -121,10 +123,7 @@ const UploadTrackForm = () => {
               <FormControl>
                 <MultipleSelector
                   {...field}
-                  options={mockAlbums.map((album) => ({
-                    value: album._id,
-                    label: album.name,
-                  }))}
+                  options={data?.data?.options || []}
                   placeholder="Select albums"
                   emptyIndicator={
                     <div className="flex items-center justify-center">

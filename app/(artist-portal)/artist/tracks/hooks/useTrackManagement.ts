@@ -2,6 +2,7 @@
 import { Option } from "@/components/ui/MultipleSelector";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useDebounce } from "@/hooks/useDebounce";
+import { useGetMyAlbumsAsFilterOptionsQuery } from "@/services/albums/albumApi";
 import { useGetMyCreatedTrackQuery } from "@/services/tracks/trackApi";
 import {
   clearFilters,
@@ -51,6 +52,8 @@ const useTrackManagement = () => {
       refetchOnMountOrArgChange: true,
     },
   );
+
+  const { data: albumOptions } = useGetMyAlbumsAsFilterOptionsQuery({});
 
   // Action chuyển trang
   const toNextPage = useCallback(() => {
@@ -139,6 +142,9 @@ const useTrackManagement = () => {
     current: data?.data.current || current,
     limit: data?.data.limit || limit,
     setLimitFilter,
+
+    // album options
+    albumOptions: albumOptions?.data.options || [],
 
     // State management
     title,

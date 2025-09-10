@@ -220,6 +220,10 @@ const MultipleSelector = React.forwardRef<
     const [inputValue, setInputValue] = React.useState("");
     const debouncedSearchTerm = useDebounce(inputValue, delay || 500);
 
+    const [dropdownDirection, setDropdownDirection] = React.useState<
+      "down" | "up"
+    >("down");
+
     React.useImperativeHandle(
       ref,
       () => ({
@@ -287,6 +291,20 @@ const MultipleSelector = React.forwardRef<
         document.removeEventListener("mousedown", handleClickOutside);
         document.removeEventListener("touchend", handleClickOutside);
       };
+    }, [open]);
+
+    useEffect(() => {
+      if (open && dropdownRef.current) {
+        const rect = dropdownRef.current.getBoundingClientRect();
+        const spaceBelow = window.innerHeight - rect.bottom;
+        const spaceAbove = rect.top;
+        // Nếu không đủ 300px phía dưới thì hiện lên trên
+        if (spaceBelow < 300 && spaceAbove > spaceBelow) {
+          setDropdownDirection("up");
+        } else {
+          setDropdownDirection("down");
+        }
+      }
     }, [open]);
 
     useEffect(() => {
@@ -570,7 +588,12 @@ const MultipleSelector = React.forwardRef<
         <div className="relative">
           {open && (
             <CommandList
-              className="bg-popover text-popover-foreground animate-in absolute top-1 z-10 w-full rounded-md border shadow-md outline-none"
+              className={cn(
+                "bg-popover text-popover-foreground animate-in absolute z-10 w-full rounded-md border shadow-md outline-none",
+                dropdownDirection === "down"
+                  ? "top-2 bottom-auto"
+                  : "bottom-12 top-auto",
+              )}
               onMouseLeave={() => {
                 setOnScrollbar(false);
               }}

@@ -1,6 +1,6 @@
 import useTrackManagement from "@/app/(artist-portal)/artist/tracks/hooks/useTrackManagement";
 import { DEFAULT_GENRES, TrackStatusValues } from "@/app/constant";
-import { mockAlbums } from "@/app/sampleData";
+import ErrorMessage from "@/components/common/ErrorMessage";
 import MultipleValueFilter from "@/components/common/filters/MultipleValueFilter";
 import TitleFilter from "@/components/common/filters/TitleFilter";
 import { Button } from "@/components/ui/button";
@@ -29,6 +29,7 @@ const TableFilters = ({
     genres,
     setGenresFilter,
     clearFilter,
+    albumOptions,
   } = useTrackManagement();
   return (
     <>
@@ -42,10 +43,7 @@ const TableFilters = ({
         />
 
         <MultipleValueFilter
-          options={mockAlbums.map((album) => ({
-            label: album.name,
-            value: album._id,
-          }))}
+          options={albumOptions}
           label="Albums"
           placeholder="Select albums"
           value={albums}
@@ -53,6 +51,17 @@ const TableFilters = ({
           className={cn(itemClassName)}
           inputClassName={cn(inputClassName)}
           labelClassName={cn(labelClassName)}
+          creatable={false}
+          emptyIndicator={
+            <div className="flex items-center justify-center">
+              <ErrorMessage
+                message="No albums found."
+                severity="info"
+                variant="inline"
+                showIcon={false}
+              />
+            </div>
+          }
         />
 
         <MultipleValueFilter
@@ -81,6 +90,7 @@ const TableFilters = ({
           className={cn(itemClassName)}
           inputClassName={cn(inputClassName)}
           labelClassName={cn(labelClassName)}
+          creatable
         />
       </div>
       <Button className="rounded-full" size={"sm"} onClick={clearFilter}>

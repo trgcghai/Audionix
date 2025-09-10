@@ -17,6 +17,10 @@ interface MultipleValueFilterProps {
   className?: string;
   labelClassName?: string;
   inputClassName?: string;
+
+  // multiple select props
+  creatable?: boolean;
+  emptyIndicator?: React.ReactNode;
 }
 
 const MultipleValueFilter = ({
@@ -29,18 +33,21 @@ const MultipleValueFilter = ({
   className,
   labelClassName,
   inputClassName,
+  creatable = false,
+  emptyIndicator,
 }: MultipleValueFilterProps) => {
   return (
     <div className={cn(className)}>
       <Label className={cn(labelClassName)}>{label}</Label>
       <MultipleSelector
-        creatable
+        creatable={creatable}
         options={options}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
         disabled={disabled}
         className={cn(inputClassName)}
+        emptyIndicator={emptyIndicator}
       />
     </div>
   );

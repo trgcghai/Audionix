@@ -58,10 +58,16 @@ const ArtistHeroSection = ({
   );
 };
 
-const PlaylistHeroSection = ({ playlist }: { playlist: Playlist }) => {
+const PlaylistHeroSection = ({
+  playlist,
+  disabledDialog,
+}: {
+  playlist: Playlist;
+  disabledDialog: boolean;
+}) => {
   return (
     <Dialog>
-      <DialogTrigger className="w-full">
+      <DialogTrigger className="w-full" disabled={disabledDialog}>
         <BaseHeroSection
           title={playlist?.title || ""}
           coverUrl={playlist?.cover_images[0]?.url || ""}

@@ -14,6 +14,7 @@ import { usePlayer } from "@/hooks/usePlayer";
 import usePlaylistAction from "@/hooks/usePlaylistAction";
 import { useGetPlaylistByIdQuery } from "@/services/playlists/playlistApi";
 import { useGetTracksQuery } from "@/services/tracks/trackApi";
+import { useUserSlice } from "@/store/slices/userSlice";
 import { useParams } from "next/navigation";
 import { useMemo, useState } from "react";
 
@@ -22,6 +23,7 @@ const DetailPlaylistPage = () => {
   const { id } = useParams<{ id: string }>();
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  const { user } = useUserSlice();
 
   const {
     data: playlistData,
@@ -67,7 +69,12 @@ const DetailPlaylistPage = () => {
 
   return (
     <div>
-      {playlist && <PlaylistHeroSection playlist={playlist} />}
+      {playlist && (
+        <PlaylistHeroSection
+          playlist={playlist}
+          disabledDialog={user?.liked_songs === id}
+        />
+      )}
 
       <Separator className="my-4" />
 

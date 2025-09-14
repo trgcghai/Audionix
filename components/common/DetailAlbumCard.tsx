@@ -1,4 +1,7 @@
 "use client";
+import { TrackTable } from "@/app/(artist-portal)/artist/tracks/components/table";
+import { TrackInAlbumColumns } from "@/app/(artist-portal)/artist/tracks/components/table/Columns";
+import { Album } from "@/app/types/model";
 import {
   Card,
   CardAction,
@@ -7,17 +10,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useAppDispatch } from "@/hooks/redux";
 import { hideViewDetail } from "@/store/slices/detailAlbumSlice";
+import { formatUploadTime } from "@/utils/formatUploadTime";
 import { ImageIcon, XIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import { TrackTable } from "../../app/(artist-portal)/artist/tracks/components/table";
-import { TrackInAlbumColumns } from "../../app/(artist-portal)/artist/tracks/components/table/Columns";
-import { ArtistAlbumItem } from "../../app/types/component";
-import { useAppDispatch } from "../../hooks/redux";
-import { formatUploadTime } from "../../utils/formatUploadTime";
 
-const DetailAlbumCard = ({ album }: { album: ArtistAlbumItem }) => {
+const DetailAlbumCard = ({ album }: { album: Album }) => {
   const dispatch = useAppDispatch();
   const [coverImageError, setCoverImageError] = useState(false);
 
@@ -45,11 +45,11 @@ const DetailAlbumCard = ({ album }: { album: ArtistAlbumItem }) => {
             </div>
           ) : (
             <Image
-              src={album.images[0].url}
-              alt={album.name}
-              width={album.images[0].width}
-              height={album.images[0].height}
-              className="rounded-lg"
+              src={album.cover_images[0].url}
+              alt={album.title}
+              width={album.cover_images[0].width}
+              height={album.cover_images[0].height}
+              className="rounded-lg aspect-square object-cover w-full border"
               onError={() => {
                 setCoverImageError(true);
               }}
@@ -60,19 +60,21 @@ const DetailAlbumCard = ({ album }: { album: ArtistAlbumItem }) => {
         <div className="row-span-3 flex flex-col justify-between">
           <div className="">
             <p className="text-sm font-semibold mb-2">Album Name</p>
-            <p className="text-md p-2 border rounded-lg">{album.name}</p>
+            <p className="text-md p-2 border rounded-lg text-muted-foreground">
+              {album.title}
+            </p>
           </div>
 
           <div className="">
             <p className="text-sm font-semibold mb-2">Created Date</p>
-            <p className="text-md p-2 border rounded-lg">
-              {formatUploadTime(album.uploadTime)}
+            <p className="text-md p-2 border rounded-lg text-muted-foreground">
+              {formatUploadTime(album.createdAt)}
             </p>
           </div>
 
           <div className="">
             <p className="text-sm font-semibold mb-2">Album&apos;s status</p>
-            <p className="text-md p-2 border rounded-lg capitalize">
+            <p className="text-md p-2 border rounded-lg text-muted-foreground capitalize">
               {album.status}
             </p>
           </div>
@@ -85,6 +87,7 @@ const DetailAlbumCard = ({ album }: { album: ArtistAlbumItem }) => {
             columns={TrackInAlbumColumns}
             data={album.tracks}
             showActions={false}
+            showFilterOptions={false}
           />
         </div>
       </CardContent>

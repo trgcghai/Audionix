@@ -1,6 +1,7 @@
 import { api } from "@/services/api";
 import albumManagementReducer from "@/store/slices/albumManagement";
 import detailAlbumReducer from "@/store/slices/detailAlbumSlice";
+import detailTrackReducer from "@/store/slices/detailTrackSlice";
 import queueDrawerReducer from "@/store/slices/queueDrawerSlice";
 import trackManagementReducer from "@/store/slices/trackManagement";
 import userReducer from "@/store/slices/userSlice";
@@ -25,6 +26,7 @@ const persistConfig = {
   whitelist: [
     "queueDrawer",
     "detailAlbum",
+    "detailTrack",
     "user",
     "trackManagement",
     "albumManagement",
@@ -37,6 +39,7 @@ const persistedReducer = persistReducer(
   combineReducers({
     queueDrawer: queueDrawerReducer,
     detailAlbum: detailAlbumReducer,
+    detailTrack: detailTrackReducer,
     trackManagement: trackManagementReducer,
     albumManagement: albumManagementReducer,
     user: userReducer,

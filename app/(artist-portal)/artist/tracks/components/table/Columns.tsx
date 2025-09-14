@@ -1,6 +1,6 @@
 import GenresCell from "@/app/(artist-portal)/artist/tracks/components/table/cells/GenresCell";
 import { TrackStatusValues } from "@/app/constant";
-import { Track } from "@/app/types/model";
+import { EmbbedTrack, Track } from "@/app/types/model";
 import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
@@ -10,7 +10,7 @@ import ActionCell from "./cells/ActionCell";
 import ImageCell from "./cells/ImageCell";
 import StatusCell from "./cells/StatusCell";
 
-export const Columns: ColumnDef<Track>[] = [
+export const BaseTrackColumns: ColumnDef<Track>[] = [
   {
     id: "select",
     enableSorting: false,
@@ -153,8 +153,10 @@ export const Columns: ColumnDef<Track>[] = [
   },
 ];
 
-export const TrackInAlbumColumns: ColumnDef<Track>[] = [
-  ...Columns.filter((item) =>
-    ["select", "coverImage", "name", "duration"].includes(item.id || ""),
+export const TrackInAlbumColumns: ColumnDef<EmbbedTrack>[] = [
+  ...BaseTrackColumns.map((item) => {
+    return item as unknown as ColumnDef<EmbbedTrack>;
+  }).filter((item) =>
+    ["coverImage", "title", "duration", "status"].includes(item.id || ""),
   ),
 ];

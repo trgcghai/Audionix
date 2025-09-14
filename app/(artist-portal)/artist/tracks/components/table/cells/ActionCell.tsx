@@ -8,9 +8,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAppDispatch } from "@/hooks/redux";
 import useTrackActions from "@/hooks/useTrackActions";
+import { openViewDetail } from "@/store/slices/detailTrackSlice";
 import { Row } from "@tanstack/react-table";
-import { MoreHorizontal, PlusCircle, Settings2, Trash2 } from "lucide-react";
+import {
+  FileText,
+  MoreHorizontal,
+  PlusCircle,
+  Settings2,
+  Trash2,
+} from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -19,6 +27,11 @@ const ActionCell = ({ row }: { row: Row<Track> }) => {
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [addToAlbumDialog, setAddToAlbumDialog] = useState(false);
   const { handleDeleteOne } = useTrackActions();
+  const dispatch = useAppDispatch();
+
+  const handleViewDetail = () => {
+    dispatch(openViewDetail({ track }));
+  };
 
   return (
     <>
@@ -29,9 +42,19 @@ const ActionCell = ({ row }: { row: Row<Track> }) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
+          <DropdownMenuItem
+            variant="default"
+            className="cursor-pointer"
+            onClick={handleViewDetail}
+          >
+            <div className="flex items-center gap-2">
+              <FileText className="mr-2 h-4 w-4" />
+              <span>View detail</span>
+            </div>
+          </DropdownMenuItem>
           <DropdownMenuItem variant="default" className="cursor-pointer">
             <Link
-              href={`/artist-tracks/update/${track._id}`}
+              href={`./tracks/update/${track._id}`}
               className="flex items-center gap-2"
             >
               <Settings2 className="mr-2 h-4 w-4" />

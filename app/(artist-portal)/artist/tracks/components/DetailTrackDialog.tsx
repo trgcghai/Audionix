@@ -13,6 +13,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import Image from "next/image";
+import Link from "next/link";
 
 interface DetailTrackDialogProps {
   isOpen: boolean;
@@ -36,7 +37,6 @@ const DetailTrackDialog = ({
           </DialogHeader>
 
           <div className="space-y-6 py-4">
-            {/* Cover Image Display */}
             <div className="space-y-2">
               <Label className="text-sm font-medium">Cover Image</Label>
               <div className="border rounded-lg p-4 bg-muted/20">
@@ -52,7 +52,6 @@ const DetailTrackDialog = ({
               </div>
             </div>
 
-            {/* Audio File Display */}
             <div className="space-y-2">
               <Label className="text-sm font-medium">Audio File</Label>
               <div className="border rounded-lg p-4 bg-muted/20">
@@ -64,16 +63,13 @@ const DetailTrackDialog = ({
               </div>
             </div>
 
-            {/* Track Information */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Title */}
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Title</Label>
                 <Input value={track.title} disabled className="font-medium" />
               </div>
 
-              {/* Album */}
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <Label className="text-sm font-medium">Album</Label>
                 {track.albums.length > 0 ? (
                   <MultipleSelector
@@ -91,9 +87,8 @@ const DetailTrackDialog = ({
                     className="font-medium"
                   />
                 )}
-              </div>
+              </div> */}
 
-              {/* Duration */}
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Duration</Label>
                 <Input
@@ -103,7 +98,6 @@ const DetailTrackDialog = ({
                 />
               </div>
 
-              {/* Release Date */}
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Release Date</Label>
                 <Input
@@ -112,19 +106,18 @@ const DetailTrackDialog = ({
                   className="font-medium"
                 />
               </div>
-            </div>
 
-            {/* Genres */}
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Genres</Label>
-              <MultipleSelector
-                className="font-medium"
-                disabled
-                value={track.genres.map((genre) => ({
-                  value: genre,
-                  label: genre.charAt(0).toUpperCase() + genre.slice(1),
-                }))}
-              />
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Genres</Label>
+                <MultipleSelector
+                  className="font-medium"
+                  disabled
+                  value={track.genres.map((genre) => ({
+                    value: genre,
+                    label: genre.charAt(0).toUpperCase() + genre.slice(1),
+                  }))}
+                />
+              </div>
             </div>
 
             {/* Action Buttons */}
@@ -132,7 +125,9 @@ const DetailTrackDialog = ({
               <Button variant="outline" onClick={() => setIsOpen(false)}>
                 Close
               </Button>
-              <Button>Edit Track</Button>
+              <Link href={`/artist/tracks/update/${track._id}`}>
+                <Button>Edit Track</Button>
+              </Link>
             </div>
           </div>
         </ScrollArea>

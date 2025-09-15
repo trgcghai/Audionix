@@ -6,6 +6,7 @@ import {
   useCreateTrackMutation,
   useDeleteOneTrackMutation,
   useDeleteTracksMutation,
+  useUpdateTrackMutation,
 } from "@/services/tracks/trackApi";
 
 const useTrackActions = () => {
@@ -16,6 +17,7 @@ const useTrackActions = () => {
   const [changeOneStatus, changeOneState] = useChangeOneTrackStatusMutation();
   const [changeMultipleStatus, changeMultipleState] =
     useChangeTracksStatusMutation();
+  const [updateTrack, updateTrackState] = useUpdateTrackMutation();
 
   const transformToPayload = (data: createTrackValues) => {
     const formData = new FormData();
@@ -106,6 +108,25 @@ const useTrackActions = () => {
     }
   };
 
+  const handleUpdateTrack = async ({
+    trackId,
+    data,
+  }: {
+    trackId: string;
+    data: createTrackValues;
+  }) => {
+    try {
+      const formData = transformToPayload(data);
+
+      await updateTrack({ trackId, formData }).unwrap();
+
+      showSuccessToast("Track uploaded successfully!");
+    } catch (err) {
+      console.error("Error creating track:", err);
+      showErrorToast("Upload track failed. Please try again.");
+    }
+  };
+
   return {
     handleCreateTrack,
     createState,
@@ -117,6 +138,8 @@ const useTrackActions = () => {
     changeOneState,
     handleChangeMultipleStatus,
     changeMultipleState,
+    handleUpdateTrack,
+    updateTrackState,
   };
 };
 export default useTrackActions;

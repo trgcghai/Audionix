@@ -59,24 +59,6 @@ export const BaseTrackColumns: ColumnDef<Track>[] = [
     },
   },
   {
-    id: "album",
-    accessorKey: "album.name",
-    enableColumnFilter: true,
-    enableSorting: false,
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Album Name" />
-    ),
-    cell: ({ row }) => {
-      const title =
-        row.original.albums.length > 0 ? row.original.albums[0].title : "-";
-      return title;
-    },
-    meta: {
-      label: "Album",
-      inputType: "text",
-    },
-  },
-  {
     id: "duration",
     accessorKey: "duration_ms",
     header: ({ column }) => (

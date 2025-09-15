@@ -130,6 +130,14 @@ const trackApi = api.injectEndpoints({
         },
         providesTags: ["Tracks"],
       }),
+      updateTrack: builder.mutation({
+        query: ({ trackId, formData }) => ({
+          url: `/tracks/${trackId}`,
+          method: "PUT",
+          data: formData,
+        }),
+        invalidatesTags: ["Tracks"],
+      }),
     };
   },
 });
@@ -145,4 +153,5 @@ export const {
   useGetSimilarTrackQuery,
   useGetTrackByArtistQuery,
   useGetMyCreatedTrackQuery,
+  useUpdateTrackMutation,
 } = trackApi;

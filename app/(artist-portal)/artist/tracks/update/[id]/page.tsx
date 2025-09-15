@@ -1,5 +1,5 @@
 "use client";
-import UploadTrackForm from "@/app/(artist-portal)/artist/tracks/components/form/UploadTrackForm";
+import UpdateTrackForm from "@/app/(artist-portal)/artist/tracks/components/form/UpdateTrackForm";
 import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
@@ -17,6 +17,8 @@ const UpdateTrackPage = () => {
     return data && data.data;
   }, [data]);
 
+  console.log(track?.albums);
+
   return (
     <div className="w-4xl mx-auto">
       {isError && (
@@ -25,7 +27,7 @@ const UpdateTrackPage = () => {
 
       {isLoading && <LoaderSpin />}
 
-      {track && <UploadTrackForm />}
+      {track && <UpdateTrackForm track={track} />}
     </div>
   );
 };

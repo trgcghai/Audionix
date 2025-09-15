@@ -138,7 +138,13 @@ const TrackHeroSection = ({ track }: { track: Track }) => {
   );
 };
 
-const AlbumHeroSection = ({ album }: { album: Album }) => {
+const AlbumHeroSection = ({
+  album,
+  tracks,
+}: {
+  album: Album;
+  tracks: Album["tracks"];
+}) => {
   return (
     <BaseHeroSection
       title={album?.title || ""}
@@ -160,7 +166,7 @@ const AlbumHeroSection = ({ album }: { album: Album }) => {
             <Dot />
             <p>
               {formatTotalTime(
-                album.tracks.reduce(
+                tracks.reduce(
                   (prev: number, curr: EmbbedTrack) => prev + curr.duration_ms,
                   0,
                 ),

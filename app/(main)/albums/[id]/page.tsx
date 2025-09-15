@@ -82,7 +82,7 @@ const DetailAlbumPage = () => {
 
   return (
     <div>
-      {album && <AlbumHeroSection album={album} />}
+      {album && <AlbumHeroSection album={album} tracks={tracks} />}
 
       <Separator className="my-4" />
 

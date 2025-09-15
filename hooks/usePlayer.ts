@@ -1,4 +1,4 @@
-import { EmbbedTrack, Track } from "@/app/types/model";
+import { Album, EmbbedTrack, Track } from "@/app/types/model";
 import { useAppDispatch } from "@/hooks/redux";
 import {
   addTracksToQueue,
@@ -10,6 +10,27 @@ import {
 } from "@/store/slices/queueDrawerSlice";
 
 const convertToPlayingTrack = (track: Track | EmbbedTrack): PlayingTrack => ({
+  _id: track._id,
+  title: track.title,
+  duration_ms: track.duration_ms,
+  cover_images: track.cover_images || [],
+  artist: {
+    _id: track.artist._id,
+    name: track.artist.name,
+  },
+  albums: track.albums
+    ? track.albums.map((album) => ({
+        _id: album._id,
+        title: album.title,
+      }))
+    : [],
+  genres: track.genres || [],
+  file: track.file,
+});
+
+const convertToPlayingTracksFromAlbum = (
+  track: Album["tracks"][number],
+): PlayingTrack => ({
   _id: track._id,
   title: track.title,
   duration_ms: track.duration_ms,
@@ -60,10 +81,21 @@ export const usePlayer = () => {
     dispatch(setIsPlaying(true));
   };
 
+  const playTracksFromAlbum = (tracks: Album["tracks"]) => {
+    if (!tracks || tracks.length === 0) return;
+
+    const playingTracks = tracks.map(convertToPlayingTracksFromAlbum);
+    dispatch(clearQueue());
+    dispatch(addTracksToQueue(playingTracks));
+    dispatch(setCurrentTrackIndex(0));
+    dispatch(setIsPlaying(true));
+  };
+
   return {
     // actions to add track(s) to queue
     playTrack,
     playTracks,
+    playTracksFromAlbum,
 
     // variables for uses
     currentTrack,

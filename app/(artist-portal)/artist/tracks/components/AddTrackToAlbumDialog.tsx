@@ -1,6 +1,7 @@
 "use client";
-import { mockArtistAlbums } from "@/app/sampleData";
 import { Track } from "@/app/types/model";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import LoaderSpin from "@/components/common/LoaderSpin";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,13 +12,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import MultipleSelector, { Option } from "@/components/ui/MultipleSelector";
+import useAlbumActions from "@/hooks/useAlbumActions";
+import { useGetMyAlbumsAsFilterOptionsQuery } from "@/services/albums/albumApi";
 import { useState } from "react";
 
 interface AddTrackToAlbumDialogProps {
@@ -35,10 +32,27 @@ const AddTrackToAlbumDialog = ({
   asChild = true,
   setStatusDialogOpen = () => {},
 }: AddTrackToAlbumDialogProps) => {
-  const [album, setAlbum] = useState<string>("");
+  const [albums, setAlbums] = useState<Option[]>([]);
+  const { data } = useGetMyAlbumsAsFilterOptionsQuery({});
 
-  const handleAddToAlbum = () => {
-    console.log(`Adding ${tracks.length} track(s) to album with ID: ${album}`);
+  const {
+    handleAddTracksToAlbums,
+    addTracksToAlbumsState: { isLoading },
+  } = useAlbumActions();
+
+  const handleCancel = () => {
+    setStatusDialogOpen(false);
+    setAlbums([]);
+  };
+
+  const handleSave = async () => {
+    const albumIds = albums.map((album) => album.value);
+    const trackIds = tracks.map((track) => track._id);
+
+    await handleAddTracksToAlbums({ albumsIds: albumIds, trackIds });
+
+    setStatusDialogOpen(false);
+    setAlbums([]);
   };
 
   return (
@@ -49,24 +63,31 @@ const AddTrackToAlbumDialog = ({
           <DialogTitle>Add selected track(s) to album</DialogTitle>
         </DialogHeader>
 
-        <Select onValueChange={(value) => setAlbum(value)} value={album}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select an album" />
-          </SelectTrigger>
-          <SelectContent>
-            {mockArtistAlbums.map((album) => {
-              return (
-                <SelectItem key={album._id} value={album._id}>
-                  {album.name}
-                </SelectItem>
-              );
-            })}
-          </SelectContent>
-        </Select>
+        <MultipleSelector
+          options={data?.data?.options || []}
+          value={albums}
+          onChange={setAlbums}
+          placeholder="Select albums"
+          emptyIndicator={
+            <div className="flex items-center justify-center">
+              <ErrorMessage
+                message="No albums found."
+                severity="info"
+                variant="inline"
+                showIcon={false}
+              />
+            </div>
+          }
+        />
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="outline" className="rounded-full">
+            <Button
+              variant="outline"
+              className="rounded-full"
+              onClick={handleCancel}
+              disabled={isLoading}
+            >
               Cancel
             </Button>
           </DialogClose>
@@ -74,9 +95,10 @@ const AddTrackToAlbumDialog = ({
             <Button
               type="submit"
               className="rounded-full"
-              onClick={handleAddToAlbum}
+              onClick={handleSave}
+              disabled={isLoading}
             >
-              Save
+              {isLoading ? <LoaderSpin /> : "Save"}
             </Button>
           </DialogClose>
         </DialogFooter>

@@ -157,7 +157,7 @@ export type Album = {
       key: string;
     },
   ];
-  tracks: EmbbedTrack[];
+  tracks: (Track & { time_added: string })[];
   genres: string[];
   number_of_followers: number;
   type: "album";

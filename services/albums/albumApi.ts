@@ -1,4 +1,6 @@
 import {
+  AddTracksToAlbumsParams,
+  AddTracksToAlbumsResponse,
   CreateAlbumResponse,
   FindAlbumByArtistParams,
   FindAlbumsAsOptionsResponse,
@@ -6,6 +8,9 @@ import {
   FindAlbumsParams,
   FindAlbumsResponse,
   FindMyFollowedAlbumsResponse,
+  FindTracksInAlbumResponse,
+  RemoveTracksFromAlbumsParams,
+  RemoveTracksFromAlbumsResponse,
   UpdateStatusManyParams,
   UpdateStatusOneParams,
 } from "@/services/albums/type";
@@ -141,6 +146,35 @@ const albumApi = api.injectEndpoints({
       }),
       providesTags: ["Albums"],
     }),
+    addTracksToAlbums: builder.mutation<
+      AddTracksToAlbumsResponse,
+      AddTracksToAlbumsParams
+    >({
+      query: ({ albumIds, trackIds }) => ({
+        url: `/albums/tracks`,
+        method: "PUT",
+        data: { albumIds, trackIds },
+      }),
+      invalidatesTags: ["Albums"],
+    }),
+    removeTracksFromAlbums: builder.mutation<
+      RemoveTracksFromAlbumsResponse,
+      RemoveTracksFromAlbumsParams
+    >({
+      query: ({ albumIds, trackIds }) => ({
+        url: `/albums/tracks`,
+        method: "DELETE",
+        data: { albumIds, trackIds },
+      }),
+      invalidatesTags: ["Albums"],
+    }),
+    getTracksInAlbum: builder.query<FindTracksInAlbumResponse, string>({
+      query: (albumId: string) => ({
+        url: `/albums/${albumId}/tracks`,
+        method: "GET",
+      }),
+      providesTags: ["Albums"],
+    }),
   }),
 });
 
@@ -157,4 +191,7 @@ export const {
   useGetAlbumByArtistQuery,
   useGetAlbumByIdQuery,
   useGetMyAlbumsAsFilterOptionsQuery,
+  useAddTracksToAlbumsMutation,
+  useRemoveTracksFromAlbumsMutation,
+  useGetTracksInAlbumQuery,
 } = albumApi;

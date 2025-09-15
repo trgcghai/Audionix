@@ -4,6 +4,7 @@ import { AlbumHeroSection } from "@/app/(main)/components/heroSection";
 import MediaList from "@/app/(main)/components/MediaList";
 import { ITEM_PER_MEDIA_ROW } from "@/app/constant";
 import { ApiErrorResponse } from "@/app/types/api";
+import { Album, Track } from "@/app/types/model";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
 import SimpleTrackTable from "@/components/common/SimpleTrackTable";
@@ -13,6 +14,7 @@ import useUserActions from "@/hooks/useUserActions";
 import {
   useGetAlbumByArtistQuery,
   useGetAlbumByIdQuery,
+  useGetTracksInAlbumQuery,
 } from "@/services/albums/albumApi";
 import { useCheckIfUserIsFollowingAlbumsQuery } from "@/services/users/userApi";
 import { useUserSlice } from "@/store/slices/userSlice";
@@ -20,7 +22,7 @@ import { useParams } from "next/navigation";
 import { useMemo } from "react";
 
 const DetailAlbumPage = () => {
-  const { playTracks } = usePlayer();
+  const { playTracksFromAlbum } = usePlayer();
   const { handleFollowAlbum, handleUnfollowAlbum } = useUserActions();
   const { id } = useParams<{ id: string }>();
   const { user, isAuthenticated } = useUserSlice();
@@ -30,16 +32,32 @@ const DetailAlbumPage = () => {
     isError: isAlbumError,
     error: albumError,
   } = useGetAlbumByIdQuery(id, { skip: !id });
+
+  const { data: tracksData } = useGetTracksInAlbumQuery(id, { skip: !id });
+
   const { data: followData } = useCheckIfUserIsFollowingAlbumsQuery([id], {
     skip: !id || !user || !isAuthenticated,
   });
+
   const album = useMemo(() => {
     return albumData && albumData.data;
   }, [albumData]);
+
   const { data: similarAlbumData } = useGetAlbumByArtistQuery(
     { artistId: album?.artist._id || "", limit: ITEM_PER_MEDIA_ROW },
     { skip: !album?.artist._id },
   );
+
+  const tracks: Album["tracks"] = useMemo(() => {
+    return tracksData?.data?.results.map(
+      (item: { _id: Track; time_added: string }) => ({
+        ...item._id,
+        time_added: item.time_added,
+      }),
+    );
+  }, [tracksData]);
+
+  console.log("tracks", tracks);
 
   if (isAlbumLoading) {
     return (
@@ -70,7 +88,7 @@ const DetailAlbumPage = () => {
 
       <AlbumControlSection
         isFollowing={followData?.data.result[0].isFollowing || false}
-        onPlay={() => album && playTracks(album.tracks)}
+        onPlay={() => album && tracks && playTracksFromAlbum(tracks)}
         onFollow={() => {
           if (followData?.data.result[0].isFollowing) {
             handleUnfollowAlbum(album._id);
@@ -80,7 +98,7 @@ const DetailAlbumPage = () => {
         }}
       />
 
-      <SimpleTrackTable tracks={album?.tracks || []} />
+      <SimpleTrackTable variant="album" tracks={tracks || []} />
 
       <MediaList
         className="mt-12"

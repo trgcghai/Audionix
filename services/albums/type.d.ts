@@ -1,5 +1,5 @@
 import { PaginatedResponse } from "@/app/types/api";
-import { Album } from "@/app/types/model";
+import { Album, Track } from "@/app/types/model";
 
 export type CreateAlbumResponse = ApiResponse<Album>;
 
@@ -28,4 +28,29 @@ export type FindMyFollowedAlbumsResponse = ApiResponse<{ albums: Album[] }>;
 
 export type FindAlbumsAsOptionsResponse = ApiResponse<{
   options: { value: string; label: string }[];
+}>;
+
+export type AddTracksToAlbumsParams = {
+  albumIds: string[];
+  trackIds: string[];
+};
+export type RemoveTracksFromAlbumsParams = AddTracksToAlbumsParams;
+
+export type AddTracksToAlbumsResponse = ApiResponse<{
+  success: boolean;
+  message: string;
+  stats: {
+    tracksAdded: number;
+    albumsModified: number;
+    albumsAttempted: number;
+  };
+}>;
+export type RemoveTracksFromAlbumsResponse = AddTracksToAlbumsResponse;
+
+export type FindTracksInAlbumResponse = ApiResponse<{
+  _id: string;
+  results: {
+    time_added: string;
+    _id: Track;
+  }[];
 }>;

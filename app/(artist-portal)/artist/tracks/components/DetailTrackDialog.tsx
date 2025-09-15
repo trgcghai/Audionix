@@ -25,8 +25,6 @@ const DetailTrackDialog = ({
   setIsOpen,
   track,
 }: DetailTrackDialogProps) => {
-  console.log("track in detail dialog", track);
-
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="!max-w-4xl !px-2">

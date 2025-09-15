@@ -1,9 +1,11 @@
 import { createAlbumFormValues } from "@/app/(artist-portal)/artist/albums/components/form/schemas";
 import useToast from "@/hooks/useToast";
 import {
+  useAddTracksToAlbumsMutation,
   useCreateAlbumMutation,
   useDeleteMultiplesMutation,
   useDeleteOneMutation,
+  useRemoveTracksFromAlbumsMutation,
   useUpdateStatusManyMutation,
   useUpdateStatusOneMutation,
 } from "@/services/albums/albumApi";
@@ -16,6 +18,11 @@ const useAlbumActions = () => {
   const [updateStatusOne, updateStatusOneState] = useUpdateStatusOneMutation();
   const [updateStatusMany, updateStatusManyState] =
     useUpdateStatusManyMutation();
+
+  const [addTracksToAlbums, addTracksToAlbumsState] =
+    useAddTracksToAlbumsMutation();
+  const [removeTracksFromAlbums, removeTracksFromAlbumsState] =
+    useRemoveTracksFromAlbumsMutation();
 
   const transformToPayload = (data: createAlbumFormValues) => {
     const formData = new FormData();
@@ -100,6 +107,42 @@ const useAlbumActions = () => {
     }
   };
 
+  const handleAddTracksToAlbums = async ({
+    albumsIds,
+    trackIds,
+  }: {
+    albumsIds: string[];
+    trackIds: string[];
+  }) => {
+    try {
+      if (albumsIds.length === 0 || trackIds.length === 0) return;
+
+      await addTracksToAlbums({ albumIds: albumsIds, trackIds }).unwrap();
+      showSuccessToast("Added tracks to albums successfully");
+    } catch (error) {
+      console.error("Failed to add tracks to albums:", error);
+      showErrorToast("Failed to add tracks to albums");
+    }
+  };
+
+  const handleRemoveTracksFromAlbums = async ({
+    albumsIds,
+    trackIds,
+  }: {
+    albumsIds: string[];
+    trackIds: string[];
+  }) => {
+    try {
+      if (albumsIds.length === 0 || trackIds.length === 0) return;
+
+      await removeTracksFromAlbums({ albumIds: albumsIds, trackIds }).unwrap();
+      showSuccessToast("Removed tracks from albums successfully");
+    } catch (error) {
+      console.error("Failed to remove tracks from albums:", error);
+      showErrorToast("Failed to remove tracks from albums");
+    }
+  };
+
   return {
     handleCreateAlbum,
     createState,
@@ -111,6 +154,10 @@ const useAlbumActions = () => {
     updateStatusOneState,
     handleUpdateStatusMany,
     updateStatusManyState,
+    handleAddTracksToAlbums,
+    addTracksToAlbumsState,
+    handleRemoveTracksFromAlbums,
+    removeTracksFromAlbumsState,
   };
 };
 export default useAlbumActions;

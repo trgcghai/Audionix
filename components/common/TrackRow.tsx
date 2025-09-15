@@ -1,6 +1,7 @@
 "use client";
 import { Playlist, Track } from "@/app/types/model";
 import { SimpleTrackTablesVariant } from "@/components/common/SimpleTrackTable";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -53,7 +54,7 @@ const RenderByVariant = ({
     });
   };
 
-  console.log(variant);
+  console.log(track);
 
   if (variant === "searchResult") {
     return (
@@ -109,6 +110,40 @@ const RenderByVariant = ({
     );
   }
 
+  if (variant === "album") {
+    return (
+      <TableRow className="rounded-lg border-b-0" onClick={onClick}>
+        <TableCell className="w-6 rounded-tl-lg rounded-bl-lg">
+          <p className="text-sm text-gray-500">{index}</p>
+        </TableCell>
+        <TableCell className="w-2/5">
+          <p className="text-sm font-semibold">{track.title}</p>
+        </TableCell>
+        <TableCell className="w-2/5">
+          <p className="text-sm font-medium">
+            {track.genres.map((genre) => (
+              <Badge key={genre} className="mr-1">
+                {genre.charAt(0).toUpperCase() + genre.slice(1)}
+              </Badge>
+            ))}
+          </p>
+        </TableCell>
+        <TableCell className="w-1/5">
+          <p className="text-sm font-medium">
+            {"time_added" in track
+              ? formatUploadTime(track.time_added as string)
+              : ""}
+          </p>
+        </TableCell>
+        <TableCell className="w-10 rounded-tr-lg rounded-br-lg">
+          <p className="text-sm font-medium">
+            {formatTrackDuration(track.duration_ms)}
+          </p>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
   return (
     <TableRow className="rounded-lg border-b-0" onClick={onClick}>
       <TableCell className="w-6 rounded-tl-lg rounded-bl-lg">
@@ -118,7 +153,7 @@ const RenderByVariant = ({
         <div className="flex items-center gap-2">
           <div>
             <p className="text-sm font-semibold">{track.title}</p>
-            <p className="text-sm text-gray-500">{track.artist.name}</p>
+            <p className="text-sm text-gray-500">{track.artist?.name}</p>
           </div>
         </div>
       </TableCell>

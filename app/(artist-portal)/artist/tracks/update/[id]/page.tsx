@@ -17,8 +17,6 @@ const UpdateTrackPage = () => {
     return data && data.data;
   }, [data]);
 
-  console.log(track?.albums);
-
   return (
     <div className="w-4xl mx-auto">
       {isError && (

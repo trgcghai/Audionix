@@ -1,6 +1,6 @@
 "use client";
 import useUpdateTrackForm from "@/app/(artist-portal)/artist/tracks/hooks/useUpdateTrackForm";
-import { DEFAULT_GENRES } from "@/app/constant";
+import { DEFAULT_GENRES, MAX_GENRES } from "@/app/constant";
 import { ApiErrorResponse } from "@/app/types/api";
 import { Track } from "@/app/types/model";
 import ErrorMessage from "@/components/common/ErrorMessage";
@@ -17,8 +17,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import MultipleSelector from "@/components/ui/MultipleSelector";
 import { useGetMyAlbumsAsFilterOptionsQuery } from "@/services/albums/albumApi";
+import Image from "next/image";
 import { AudioUploadField } from "./AudioUploadField";
 
 interface UpdateTrackFormProps {
@@ -44,14 +46,27 @@ const UpdateTrackForm = ({ track }: UpdateTrackFormProps) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+        <div className="space-y-2">
+          <Label className="font-semibold">Current Cover Image</Label>
+          <div className="border rounded-lg p-4">
+            <div className="flex items-center justify-center">
+              <Image
+                src={track.cover_images[0].url}
+                alt={`${track.title} cover`}
+                width={track.cover_images[0].width}
+                height={track.cover_images[0].height}
+                className="w-[300px] object-cover aspect-square rounded-lg shadow-md"
+              />
+            </div>
+          </div>
+        </div>
+
         <FormField
           control={form.control}
           name="cover_image"
           render={({ field }) => (
             <FormItem className="h-full w-full">
-              <FormLabel required className="font-semibold">
-                Cover Image
-              </FormLabel>
+              <FormLabel className="font-semibold">New Cover Image</FormLabel>
               <FormControl>
                 <ImageUploadField field={field} />
               </FormControl>
@@ -60,14 +75,23 @@ const UpdateTrackForm = ({ track }: UpdateTrackFormProps) => {
           )}
         />
 
+        <div className="space-y-2">
+          <Label className="font-semibold">Current Audio File</Label>
+          <div className="border rounded-lg p-4">
+            <div className="flex items-center gap-4">
+              <audio controls className="w-full">
+                <source src={track.file.url} type={track.file.mimetype} />
+              </audio>
+            </div>
+          </div>
+        </div>
+
         <FormField
           control={form.control}
           name="audio"
           render={({ field }) => (
             <FormItem className="h-full w-full">
-              <FormLabel required className="font-semibold">
-                Audio File
-              </FormLabel>
+              <FormLabel className="font-semibold">New Audio File</FormLabel>
               <FormControl>
                 <AudioUploadField field={field} />
               </FormControl>
@@ -81,9 +105,7 @@ const UpdateTrackForm = ({ track }: UpdateTrackFormProps) => {
           name="title"
           render={({ field }) => (
             <FormItem className="h-full w-full">
-              <FormLabel required className="font-semibold">
-                Title
-              </FormLabel>
+              <FormLabel className="font-semibold">Title</FormLabel>
               <FormControl>
                 <Input
                   {...field}
@@ -102,14 +124,12 @@ const UpdateTrackForm = ({ track }: UpdateTrackFormProps) => {
           name="genres"
           render={({ field }) => (
             <FormItem className="h-full w-full">
-              <FormLabel required className="font-semibold">
-                Genres
-              </FormLabel>
+              <FormLabel className="font-semibold">Genres</FormLabel>
               <FormControl>
                 <MultipleSelector
                   {...field}
                   options={DEFAULT_GENRES}
-                  maxSelected={5}
+                  maxSelected={MAX_GENRES}
                   creatable
                   placeholder="Select genres"
                 />

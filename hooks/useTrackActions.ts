@@ -1,4 +1,7 @@
-import { createTrackValues } from "@/app/(artist-portal)/artist/tracks/components/form/schemas";
+import {
+  createTrackValues,
+  updateTrackValues,
+} from "@/app/(artist-portal)/artist/tracks/components/form/schemas";
 import useToast from "@/hooks/useToast";
 import {
   useChangeOneTrackStatusMutation,
@@ -19,10 +22,12 @@ const useTrackActions = () => {
     useChangeTracksStatusMutation();
   const [updateTrack, updateTrackState] = useUpdateTrackMutation();
 
-  const transformToPayload = (data: createTrackValues) => {
+  const transformToPayload = (data: createTrackValues | updateTrackValues) => {
     const formData = new FormData();
 
-    formData.append("title", data.title);
+    if (data.title) {
+      formData.append("title", data.title);
+    }
 
     if (data.albums && data.albums.length > 0) {
       formData.append(
@@ -31,14 +36,24 @@ const useTrackActions = () => {
       );
     }
 
-    formData.append(
-      "genres",
-      JSON.stringify(data.genres.map((genre) => genre.value)),
-    );
+    if (data.genres && data.genres.length > 0) {
+      formData.append(
+        "genres",
+        JSON.stringify(data.genres.map((genre) => genre.value)),
+      );
+    }
 
-    formData.append("cover_image", data.cover_image[0]);
+    if (
+      data.cover_image &&
+      data.cover_image.length > 0 &&
+      data.cover_image[0]
+    ) {
+      formData.append("cover_image", data.cover_image[0]);
+    }
 
-    formData.append("audio", data.audio[0]);
+    if (data.audio && data.audio.length > 0 && data.audio[0]) {
+      formData.append("audio", data.audio[0]);
+    }
 
     return formData;
   };
@@ -113,7 +128,7 @@ const useTrackActions = () => {
     data,
   }: {
     trackId: string;
-    data: createTrackValues;
+    data: updateTrackValues;
   }) => {
     try {
       const formData = transformToPayload(data);

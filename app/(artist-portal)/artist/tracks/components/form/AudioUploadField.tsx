@@ -1,5 +1,4 @@
 "use client";
-import { createTrackValues } from "@/app/(artist-portal)/artist/tracks/components/form/schemas";
 import { AUDIO_FILE_ACCEPT_TYPES } from "@/app/constant";
 import {
   FileInput,
@@ -10,13 +9,15 @@ import {
 import getAcceptedFileExtensions from "@/utils/getAcceptedFileExtensions";
 import { Music } from "lucide-react";
 import { DropzoneOptions } from "react-dropzone";
-import { ControllerRenderProps } from "react-hook-form";
+import { ControllerRenderProps, FieldValues, Path } from "react-hook-form";
 
-interface AudioUploadFieldProps {
-  field: ControllerRenderProps<createTrackValues, "audio">;
+interface AudioUploadFieldProps<T extends FieldValues> {
+  field: ControllerRenderProps<T, Path<T>>;
 }
 
-export const AudioUploadField = ({ field }: AudioUploadFieldProps) => {
+export const AudioUploadField = <T extends FieldValues>({
+  field,
+}: AudioUploadFieldProps<T>) => {
   const options = {
     multiple: false,
     maxFiles: 1,
@@ -45,7 +46,7 @@ export const AudioUploadField = ({ field }: AudioUploadFieldProps) => {
       )}
       {field.value && field.value.length > 0 && (
         <FileUploaderContent className="border-muted flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed p-4">
-          {field.value.map((file, index) => (
+          {field.value.map((file: File, index: number) => (
             <FileUploaderItem
               index={index}
               key={file.name}

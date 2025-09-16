@@ -51,3 +51,10 @@ export type UpdateMultipleStatusResponse = ApiResponse<{
   }[];
   message: string;
 }>;
+
+export type UpdateTrackResponse = ApiResponse<{ result: Track }>;
+
+export type UpdateTrackParams = {
+  trackId: string;
+  formData: FormData;
+};

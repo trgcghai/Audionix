@@ -1,6 +1,6 @@
 "use client";
 import useCreateAlbumForm from "@/app/(artist-portal)/artist/albums/hooks/useCreateAlbumForm";
-import { DEFAULT_GENRES } from "@/app/constant";
+import { DEFAULT_GENRES, MAX_GENRES } from "@/app/constant";
 import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
@@ -89,7 +89,7 @@ const EditAlbumForm = () => {
                   <MultipleSelector
                     {...field}
                     options={DEFAULT_GENRES}
-                    maxSelected={5}
+                    maxSelected={MAX_GENRES}
                     creatable
                     placeholder="Select genres"
                   />

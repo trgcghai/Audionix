@@ -93,6 +93,8 @@ export const DEFAULT_GENRES: Option[] = [
   },
 ];
 
+export const MAX_GENRES = 4;
+
 export const MAX_FILE_SIZE_MB = 25; // 25MB
 
 export const MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024; // convert to bytes

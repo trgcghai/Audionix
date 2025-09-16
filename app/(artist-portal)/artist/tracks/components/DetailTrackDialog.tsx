@@ -69,26 +69,6 @@ const DetailTrackDialog = ({
                 <Input value={track.title} disabled className="font-medium" />
               </div>
 
-              {/* <div className="space-y-2">
-                <Label className="text-sm font-medium">Album</Label>
-                {track.albums.length > 0 ? (
-                  <MultipleSelector
-                    className="font-medium"
-                    disabled
-                    value={track.albums.map((album) => ({
-                      value: album._id,
-                      label: album.title,
-                    }))}
-                  />
-                ) : (
-                  <Input
-                    value="This track is currently not in any of your albums"
-                    disabled
-                    className="font-medium"
-                  />
-                )}
-              </div> */}
-
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Duration</Label>
                 <Input

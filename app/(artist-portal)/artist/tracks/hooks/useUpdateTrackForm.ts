@@ -1,6 +1,6 @@
 import {
-  createTrackSchema,
-  createTrackValues,
+  updateTrackSchema,
+  updateTrackValues,
 } from "@/app/(artist-portal)/artist/tracks/components/form/schemas";
 import { Track } from "@/app/types/model";
 import useTrackActions from "@/hooks/useTrackActions";
@@ -16,8 +16,8 @@ const useUpdateTrackForm = ({ track }: props) => {
   const { handleUpdateTrack, updateTrackState } = useTrackActions();
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const form = useForm<createTrackValues>({
-    resolver: zodResolver(createTrackSchema),
+  const form = useForm<updateTrackValues>({
+    resolver: zodResolver(updateTrackSchema),
     defaultValues: {
       title: track.title,
       albums:
@@ -26,29 +26,26 @@ const useUpdateTrackForm = ({ track }: props) => {
           value: album._id,
         })) || [],
       genres:
-        track.genres.map((genre) => ({ label: genre, value: genre })) || [],
-      cover_image: [new File([], track.cover_images[0].url)],
-      audio: [new File([], track.file.url)],
+        track.genres.map((genre) => ({
+          label: genre.charAt(0).toUpperCase() + genre.slice(1),
+          value: genre,
+        })) || [],
+      cover_image: undefined,
+      audio: undefined,
     },
   });
 
-  const handleSubmit = async (data: createTrackValues) => {
+  const handleSubmit = async (data: updateTrackValues) => {
     try {
       await handleUpdateTrack({ trackId: track._id, data });
-      form.reset();
+
+      form.resetField("cover_image");
+      form.resetField("audio");
     } catch (error) {
       console.error("Error creating track:", error);
     }
 
     setDialogOpen(false);
-
-    form.reset({
-      title: "",
-      albums: [],
-      genres: [],
-      cover_image: undefined,
-      audio: undefined,
-    });
   };
 
   const handleReset = () => {

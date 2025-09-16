@@ -11,6 +11,8 @@ import {
   UpdateMultipleStatusParams,
   UpdateMultipleStatusResponse,
   UpdateOneStatusParams,
+  UpdateTrackParams,
+  UpdateTrackResponse,
 } from "./type";
 
 const trackApi = api.injectEndpoints({
@@ -130,7 +132,7 @@ const trackApi = api.injectEndpoints({
         },
         providesTags: ["Tracks"],
       }),
-      updateTrack: builder.mutation({
+      updateTrack: builder.mutation<UpdateTrackResponse, UpdateTrackParams>({
         query: ({ trackId, formData }) => ({
           url: `/tracks/${trackId}`,
           method: "PUT",

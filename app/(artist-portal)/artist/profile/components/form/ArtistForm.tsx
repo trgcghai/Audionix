@@ -1,6 +1,6 @@
 "use client";
 import useArtistForm from "@/app/(artist-portal)/artist/profile/hooks/useArtistForm";
-import { DEFAULT_GENRES } from "@/app/constant";
+import { DEFAULT_GENRES, MAX_GENRES } from "@/app/constant";
 import { ApiErrorResponse } from "@/app/types/api";
 import { Artist } from "@/app/types/model";
 import ErrorMessage from "@/components/common/ErrorMessage";
@@ -115,7 +115,7 @@ const ArtistForm = ({
                 <MultipleSelector
                   {...field}
                   options={DEFAULT_GENRES}
-                  maxSelected={5}
+                  maxSelected={MAX_GENRES}
                   creatable
                   placeholder="Select genres"
                 />

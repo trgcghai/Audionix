@@ -1,4 +1,4 @@
-import { MAX_FILE_SIZE, MAX_FILE_SIZE_MB } from "@/app/constant";
+import { MAX_FILE_SIZE, MAX_FILE_SIZE_MB, MAX_GENRES } from "@/app/constant";
 import { z } from "zod";
 
 const optionSchema = z.object({
@@ -14,7 +14,8 @@ export const artistSchema = z.object({
     .max(100, "Name cannot exceed 100 characters"),
   genres: z
     .array(optionSchema, { message: "At least one genre is required" })
-    .min(1, "At least one genre is required"),
+    .min(1, "At least one genre is required")
+    .max(MAX_GENRES, `You can select up to ${MAX_GENRES} genres`),
   cover_images: z
     .instanceof(File, { message: "Cover image must be a valid file" })
     .refine((value) => value.size < MAX_FILE_SIZE, {

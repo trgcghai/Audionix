@@ -22,7 +22,7 @@ export default function ArtistPortalLayout({
               className="relative top-0 right-0 left-0 h-12 shrink-0"
             />
 
-            <ScrollArea className="w-full flex-1 overflow-auto">
+            <ScrollArea className="w-full flex-1 h-full">
               <div className="h-full p-4">
                 <div className="px-3 py-6 bg-card border rounded-sm">
                   {children}

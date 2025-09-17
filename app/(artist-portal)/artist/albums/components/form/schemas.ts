@@ -29,3 +29,28 @@ export const createAlbumSchema = z.object({
 });
 
 export type createAlbumFormValues = z.infer<typeof createAlbumSchema>;
+
+export const updateAlbumSchema = z.object({
+  title: z
+    .string()
+    .min(1, "Title is required")
+    .max(100, "Title cannot exceed 100 characters")
+    .optional(),
+  description: z.string().optional(),
+  cover_image: z
+    .array(
+      z
+        .instanceof(File, { message: "Cover image is required" })
+        .refine((file) => file.size < MAX_FILE_SIZE, {
+          message: `Cover image must be less than ${MAX_FILE_SIZE_MB}MB`,
+        }),
+    )
+    .optional(),
+  genres: z
+    .array(optionSchema, { message: "At least one genre is required" })
+    .min(1, "At least one genre is required")
+    .max(MAX_GENRES, `You can select up to ${MAX_GENRES} genres`)
+    .optional(),
+});
+
+export type updateAlbumFormValues = z.infer<typeof updateAlbumSchema>;

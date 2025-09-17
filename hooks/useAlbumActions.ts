@@ -1,4 +1,7 @@
-import { createAlbumFormValues } from "@/app/(artist-portal)/artist/albums/components/form/schemas";
+import {
+  createAlbumFormValues,
+  updateAlbumFormValues,
+} from "@/app/(artist-portal)/artist/albums/components/form/schemas";
 import useToast from "@/hooks/useToast";
 import {
   useAddTracksToAlbumsMutation,
@@ -6,6 +9,7 @@ import {
   useDeleteMultiplesMutation,
   useDeleteOneMutation,
   useRemoveTracksFromAlbumsMutation,
+  useUpdateAlbumMutation,
   useUpdateStatusManyMutation,
   useUpdateStatusOneMutation,
 } from "@/services/albums/albumApi";
@@ -24,19 +28,29 @@ const useAlbumActions = () => {
   const [removeTracksFromAlbums, removeTracksFromAlbumsState] =
     useRemoveTracksFromAlbumsMutation();
 
-  const transformToPayload = (data: createAlbumFormValues) => {
+  const [updateAlbum, updateAlbumState] = useUpdateAlbumMutation();
+
+  const transformToPayload = (
+    data: createAlbumFormValues | updateAlbumFormValues,
+  ) => {
     const formData = new FormData();
 
-    formData.append("title", data.title);
+    if (data.title) {
+      formData.append("title", data.title);
+    }
 
     formData.append("description", data.description || "");
 
-    formData.append("cover_images", data.cover_image[0]);
+    if (data.cover_image && data.cover_image.length > 0) {
+      formData.append("cover_images", data.cover_image[0]);
+    }
 
-    formData.append(
-      "genres",
-      JSON.stringify(data.genres.map((genre) => genre.value)),
-    );
+    if (data.genres && data.genres.length > 0) {
+      formData.append(
+        "genres",
+        JSON.stringify(data.genres.map((genre) => genre.value)),
+      );
+    }
 
     return formData;
   };
@@ -143,6 +157,23 @@ const useAlbumActions = () => {
     }
   };
 
+  const handleUpdateAlbum = async ({
+    albumId,
+    formData,
+  }: {
+    albumId: string;
+    formData: updateAlbumFormValues;
+  }) => {
+    try {
+      const data = transformToPayload(formData);
+      await updateAlbum({ albumId, data }).unwrap();
+      showSuccessToast("Album updated successfully");
+    } catch (err) {
+      console.error("Error updating album:", err);
+      showErrorToast("Failed to update album");
+    }
+  };
+
   return {
     handleCreateAlbum,
     createState,
@@ -158,6 +189,8 @@ const useAlbumActions = () => {
     addTracksToAlbumsState,
     handleRemoveTracksFromAlbums,
     removeTracksFromAlbumsState,
+    handleUpdateAlbum,
+    updateAlbumState,
   };
 };
 export default useAlbumActions;

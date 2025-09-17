@@ -11,6 +11,8 @@ import {
   FindTracksInAlbumResponse,
   RemoveTracksFromAlbumsParams,
   RemoveTracksFromAlbumsResponse,
+  UpdateAlbumParams,
+  UpdateAlbumResponse,
   UpdateStatusManyParams,
   UpdateStatusOneParams,
 } from "@/services/albums/type";
@@ -173,6 +175,14 @@ const albumApi = api.injectEndpoints({
       }),
       providesTags: ["Albums"],
     }),
+    updateAlbum: builder.mutation<UpdateAlbumResponse, UpdateAlbumParams>({
+      query: ({ albumId, data }) => ({
+        url: `/albums/${albumId}`,
+        method: "PUT",
+        data,
+      }),
+      invalidatesTags: ["Albums"],
+    }),
   }),
 });
 
@@ -192,4 +202,5 @@ export const {
   useAddTracksToAlbumsMutation,
   useRemoveTracksFromAlbumsMutation,
   useGetTracksInAlbumQuery,
+  useUpdateAlbumMutation,
 } = albumApi;

@@ -54,3 +54,10 @@ export type FindTracksInAlbumResponse = ApiResponse<{
     _id: Track;
   }[];
 }>;
+
+export type UpdateAlbumResponse = ApiResponse<Album>;
+
+export type UpdateAlbumParams = {
+  albumId: string;
+  data: FormData;
+};

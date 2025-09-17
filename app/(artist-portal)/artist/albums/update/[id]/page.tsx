@@ -1,21 +1,32 @@
 "use client";
-import EditAlbumForm from "@/app/(artist-portal)/artist/albums/components/form/EditAlbumForm";
-import { mockArtistAlbums } from "@/app/sampleData";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import UpdateAlbumForm from "@/app/(artist-portal)/artist/albums/components/form/UpdateAlbumForm";
+import { ApiErrorResponse } from "@/app/types/api";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import LoaderSpin from "@/components/common/LoaderSpin";
+import { useGetAlbumByIdQuery } from "@/services/albums/albumApi";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 
 const UpdateAlbumPage = () => {
-  const { id } = useParams();
-  const album = useMemo(
-    () => mockArtistAlbums.find((album) => album.id === id),
-    [id],
-  );
+  const { id } = useParams<{ id: string }>();
+  const { data, isLoading, isError, error } = useGetAlbumByIdQuery(id, {
+    skip: !id,
+  });
+
+  const album = useMemo(() => {
+    return data && data.data;
+  }, [data]);
 
   return (
-    <ScrollArea className="mx-auto w-4xl">
-      <EditAlbumForm album={album} />
-    </ScrollArea>
+    <div className="w-4xl mx-auto">
+      {isError && (
+        <ErrorMessage message={(error as ApiErrorResponse).data.message} />
+      )}
+
+      {isLoading && <LoaderSpin />}
+
+      {data && <UpdateAlbumForm album={album} />}
+    </div>
   );
 };
 export default UpdateAlbumPage;

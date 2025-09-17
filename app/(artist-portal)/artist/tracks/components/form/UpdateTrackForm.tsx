@@ -192,7 +192,7 @@ const UpdateTrackForm = ({ track }: UpdateTrackFormProps) => {
             onClick={openConfirmDialog}
             disabled={isLoading}
           >
-            {isLoading ? <LoaderSpin /> : "Upload"}
+            {isLoading ? <LoaderSpin /> : "Save Changes"}
           </Button>
           <ConfirmDialog
             title="Confirm Upload"

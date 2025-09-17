@@ -1,6 +1,7 @@
 "use client";
 import { Playlist, Track } from "@/app/types/model";
 import { SimpleTrackTablesVariant } from "@/components/common/SimpleTrackTable";
+import useTrackRow from "@/components/common/SimpleTrackTable/useTrackRow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,59 +11,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { TableCell, TableRow } from "@/components/ui/table";
-import useAlbumActions from "@/hooks/useAlbumActions";
-import usePlaylistAction from "@/hooks/usePlaylistAction";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import { Ellipsis, Trash2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useMemo } from "react";
 
-interface RenderByVariantProps extends TrackRowProps {
-  onClick: () => void;
-}
-
-const RenderByVariant = ({
+const TrackRow = ({
   index,
   track,
+  onClick = () => {},
   variant = "default",
-  onClick,
-}: RenderByVariantProps) => {
+}: TrackRowProps) => {
   const {
-    handleAddTracksToPlaylist,
-    handleRemoveTracksFromPlaylist,
-    getCurrrentPlaylistId,
-  } = usePlaylistAction();
-
-  const { handleRemoveTracksFromAlbums, getCurrentAlbumId } = useAlbumActions();
-
-  const albumName = useMemo(() => {
-    return track.albums && track.albums.length > 0
-      ? track.albums[0].title
-      : "-";
-  }, [track.albums]);
-
-  const handleAddToPlaylist = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    handleAddTracksToPlaylist({
-      id: getCurrrentPlaylistId()!,
-      trackIds: [track._id],
-    });
-  };
-
-  const handleRemoveFromPlaylist = () => {
-    handleRemoveTracksFromPlaylist({
-      id: getCurrrentPlaylistId()!,
-      trackIds: [track._id],
-    });
-  };
-
-  const handleRemoveFromAlbum = () => {
-    handleRemoveTracksFromAlbums({
-      albumsIds: [getCurrentAlbumId()!],
-      trackIds: [track._id],
-    });
-  };
+    handleAddToPlaylist,
+    handleRemoveFromPlaylist,
+    handleRemoveFromAlbum,
+    albumName,
+  } = useTrackRow({ track });
 
   if (variant === "searchResult") {
     return (
@@ -102,8 +66,11 @@ const RenderByVariant = ({
             </div>
           </div>
         </TableCell>
-        <TableCell>
-          <p className="text-sm font-medium">{albumName}</p>
+        <TableCell className="w-3/5"></TableCell>
+        <TableCell className="">
+          <p className="text-sm font-medium">
+            {formatTrackDuration(track.duration_ms)}
+          </p>
         </TableCell>
         <TableCell
           className="rounded-tr-lg rounded-br-lg text-end"
@@ -267,26 +234,10 @@ const RenderByVariant = ({
   );
 };
 
-const TrackRow = ({ index, track, variant = "default" }: TrackRowProps) => {
-  const router = useRouter();
-
-  const handleRowClick = () => {
-    router.push(`/tracks/${track._id}`);
-  };
-
-  return (
-    <RenderByVariant
-      index={index}
-      track={track}
-      variant={variant}
-      onClick={handleRowClick}
-    />
-  );
-};
-
 interface TrackRowProps {
   index: number;
   track: Track | Playlist["tracks"][number];
+  onClick?: () => void;
   variant?: SimpleTrackTablesVariant;
 }
 

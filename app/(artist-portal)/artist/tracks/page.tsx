@@ -15,7 +15,7 @@ const ArtistTrackPage = () => {
   const dispatch = useAppDispatch();
 
   const setIsOpen = (isOpen: boolean) => {
-    dispatch(setOpen(isOpen));
+    dispatch(setOpen({ isOpen }));
   };
 
   return (

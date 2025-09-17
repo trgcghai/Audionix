@@ -46,7 +46,7 @@ const DetailTrackDialog = ({
                     alt={`${track.title} cover`}
                     width={track.cover_images[0].width}
                     height={track.cover_images[0].height}
-                    className="w-full object-cover rounded-lg shadow-md"
+                    className="w-[300px] aspect-square object-cover rounded-lg shadow-md"
                   />
                 </div>
               </div>
@@ -88,6 +88,15 @@ const DetailTrackDialog = ({
               </div>
 
               <div className="space-y-2">
+                <Label className="text-sm font-medium">Last updated</Label>
+                <Input
+                  value={formatUploadTime(track.updatedAt)}
+                  disabled
+                  className="font-medium"
+                />
+              </div>
+
+              <div className="space-y-2 col-span-2">
                 <Label className="text-sm font-medium">Genres</Label>
                 <MultipleSelector
                   className="font-medium"
@@ -102,11 +111,15 @@ const DetailTrackDialog = ({
 
             {/* Action Buttons */}
             <div className="flex justify-end gap-3 pt-4">
-              <Button variant="outline" onClick={() => setIsOpen(false)}>
+              <Button
+                variant="outline"
+                onClick={() => setIsOpen(false)}
+                className="rounded-full"
+              >
                 Close
               </Button>
               <Link href={`/artist/tracks/update/${track._id}`}>
-                <Button>Edit Track</Button>
+                <Button className="rounded-full">Edit Track</Button>
               </Link>
             </div>
           </div>

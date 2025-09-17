@@ -32,10 +32,10 @@ export const detailTrackSlice = createSlice({
         state.track = null;
       }
     },
-    setTrack: (state, action) => {
+    setTrack: (state, action: PayloadAction<{ track: Track }>) => {
       state.track = action.payload.track;
     },
-    setOpen: (state, action) => {
+    setOpen: (state, action: PayloadAction<{ isOpen: boolean }>) => {
       state.isOpen = action.payload.isOpen;
     },
   },

@@ -1,9 +1,9 @@
 "use client";
+import DetailAlbumDialog from "@/app/(artist-portal)/artist/albums/components/DetailAlbumDialog";
 import AlbumTable from "@/app/(artist-portal)/artist/albums/components/table";
 import { Columns } from "@/app/(artist-portal)/artist/albums/components/table/Columns";
 import useAlbumManagement from "@/app/(artist-portal)/artist/albums/hooks/useAlbumManagement";
 import { ApiErrorResponse } from "@/app/types/api";
-import DetailAlbumCard from "@/components/common/DetailAlbumCard";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
 import { useAppDispatch } from "@/hooks/redux";
@@ -14,7 +14,7 @@ import {
 import { useEffect } from "react";
 
 const ArtistAlbumPage = () => {
-  const { album, isOpen } = useDetailAlbumSlice();
+  const { album } = useDetailAlbumSlice();
   const dispatch = useAppDispatch();
   const { albums, getAlbumState } = useAlbumManagement();
 
@@ -27,7 +27,7 @@ const ArtistAlbumPage = () => {
   return (
     <div className="h-full px-3">
       <div className="flex items-start gap-10">
-        <div className={`${isOpen ? "w-3/5" : "w-full"}`}>
+        <div className="w-full">
           <p className="mb-4 text-xl font-bold">Your albums</p>
 
           {getAlbumState.isLoading && <LoaderSpin fullScreen />}
@@ -44,11 +44,7 @@ const ArtistAlbumPage = () => {
           )}
         </div>
 
-        {isOpen && album && (
-          <div className="w-2/5">
-            <DetailAlbumCard album={album} />
-          </div>
-        )}
+        {album && <DetailAlbumDialog />}
       </div>
     </div>
   );

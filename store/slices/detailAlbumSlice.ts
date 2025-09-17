@@ -1,10 +1,10 @@
-import { ArtistAlbumItem } from "@/app/types/component";
+import { Album } from "@/app/types/model";
 import { useAppSelector } from "@/hooks/redux";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface DetailAlbumSliceState {
   isOpen: boolean;
-  album: ArtistAlbumItem | null;
+  album: Album | null;
 }
 
 const initialState: DetailAlbumSliceState = {
@@ -16,7 +16,7 @@ export const detailAlbumSlice = createSlice({
   name: "detailAlbum",
   initialState,
   reducers: {
-    openViewDetail: (state, action) => {
+    openViewDetail: (state, action: PayloadAction<{ album: Album }>) => {
       state.isOpen = true;
       state.album = action.payload.album;
     },
@@ -32,11 +32,22 @@ export const detailAlbumSlice = createSlice({
         state.album = null;
       }
     },
+    setAlbum: (state, action: PayloadAction<{ album: Album }>) => {
+      state.album = action.payload.album;
+    },
+    setOpen: (state, action: PayloadAction<{ isOpen: boolean }>) => {
+      state.isOpen = action.payload.isOpen;
+    },
   },
 });
 
-export const { openViewDetail, hideViewDetail, toggleViewDetail } =
-  detailAlbumSlice.actions;
+export const {
+  openViewDetail,
+  hideViewDetail,
+  toggleViewDetail,
+  setAlbum,
+  setOpen,
+} = detailAlbumSlice.actions;
 
 export const useDetailAlbumSlice = () =>
   useAppSelector((state) => state.detailAlbum);

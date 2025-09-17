@@ -13,8 +13,10 @@ import {
   useUpdateStatusManyMutation,
   useUpdateStatusOneMutation,
 } from "@/services/albums/albumApi";
+import { usePathname } from "next/navigation";
 
 const useAlbumActions = () => {
+  const pathname = usePathname();
   const { showSuccessToast, showErrorToast } = useToast();
   const [createAlbum, createState] = useCreateAlbumMutation();
   const [deleteOne, deleteOneState] = useDeleteOneMutation();
@@ -53,6 +55,11 @@ const useAlbumActions = () => {
     }
 
     return formData;
+  };
+
+  const getCurrentAlbumId = () => {
+    const match = pathname.match(/artist\/albums\/update\/([^/]+)/);
+    return match ? match[1] : "";
   };
 
   const handleCreateAlbum = async (data: createAlbumFormValues) => {
@@ -191,6 +198,7 @@ const useAlbumActions = () => {
     removeTracksFromAlbumsState,
     handleUpdateAlbum,
     updateAlbumState,
+    getCurrentAlbumId,
   };
 };
 export default useAlbumActions;

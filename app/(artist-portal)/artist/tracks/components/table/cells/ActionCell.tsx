@@ -49,7 +49,7 @@ const ActionCell = ({ row }: { row: Row<Track> }) => {
           >
             <div className="flex items-center gap-2">
               <FileText className="mr-2 h-4 w-4" />
-              <span>View detail</span>
+              <span>View Detail</span>
             </div>
           </DropdownMenuItem>
           <DropdownMenuItem variant="default" className="cursor-pointer">

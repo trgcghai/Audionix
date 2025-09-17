@@ -31,8 +31,6 @@ const DetailAlbumDialog = () => {
       skip: !album?._id && !isOpen,
     });
 
-  console.log(data);
-
   if (!album) return null;
 
   return (

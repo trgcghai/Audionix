@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { TableCell, TableRow } from "@/components/ui/table";
+import useAlbumActions from "@/hooks/useAlbumActions";
 import usePlaylistAction from "@/hooks/usePlaylistAction";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { formatUploadTime } from "@/utils/formatUploadTime";
@@ -33,6 +34,8 @@ const RenderByVariant = ({
     getCurrrentPlaylistId,
   } = usePlaylistAction();
 
+  const { handleRemoveTracksFromAlbums, getCurrentAlbumId } = useAlbumActions();
+
   const albumName = useMemo(() => {
     return track.albums && track.albums.length > 0
       ? track.albums[0].title
@@ -54,7 +57,12 @@ const RenderByVariant = ({
     });
   };
 
-  console.log(track);
+  const handleRemoveFromAlbum = () => {
+    handleRemoveTracksFromAlbums({
+      albumsIds: [getCurrentAlbumId()!],
+      trackIds: [track._id],
+    });
+  };
 
   if (variant === "searchResult") {
     return (
@@ -97,7 +105,10 @@ const RenderByVariant = ({
         <TableCell>
           <p className="text-sm font-medium">{albumName}</p>
         </TableCell>
-        <TableCell className="rounded-tr-lg rounded-br-lg text-end">
+        <TableCell
+          className="rounded-tr-lg rounded-br-lg text-end"
+          onClick={(e) => e.stopPropagation()}
+        >
           <Button
             variant="outline"
             className="h-8 rounded-full text-sm font-medium"
@@ -144,6 +155,64 @@ const RenderByVariant = ({
     );
   }
 
+  if (variant === "albumManagement") {
+    return (
+      <TableRow className="rounded-lg border-b-0" onClick={onClick}>
+        <TableCell className="w-6 rounded-tl-lg rounded-bl-lg">
+          <p className="text-sm text-gray-500">{index}</p>
+        </TableCell>
+        <TableCell className="w-2/5">
+          <p className="text-sm font-semibold">{track.title}</p>
+        </TableCell>
+        <TableCell className="w-2/5">
+          <p className="text-sm font-medium">
+            {track.genres.map((genre) => (
+              <Badge key={genre} className="mr-1">
+                {genre.charAt(0).toUpperCase() + genre.slice(1)}
+              </Badge>
+            ))}
+          </p>
+        </TableCell>
+        <TableCell className="w-1/5">
+          <p className="text-sm font-medium">
+            {"time_added" in track
+              ? formatUploadTime(track.time_added as string)
+              : ""}
+          </p>
+        </TableCell>
+        <TableCell className="w-10">
+          <p className="text-sm font-medium">
+            {formatTrackDuration(track.duration_ms)}
+          </p>
+        </TableCell>
+        <TableCell
+          className="w-10 rounded-tr-lg rounded-br-lg"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="text-md h-10 w-10 gap-1 rounded-full font-semibold"
+              >
+                <Ellipsis className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" sideOffset={10}>
+              <DropdownMenuItem
+                variant="destructive"
+                onClick={handleRemoveFromAlbum}
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                Remove from this album
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
   return (
     <TableRow className="rounded-lg border-b-0" onClick={onClick}>
       <TableCell className="w-6 rounded-tl-lg rounded-bl-lg">
@@ -170,7 +239,10 @@ const RenderByVariant = ({
           {formatTrackDuration(track.duration_ms)}
         </p>
       </TableCell>
-      <TableCell className="w-10 rounded-tr-lg rounded-br-lg">
+      <TableCell
+        className="w-10 rounded-tr-lg rounded-br-lg"
+        onClick={(e) => e.stopPropagation()}
+      >
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button

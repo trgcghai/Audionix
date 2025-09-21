@@ -58,7 +58,11 @@ const useAlbumActions = () => {
   };
 
   const getCurrentAlbumId = () => {
-    const match = pathname.match(/artist\/albums\/update\/([^/]+)/);
+    // Hỗ trợ cả /artist/albums/update/:id (artist route)
+    // và /admin/management/albums/update/:id (admin route)
+    const match = pathname.match(
+      /(?:artist|admin\/management)\/albums\/update\/([^/]+)/,
+    );
     return match ? match[1] : "";
   };
 

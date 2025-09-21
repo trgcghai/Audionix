@@ -138,7 +138,7 @@ const DetailAlbumDialog = () => {
               >
                 Close
               </Button>
-              <Link href={`/artist/albums/update/${album._id}`}>
+              <Link href={`./albums/update/${album._id}`}>
                 <Button className="rounded-full">Edit Album</Button>
               </Link>
             </div>

@@ -118,7 +118,7 @@ const DetailTrackDialog = ({
               >
                 Close
               </Button>
-              <Link href={`/artist/tracks/update/${track._id}`}>
+              <Link href={`./tracks/update/${track._id}`}>
                 <Button className="rounded-full">Edit Track</Button>
               </Link>
             </div>

@@ -4,6 +4,7 @@ import detailAlbumReducer from "@/store/slices/detailAlbumSlice";
 import detailTrackReducer from "@/store/slices/detailTrackSlice";
 import queueDrawerReducer from "@/store/slices/queueDrawerSlice";
 import trackManagementReducer from "@/store/slices/trackManagement";
+import userManagementReducer from "@/store/slices/userManagement";
 import userReducer from "@/store/slices/userSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
@@ -30,6 +31,7 @@ const persistConfig = {
     "user",
     "trackManagement",
     "albumManagement",
+    "userManagement",
   ], // Only persist these slices
   blacklist: [api.reducerPath],
 };
@@ -42,6 +44,7 @@ const persistedReducer = persistReducer(
     detailTrack: detailTrackReducer,
     trackManagement: trackManagementReducer,
     albumManagement: albumManagementReducer,
+    userManagement: userManagementReducer,
     user: userReducer,
     [api.reducerPath]: api.reducer,
   }),

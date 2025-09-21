@@ -40,6 +40,7 @@ const TableFilters = ({
           className={cn(itemClassName)}
           inputClassName={cn(inputClassName)}
           labelClassName={cn(labelClassName, "w-1/8")}
+          title="Track Title"
         />
 
         <MultipleValueFilter

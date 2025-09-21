@@ -6,6 +6,7 @@ interface UserManagementState {
   username: string;
   email: string;
   debounceUsername: string;
+  debounceEmail: string;
 }
 
 const initialState: UserManagementState = {
@@ -14,6 +15,7 @@ const initialState: UserManagementState = {
   username: "",
   email: "",
   debounceUsername: "",
+  debounceEmail: "",
 };
 
 export const userManagementSlice = createSlice({
@@ -23,6 +25,9 @@ export const userManagementSlice = createSlice({
     clearFilters: () => initialState,
     setDebounceUsername: (state, action: PayloadAction<string>) => {
       state.debounceUsername = action.payload;
+    },
+    setDebounceEmail: (state, action: PayloadAction<string>) => {
+      state.debounceEmail = action.payload;
     },
     setFilters: (
       state,
@@ -45,6 +50,7 @@ export const userManagementSlice = createSlice({
 export const {
   clearFilters,
   setDebounceUsername,
+  setDebounceEmail,
   setFilters,
   setCurrentPage,
   setPageLimit,

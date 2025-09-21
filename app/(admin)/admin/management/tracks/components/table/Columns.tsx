@@ -151,30 +151,3 @@ export const AdminTrackColumns: ColumnDef<Track>[] = [
     cell: ({ row }) => <ActionCell row={row} />,
   },
 ];
-
-export const AdminTrackColumns2: ColumnDef<Track>[] = [
-  ...AdminTrackColumns.slice(0, -2).filter((item) => item.id !== "coverImage"), // Remove last two columns (status and actions)
-  {
-    id: "artist",
-    accessorKey: "artist",
-    enableColumnFilter: true,
-    enableSorting: false,
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Upload by" />
-    ),
-    meta: {
-      label: "Artist",
-      inputType: "text",
-    },
-    cell: ({ row }) => (
-      <Badge className="rounded-full text-sm px-2 py-1">
-        {row.original.artist.name}
-      </Badge>
-    ),
-  },
-  ...AdminTrackColumns.slice(-2, -1),
-  {
-    id: "actions",
-    cell: ({ row }) => <ActionCell row={row} />,
-  },
-];

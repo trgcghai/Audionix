@@ -36,6 +36,7 @@ const TableFilters = ({
           className={cn(itemClassName)}
           inputClassName={cn(inputClassName)}
           labelClassName={cn(labelClassName)}
+          title="Album Title"
         />
         <MultipleValueFilter
           options={DEFAULT_GENRES.map((genre) => ({

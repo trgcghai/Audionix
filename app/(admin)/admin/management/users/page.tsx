@@ -1,4 +1,6 @@
 "use client";
+import { AdminUserTable } from "@/app/(admin)/admin/management/users/components/table";
+import { AdminUserColumns } from "@/app/(admin)/admin/management/users/components/table/Columns";
 import useAdminUserManagement from "@/app/(admin)/hooks/useAdminUserManagement";
 import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
@@ -9,8 +11,6 @@ import Link from "next/link";
 
 const UsersManagement = () => {
   const { users, getUserState } = useAdminUserManagement();
-
-  console.log("users", users);
 
   return (
     <div className="h-full px-3">
@@ -39,8 +39,7 @@ const UsersManagement = () => {
             />
           )}
           {getUserState.isSuccess && (
-            // <UserTable columns={AdminUserColumns} data={users} />
-            <div>User table here</div>
+            <AdminUserTable columns={AdminUserColumns} data={users} />
           )}
         </div>
       </div>

@@ -5,6 +5,7 @@ import { useGetUsersQuery } from "@/services/users/userApi";
 import {
   clearFilters,
   setCurrentPage,
+  setDebounceEmail,
   setDebounceUsername,
   setFilters,
   setPageLimit,
@@ -12,12 +13,13 @@ import {
 import { useCallback, useEffect, useRef } from "react";
 
 const useAdminUserManagement = () => {
-  const { current, limit, username, email, debounceUsername } = useAppSelector(
-    (state) => state.userManagement,
-  );
+  const { current, limit, username, email, debounceUsername, debounceEmail } =
+    useAppSelector((state) => state.userManagement);
   const dispatch = useAppDispatch();
   const refUsername = useRef(username);
+  const refEmail = useRef(email);
   const debouncedUsername = useDebounce(debounceUsername, 500);
+  const debouncedEmail = useDebounce(debounceEmail, 500);
 
   useEffect(() => {
     if (debouncedUsername !== refUsername.current) {
@@ -25,6 +27,13 @@ const useAdminUserManagement = () => {
       dispatch(setFilters({ username: debouncedUsername }));
     }
   }, [debouncedUsername, dispatch]);
+
+  useEffect(() => {
+    if (debouncedEmail !== refEmail.current) {
+      refEmail.current = debouncedEmail;
+      dispatch(setFilters({ email: debouncedEmail }));
+    }
+  }, [debouncedEmail, dispatch]);
 
   const { data, ...getUserState } = useGetUsersQuery(
     {
@@ -75,10 +84,9 @@ const useAdminUserManagement = () => {
 
   const setEmailFilter = useCallback(
     (email: string) => {
-      dispatch(setFilters({ email }));
-      toFirstPage();
+      dispatch(setDebounceEmail(email));
     },
-    [dispatch, toFirstPage],
+    [dispatch],
   );
 
   const clearFilter = useCallback(() => {
@@ -101,6 +109,7 @@ const useAdminUserManagement = () => {
     setEmailFilter,
 
     debounceUsername,
+    debounceEmail,
     clearFilter,
 
     toNextPage,

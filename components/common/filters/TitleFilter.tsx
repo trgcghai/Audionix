@@ -10,20 +10,22 @@ interface TitleFilterProps {
   className?: string;
   labelClassName?: string;
   inputClassName?: string;
+  title: string;
 }
 
 const TitleFilter = ({
   value,
   onChange,
-  placeholder = "Search by track title",
+  placeholder = "Search...",
   disabled = false,
   className = "",
   labelClassName = "",
   inputClassName = "",
+  title,
 }: TitleFilterProps) => {
   return (
     <div className={cn(className)}>
-      <Label className={cn(labelClassName)}>Track title</Label>
+      <Label className={cn(labelClassName)}>{title}</Label>
       <Input
         className={cn("!bg-transparent", inputClassName)}
         value={value}

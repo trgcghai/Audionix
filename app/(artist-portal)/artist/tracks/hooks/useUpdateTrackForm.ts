@@ -36,6 +36,8 @@ const useUpdateTrackForm = ({ track }: props) => {
   });
 
   const handleSubmit = async (data: updateTrackValues) => {
+    console.log(data);
+
     try {
       await handleUpdateTrack({ trackId: track._id, data });
 

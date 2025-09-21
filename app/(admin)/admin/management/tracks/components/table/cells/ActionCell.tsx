@@ -58,7 +58,7 @@ const ActionCell = ({ row }: ActionCellProps) => {
           </DropdownMenuItem>
           <DropdownMenuItem variant="default" className="cursor-pointer">
             <Link
-              href={`./update/${track._id}`}
+              href={`./tracks/update/${track._id}`}
               className="flex items-center gap-2"
             >
               <Settings2 className="mr-2 h-4 w-4" />

@@ -7,7 +7,12 @@ import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
 import { useAppDispatch } from "@/hooks/redux";
-import { setOpen, useDetailTrackSlice } from "@/store/slices/detailTrackSlice";
+import {
+  hideViewDetail,
+  setOpen,
+  useDetailTrackSlice,
+} from "@/store/slices/detailTrackSlice";
+import { useEffect } from "react";
 
 const ArtistTrackPage = () => {
   const { tracks, isLoading, isError, error } = useTrackManagement();
@@ -17,6 +22,12 @@ const ArtistTrackPage = () => {
   const setIsOpen = (isOpen: boolean) => {
     dispatch(setOpen({ isOpen }));
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(hideViewDetail());
+    };
+  }, [dispatch]);
 
   return (
     <div className="px-3">

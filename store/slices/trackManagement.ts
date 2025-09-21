@@ -41,11 +41,7 @@ export const trackManagementSlice = createSlice({
         genres?: Option[];
       }>,
     ) => {
-      state.title = action.payload.title || "";
-      state.albums = action.payload.albums || [];
-      state.uploadTime = action.payload.uploadTime || undefined;
-      state.status = action.payload.status || [];
-      state.genres = action.payload.genres || [];
+      return { ...state, ...action.payload, current: 1 };
     },
     setCurrentPage: (state, action: PayloadAction<number>) => {
       state.current = action.payload < 1 ? 1 : action.payload;

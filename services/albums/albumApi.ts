@@ -146,6 +146,16 @@ const albumApi = api.injectEndpoints({
       }),
       providesTags: ["Albums"],
     }),
+    getAlbumsAsFilterOptions: builder.query<
+      FindAlbumsAsOptionsResponse,
+      unknown
+    >({
+      query: () => ({
+        url: `/albums/options`,
+        method: "GET",
+      }),
+      providesTags: ["Albums"],
+    }),
     addTracksToAlbums: builder.mutation<
       AddTracksToAlbumsResponse,
       AddTracksToAlbumsParams
@@ -199,6 +209,7 @@ export const {
   useGetAlbumByArtistQuery,
   useGetAlbumByIdQuery,
   useGetMyAlbumsAsFilterOptionsQuery,
+  useGetAlbumsAsFilterOptionsQuery,
   useAddTracksToAlbumsMutation,
   useRemoveTracksFromAlbumsMutation,
   useGetTracksInAlbumQuery,

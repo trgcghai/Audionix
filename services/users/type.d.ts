@@ -1,4 +1,4 @@
-import { ApiResponse } from "@/app/types/api";
+import { ApiResponse, PaginatedResponse } from "@/app/types/api";
 import { User } from "@/app/types/model";
 
 export type CheckUserFollowArtistResponse = ApiResponse<{
@@ -27,3 +27,13 @@ export type UpdateUserResponse = ApiResponse<{
 export type GetMyProfileResponse = ApiResponse<{
   item: User;
 }>;
+
+export type FindUserParams = {
+  username?: string;
+  email?: string;
+  current?: number;
+  limit?: number;
+  sort?: string;
+};
+
+export type FindUserResponse = ApiResponse<PaginatedResponse<User>>;

@@ -2,6 +2,8 @@ import { api } from "@/services/api";
 import {
   CheckUserFollowAlbumResponse,
   CheckUserFollowArtistResponse,
+  FindUserParams,
+  FindUserResponse,
   GetMyProfileResponse,
   UpdateUserResponse,
 } from "@/services/users/type";
@@ -105,6 +107,15 @@ const userApi = api.injectEndpoints({
       },
       providesTags: ["User"],
     }),
+    getUsers: builder.query<FindUserResponse, FindUserParams>({
+      query: (params) => {
+        return {
+          url: `/users`,
+          method: "GET",
+          params,
+        };
+      },
+    }),
   }),
 });
 
@@ -117,4 +128,5 @@ export const {
   useCheckIfUserIsFollowingAlbumsQuery,
   useUpdateUserProfileMutation,
   useGetMyProfileQuery,
+  useGetUsersQuery,
 } = userApi;

@@ -20,6 +20,7 @@ const TrackRow = ({
   track,
   onClick = () => {},
   variant = "default",
+  showAction = true,
 }: TrackRowProps) => {
   const {
     handleAddToPlaylist,
@@ -72,18 +73,20 @@ const TrackRow = ({
             {formatTrackDuration(track.duration_ms)}
           </p>
         </TableCell>
-        <TableCell
-          className="rounded-tr-lg rounded-br-lg text-end"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <Button
-            variant="outline"
-            className="h-8 rounded-full text-sm font-medium"
-            onClick={handleAddToPlaylist}
+        {showAction && (
+          <TableCell
+            className="rounded-tr-lg rounded-br-lg text-end"
+            onClick={(e) => e.stopPropagation()}
           >
-            Add
-          </Button>
-        </TableCell>
+            <Button
+              variant="outline"
+              className="h-8 rounded-full text-sm font-medium"
+              onClick={handleAddToPlaylist}
+            >
+              Add
+            </Button>
+          </TableCell>
+        )}
       </TableRow>
     );
   }
@@ -152,30 +155,32 @@ const TrackRow = ({
             {formatTrackDuration(track.duration_ms)}
           </p>
         </TableCell>
-        <TableCell
-          className="w-10 rounded-tr-lg rounded-br-lg"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="text-md h-10 w-10 gap-1 rounded-full font-semibold"
-              >
-                <Ellipsis className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" sideOffset={10}>
-              <DropdownMenuItem
-                variant="destructive"
-                onClick={handleRemoveFromAlbum}
-              >
-                <Trash2 className="mr-2 h-4 w-4" />
-                Remove from this album
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </TableCell>
+        {showAction && (
+          <TableCell
+            className="w-10 rounded-tr-lg rounded-br-lg"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="text-md h-10 w-10 gap-1 rounded-full font-semibold"
+                >
+                  <Ellipsis className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" sideOffset={10}>
+                <DropdownMenuItem
+                  variant="destructive"
+                  onClick={handleRemoveFromAlbum}
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Remove from this album
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </TableCell>
+        )}
       </TableRow>
     );
   }
@@ -206,30 +211,32 @@ const TrackRow = ({
           {formatTrackDuration(track.duration_ms)}
         </p>
       </TableCell>
-      <TableCell
-        className="w-10 rounded-tr-lg rounded-br-lg"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              className="text-md h-10 w-10 gap-1 rounded-full font-semibold"
-            >
-              <Ellipsis className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" sideOffset={10}>
-            <DropdownMenuItem
-              variant="destructive"
-              onClick={handleRemoveFromPlaylist}
-            >
-              <Trash2 className="mr-2 h-4 w-4" />
-              Remove from this playlist
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </TableCell>
+      {showAction && (
+        <TableCell
+          className="w-10 rounded-tr-lg rounded-br-lg"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="text-md h-10 w-10 gap-1 rounded-full font-semibold"
+              >
+                <Ellipsis className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" sideOffset={10}>
+              <DropdownMenuItem
+                variant="destructive"
+                onClick={handleRemoveFromPlaylist}
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                Remove from this playlist
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </TableCell>
+      )}
     </TableRow>
   );
 };
@@ -239,6 +246,7 @@ interface TrackRowProps {
   track: Track | Playlist["tracks"][number];
   onClick?: () => void;
   variant?: SimpleTrackTablesVariant;
+  showAction?: boolean;
 }
 
 export default TrackRow;

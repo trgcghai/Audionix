@@ -7,12 +7,14 @@ interface TableRowByVariantProps {
   index: number;
   track: Track | Playlist["tracks"][number];
   variant?: SimpleTrackTablesVariant;
+  showAction?: boolean;
 }
 
 const TableRowByVariant = ({
   index,
   track,
   variant = "default",
+  showAction = true,
 }: TableRowByVariantProps) => {
   const router = useRouter();
 
@@ -26,6 +28,7 @@ const TableRowByVariant = ({
       track={track}
       variant={variant}
       onClick={handleRowClick}
+      showAction={showAction}
     />
   );
 };

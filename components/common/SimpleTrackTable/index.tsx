@@ -16,6 +16,7 @@ interface SimpleTrackTableProps {
   showHeader?: boolean;
   variant?: SimpleTrackTablesVariant;
   className?: string;
+  showAction?: boolean;
 }
 
 const SimpleTrackTable = ({
@@ -23,6 +24,7 @@ const SimpleTrackTable = ({
   showHeader = true,
   tracks,
   className,
+  showAction = true,
 }: SimpleTrackTableProps) => {
   if (!tracks || tracks.length === 0) {
     return (
@@ -38,7 +40,9 @@ const SimpleTrackTable = ({
 
   return (
     <Table className={className}>
-      {showHeader && <TableHeaderByVariant variant={variant} />}
+      {showHeader && (
+        <TableHeaderByVariant variant={variant} showAction={showAction} />
+      )}
       <TableBody>
         {tracks.map((track, index) => (
           <TableRowByVariant
@@ -46,6 +50,7 @@ const SimpleTrackTable = ({
             track={track}
             index={index + 1}
             variant={variant}
+            showAction={showAction}
           />
         ))}
       </TableBody>

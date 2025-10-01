@@ -9,8 +9,7 @@ import {
 import { useAppDispatch } from "@/hooks/redux";
 import { openViewDetail } from "@/store/slices/detailPlaylistSlice";
 import { Row } from "@tanstack/react-table";
-import { FileText, MoreHorizontal, Settings2, Trash2 } from "lucide-react";
-import Link from "next/link";
+import { FileText, MoreHorizontal } from "lucide-react";
 
 interface ActionCellProps {
   row: Row<Playlist>;
@@ -35,16 +34,6 @@ const ActionCell = ({ row }: ActionCellProps) => {
             <FileText className="mr-2 h-4 w-4" />
             <span>View Detail</span>
           </div>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href={`/admin/management/playlists/update/${playlist._id}`}>
-            <Settings2 className="mr-2 h-4 w-4" />
-            <span>Edit</span>
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem variant="destructive" className="cursor-pointer">
-          <Trash2 className="mr-2 h-4 w-4" />
-          <span>Delete</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

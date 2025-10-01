@@ -78,7 +78,7 @@ const DetailPlaylistDialog = () => {
                 />
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2 col-span-2">
                 <Label className="text-sm font-medium">Creator</Label>
                 <Input
                   value={playlist.owner.username || "Unknown"}
@@ -130,6 +130,7 @@ const DetailPlaylistDialog = () => {
                 <SimpleTrackTable
                   tracks={playlist.tracks || []}
                   variant="default"
+                  showAction={false}
                 />
               )}
             </div>

@@ -114,7 +114,7 @@ export type Artist = {
 export type Playlist = {
   _id: string;
   title: string;
-  owner?: string;
+  owner: User;
   status: string;
   type: "playlist";
   description: string;

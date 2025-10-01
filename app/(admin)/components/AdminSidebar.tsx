@@ -1,20 +1,7 @@
 import LinkLogo from "@/components/common/LinkLogo";
 import { NavMain } from "@/components/ui/nav-main";
 import { Sidebar, SidebarContent, SidebarRail } from "@/components/ui/sidebar";
-import {
-  Album,
-  FileText,
-  HelpCircle,
-  LifeBuoy,
-  ListMusic,
-  Mail,
-  Music,
-  Settings,
-  Shapes,
-  User2,
-  UserCog,
-  Users,
-} from "lucide-react";
+import { Album, ListMusic, Music, Settings, UserCog } from "lucide-react";
 import NextLink from "next/link";
 import * as React from "react";
 
@@ -46,15 +33,6 @@ const navItems = [
       {
         title: (
           <p className="flex items-center gap-2">
-            <Users className="w-4 h-4" /> Users
-          </p>
-        ),
-        key: "users",
-        url: "/admin/management/users",
-      },
-      {
-        title: (
-          <p className="flex items-center gap-2">
             <ListMusic className="w-4 h-4" /> Playlists
           </p>
         ),
@@ -64,64 +42,11 @@ const navItems = [
       {
         title: (
           <p className="flex items-center gap-2">
-            <User2 className="w-4 h-4" /> Artists
-          </p>
-        ),
-        key: "artists",
-        url: "/admin/management/artists",
-      },
-      {
-        title: (
-          <p className="flex items-center gap-2">
-            <UserCog className="w-4 h-4" /> Accounts
+            <UserCog className="w-4 h-4" /> Accounts - Users - Artists
           </p>
         ),
         key: "accounts",
         url: "/admin/management/accounts",
-      },
-      {
-        title: (
-          <p className="flex items-center gap-2">
-            <Shapes className="w-4 h-4" /> Genres
-          </p>
-        ),
-        key: "genres",
-        url: "/admin/management/genres",
-      },
-    ],
-  },
-  {
-    title: "Support",
-    url: "#",
-    icon: LifeBuoy,
-    isActive: true,
-    items: [
-      {
-        title: (
-          <p className="flex items-center gap-2">
-            <HelpCircle className="w-4 h-4" /> FAQ
-          </p>
-        ),
-        key: "faq",
-        url: "/admin/support/faq",
-      },
-      {
-        title: (
-          <p className="flex items-center gap-2">
-            <Mail className="w-4 h-4" /> Tickets
-          </p>
-        ),
-        key: "tickets",
-        url: "/admin/support/tickets",
-      },
-      {
-        title: (
-          <p className="flex items-center gap-2">
-            <FileText className="w-4 h-4" /> Email templates
-          </p>
-        ),
-        key: "email-templates",
-        url: "/admin/support/email-templates",
       },
     ],
   },

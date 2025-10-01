@@ -120,7 +120,7 @@ export const AdminTrackColumns: ColumnDef<Track>[] = [
       <DataTableColumnHeader column={column} title="Upload by" />
     ),
     cell: ({ row }) => (
-      <Badge className="rounded-full text-sm px-2 py-1">
+      <Badge className="rounded-full px-2 py-1">
         {row.original.artist.name}
       </Badge>
     ),

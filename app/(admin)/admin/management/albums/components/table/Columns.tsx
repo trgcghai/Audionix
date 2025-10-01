@@ -123,7 +123,7 @@ export const AdminAlbumColumns: ColumnDef<Album>[] = [
       <DataTableColumnHeader column={column} title="Uploaded by" />
     ),
     cell: ({ row }) => (
-      <Badge className="text-sm px-2 py-1 rounded-full">
+      <Badge className="px-2 py-1 rounded-full">
         {row.original.artist.name}
       </Badge>
     ),

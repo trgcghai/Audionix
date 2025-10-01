@@ -19,7 +19,7 @@ const playlistApi = api.injectEndpoints({
   endpoints: (builder) => {
     return {
       getPlaylists: builder.query<FindPlaylistResponse, FindPlaylistParams>({
-        query: ({ current = 1, limit = 10, sort, status, title }) => ({
+        query: ({ current = 1, limit = 10, sort, status, title, owners }) => ({
           url: "/playlists",
           method: "GET",
           params: {
@@ -28,6 +28,7 @@ const playlistApi = api.injectEndpoints({
             sort,
             status,
             title,
+            owner: owners ? owners.join(",") : undefined,
           },
         }),
       }),

@@ -2,6 +2,7 @@ import { api } from "@/services/api";
 import {
   CheckUserFollowAlbumResponse,
   CheckUserFollowArtistResponse,
+  FindUserAsOptionsResponse,
   FindUserByIdResponse,
   FindUserParams,
   FindUserResponse,
@@ -136,6 +137,14 @@ const userApi = api.injectEndpoints({
       },
       invalidatesTags: ["User"],
     }),
+    getUsersAsOptions: builder.query<FindUserAsOptionsResponse, void>({
+      query: () => {
+        return {
+          url: `/users/options`,
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
@@ -151,4 +160,5 @@ export const {
   useGetUsersQuery,
   useGetUserByIdQuery,
   useCreateUserMutation,
+  useGetUsersAsOptionsQuery,
 } = userApi;

@@ -9,6 +9,7 @@ export type FindPlaylistParams = {
   title?: string;
   status?: string;
   sort?: string;
+  owners?: string[];
 };
 
 export type CreatePlaylistResponse = ApiResponse<{ result: Playlist }>;

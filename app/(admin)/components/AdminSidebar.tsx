@@ -6,10 +6,8 @@ import {
   FileText,
   HelpCircle,
   LifeBuoy,
-  Link,
   ListMusic,
   Mail,
-  MoreHorizontal,
   Music,
   Settings,
   Shapes,
@@ -124,23 +122,6 @@ const navItems = [
         ),
         key: "email-templates",
         url: "/admin/support/email-templates",
-      },
-    ],
-  },
-  {
-    title: "Other",
-    url: "#",
-    icon: MoreHorizontal,
-    isActive: true,
-    items: [
-      {
-        title: (
-          <p className="flex items-center gap-2">
-            <Link className="w-4 h-4" /> Footer items
-          </p>
-        ),
-        key: "footer",
-        url: "/admin/other/footer",
       },
     ],
   },

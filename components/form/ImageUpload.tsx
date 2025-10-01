@@ -1,3 +1,4 @@
+"use client";
 import { COVER_IMAGE_ACCEPT_TYPES } from "@/app/constant";
 import { FormControl, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";

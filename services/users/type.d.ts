@@ -37,3 +37,5 @@ export type FindUserParams = {
 };
 
 export type FindUserResponse = ApiResponse<PaginatedResponse<User>>;
+
+export type FindUserByIdResponse = ApiResponse<{ item: User }>;

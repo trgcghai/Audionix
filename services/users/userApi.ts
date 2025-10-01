@@ -2,6 +2,7 @@ import { api } from "@/services/api";
 import {
   CheckUserFollowAlbumResponse,
   CheckUserFollowArtistResponse,
+  FindUserByIdResponse,
   FindUserParams,
   FindUserResponse,
   GetMyProfileResponse,
@@ -116,6 +117,25 @@ const userApi = api.injectEndpoints({
         };
       },
     }),
+    getUserById: builder.query<FindUserByIdResponse, string>({
+      query: (userId) => {
+        return {
+          url: `/users/${userId}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["User"],
+    }),
+    createUser: builder.mutation<void, FormData>({
+      query: (formData) => {
+        return {
+          url: `/users`,
+          method: "POST",
+          data: formData,
+        };
+      },
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
@@ -129,4 +149,6 @@ export const {
   useUpdateUserProfileMutation,
   useGetMyProfileQuery,
   useGetUsersQuery,
+  useGetUserByIdQuery,
+  useCreateUserMutation,
 } = userApi;

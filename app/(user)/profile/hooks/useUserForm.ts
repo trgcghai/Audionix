@@ -1,5 +1,9 @@
-import { ProfileFormValues } from "@/app/(user)/profile/components/form/schemas";
+import {
+  ProfileFormValues,
+  profileSchema,
+} from "@/app/(user)/profile/components/form/schemas";
 import useUserActions from "@/hooks/useUserActions";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 interface UseUserForm {
@@ -11,6 +15,7 @@ interface UseUserForm {
 const useUserForm = ({ user }: UseUserForm) => {
   const { handleUpdateProfile, updateProfileState } = useUserActions();
   const form = useForm<ProfileFormValues>({
+    resolver: zodResolver(profileSchema),
     defaultValues: {
       username: user.username,
     },

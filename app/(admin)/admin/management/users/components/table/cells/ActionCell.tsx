@@ -31,19 +31,9 @@ const ActionCell = ({ row }: ActionCellProps) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          {/* <DropdownMenuItem
-            variant="default"
-            className="cursor-pointer"
-            onClick={handleViewDetail}
-          >
-            <div className="flex items-center gap-2">
-              <FileText className="mr-2 h-4 w-4" />
-              <span>View Detail</span>
-            </div>
-          </DropdownMenuItem> */}
           <DropdownMenuItem variant="default" className="cursor-pointer">
             <Link
-              href={`./update/${user._id}`}
+              href={`./users/update/${user._id}`}
               className="flex items-center gap-2"
             >
               <Settings2 className="mr-2 h-4 w-4" />

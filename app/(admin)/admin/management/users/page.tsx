@@ -5,9 +5,6 @@ import useAdminUserManagement from "@/app/(admin)/hooks/useAdminUserManagement";
 import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
-import { Button } from "@/components/ui/button";
-import { PlusIcon } from "lucide-react";
-import Link from "next/link";
 
 const UsersManagement = () => {
   const { users, getUserState } = useAdminUserManagement();
@@ -18,15 +15,6 @@ const UsersManagement = () => {
         <div className="w-full">
           <div className="mb-4 flex items-center justify-between">
             <p className="text-xl font-bold capitalize">Users Management</p>
-
-            <Button className="rounded-full">
-              <Link
-                href="/admin/management/users/create"
-                className="flex gap-2 items-center"
-              >
-                <PlusIcon /> Add new
-              </Link>
-            </Button>
           </div>
 
           {getUserState.isLoading && <LoaderSpin fullScreen />}

@@ -1,5 +1,5 @@
 import { Option } from "@/components/ui/MultipleSelector";
-import { AlbumStatus, TrackStatus } from "./enums";
+import { AlbumStatus, Role, TrackStatus } from "./enums";
 
 export const PAGE_SIZE_OPTIONS = [10, 15, 20, 25, 30, 35, 40] as const;
 
@@ -100,3 +100,8 @@ export const MAX_FILE_SIZE_MB = 25; // 25MB
 export const MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024; // convert to bytes
 
 export const ITEM_PER_MEDIA_ROW = 6;
+
+export const ROLE_OPTIONS: Option[] = Object.entries(Role).map(([, value]) => ({
+  value,
+  label: value.charAt(0).toUpperCase() + value.slice(1),
+}));

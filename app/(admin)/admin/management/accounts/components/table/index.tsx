@@ -1,12 +1,5 @@
 "use client";
 
-import DataTableActionsOnSelected from "@/app/(admin)/admin/management/tracks/components/table/actionsOnSelected";
-import TableFilters from "@/app/(admin)/admin/management/tracks/components/table/filters";
-import useAdminTrackManagement from "@/app/(admin)/hooks/useAdminTrackManagement";
-import { DataTablePagination } from "@/components/dataTable/DataTablePagination";
-import { DataTableViewOptions } from "@/components/dataTable/DataTableViewOptions";
-import TableContent from "@/components/dataTable/TableContent";
-import { cn } from "@/libs/utils";
 import {
   ColumnDef,
   getCoreRowModel,
@@ -17,7 +10,15 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
+
+import TableFilters from "@/app/(admin)/admin/management/accounts/components/table/filters";
+import useAdminAccountManagement from "@/app/(admin)/hooks/useAdminAccountManagement";
+import { DataTablePagination } from "@/components/dataTable/DataTablePagination";
+import { DataTableViewOptions } from "@/components/dataTable/DataTableViewOptions";
+import TableContent from "@/components/dataTable/TableContent";
+import { cn } from "@/libs/utils";
 import { useEffect, useState } from "react";
+// import DataTableActionsOnSelected from "./actionsOnSelected";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -27,13 +28,13 @@ interface DataTableProps<TData, TValue> {
   showFilterOptions?: boolean;
 }
 
-export function AdminTrackTable<TData, TValue>({
+const AdminAccountTable = <TData, TValue>({
   columns,
   data,
   showActions = true,
   showViewOptions = true,
   showFilterOptions = true,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData, TValue>) => {
   const [hasSelectedRows, setHasSelectedRows] = useState(false);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -65,7 +66,7 @@ export function AdminTrackTable<TData, TValue>({
     toLastPage,
     toNextPage,
     toPreviousPage,
-  } = useAdminTrackManagement();
+  } = useAdminAccountManagement();
 
   useEffect(() => {
     const selectedRows = table.getSelectedRowModel().rows;
@@ -79,7 +80,7 @@ export function AdminTrackTable<TData, TValue>({
           className="grid grid-cols-2 gap-x-12 gap-y-6"
           itemClassName="flex items-center gap-4 mb-0"
           inputClassName="flex-1 w-full rounded-full"
-          labelClassName="text-sm w-1/7 capitalize"
+          labelClassName="text-sm w-1/8 capitalize"
         />
       )}
       <div
@@ -88,9 +89,9 @@ export function AdminTrackTable<TData, TValue>({
           showActions && hasSelectedRows && "justify-between",
         )}
       >
-        {showActions && hasSelectedRows && (
+        {/* {showActions && hasSelectedRows && (
           <DataTableActionsOnSelected table={table} />
-        )}
+        )} */}
         {showViewOptions && <DataTableViewOptions table={table} />}
       </div>
       <TableContent table={table} columns={columns} />
@@ -106,4 +107,6 @@ export function AdminTrackTable<TData, TValue>({
       />
     </div>
   );
-}
+};
+
+export default AdminAccountTable;

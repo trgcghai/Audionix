@@ -2,6 +2,8 @@ import { ApiResponse } from "@/app/types/api";
 import { Account } from "@/app/types/model";
 import { api } from "../api";
 import {
+  FindAccountParams,
+  FindAccountResponse,
   LoginPayload,
   LoginResponse,
   RegisterPayload,
@@ -66,6 +68,13 @@ const authApi = api.injectEndpoints({
         }),
       },
     ),
+    getAccounts: build.query<FindAccountResponse, FindAccountParams>({
+      query: (params) => ({
+        url: "/auth/accounts",
+        params,
+      }),
+      providesTags: ["Accounts"],
+    }),
   }),
 });
 
@@ -77,4 +86,5 @@ export const {
   useLogoutMutation,
   useProfileQuery,
   useUpdatePasswordMutation,
+  useGetAccountsQuery,
 } = authApi;

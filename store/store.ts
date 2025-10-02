@@ -1,5 +1,7 @@
 import { api } from "@/services/api";
+import accountManagementReducer from "@/store/slices/accountManagement";
 import albumManagementReducer from "@/store/slices/albumManagement";
+import detailAccountReducer from "@/store/slices/detailAccountSlice";
 import detailAlbumReducer from "@/store/slices/detailAlbumSlice";
 import detailPlaylistReducer from "@/store/slices/detailPlaylistSlice";
 import detailTrackReducer from "@/store/slices/detailTrackSlice";
@@ -31,11 +33,13 @@ const persistConfig = {
     "detailAlbum",
     "detailTrack",
     "detailPlaylist",
+    "detailAccount",
     "user",
     "trackManagement",
     "albumManagement",
     "userManagement",
     "playlistManagement",
+    "accountManagement",
   ], // Only persist these slices
   blacklist: [api.reducerPath],
 };
@@ -51,6 +55,8 @@ const persistedReducer = persistReducer(
     userManagement: userManagementReducer,
     playlistManagement: playlistManagementReducer,
     detailPlaylist: detailPlaylistReducer,
+    accountManagement: accountManagementReducer,
+    detailAccount: detailAccountReducer,
     user: userReducer,
     [api.reducerPath]: api.reducer,
   }),

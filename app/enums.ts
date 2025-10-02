@@ -17,3 +17,9 @@ export enum Volume {
   MAX = 0.1,
   DEFAULT = 0.07,
 }
+
+export enum Role {
+  USER = "user",
+  ADMIN = "admin",
+  ARTIST = "artist",
+}

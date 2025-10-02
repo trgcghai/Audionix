@@ -80,7 +80,7 @@ const AlbumTable = <TData, TValue>({
           className="grid grid-cols-2 gap-x-12 gap-y-6"
           itemClassName="flex items-center gap-4 mb-0"
           inputClassName="flex-1 w-full rounded-full"
-          labelClassName="text-base w-1/8 capitalize"
+          labelClassName="text-sm w-1/8 capitalize"
         />
       )}
       <div

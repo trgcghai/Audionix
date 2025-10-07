@@ -1,9 +1,9 @@
 "use client";
 import { useActionOnSelected } from "@/app/(artist-portal)/artist/tracks/hooks/useActionOnSelected";
+import DeleteSection from "@/components/dataTable/DeleteSection";
 import useTrackActions from "@/hooks/useTrackActions";
 import { Table } from "@tanstack/react-table";
 import AddToAlbumSection from "./AddToAlbumSection";
-import DeleteSection from "./DeleteSection";
 import StatusChangeSection from "./StatusChangeSection";
 
 function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {

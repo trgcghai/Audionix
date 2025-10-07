@@ -1,14 +1,13 @@
 "use client";
-import { Album } from "@/app/types/model";
 import { Table } from "@tanstack/react-table";
 import { useState } from "react";
 
 export const useActionOnSelected = <TData>(table: Table<TData>) => {
   const [selectedStatus, setSelectedStatus] = useState<string | undefined>();
 
-  const selectedAlbums = table
+  const selectedItems = table
     .getSelectedRowModel()
-    .rows.map((row) => row.original) as Album[];
+    .rows.map((row) => row.original);
 
   const handleStatusChange = (value: string) => {
     setSelectedStatus(value);
@@ -16,7 +15,7 @@ export const useActionOnSelected = <TData>(table: Table<TData>) => {
 
   return {
     selectedStatus,
-    selectedAlbums,
+    selectedItems,
     handleStatusChange,
   };
 };

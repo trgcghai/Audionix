@@ -1,14 +1,18 @@
 "use client";
-import { useActionOnSelected } from "@/app/(artist-portal)/artist/tracks/hooks/useActionOnSelected";
+import { Track } from "@/app/types/model";
 import DeleteSection from "@/components/dataTable/DeleteSection";
+import { useActionOnSelected } from "@/hooks/useActionOnSelected";
 import useTrackActions from "@/hooks/useTrackActions";
 import { Table } from "@tanstack/react-table";
 import AddToAlbumSection from "./AddToAlbumSection";
 import StatusChangeSection from "./StatusChangeSection";
 
 function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
-  const { selectedStatus, selectedTracks, handleStatusChange } =
-    useActionOnSelected(table);
+  const {
+    selectedStatus,
+    selectedItems: selectedTracks,
+    handleStatusChange,
+  } = useActionOnSelected(table);
   const { handleDeleteTracks, handleChangeMultipleStatus } = useTrackActions();
 
   return (
@@ -18,17 +22,19 @@ function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
         onStatusChange={handleStatusChange}
         onStatusConfirm={() => {
           handleChangeMultipleStatus({
-            ids: selectedTracks.map((track) => track._id),
+            ids: selectedTracks.map((track) => (track as Track)._id),
             status: selectedStatus!,
           });
         }}
       />
 
-      <AddToAlbumSection selectedTracks={selectedTracks} />
+      <AddToAlbumSection selectedTracks={selectedTracks as Track[]} />
 
       <DeleteSection
         onDeleteConfirm={() =>
-          handleDeleteTracks(selectedTracks.map((track) => track._id))
+          handleDeleteTracks(
+            selectedTracks.map((track) => (track as Track)._id),
+          )
         }
       />
     </div>

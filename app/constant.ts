@@ -1,4 +1,5 @@
 import { Option } from "@/components/ui/MultipleSelector";
+import formatStringCapital from "@/utils/formatStringCapital";
 import { AccountStatus, AlbumStatus, Role, TrackStatus } from "./enums";
 
 export const PAGE_SIZE_OPTIONS = [10, 15, 20, 25, 30, 35, 40] as const;
@@ -7,7 +8,7 @@ export const TRACK_STATUS_OPTIONS = Object.entries(TrackStatus).map(
   ([key, value]) => ({
     key,
     value,
-    label: value.charAt(0).toUpperCase() + value.slice(1).replace(/_/g, " "),
+    label: formatStringCapital(value).replace(/_/g, " "),
   }),
 );
 
@@ -15,7 +16,7 @@ export const ALBUM_STATUS_OPTIONS = Object.entries(AlbumStatus).map(
   ([key, value]) => ({
     key,
     value,
-    label: value.charAt(0).toUpperCase() + value.slice(1).replace(/_/g, " "),
+    label: formatStringCapital(value).replace(/_/g, " "),
   }),
 );
 
@@ -23,7 +24,7 @@ export const ACCOUNT_STATUS_OPTIONS = Object.entries(AccountStatus).map(
   ([key, value]) => ({
     key,
     value,
-    label: value.charAt(0).toUpperCase() + value.slice(1).replace(/_/g, " "),
+    label: formatStringCapital(value).replace(/_/g, " "),
   }),
 );
 
@@ -107,5 +108,5 @@ export const ITEM_PER_MEDIA_ROW = 6;
 
 export const ROLE_OPTIONS: Option[] = Object.entries(Role).map(([, value]) => ({
   value,
-  label: value.charAt(0).toUpperCase() + value.slice(1),
+  label: formatStringCapital(value),
 }));

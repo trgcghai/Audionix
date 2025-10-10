@@ -1,18 +1,18 @@
-import { PaginatedResponse } from "@/app/types/api";
+import { ApiResponse, PaginatedResponse } from "@/app/types/api";
 
-export type LoginPayload = {
+export type LoginParams = {
   email: string;
   password: string;
 };
 
-export type RegisterPayload = {
+export type RegisterParams = {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
 };
 
-export type UpdatePasswordPayload = {
+export type UpdatePasswordParams = {
   newPassword: string;
   oldPassword: string;
 };
@@ -28,3 +28,14 @@ export type FindAccountParams = {
   current?: number;
   sort?: string;
 };
+
+export type AccountStatusParams = {
+  accountIds: string[];
+};
+
+export type AccountStatusResponse = ApiResponse<{
+  modifiedCount: number;
+  matchedCount: number;
+  notFoundIds: string[] | undefined;
+  message: string;
+}>;

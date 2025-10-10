@@ -2,17 +2,19 @@ import { ApiResponse } from "@/app/types/api";
 import { Account } from "@/app/types/model";
 import { api } from "../api";
 import {
+  AccountStatusParams,
+  AccountStatusResponse,
   FindAccountParams,
   FindAccountResponse,
-  LoginPayload,
+  LoginParams,
   LoginResponse,
-  RegisterPayload,
-  UpdatePasswordPayload,
+  RegisterParams,
+  UpdatePasswordParams,
 } from "./type";
 
 const authApi = api.injectEndpoints({
   endpoints: (build) => ({
-    login: build.mutation<LoginResponse, LoginPayload>({
+    login: build.mutation<LoginResponse, LoginParams>({
       query: (data) => ({
         url: "/auth/login",
         method: "POST",
@@ -20,7 +22,7 @@ const authApi = api.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
-    register: build.mutation<ApiResponse<unknown>, RegisterPayload>({
+    register: build.mutation<ApiResponse<unknown>, RegisterParams>({
       query: (data) => ({
         url: "/auth/register",
         method: "POST",
@@ -59,21 +61,41 @@ const authApi = api.injectEndpoints({
       }),
       providesTags: ["User"],
     }),
-    updatePassword: build.mutation<ApiResponse<unknown>, UpdatePasswordPayload>(
-      {
-        query: (data) => ({
-          url: "/auth/accounts/password",
-          method: "PUT",
-          data,
-        }),
-      },
-    ),
+    updatePassword: build.mutation<ApiResponse<unknown>, UpdatePasswordParams>({
+      query: (data) => ({
+        url: "/auth/accounts/password",
+        method: "PUT",
+        data,
+      }),
+    }),
     getAccounts: build.query<FindAccountResponse, FindAccountParams>({
       query: (params) => ({
         url: "/auth/accounts",
         params,
       }),
       providesTags: ["Accounts"],
+    }),
+    deactivateAccounts: build.mutation<
+      AccountStatusResponse,
+      AccountStatusParams
+    >({
+      query: (data) => ({
+        url: "/auth/accounts/deactivation",
+        method: "PUT",
+        data,
+      }),
+      invalidatesTags: ["Accounts"],
+    }),
+    activateAccounts: build.mutation<
+      AccountStatusResponse,
+      AccountStatusParams
+    >({
+      query: (data) => ({
+        url: "/auth/accounts/activation",
+        method: "PUT",
+        data,
+      }),
+      invalidatesTags: ["Accounts"],
     }),
   }),
 });
@@ -87,4 +109,6 @@ export const {
   useProfileQuery,
   useUpdatePasswordMutation,
   useGetAccountsQuery,
+  useDeactivateAccountsMutation,
+  useActivateAccountsMutation,
 } = authApi;

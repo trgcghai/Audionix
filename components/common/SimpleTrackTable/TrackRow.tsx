@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { TableCell, TableRow } from "@/components/ui/table";
+import formatStringCapital from "@/utils/formatStringCapital";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import { Ellipsis, Trash2 } from "lucide-react";
@@ -104,7 +105,7 @@ const TrackRow = ({
           <p className="text-sm font-medium">
             {track.genres.map((genre) => (
               <Badge key={genre} className="mr-1">
-                {genre.charAt(0).toUpperCase() + genre.slice(1)}
+                {formatStringCapital(genre)}
               </Badge>
             ))}
           </p>
@@ -138,7 +139,7 @@ const TrackRow = ({
           <p className="text-sm font-medium">
             {track.genres.map((genre) => (
               <Badge key={genre} className="mr-1">
-                {genre.charAt(0).toUpperCase() + genre.slice(1)}
+                {formatStringCapital(genre)}
               </Badge>
             ))}
           </p>

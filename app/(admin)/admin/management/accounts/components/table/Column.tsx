@@ -1,10 +1,12 @@
 "use client";
 
 import ActionCell from "@/app/(admin)/admin/management/accounts/components/table/cells/ActionCell";
+import { AccountStatus } from "@/app/enums";
 import { Account } from "@/app/types/model";
 import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import formatStringCapital from "@/utils/formatStringCapital";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import { ColumnDef } from "@tanstack/react-table";
 
@@ -126,7 +128,11 @@ export const AdminAccountColumns: ColumnDef<Account>[] = [
         variant={row.original.isActivate ? "default" : "destructive"}
         className="rounded-full"
       >
-        {row.original.isActivate ? "Activated" : "Unactivated"}
+        {formatStringCapital(
+          row.original.isActivate
+            ? AccountStatus.ACTIVATED
+            : AccountStatus.DEACTIVATED,
+        )}
       </Badge>
     ),
     meta: {

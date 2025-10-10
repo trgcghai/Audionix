@@ -4,6 +4,7 @@ import {
 } from "@/app/(artist-portal)/artist/tracks/components/form/schemas";
 import { Track } from "@/app/types/model";
 import useTrackActions from "@/hooks/useTrackActions";
+import formatStringCapital from "@/utils/formatStringCapital";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -27,7 +28,7 @@ const useUpdateTrackForm = ({ track }: props) => {
         })) || [],
       genres:
         track.genres.map((genre) => ({
-          label: genre.charAt(0).toUpperCase() + genre.slice(1),
+          label: formatStringCapital(genre),
           value: genre,
         })) || [],
       cover_image: undefined,

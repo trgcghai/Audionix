@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import formatStringCapital from "@/utils/formatStringCapital";
 import { Row } from "@tanstack/react-table";
 import { useMemo } from "react";
 
@@ -15,7 +16,7 @@ interface GenresCellProps<T> {
 function GenresCell<T>({
   row,
   getGenres,
-  formatGenre = (genre) => genre.charAt(0).toUpperCase() + genre.slice(1),
+  formatGenre = (genre) => formatStringCapital(genre),
   badgeClassName = "cursor-pointer rounded-full px-2 py-1 capitalize",
 }: GenresCellProps<T>) {
   const genres = useMemo(() => getGenres(row.original) || [], [row, getGenres]);

@@ -11,6 +11,7 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 
+import DataTableActionsOnSelected from "@/app/(admin)/admin/management/accounts/components/table/actionsOnSelected";
 import TableFilters from "@/app/(admin)/admin/management/accounts/components/table/filters";
 import useAdminAccountManagement from "@/app/(admin)/hooks/useAdminAccountManagement";
 import { DataTablePagination } from "@/components/dataTable/DataTablePagination";
@@ -88,9 +89,9 @@ const AdminAccountTable = <TData, TValue>({
           showActions && hasSelectedRows && "justify-between",
         )}
       >
-        {/* {showActions && hasSelectedRows && (
+        {showActions && hasSelectedRows && (
           <DataTableActionsOnSelected table={table} />
-        )} */}
+        )}
         {showViewOptions && <DataTableViewOptions table={table} />}
       </div>
       <TableContent table={table} columns={columns} />

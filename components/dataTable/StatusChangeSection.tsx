@@ -41,8 +41,8 @@ const StatusChangeSection = ({
 
   return (
     <div className="flex w-1/3 items-center justify-between gap-2">
-      <Label className="text-base font-medium capitalize">
-        Change selected row to status:
+      <Label className="text-sm font-medium capitalize">
+        Change selected row to:
       </Label>
       <StatusSelect
         value={selectedStatus!}

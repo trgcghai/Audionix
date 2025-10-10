@@ -4,6 +4,7 @@ import {
 } from "@/app/(artist-portal)/artist/albums/components/form/schemas";
 import { Album } from "@/app/types/model";
 import useAlbumActions from "@/hooks/useAlbumActions";
+import formatStringCapital from "@/utils/formatStringCapital";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -22,7 +23,7 @@ const useUpdateAlbumForm = ({ album }: UpdateAlbumFormProps) => {
       title: album.title,
       description: album.description,
       genres: album.genres.map((genre) => ({
-        label: genre.charAt(0).toUpperCase() + genre.slice(1),
+        label: formatStringCapital(genre),
         value: genre,
       })),
       cover_image: undefined,

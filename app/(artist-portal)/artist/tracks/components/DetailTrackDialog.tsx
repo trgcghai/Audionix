@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import MultipleSelector from "@/components/ui/MultipleSelector";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import formatStringCapital from "@/utils/formatStringCapital";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import Image from "next/image";
@@ -103,7 +104,7 @@ const DetailTrackDialog = ({
                   disabled
                   value={track.genres.map((genre) => ({
                     value: genre,
-                    label: genre.charAt(0).toUpperCase() + genre.slice(1),
+                    label: formatStringCapital(genre),
                   }))}
                 />
               </div>

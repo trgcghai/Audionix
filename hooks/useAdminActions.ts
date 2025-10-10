@@ -1,9 +1,18 @@
 import { UserFormValues } from "@/app/(admin)/admin/management/users/components/form/schemas";
+import { AccountStatus } from "@/app/enums";
 import useToast from "@/hooks/useToast";
+import {
+  useActivateAccountsMutation,
+  useDeactivateAccountsMutation,
+} from "@/services/auth/authApi";
 import { useCreateUserMutation } from "@/services/users/userApi";
 
 const useAdminActions = () => {
   const [createUser, createUserState] = useCreateUserMutation();
+  const [activateAccounts, activateAccountsState] =
+    useActivateAccountsMutation();
+  const [deactivateAccounts, deactivateAccountsState] =
+    useDeactivateAccountsMutation();
   const { showErrorToast, showSuccessToast } = useToast();
 
   const transformToPayload = (data: UserFormValues) => {
@@ -29,9 +38,31 @@ const useAdminActions = () => {
     }
   };
 
+  const handleToggleActiveStatus = async (
+    accountIds: string[],
+    status: AccountStatus,
+  ) => {
+    try {
+      if (status === AccountStatus.DEACTIVATED) {
+        await deactivateAccounts({ accountIds }).unwrap();
+      } else if (status === AccountStatus.ACTIVATED) {
+        await activateAccounts({ accountIds }).unwrap();
+      }
+      showSuccessToast("Activating accounts successfully");
+    } catch (err) {
+      console.log(err);
+      showErrorToast(
+        "Failed to update account status. Please try again later.",
+      );
+    }
+  };
+
   return {
     handleCreateUser,
     createUserState,
+    handleToggleActiveStatus,
+    activateAccountsState,
+    deactivateAccountsState,
   };
 };
 export default useAdminActions;

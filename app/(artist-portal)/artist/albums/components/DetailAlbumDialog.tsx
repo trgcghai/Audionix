@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAppDispatch } from "@/hooks/redux";
 import { useGetTracksInAlbumQuery } from "@/services/albums/albumApi";
 import { setOpen, useDetailAlbumSlice } from "@/store/slices/detailAlbumSlice";
+import formatStringCapital from "@/utils/formatStringCapital";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import Image from "next/image";
 import Link from "next/link";
@@ -102,7 +103,7 @@ const DetailAlbumDialog = () => {
                   disabled
                   value={album.genres.map((genre) => ({
                     value: genre,
-                    label: genre.charAt(0).toUpperCase() + genre.slice(1),
+                    label: formatStringCapital(genre),
                   }))}
                 />
               </div>

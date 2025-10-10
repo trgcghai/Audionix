@@ -1,6 +1,7 @@
 import { ArtistFormValues } from "@/app/(artist-portal)/artist/profile/components/form/schemas";
 import { Artist } from "@/app/types/model";
 import useArtistActions from "@/hooks/useArtistActions";
+import formatStringCapital from "@/utils/formatStringCapital";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -21,7 +22,7 @@ const useArtistForm = ({ artist }: UseArtistFormProps) => {
       name: artist ? artist.name : "",
       genres: artist
         ? artist.genres.map((genre) => ({
-            label: genre.charAt(0).toUpperCase() + genre.slice(1),
+            label: formatStringCapital(genre),
             value: genre,
           }))
         : [],

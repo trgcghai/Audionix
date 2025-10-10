@@ -38,9 +38,9 @@ const ActionCell = ({ row }: { row: Row<Account> }) => {
           onClick={() => {
             // Handle account status toggle (active/inactive)
           }}
-          className={account.isVerified ? "text-red-600" : "text-green-600"}
+          className={account.isActivate ? "text-red-600" : "text-green-600"}
         >
-          {account.isVerified ? "Deactivate" : "Activate"}
+          {account.isActivate ? "Deactivate" : "Activate"}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

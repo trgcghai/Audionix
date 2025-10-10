@@ -1,4 +1,5 @@
-import StatusSelect from "@/app/(admin)/admin/management/albums/components/StatusSelect";
+import { AlbumStatusValues } from "@/app/constant";
+import StatusSelect from "@/components/common/StatusSelect";
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
@@ -27,8 +28,10 @@ const StatusChangeSection = ({
         Change selected row to status:
       </Label>
       <StatusSelect
-        status={selectedStatus!}
-        handleStatusChange={handleStatusChange}
+        value={selectedStatus!}
+        onChange={handleStatusChange}
+        title="Select status"
+        items={AlbumStatusValues}
       />
       <ConfirmDialog
         title="Confirm Status Change"

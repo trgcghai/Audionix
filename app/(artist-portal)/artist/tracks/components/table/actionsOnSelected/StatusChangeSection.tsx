@@ -1,4 +1,5 @@
-import StatusSelect from "@/app/(artist-portal)/artist/tracks/components/StatusSelect";
+import { TrackStatusValues } from "@/app/constant";
+import StatusSelect from "@/components/common/StatusSelect";
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
@@ -27,8 +28,10 @@ const StatusChangeSection = ({
         Change selected row to status:
       </Label>
       <StatusSelect
-        status={selectedStatus!}
-        handleStatusChange={handleStatusChange}
+        value={selectedStatus!}
+        onChange={handleStatusChange}
+        title="Select status"
+        items={TrackStatusValues}
       />
       <ConfirmDialog
         title="Confirm Status Change"

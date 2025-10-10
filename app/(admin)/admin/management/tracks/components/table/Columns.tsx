@@ -1,4 +1,5 @@
 import GenresCell from "@/app/(admin)/admin/management/tracks/components/table/cells/GenresCell";
+import StatusCell from "@/app/(artist-portal)/artist/tracks/components/table/cells/StatusCell";
 import { TrackStatusValues } from "@/app/constant";
 import { Track } from "@/app/types/model";
 import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
@@ -9,7 +10,6 @@ import { formatUploadTime } from "@/utils/formatUploadTime";
 import { ColumnDef } from "@tanstack/react-table";
 import ActionCell from "./cells/ActionCell";
 import ImageCell from "./cells/ImageCell";
-import StatusCell from "./cells/StatusCell";
 
 export const AdminTrackColumns: ColumnDef<Track>[] = [
   {

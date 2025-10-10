@@ -1,4 +1,3 @@
-import { AlbumStatusValues } from "@/app/constant";
 import {
   Select,
   SelectContent,
@@ -8,30 +7,30 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/libs/utils";
 
-interface AlbumStatusProps {
-  status: string;
-  handleStatusChange: (value: string) => void;
+interface TrackStatusProps {
+  items: { key: string; value: string; label: string }[];
+  value: string;
+  onChange: (value: string) => void;
   disabled?: boolean;
   className?: string;
+  title: string;
 }
 
 const StatusSelect = ({
-  status,
-  handleStatusChange,
-  disabled,
-  className,
-}: AlbumStatusProps) => {
+  items,
+  value,
+  title,
+  onChange,
+  disabled = false,
+  className = "",
+}: TrackStatusProps) => {
   return (
-    <Select
-      value={status}
-      onValueChange={handleStatusChange}
-      disabled={disabled}
-    >
+    <Select value={value} onValueChange={onChange} disabled={disabled}>
       <SelectTrigger className={cn("flex-1 rounded-full", className)}>
-        <SelectValue placeholder="Select status" />
+        <SelectValue placeholder={title} />
       </SelectTrigger>
       <SelectContent>
-        {AlbumStatusValues.map((status) => (
+        {items.map((status) => (
           <SelectItem
             key={status.key}
             value={status.value}

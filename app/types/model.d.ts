@@ -88,6 +88,7 @@ export type Account = {
   lastName: string;
   role: string[];
   isVerified: boolean;
+  isActivate: boolean;
   createdAt: string;
   updatedAt: string;
   __v: number;

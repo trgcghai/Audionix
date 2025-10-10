@@ -114,6 +114,27 @@ export const AdminAccountColumns: ColumnDef<Account>[] = [
     },
   },
   {
+    id: "isActivate",
+    accessorKey: "isActivate",
+    enableColumnFilter: true,
+    enableSorting: false,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Activated" />
+    ),
+    cell: ({ row }) => (
+      <Badge
+        variant={row.original.isActivate ? "default" : "destructive"}
+        className="rounded-full"
+      >
+        {row.original.isActivate ? "Activated" : "Unactivated"}
+      </Badge>
+    ),
+    meta: {
+      label: "Verified",
+      inputType: "text",
+    },
+  },
+  {
     id: "createdAt",
     accessorKey: "createdAt",
     enableColumnFilter: true,

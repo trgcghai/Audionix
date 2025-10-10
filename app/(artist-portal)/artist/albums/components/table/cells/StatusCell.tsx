@@ -1,6 +1,7 @@
-import StatusSelect from "@/app/(artist-portal)/artist/albums/components/StatusSelect";
+import { AlbumStatusValues } from "@/app/constant";
 import { AlbumStatus } from "@/app/enums";
 import { Album } from "@/app/types/model";
+import StatusSelect from "@/components/common/StatusSelect";
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -44,10 +45,12 @@ const StatusCell = ({ row }: { row: Row<Album> }) => {
         </PopoverTrigger>
         <PopoverContent align="end" className="w-48">
           <StatusSelect
-            status={status}
-            handleStatusChange={handleStatusChange}
+            value={status}
+            onChange={handleStatusChange}
             disabled={false}
             className="w-full rounded-lg"
+            title="Select status"
+            items={AlbumStatusValues}
           />
         </PopoverContent>
       </Popover>

@@ -14,14 +14,7 @@ import { cn } from "@/libs/utils";
 import { openViewDetail } from "@/store/slices/detailAccountSlice";
 import formatStringCapital from "@/utils/formatStringCapital";
 import { Row } from "@tanstack/react-table";
-import {
-  FileText,
-  MoreHorizontal,
-  Power,
-  PowerOff,
-  Settings2,
-} from "lucide-react";
-import Link from "next/link";
+import { FileText, MoreHorizontal, Power, PowerOff } from "lucide-react";
 
 const ActionCell = ({ row }: { row: Row<Account> }) => {
   const account = row.original;
@@ -41,12 +34,6 @@ const ActionCell = ({ row }: { row: Row<Account> }) => {
             <FileText className="mr-2 h-4 w-4" />
             <span>View Detail</span>
           </div>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href={`./accounts/update/${account._id}`}>
-            <Settings2 className="mr-2 h-4 w-4" />
-            <span>Edit</span>
-          </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem

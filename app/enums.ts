@@ -28,3 +28,8 @@ export enum AccountStatus {
   ACTIVATED = "activated",
   DEACTIVATED = "deactivated",
 }
+
+export enum VerifyStatus {
+  VERIFIED = "verified",
+  UNVERIFIED = "unverified",
+}

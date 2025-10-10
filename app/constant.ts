@@ -1,6 +1,12 @@
 import { Option } from "@/components/ui/MultipleSelector";
 import formatStringCapital from "@/utils/formatStringCapital";
-import { AccountStatus, AlbumStatus, Role, TrackStatus } from "./enums";
+import {
+  AccountStatus,
+  AlbumStatus,
+  Role,
+  TrackStatus,
+  VerifyStatus,
+} from "./enums";
 
 export const PAGE_SIZE_OPTIONS = [10, 15, 20, 25, 30, 35, 40] as const;
 
@@ -21,6 +27,14 @@ export const ALBUM_STATUS_OPTIONS = Object.entries(AlbumStatus).map(
 );
 
 export const ACCOUNT_STATUS_OPTIONS = Object.entries(AccountStatus).map(
+  ([key, value]) => ({
+    key,
+    value,
+    label: formatStringCapital(value).replace(/_/g, " "),
+  }),
+);
+
+export const VERIFY_STATUS_OPTIONS = Object.entries(VerifyStatus).map(
   ([key, value]) => ({
     key,
     value,

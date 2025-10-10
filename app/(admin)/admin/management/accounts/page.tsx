@@ -1,5 +1,5 @@
 "use client";
-import DetailAccountDialog from "@/app/(admin)/admin/management/accounts/components/DetailAccountDialog";
+import DetailAccountDialog from "@/app/(admin)/admin/management/accounts/components/detailAccountDialog";
 import AdminAccountTable from "@/app/(admin)/admin/management/accounts/components/table";
 import { AdminAccountColumns } from "@/app/(admin)/admin/management/accounts/components/table/Column";
 import useAdminAccountManagement from "@/app/(admin)/hooks/useAdminAccountManagement";

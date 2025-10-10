@@ -3,13 +3,13 @@ import StatusCell from "@/app/(artist-portal)/artist/tracks/components/table/cel
 import { TrackStatusValues } from "@/app/constant";
 import { Track } from "@/app/types/model";
 import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
+import ImageCell from "@/components/dataTable/ImageCell";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import { ColumnDef } from "@tanstack/react-table";
 import ActionCell from "./cells/ActionCell";
-import ImageCell from "./cells/ImageCell";
 
 export const AdminTrackColumns: ColumnDef<Track>[] = [
   {
@@ -44,7 +44,12 @@ export const AdminTrackColumns: ColumnDef<Track>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Track Image Cover" />
     ),
-    cell: ({ row }) => <ImageCell row={row} />,
+    cell: ({ row }) => (
+      <ImageCell<Track>
+        row={row}
+        getImageUrl={(data) => data.cover_images[0].url}
+      />
+    ),
   },
   {
     id: "title",

@@ -5,12 +5,12 @@ import GenresCell from "@/app/(artist-portal)/artist/tracks/components/table/cel
 import { ARTIST_ALBUM_STATUS_OPTIONS } from "@/app/constant";
 import { Album } from "@/app/types/model";
 import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
+import ImageCell from "@/components/dataTable/ImageCell";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import { ColumnDef } from "@tanstack/react-table";
 import ActionCell from "./cells/ActionCell";
-import ImageCell from "./cells/ImageCell";
 
 export const AdminAlbumColumns: ColumnDef<Album>[] = [
   {
@@ -45,7 +45,12 @@ export const AdminAlbumColumns: ColumnDef<Album>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Album Image Cover" />
     ),
-    cell: ({ row }) => <ImageCell row={row} />,
+    cell: ({ row }) => (
+      <ImageCell<Album>
+        row={row}
+        getImageUrl={(data) => data.cover_images[0].url}
+      />
+    ),
   },
   {
     id: "title",

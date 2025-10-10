@@ -2,12 +2,12 @@ import GenresCell from "@/app/(artist-portal)/artist/tracks/components/table/cel
 import { TrackStatusValues } from "@/app/constant";
 import { EmbbedTrack, Track } from "@/app/types/model";
 import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
+import ImageCell from "@/components/dataTable/ImageCell";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import { ColumnDef } from "@tanstack/react-table";
 import ActionCell from "./cells/ActionCell";
-import ImageCell from "./cells/ImageCell";
 import StatusCell from "./cells/StatusCell";
 
 export const BaseTrackColumns: ColumnDef<Track>[] = [
@@ -43,7 +43,12 @@ export const BaseTrackColumns: ColumnDef<Track>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Track Image Cover" />
     ),
-    cell: ({ row }) => <ImageCell row={row} />,
+    cell: ({ row }) => (
+      <ImageCell<Track>
+        row={row}
+        getImageUrl={(data) => data.cover_images[0].url}
+      />
+    ),
   },
   {
     id: "title",

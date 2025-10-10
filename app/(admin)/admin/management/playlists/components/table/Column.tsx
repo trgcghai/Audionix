@@ -1,9 +1,9 @@
 "use client";
 
 import ActionCell from "@/app/(admin)/admin/management/playlists/components/table/cells/ActionCell";
-import ImageCell from "@/app/(admin)/admin/management/playlists/components/table/cells/ImageCell";
 import { Playlist } from "@/app/types/model";
 import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
+import ImageCell from "@/components/dataTable/ImageCell";
 import { Badge } from "@/components/ui/badge";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import { ColumnDef } from "@tanstack/react-table";
@@ -19,7 +19,12 @@ export const AdminPlaylistColumns: ColumnDef<Playlist>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Playlist Cover" />
     ),
-    cell: ({ row }) => <ImageCell row={row} />,
+    cell: ({ row }) => (
+      <ImageCell<Playlist>
+        row={row}
+        getImageUrl={(data) => data.cover_images[0].url}
+      />
+    ),
   },
   {
     id: "title",

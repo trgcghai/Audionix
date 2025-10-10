@@ -1,10 +1,10 @@
 import { User } from "@/app/types/model";
 import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
+import ImageCell from "@/components/dataTable/ImageCell";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import { ColumnDef } from "@tanstack/react-table";
 import ActionCell from "./cells/ActionCell";
-import ImageCell from "./cells/ImageCell";
 
 export const AdminUserColumns: ColumnDef<User>[] = [
   {
@@ -39,7 +39,9 @@ export const AdminUserColumns: ColumnDef<User>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Track Image Cover" />
     ),
-    cell: ({ row }) => <ImageCell row={row} />,
+    cell: ({ row }) => (
+      <ImageCell<User> row={row} getImageUrl={(data) => data.avatar[0].url} />
+    ),
   },
   {
     id: "username",

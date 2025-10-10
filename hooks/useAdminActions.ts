@@ -1,9 +1,10 @@
 import { UserFormValues } from "@/app/(admin)/admin/management/users/components/form/schemas";
-import { AccountStatus } from "@/app/enums";
+import { AccountStatus, Role } from "@/app/enums";
 import useToast from "@/hooks/useToast";
 import {
   useActivateAccountsMutation,
   useDeactivateAccountsMutation,
+  useUpdateRolesMutation,
 } from "@/services/auth/authApi";
 import { useCreateUserMutation } from "@/services/users/userApi";
 
@@ -13,6 +14,7 @@ const useAdminActions = () => {
     useActivateAccountsMutation();
   const [deactivateAccounts, deactivateAccountsState] =
     useDeactivateAccountsMutation();
+  const [updateRoles, updateRolesState] = useUpdateRolesMutation();
   const { showErrorToast, showSuccessToast } = useToast();
 
   const transformToPayload = (data: UserFormValues) => {
@@ -38,10 +40,13 @@ const useAdminActions = () => {
     }
   };
 
-  const handleToggleActiveStatus = async (
-    accountIds: string[],
-    status: AccountStatus,
-  ) => {
+  const handleToggleActiveStatus = async ({
+    accountIds,
+    status,
+  }: {
+    accountIds: string[];
+    status: AccountStatus;
+  }) => {
     try {
       if (status === AccountStatus.DEACTIVATED) {
         await deactivateAccounts({ accountIds }).unwrap();
@@ -57,12 +62,30 @@ const useAdminActions = () => {
     }
   };
 
+  const handleUpdateRoles = async ({
+    accountIds,
+    newRoles,
+  }: {
+    accountIds: string[];
+    newRoles: Role[];
+  }) => {
+    try {
+      await updateRoles({ accountIds, newRoles }).unwrap();
+      showSuccessToast("Updating roles successfully");
+    } catch (err) {
+      console.log(err);
+      showErrorToast("Failed to update roles. Please try again later.");
+    }
+  };
+
   return {
     handleCreateUser,
     createUserState,
     handleToggleActiveStatus,
     activateAccountsState,
     deactivateAccountsState,
+    handleUpdateRoles,
+    updateRolesState,
   };
 };
 export default useAdminActions;

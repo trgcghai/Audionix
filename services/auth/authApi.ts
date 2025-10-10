@@ -10,6 +10,8 @@ import {
   LoginResponse,
   RegisterParams,
   UpdatePasswordParams,
+  UpdateRoleParams,
+  UpdateRoleResponse,
 } from "./type";
 
 const authApi = api.injectEndpoints({
@@ -97,6 +99,14 @@ const authApi = api.injectEndpoints({
       }),
       invalidatesTags: ["Accounts"],
     }),
+    updateRoles: build.mutation<UpdateRoleResponse, UpdateRoleParams>({
+      query: (data) => ({
+        url: `/auth/accounts/roles`,
+        method: "PUT",
+        data,
+      }),
+      invalidatesTags: ["Accounts"],
+    }),
   }),
 });
 
@@ -111,4 +121,5 @@ export const {
   useGetAccountsQuery,
   useDeactivateAccountsMutation,
   useActivateAccountsMutation,
+  useUpdateRolesMutation,
 } = authApi;

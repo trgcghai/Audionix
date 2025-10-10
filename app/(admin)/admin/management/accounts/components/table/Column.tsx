@@ -2,6 +2,7 @@
 
 import ActionCell from "@/app/(admin)/admin/management/accounts/components/table/cells/ActionCell";
 import ActivatedCell from "@/app/(admin)/admin/management/accounts/components/table/cells/ActivatedCell";
+import RolesCell from "@/app/(admin)/admin/management/accounts/components/table/cells/RolesCell";
 import { Account } from "@/app/types/model";
 import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
 import { Badge } from "@/components/ui/badge";
@@ -79,15 +80,7 @@ export const AdminAccountColumns: ColumnDef<Account>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Roles" />
     ),
-    cell: ({ row }) => (
-      <div className="flex flex-wrap gap-2">
-        {row.original.role.map((role) => (
-          <Badge key={role} className="capitalize rounded-full">
-            {role}
-          </Badge>
-        ))}
-      </div>
-    ),
+    cell: ({ row }) => <RolesCell row={row} />,
     meta: {
       label: "Roles",
       inputType: "text",

@@ -16,6 +16,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAppDispatch } from "@/hooks/redux";
 import useAdminActions from "@/hooks/useAdminActions";
+import { cn } from "@/libs/utils";
 import { useGetArtistByIdQuery } from "@/services/artists/artistApi";
 import { useGetUserByIdQuery } from "@/services/users/userApi";
 import {
@@ -80,7 +81,12 @@ const DetailAccountDialog = () => {
             <Separator />
 
             <Tabs defaultValue={TabValues.ACCOUNT} className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
+              <TabsList
+                className={cn(
+                  "grid w-full",
+                  isArtist ? "grid-cols-3" : "grid-cols-2",
+                )}
+              >
                 <TabsTrigger value={TabValues.ACCOUNT}>
                   Account Information
                 </TabsTrigger>
@@ -140,12 +146,12 @@ const DetailAccountDialog = () => {
                 variant={account.isActivate ? "destructive" : "default"}
                 className="rounded-full flex items-center gap-2"
                 onClick={() => {
-                  handleToggleActiveStatus(
-                    [account._id],
-                    account.isActivate
+                  handleToggleActiveStatus({
+                    accountIds: [account._id],
+                    status: account.isActivate
                       ? AccountStatus.DEACTIVATED
                       : AccountStatus.ACTIVATED,
-                  );
+                  });
                   dispatch(setOpen({ isOpen: false }));
                 }}
               >

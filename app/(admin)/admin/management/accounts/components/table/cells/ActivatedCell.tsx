@@ -30,7 +30,10 @@ const ActivatedCell = ({ row }: { row: Row<Account> }) => {
   };
 
   const handleStatusConfirm = () => {
-    handleToggleActiveStatus([row.original._id], status);
+    handleToggleActiveStatus({
+      accountIds: [row.original._id],
+      status: status,
+    });
     setStatusDialogOpen(false);
   };
 

@@ -14,13 +14,14 @@ function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
   const { selectedIds } = useActionOnSelected(table);
   const { handleToggleActiveStatus } = useAdminActions();
 
-  // Mock function to handle updating multiple accounts
   const handleUpdateStatusMany = (data: {
     ids: string[];
     status: AccountStatus;
   }) => {
-    console.log("Updating accounts status:", data.status, "for IDs:", data.ids);
-    handleToggleActiveStatus(data.ids, data.status);
+    handleToggleActiveStatus({
+      accountIds: data.ids,
+      status: data.status,
+    });
   };
 
   return (

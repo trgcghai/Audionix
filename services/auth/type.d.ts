@@ -1,3 +1,4 @@
+import { Role } from "@/app/enums";
 import { ApiResponse, PaginatedResponse } from "@/app/types/api";
 
 export type LoginParams = {
@@ -37,5 +38,18 @@ export type AccountStatusResponse = ApiResponse<{
   modifiedCount: number;
   matchedCount: number;
   notFoundIds: string[] | undefined;
+  message: string;
+}>;
+
+export type UpdateRoleParams = {
+  accountIds: string[];
+  newRoles: Role[];
+};
+
+export type UpdateRoleResponse = ApiResponse<{
+  modifiedCount: number;
+  matchedCount: number;
+  notFoundIds: string[] | undefined;
+  updatedRoles: Role[];
   message: string;
 }>;

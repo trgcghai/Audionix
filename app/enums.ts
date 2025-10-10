@@ -23,3 +23,8 @@ export enum Role {
   ADMIN = "admin",
   ARTIST = "artist",
 }
+
+export enum AccountStatus {
+  ACTIVATED = "activated",
+  DEACTIVATED = "deactivated",
+}

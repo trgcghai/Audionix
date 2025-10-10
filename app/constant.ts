@@ -1,11 +1,9 @@
 import { Option } from "@/components/ui/MultipleSelector";
-import { AlbumStatus, Role, TrackStatus } from "./enums";
+import { AccountStatus, AlbumStatus, Role, TrackStatus } from "./enums";
 
 export const PAGE_SIZE_OPTIONS = [10, 15, 20, 25, 30, 35, 40] as const;
 
-export const ARTIST_TRACK_STATUS_OPTIONS = ["active", "inactive"];
-
-export const TrackStatusValues = Object.entries(TrackStatus).map(
+export const TRACK_STATUS_OPTIONS = Object.entries(TrackStatus).map(
   ([key, value]) => ({
     key,
     value,
@@ -13,7 +11,7 @@ export const TrackStatusValues = Object.entries(TrackStatus).map(
   }),
 );
 
-export const AlbumStatusValues = Object.entries(AlbumStatus).map(
+export const ALBUM_STATUS_OPTIONS = Object.entries(AlbumStatus).map(
   ([key, value]) => ({
     key,
     value,
@@ -21,7 +19,13 @@ export const AlbumStatusValues = Object.entries(AlbumStatus).map(
   }),
 );
 
-export const ARTIST_ALBUM_STATUS_OPTIONS = ["published", "hidden"];
+export const ACCOUNT_STATUS_OPTIONS = Object.entries(AccountStatus).map(
+  ([key, value]) => ({
+    key,
+    value,
+    label: value.charAt(0).toUpperCase() + value.slice(1).replace(/_/g, " "),
+  }),
+);
 
 export const COVER_IMAGE_ACCEPT_TYPES = {
   "image/jpeg": [".jpg", ".jpeg"],

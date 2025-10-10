@@ -2,7 +2,6 @@
 
 import StatusCell from "@/app/(artist-portal)/artist/albums/components/table/cells/StatusCell";
 import GenresCell from "@/app/(artist-portal)/artist/tracks/components/table/cells/GenresCell";
-import { ARTIST_ALBUM_STATUS_OPTIONS } from "@/app/constant";
 import { Album } from "@/app/types/model";
 import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
 import ImageCell from "@/components/dataTable/ImageCell";
@@ -151,7 +150,6 @@ export const AdminAlbumColumns: ColumnDef<Album>[] = [
     cell: ({ row }) => <StatusCell row={row} />,
     meta: {
       inputType: "select",
-      options: ARTIST_ALBUM_STATUS_OPTIONS,
     },
   },
   {

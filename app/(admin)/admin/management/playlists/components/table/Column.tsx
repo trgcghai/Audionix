@@ -22,7 +22,9 @@ export const AdminPlaylistColumns: ColumnDef<Playlist>[] = [
     cell: ({ row }) => (
       <ImageCell<Playlist>
         row={row}
-        getImageUrl={(data) => data.cover_images[0].url}
+        getImageUrl={(data) =>
+          data.cover_images.length > 0 ? data.cover_images[0].url : ""
+        }
       />
     ),
   },

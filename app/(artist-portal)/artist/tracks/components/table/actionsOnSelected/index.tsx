@@ -1,5 +1,5 @@
 "use client";
-import { TrackStatusValues } from "@/app/constant";
+import { TRACK_STATUS_OPTIONS } from "@/app/constant";
 import DeleteSection from "@/components/dataTable/DeleteSection";
 import StatusChangeSection from "@/components/dataTable/StatusChangeSection";
 import { useActionOnSelected } from "@/hooks/useActionOnSelected";
@@ -17,7 +17,7 @@ function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
       <StatusChangeSection
         selectedStatus={selectedStatus}
         onStatusChange={setSelectedStatus}
-        statusItems={TrackStatusValues}
+        statusItems={TRACK_STATUS_OPTIONS}
         onStatusConfirm={() => {
           handleChangeMultipleStatus({
             ids: selectedIds,

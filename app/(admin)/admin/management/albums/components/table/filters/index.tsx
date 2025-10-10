@@ -1,5 +1,5 @@
 import useAdminAlbumManagement from "@/app/(admin)/hooks/useAdminAlbumManagement";
-import { AlbumStatusValues, DEFAULT_GENRES } from "@/app/constant";
+import { ALBUM_STATUS_OPTIONS, DEFAULT_GENRES } from "@/app/constant";
 import MultipleValueFilter from "@/components/common/filters/MultipleValueFilter";
 import TitleFilter from "@/components/common/filters/TitleFilter";
 import { Button } from "@/components/ui/button";
@@ -52,7 +52,7 @@ const TableFilters = ({
           labelClassName={cn(labelClassName)}
         />
         <MultipleValueFilter
-          options={AlbumStatusValues.map((status) => ({
+          options={ALBUM_STATUS_OPTIONS.map((status) => ({
             label: status.label,
             value: status.value,
           }))}

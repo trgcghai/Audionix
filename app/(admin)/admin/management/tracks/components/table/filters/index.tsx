@@ -1,5 +1,5 @@
 import useAdminTrackManagement from "@/app/(admin)/hooks/useAdminTrackManagement";
-import { DEFAULT_GENRES, TrackStatusValues } from "@/app/constant";
+import { DEFAULT_GENRES, TRACK_STATUS_OPTIONS } from "@/app/constant";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import MultipleValueFilter from "@/components/common/filters/MultipleValueFilter";
 import TitleFilter from "@/components/common/filters/TitleFilter";
@@ -66,7 +66,7 @@ const TableFilters = ({
         />
 
         <MultipleValueFilter
-          options={TrackStatusValues.map((status) => ({
+          options={TRACK_STATUS_OPTIONS.map((status) => ({
             label: status.label,
             value: status.value,
           }))}

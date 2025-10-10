@@ -1,5 +1,5 @@
 import GenresCell from "@/app/(artist-portal)/artist/tracks/components/table/cells/GenresCell";
-import { TrackStatusValues } from "@/app/constant";
+import { TRACK_STATUS_OPTIONS } from "@/app/constant";
 import { EmbbedTrack, Track } from "@/app/types/model";
 import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
 import ImageCell from "@/components/dataTable/ImageCell";
@@ -131,7 +131,7 @@ export const BaseTrackColumns: ColumnDef<Track>[] = [
     cell: ({ row }) => <StatusCell row={row} />,
     meta: {
       inputType: "select",
-      options: TrackStatusValues,
+      options: TRACK_STATUS_OPTIONS,
     },
   },
   {

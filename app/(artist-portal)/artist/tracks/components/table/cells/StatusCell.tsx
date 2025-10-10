@@ -1,4 +1,4 @@
-import { TrackStatusValues } from "@/app/constant";
+import { TRACK_STATUS_OPTIONS } from "@/app/constant";
 import { TrackStatus } from "@/app/enums";
 import { Track } from "@/app/types/model";
 import StatusSelect from "@/components/common/StatusSelect";
@@ -52,7 +52,7 @@ const StatusCell = ({ row }: { row: Row<Track> }) => {
             onChange={handleStatusChange}
             className="w-full rounded-md"
             title="Select status"
-            items={TrackStatusValues}
+            items={TRACK_STATUS_OPTIONS}
           />
         </PopoverContent>
       </Popover>

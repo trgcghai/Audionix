@@ -1,6 +1,6 @@
 import GenresCell from "@/app/(admin)/admin/management/tracks/components/table/cells/GenresCell";
 import StatusCell from "@/app/(artist-portal)/artist/tracks/components/table/cells/StatusCell";
-import { TrackStatusValues } from "@/app/constant";
+import { TRACK_STATUS_OPTIONS } from "@/app/constant";
 import { Track } from "@/app/types/model";
 import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
 import ImageCell from "@/components/dataTable/ImageCell";
@@ -148,7 +148,7 @@ export const AdminTrackColumns: ColumnDef<Track>[] = [
     cell: ({ row }) => <StatusCell row={row} />,
     meta: {
       inputType: "select",
-      options: TrackStatusValues,
+      options: TRACK_STATUS_OPTIONS,
     },
   },
   {

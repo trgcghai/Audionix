@@ -1,4 +1,4 @@
-import { AlbumStatusValues } from "@/app/constant";
+import { ALBUM_STATUS_OPTIONS } from "@/app/constant";
 import { AlbumStatus } from "@/app/enums";
 import { Album } from "@/app/types/model";
 import StatusSelect from "@/components/common/StatusSelect";
@@ -50,7 +50,7 @@ const StatusCell = ({ row }: { row: Row<Album> }) => {
             disabled={false}
             className="w-full rounded-lg"
             title="Select status"
-            items={AlbumStatusValues}
+            items={ALBUM_STATUS_OPTIONS}
           />
         </PopoverContent>
       </Popover>

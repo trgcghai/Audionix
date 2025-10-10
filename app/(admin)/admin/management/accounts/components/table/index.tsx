@@ -18,7 +18,6 @@ import { DataTableViewOptions } from "@/components/dataTable/DataTableViewOption
 import TableContent from "@/components/dataTable/TableContent";
 import { cn } from "@/libs/utils";
 import { useEffect, useState } from "react";
-// import DataTableActionsOnSelected from "./actionsOnSelected";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

@@ -1,11 +1,11 @@
 "use client";
+import { TrackStatusValues } from "@/app/constant";
 import { Track } from "@/app/types/model";
 import DeleteSection from "@/components/dataTable/DeleteSection";
+import StatusChangeSection from "@/components/dataTable/StatusChangeSection";
 import { useActionOnSelected } from "@/hooks/useActionOnSelected";
 import useTrackActions from "@/hooks/useTrackActions";
 import { Table } from "@tanstack/react-table";
-import AddToAlbumSection from "./AddToAlbumSection";
-import StatusChangeSection from "./StatusChangeSection";
 
 function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
   const {
@@ -20,6 +20,7 @@ function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
       <StatusChangeSection
         selectedStatus={selectedStatus}
         onStatusChange={handleStatusChange}
+        statusItems={TrackStatusValues}
         onStatusConfirm={() => {
           handleChangeMultipleStatus({
             ids: selectedTracks.map((track) => (track as Track)._id),
@@ -27,8 +28,6 @@ function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
           });
         }}
       />
-
-      <AddToAlbumSection selectedTracks={selectedTracks as Track[]} />
 
       <DeleteSection
         onDeleteConfirm={() =>

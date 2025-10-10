@@ -1,10 +1,11 @@
 "use client";
+import { AlbumStatusValues } from "@/app/constant";
 import { Album } from "@/app/types/model";
 import DeleteSection from "@/components/dataTable/DeleteSection";
+import StatusChangeSection from "@/components/dataTable/StatusChangeSection";
 import { useActionOnSelected } from "@/hooks/useActionOnSelected";
 import useAlbumActions from "@/hooks/useAlbumActions";
 import { Table } from "@tanstack/react-table";
-import StatusChangeSection from "./StatusChangeSection";
 
 function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
   const {
@@ -19,6 +20,7 @@ function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
       <StatusChangeSection
         selectedStatus={selectedStatus}
         onStatusChange={handleStatusChange}
+        statusItems={AlbumStatusValues}
         onStatusConfirm={() => {
           handleUpdateStatusMany({
             ids: selectedAlbums.map((album) => (album as Album)._id),

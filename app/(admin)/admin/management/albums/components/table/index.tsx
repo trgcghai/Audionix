@@ -11,9 +11,9 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 
-import DataTableActionsOnSelected from "@/app/(admin)/admin/management/albums/components/table/actionsOnSelected";
 import TableFilters from "@/app/(admin)/admin/management/albums/components/table/filters";
 import useAdminAlbumManagement from "@/app/(admin)/hooks/useAdminAlbumManagement";
+import DataTableActionsOnSelected from "@/app/(artist-portal)/artist/albums/components/table/actionsOnSelected";
 import { DataTablePagination } from "@/components/dataTable/DataTablePagination";
 import { DataTableViewOptions } from "@/components/dataTable/DataTableViewOptions";
 import TableContent from "@/components/dataTable/TableContent";

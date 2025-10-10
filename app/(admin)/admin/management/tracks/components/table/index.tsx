@@ -1,8 +1,8 @@
 "use client";
 
-import DataTableActionsOnSelected from "@/app/(admin)/admin/management/tracks/components/table/actionsOnSelected";
 import TableFilters from "@/app/(admin)/admin/management/tracks/components/table/filters";
 import useAdminTrackManagement from "@/app/(admin)/hooks/useAdminTrackManagement";
+import DataTableActionsOnSelected from "@/app/(artist-portal)/artist/tracks/components/table/actionsOnSelected";
 import { DataTablePagination } from "@/components/dataTable/DataTablePagination";
 import { DataTableViewOptions } from "@/components/dataTable/DataTableViewOptions";
 import TableContent from "@/components/dataTable/TableContent";

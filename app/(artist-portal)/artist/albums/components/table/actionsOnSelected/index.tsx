@@ -1,29 +1,26 @@
 "use client";
 import { AlbumStatusValues } from "@/app/constant";
-import { Album } from "@/app/types/model";
 import DeleteSection from "@/components/dataTable/DeleteSection";
 import StatusChangeSection from "@/components/dataTable/StatusChangeSection";
 import { useActionOnSelected } from "@/hooks/useActionOnSelected";
 import useAlbumActions from "@/hooks/useAlbumActions";
 import { Table } from "@tanstack/react-table";
+import { useState } from "react";
 
 function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
-  const {
-    selectedStatus,
-    selectedItems: selectedAlbums,
-    handleStatusChange,
-  } = useActionOnSelected(table);
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
+  const { selectedIds } = useActionOnSelected(table);
   const { handleUpdateStatusMany, handleDeleteMultiple } = useAlbumActions();
 
   return (
     <div className="flex w-full flex-1 items-center gap-6">
       <StatusChangeSection
         selectedStatus={selectedStatus}
-        onStatusChange={handleStatusChange}
+        onStatusChange={setSelectedStatus}
         statusItems={AlbumStatusValues}
         onStatusConfirm={() => {
           handleUpdateStatusMany({
-            ids: selectedAlbums.map((album) => (album as Album)._id),
+            ids: selectedIds,
             status: selectedStatus!,
           });
         }}
@@ -31,9 +28,7 @@ function DataTableActionsOnSelected<TData>({ table }: { table: Table<TData> }) {
 
       <DeleteSection
         onDeleteConfirm={() => {
-          handleDeleteMultiple(
-            selectedAlbums.map((album) => (album as Album)._id),
-          );
+          handleDeleteMultiple(selectedIds);
         }}
       />
     </div>

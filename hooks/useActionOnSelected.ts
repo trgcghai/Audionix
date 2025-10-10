@@ -1,21 +1,28 @@
 "use client";
 import { Table } from "@tanstack/react-table";
-import { useState } from "react";
 
-export const useActionOnSelected = <TData>(table: Table<TData>) => {
-  const [selectedStatus, setSelectedStatus] = useState<string | undefined>();
+export const useActionOnSelected = <TData>(
+  table: Table<TData>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  idExtractor: (item: TData) => string = (item: any) => item._id,
+) => {
+  // Lấy các dòng được chọn
+  const selectedRows = table.getSelectedRowModel().rows;
 
-  const selectedItems = table
-    .getSelectedRowModel()
-    .rows.map((row) => row.original);
+  // Trích xuất dữ liệu gốc
+  const selectedItems = selectedRows.map((row) => row.original);
 
-  const handleStatusChange = (value: string) => {
-    setSelectedStatus(value);
-  };
+  // Trích xuất IDs để thuận tiện
+  const selectedIds = selectedItems.map((item) => idExtractor(item));
+
+  // Số lượng dòng được chọn
+  const selectedCount = selectedRows.length;
 
   return {
-    selectedStatus,
     selectedItems,
-    handleStatusChange,
+    selectedIds,
+    selectedCount,
+
+    hasSelected: selectedCount > 0,
   };
 };

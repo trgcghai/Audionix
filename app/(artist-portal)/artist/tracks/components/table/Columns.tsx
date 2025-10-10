@@ -4,6 +4,7 @@ import { EmbbedTrack, Track } from "@/app/types/model";
 import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
 import ImageCell from "@/components/dataTable/ImageCell";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useGetMyAlbumsAsFilterOptionsQuery } from "@/services/albums/albumApi";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import { ColumnDef } from "@tanstack/react-table";
@@ -136,7 +137,12 @@ export const BaseTrackColumns: ColumnDef<Track>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <ActionCell row={row} />,
+    cell: ({ row }) => (
+      <ActionCell
+        row={row}
+        useGetOptionsQuery={useGetMyAlbumsAsFilterOptionsQuery}
+      />
+    ),
   },
 ];
 

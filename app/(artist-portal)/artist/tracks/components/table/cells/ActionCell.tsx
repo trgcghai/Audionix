@@ -6,10 +6,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAppDispatch } from "@/hooks/redux";
 import useTrackActions from "@/hooks/useTrackActions";
+import { useGetMyAlbumsAsFilterOptionsQuery } from "@/services/albums/albumApi";
 import { openViewDetail } from "@/store/slices/detailTrackSlice";
 import { Row } from "@tanstack/react-table";
 import {
@@ -22,7 +24,12 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 
-const ActionCell = ({ row }: { row: Row<Track> }) => {
+interface ActionCellProps {
+  row: Row<Track>;
+  useGetOptionsQuery: typeof useGetMyAlbumsAsFilterOptionsQuery;
+}
+
+const ActionCell = ({ row, useGetOptionsQuery }: ActionCellProps) => {
   const track = row.original;
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [addToAlbumDialog, setAddToAlbumDialog] = useState(false);
@@ -68,6 +75,7 @@ const ActionCell = ({ row }: { row: Row<Track> }) => {
             <PlusCircle className="mr-1 h-4 w-4" />
             Add to album
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem
             variant="destructive"
             className="cursor-pointer"
@@ -82,6 +90,7 @@ const ActionCell = ({ row }: { row: Row<Track> }) => {
         tracks={[track as Track]}
         statusDialogOpen={addToAlbumDialog}
         setStatusDialogOpen={setAddToAlbumDialog}
+        useGetOptionsQuery={useGetOptionsQuery}
       />
       <ConfirmDialog
         title="Confirm Deletion"

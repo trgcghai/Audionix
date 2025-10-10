@@ -1,4 +1,5 @@
-import GenresCell from "@/app/(admin)/admin/management/tracks/components/table/cells/GenresCell";
+import ActionCell from "@/app/(artist-portal)/artist/tracks/components/table/cells/ActionCell";
+import GenresCell from "@/app/(artist-portal)/artist/tracks/components/table/cells/GenresCell";
 import StatusCell from "@/app/(artist-portal)/artist/tracks/components/table/cells/StatusCell";
 import { TRACK_STATUS_OPTIONS } from "@/app/constant";
 import { Track } from "@/app/types/model";
@@ -6,10 +7,10 @@ import { DataTableColumnHeader } from "@/components/dataTable/ColumnHeader";
 import ImageCell from "@/components/dataTable/ImageCell";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useGetAlbumsAsFilterOptionsQuery } from "@/services/albums/albumApi";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import { ColumnDef } from "@tanstack/react-table";
-import ActionCell from "./cells/ActionCell";
 
 export const AdminTrackColumns: ColumnDef<Track>[] = [
   {
@@ -153,6 +154,11 @@ export const AdminTrackColumns: ColumnDef<Track>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <ActionCell row={row} />,
+    cell: ({ row }) => (
+      <ActionCell
+        row={row}
+        useGetOptionsQuery={useGetAlbumsAsFilterOptionsQuery}
+      />
+    ),
   },
 ];

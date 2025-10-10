@@ -1,22 +1,32 @@
+import { AccountStatus } from "@/app/enums";
 import { Account } from "@/app/types/model";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAppDispatch } from "@/hooks/redux";
+import useAdminActions from "@/hooks/useAdminActions";
+import { cn } from "@/libs/utils";
 import { openViewDetail } from "@/store/slices/detailAccountSlice";
+import formatStringCapital from "@/utils/formatStringCapital";
 import { Row } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import {
+  FileText,
+  MoreHorizontal,
+  Power,
+  PowerOff,
+  Settings2,
+} from "lucide-react";
 import Link from "next/link";
 
 const ActionCell = ({ row }: { row: Row<Account> }) => {
   const account = row.original;
   const dispatch = useAppDispatch();
+  const { handleToggleActiveStatus } = useAdminActions();
 
   return (
     <DropdownMenu>
@@ -26,21 +36,44 @@ const ActionCell = ({ row }: { row: Row<Account> }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuItem onClick={() => dispatch(openViewDetail({ account }))}>
-          View Details
+          <div className="flex items-center gap-2">
+            <FileText className="mr-2 h-4 w-4" />
+            <span>View Detail</span>
+          </div>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href={`./accounts/update/${account._id}`}>
+            <Settings2 className="mr-2 h-4 w-4" />
+            <span>Edit</span>
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href={`./accounts/update/${account._id}`}>Edit</Link>
-        </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
-            // Handle account status toggle (active/inactive)
+            handleToggleActiveStatus(
+              [account._id],
+              account.isActivate
+                ? AccountStatus.DEACTIVATED
+                : AccountStatus.ACTIVATED,
+            );
           }}
-          className={account.isActivate ? "text-red-600" : "text-green-600"}
+          variant={account.isActivate ? "destructive" : "default"}
+          className={cn(
+            "cursor-pointer",
+            !account.isActivate && "text-primary",
+          )}
         >
-          {account.isActivate ? "Deactivate" : "Activate"}
+          {account.isActivate ? (
+            <PowerOff className="mr-2 h-4 w-4" />
+          ) : (
+            <Power className="mr-2 h-4 w-4 text-primary" />
+          )}
+          {formatStringCapital(
+            account.isActivate
+              ? AccountStatus.DEACTIVATED
+              : AccountStatus.ACTIVATED,
+          )}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

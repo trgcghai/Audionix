@@ -23,6 +23,7 @@ interface AddTrackToAlbumDialogProps {
   children?: React.ReactNode;
   asChild?: boolean;
   setStatusDialogOpen?: (open: boolean) => void;
+  useGetOptionsQuery: typeof useGetMyAlbumsAsFilterOptionsQuery;
 }
 
 const AddTrackToAlbumDialog = ({
@@ -31,9 +32,10 @@ const AddTrackToAlbumDialog = ({
   children,
   asChild = true,
   setStatusDialogOpen = () => {},
+  useGetOptionsQuery,
 }: AddTrackToAlbumDialogProps) => {
   const [albums, setAlbums] = useState<Option[]>([]);
-  const { data } = useGetMyAlbumsAsFilterOptionsQuery({});
+  const { data } = useGetOptionsQuery({});
 
   const {
     handleAddTracksToAlbums,

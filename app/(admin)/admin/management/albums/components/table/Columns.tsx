@@ -1,5 +1,6 @@
 "use client";
 
+import ActionCell from "@/app/(artist-portal)/artist/albums/components/table/cells/ActionCell";
 import StatusCell from "@/app/(artist-portal)/artist/albums/components/table/cells/StatusCell";
 import GenresCell from "@/app/(artist-portal)/artist/tracks/components/table/cells/GenresCell";
 import { Album } from "@/app/types/model";
@@ -9,7 +10,6 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatUploadTime } from "@/utils/formatUploadTime";
 import { ColumnDef } from "@tanstack/react-table";
-import ActionCell from "./cells/ActionCell";
 
 export const AdminAlbumColumns: ColumnDef<Album>[] = [
   {

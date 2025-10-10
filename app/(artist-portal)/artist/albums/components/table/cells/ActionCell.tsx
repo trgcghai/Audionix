@@ -5,6 +5,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAppDispatch } from "@/hooks/redux";
@@ -50,13 +51,14 @@ const ActionCell = ({ row }: { row: Row<Album> }) => {
           </DropdownMenuItem>
           <DropdownMenuItem variant="default" className="cursor-pointer">
             <Link
-              href={`/artist/albums/update/${album._id}`}
+              href={`./albums/update/${album._id}`}
               className="flex items-center gap-2"
             >
               <Settings2 className="mr-2 h-4 w-4" />
               <span>Edit</span>
             </Link>
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem
             variant="destructive"
             className="cursor-pointer"

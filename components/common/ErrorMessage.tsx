@@ -54,7 +54,7 @@ const ErrorMessage = ({
     >
       <div className="flex items-center justify-center gap-2">
         {showIcon && <AlertCircle className={iconSizes[variant]} />}
-        <span>{message}</span>
+        <span className="capitalize">{message}</span>
       </div>
 
       {showRetry && onRetry && (

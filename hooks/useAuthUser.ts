@@ -21,7 +21,11 @@ const useRegister = () => {
   const [error, setError] = useState<string>("");
   const router = useRouter();
 
-  const handleRegister = async (data: SignUpFormValues) => {
+  const handleRegister = async ({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    confirmPassword,
+    ...data
+  }: SignUpFormValues) => {
     try {
       const result = await register(data).unwrap();
 
@@ -29,10 +33,9 @@ const useRegister = () => {
         router.push(`/auth/verify-otp?email=${data.email}`);
       }
     } catch (error) {
-      const { data } = error as { data: ApiErrorResponse; status: number };
-
+      const { data } = error as ApiErrorResponse;
       setError(
-        data.data.message || "An unexpected error occurred. Please try again.",
+        data.message || "An unexpected error occurred. Please try again.",
       );
     }
   };
@@ -73,10 +76,9 @@ const useLogin = () => {
         router.push("/");
       }
     } catch (error) {
-      const { data } = error as { data: ApiErrorResponse; status: number };
-
+      const { data } = error as ApiErrorResponse;
       setError(
-        data.data.message || "An unexpected error occurred. Please try again.",
+        data.message || "An unexpected error occurred. Please try again.",
       );
     }
   };
@@ -102,10 +104,9 @@ const useOtp = (email: string) => {
         router.push("/auth/login");
       }
     } catch (error) {
-      const { data } = error as { data: ApiErrorResponse; status: number };
-
+      const { data } = error as ApiErrorResponse;
       setError(
-        data.data.message || "An unexpected error occurred. Please try again.",
+        data.message || "An unexpected error occurred. Please try again.",
       );
     }
   };

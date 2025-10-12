@@ -67,9 +67,9 @@ const UserTab = ({ user, isLoading, isError, error }: UserTabProps) => {
         <Label className="text-sm font-medium">Following Artists</Label>
         <div className="p-2 border rounded-md min-h-10 flex flex-wrap gap-2">
           {user.followed_artists && user.followed_artists.length > 0 ? (
-            user.followed_artists.map((artistId, index) => (
-              <Badge key={index} variant="outline">
-                {artistId}
+            user.followed_artists.map(({ _id, name }) => (
+              <Badge key={_id} variant="default" className="rounded-full">
+                {name}
               </Badge>
             ))
           ) : (
@@ -84,9 +84,9 @@ const UserTab = ({ user, isLoading, isError, error }: UserTabProps) => {
         <Label className="text-sm font-medium">Following Albums</Label>
         <div className="p-2 border rounded-md min-h-10 flex flex-wrap gap-2">
           {user.followed_albums && user.followed_albums.length > 0 ? (
-            user.followed_albums.map((albumId, index) => (
-              <Badge key={index} variant="outline">
-                {albumId}
+            user.followed_albums.map(({ _id, title }) => (
+              <Badge key={_id} variant="default" className="rounded-full">
+                {title}
               </Badge>
             ))
           ) : (

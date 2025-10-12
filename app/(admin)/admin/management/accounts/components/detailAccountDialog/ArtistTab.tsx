@@ -48,10 +48,12 @@ const ArtistTab = ({ artist, isLoading, isError, error }: ArtistTabProps) => {
               className="object-cover rounded-full"
             />
           ) : (
-            <div className="h-32 w-32 bg-muted rounded-full flex items-center justify-center">
-              <span className="text-4xl font-semibold uppercase">
-                {artist?.name?.charAt(0) || "U"}
-              </span>
+            <div className="flex items-center justify-center">
+              <div className="h-32 w-32 bg-muted rounded-full flex items-center justify-center">
+                <span className="text-4xl font-semibold uppercase">
+                  {artist?.name?.charAt(0) || "U"}
+                </span>
+              </div>
             </div>
           )}
         </div>

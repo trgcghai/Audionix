@@ -180,8 +180,8 @@ export type User = {
     },
   ];
   liked_songs: string;
-  followed_artists: string[];
-  followed_albums: string[];
+  followed_artists: { _id: string; name: string }[];
+  followed_albums: { _id: string; title: string }[];
   createdAt: string;
   updatedAt: string;
   __v: number;

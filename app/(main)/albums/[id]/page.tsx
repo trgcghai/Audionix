@@ -57,8 +57,6 @@ const DetailAlbumPage = () => {
     );
   }, [tracksData]);
 
-  console.log("tracks", tracks);
-
   if (isAlbumLoading) {
     return (
       <div className="flex items-center justify-center">

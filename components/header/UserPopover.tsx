@@ -37,6 +37,11 @@ export default function UserPopover({ user, roles }: UserPopoverProps) {
     [pathname],
   );
 
+  const isAtAdminPortal = useMemo(
+      () => pathname.includes("/admin/"),
+      [pathname],
+  );
+
   const hasAdminRole = useMemo(() => roles.includes("admin"), [roles]);
 
   return (
@@ -140,18 +145,29 @@ export default function UserPopover({ user, roles }: UserPopoverProps) {
             </Link>
           )}
           {hasAdminRole && (
-            <Link href="/admin/dashboard">
-              <Button
-                variant="ghost"
-                className="h-auto w-full justify-start gap-2 px-3 py-2"
-              >
-                <ShieldCheck className="h-4 w-4" />
-                <span className="text-sm capitalize">
-                  Go to admin dashboard
-                </span>
-              </Button>
-            </Link>
+              isAtAdminPortal ? (
+                  <Link href="/">
+                    <Button
+                      variant="ghost"
+                      className="h-auto w-full justify-start gap-2 px-3 py-2"
+                    >
+                      <ShieldCheck className="h-4 w-4" />
+                      <span className="text-sm capitalize">Go back to user page</span>
+                    </Button>
+                  </Link>
+              ) : (
+                  <Link href="/admin/dashboard">
+                    <Button
+                      variant="ghost"
+                      className="h-auto w-full justify-start gap-2 px-3 py-2"
+                    >
+                      <ShieldCheck className="h-4 w-4" />
+                      <span className="text-sm capitalize">Go to admin dashboard</span>
+                    </Button>
+                  </Link>
+              )
           )}
+
         </div>
         <Separator />
 

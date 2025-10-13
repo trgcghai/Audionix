@@ -20,7 +20,7 @@ const AdmindashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
             <ScrollArea className="w-full flex-1 h-full">
               <div className="h-full p-4">
-                <div className="px-3 py-6 bg-card border rounded-sm">
+                <div className="px-6 py-12 bg-card border rounded-sm">
                   {children}
                 </div>
                 <Separator className="my-12" />

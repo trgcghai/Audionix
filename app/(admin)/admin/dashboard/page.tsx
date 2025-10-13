@@ -83,13 +83,12 @@ export default function AdminDashboard() {
           ))}
         </div>
 
-        {/* Charts Grid */}
         <div className="grid gap-6 lg:grid-cols-2">
-          {/* User Registration Chart */}
           <ChartCard
             title="User Registrations"
             description="Total registered users over time"
             config={chartConfigs.users}
+            className="w-full"
           >
             <LineChartComponent
               data={userRegistrationData}
@@ -98,11 +97,11 @@ export default function AdminDashboard() {
             />
           </ChartCard>
 
-          {/* Playlist Growth Chart */}
           <ChartCard
             title="User-Created Playlists"
             description="Number of playlists created by users"
             config={chartConfigs.playlists}
+            className="w-full"
           >
             <LineChartComponent
               data={playlistData}
@@ -111,7 +110,6 @@ export default function AdminDashboard() {
             />
           </ChartCard>
 
-          {/* Top Artists Chart */}
           <ChartCard
             title="Top 10 Most Liked Artists"
             description="Artists with the most followers and likes"
@@ -126,12 +124,11 @@ export default function AdminDashboard() {
             />
           </ChartCard>
 
-          {/* Likes Chart */}
           <ChartCard
             title="Likes Overview"
             description="Total likes on songs and albums over time"
             config={chartConfigs.likes}
-            className="h-[350px] w-full"
+            className="h-[400px] w-full"
           >
             <BarChartComponent
               data={likesData}

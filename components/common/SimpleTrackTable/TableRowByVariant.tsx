@@ -1,3 +1,4 @@
+"use client";
 import { Playlist, Track } from "@/app/types/model";
 import TrackRow from "@/components/common/SimpleTrackTable/TrackRow";
 import { useRouter } from "next/navigation";

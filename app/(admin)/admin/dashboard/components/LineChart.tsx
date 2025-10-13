@@ -36,7 +36,7 @@ export default function LineChartComponent({
           dataKey={dataKey}
           stroke="var(--primary)"
           strokeWidth={2}
-          dot={false}
+          dot={true}
         />
       </LineChart>
     </ResponsiveContainer>

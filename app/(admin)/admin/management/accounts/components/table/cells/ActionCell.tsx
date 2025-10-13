@@ -38,12 +38,12 @@ const ActionCell = ({ row }: { row: Row<Account> }) => {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={() => {
-            handleToggleActiveStatus(
-              [account._id],
-              account.isActivate
+            handleToggleActiveStatus({
+              accountIds: [account._id],
+              status: account.isActivate
                 ? AccountStatus.DEACTIVATED
                 : AccountStatus.ACTIVATED,
-            );
+            });
           }}
           variant={account.isActivate ? "destructive" : "default"}
           className={cn(

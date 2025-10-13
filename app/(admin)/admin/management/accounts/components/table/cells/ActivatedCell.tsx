@@ -12,17 +12,20 @@ import {
 import useAdminActions from "@/hooks/useAdminActions";
 import formatStringCapital from "@/utils/formatStringCapital";
 import { Row } from "@tanstack/react-table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ActivatedCell = ({ row }: { row: Row<Account> }) => {
-  // Lấy giá trị ban đầu từ dữ liệu tài khoản
-  const initialStatus = row.original.isActivate
-    ? AccountStatus.ACTIVATED
-    : AccountStatus.DEACTIVATED;
-
-  const [status, setStatus] = useState<AccountStatus>(initialStatus);
+  const [status, setStatus] = useState<AccountStatus | undefined>();
   const [statusDialogOpen, setStatusDialogOpen] = useState(false);
   const { handleToggleActiveStatus } = useAdminActions();
+
+  useEffect(() => {
+    setStatus(
+      row.original.isActivate
+        ? AccountStatus.ACTIVATED
+        : AccountStatus.DEACTIVATED,
+    );
+  }, [row.original.isActivate]);
 
   const handleStatusChange = (value: string) => {
     setStatus(value as AccountStatus);
@@ -32,7 +35,7 @@ const ActivatedCell = ({ row }: { row: Row<Account> }) => {
   const handleStatusConfirm = () => {
     handleToggleActiveStatus({
       accountIds: [row.original._id],
-      status: status,
+      status: status as AccountStatus,
     });
     setStatusDialogOpen(false);
   };
@@ -54,7 +57,7 @@ const ActivatedCell = ({ row }: { row: Row<Account> }) => {
         </PopoverTrigger>
         <PopoverContent align="end" className="w-48">
           <StatusSelect
-            value={status}
+            value={status as AccountStatus}
             onChange={handleStatusChange}
             disabled={false}
             className="w-full rounded-lg"

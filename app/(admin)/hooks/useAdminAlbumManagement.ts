@@ -2,7 +2,7 @@
 import { Option } from "@/components/ui/MultipleSelector";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useGetAlbumsQuery } from "@/services/albums/albumApi";
+import { useGetAlbumsForManagementQuery } from "@/services/albums/albumApi";
 import {
   clearFilters,
   setCurrentPage,
@@ -26,7 +26,7 @@ const useAdminAlbumManagement = () => {
     }
   }, [debouncedTitle, dispatch]);
 
-  const { data, ...getAlbumState } = useGetAlbumsQuery(
+  const { data, ...getAlbumState } = useGetAlbumsForManagementQuery(
     {
       current,
       limit,

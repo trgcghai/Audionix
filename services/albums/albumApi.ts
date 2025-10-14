@@ -37,6 +37,25 @@ const albumApi = api.injectEndpoints({
       },
       providesTags: ["Albums"],
     }),
+    getAlbumsForManagement: builder.query<FindAlbumsResponse, FindAlbumsParams>(
+      {
+        query: ({ current, limit, title, genres, status, sort }) => {
+          return {
+            url: "/albums/management",
+            method: "GET",
+            params: {
+              current: current && current < 1 ? 1 : current,
+              limit: limit && limit < 1 ? 10 : limit,
+              title,
+              genres: (genres && genres.join(",")) || undefined,
+              status: (status && status.join(",")) || undefined,
+              sort,
+            },
+          };
+        },
+        providesTags: ["Albums"],
+      },
+    ),
     getMyCreatedAlbums: builder.query<FindAlbumsResponse, FindAlbumsParams>({
       query: ({ current, limit, title, genres, status, sort }) => {
         return {
@@ -199,6 +218,7 @@ const albumApi = api.injectEndpoints({
 export const {
   useCreateAlbumMutation,
   useGetAlbumsQuery,
+  useGetAlbumsForManagementQuery,
   useGetMyCreatedAlbumsQuery,
   useDeleteOneMutation,
   useDeleteMultiplesMutation,

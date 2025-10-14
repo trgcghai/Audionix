@@ -9,6 +9,7 @@ import {
   CheckTracksResponse,
   FindPlaylistParams,
   FindPlaylistResponse,
+  FindTracksInPlaylistResponse,
   RemoveMultipleTracksParams,
   RemoveTracksParams,
   RemoveTracksResponse,
@@ -167,6 +168,23 @@ const playlistApi = api.injectEndpoints({
         }),
         providesTags: ["Playlists"],
       }),
+      getTracksInPlaylist: builder.query<FindTracksInPlaylistResponse, string>({
+        query: (playlistId: string) => ({
+          url: `/playlists/${playlistId}/tracks`,
+          method: "GET",
+        }),
+        providesTags: ["Playlists"],
+      }),
+      getTracksInLikedSongs: builder.query<
+        FindTracksInPlaylistResponse,
+        unknown
+      >({
+        query: () => ({
+          url: `/playlists/liked/tracks`,
+          method: "GET",
+        }),
+        providesTags: ["Playlists"],
+      }),
     };
   },
 });
@@ -187,4 +205,6 @@ export const {
   useCheckTracksInPlaylistQuery,
   useCheckTracksInLikedQuery,
   useGetMyLikedSongsQuery,
+  useGetTracksInPlaylistQuery,
+  useGetTracksInLikedSongsQuery,
 } = playlistApi;

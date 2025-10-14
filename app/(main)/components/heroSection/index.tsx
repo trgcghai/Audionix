@@ -61,9 +61,11 @@ const ArtistHeroSection = ({
 const PlaylistHeroSection = ({
   playlist,
   disabledDialog,
+  tracks,
 }: {
   playlist: Playlist;
   disabledDialog: boolean;
+  tracks: Playlist["tracks"];
 }) => {
   return (
     <Dialog>
@@ -87,14 +89,11 @@ const PlaylistHeroSection = ({
               <div className="flex items-center gap-2">
                 <p>
                   {formatTotalTime(
-                    playlist.tracks.reduce(
-                      (prev, curr) => prev + curr.duration_ms,
-                      0,
-                    ),
+                    tracks.reduce((prev, curr) => prev + curr.duration_ms, 0),
                   )}
                 </p>
                 <Dot />
-                <p>{playlist?.tracks.length} tracks</p>
+                <p>{tracks.length} tracks</p>
               </div>
             </div>
           </div>

@@ -45,6 +45,35 @@ const trackApi = api.injectEndpoints({
         },
         providesTags: ["Tracks"],
       }),
+      getTracksForManagement: builder.query<FindTrackResponse, FindTrackParams>(
+        {
+          query: ({
+            artist,
+            current,
+            genres,
+            limit,
+            sort,
+            status,
+            title,
+            albums,
+          }) => {
+            return {
+              url: `/tracks/management`,
+              params: {
+                current: current && current < 1 ? 1 : current,
+                limit: limit && limit < 1 ? 10 : limit,
+                title,
+                artist,
+                genres: (genres && genres.join(",")) || undefined,
+                status: (status && status.join(",")) || undefined,
+                sort,
+                albums: (albums && albums.join(",")) || undefined,
+              },
+            };
+          },
+          providesTags: ["Tracks"],
+        },
+      ),
       createTrack: builder.mutation<CreateTrackResponse, FormData>({
         query: (formData) => ({
           url: "/tracks",
@@ -146,6 +175,7 @@ const trackApi = api.injectEndpoints({
 
 export const {
   useGetTracksQuery,
+  useGetTracksForManagementQuery,
   useCreateTrackMutation,
   useDeleteOneTrackMutation,
   useDeleteTracksMutation,

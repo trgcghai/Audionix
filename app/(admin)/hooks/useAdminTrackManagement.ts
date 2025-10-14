@@ -3,7 +3,7 @@ import { Option } from "@/components/ui/MultipleSelector";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useGetAlbumsAsFilterOptionsQuery } from "@/services/albums/albumApi";
-import { useGetTracksQuery } from "@/services/tracks/trackApi";
+import { useGetTracksForManagementQuery } from "@/services/tracks/trackApi";
 import {
   clearFilters,
   setCurrentPage,
@@ -37,7 +37,7 @@ const useAdminTrackManagement = () => {
   }, [debouncedTitle, dispatch]);
 
   // Gọi API để lấy danh sách tracks
-  const { data, isLoading, isError, error } = useGetTracksQuery(
+  const { data, isLoading, isError, error } = useGetTracksForManagementQuery(
     {
       current,
       limit,

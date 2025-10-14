@@ -127,7 +127,7 @@ export type Playlist = {
       key: string;
     },
   ];
-  tracks: EmbbedTrack[];
+  tracks: (Track & { time_added: string })[];
   createdAt: string;
   updatedAt: string;
   __v: number;

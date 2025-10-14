@@ -204,7 +204,7 @@ const TrackRow = ({
       </TableCell>
       <TableCell className="w-1/5">
         <p className="text-sm font-medium">
-          {"timeAdded" in track ? formatUploadTime(track.timeAdded!) : ""}
+          {"time_added" in track ? formatUploadTime(track.time_added!) : ""}
         </p>
       </TableCell>
       <TableCell className="w-1/10">

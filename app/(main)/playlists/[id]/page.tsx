@@ -5,6 +5,7 @@ import SearchTrack from "@/app/(main)/playlists/components/SearchTrack";
 import TracksList from "@/app/(main)/playlists/components/TracksList";
 import { ITEM_PER_MEDIA_ROW } from "@/app/constant";
 import { ApiErrorResponse } from "@/app/types/api";
+import { Playlist, Track } from "@/app/types/model";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import LoaderSpin from "@/components/common/LoaderSpin";
 import SimpleTrackTable from "@/components/common/SimpleTrackTable";
@@ -12,7 +13,11 @@ import { Separator } from "@/components/ui/separator";
 import { useDebounce } from "@/hooks/useDebounce";
 import { usePlayer } from "@/hooks/usePlayer";
 import usePlaylistAction from "@/hooks/usePlaylistAction";
-import { useGetPlaylistByIdQuery } from "@/services/playlists/playlistApi";
+import {
+  useGetPlaylistByIdQuery,
+  useGetTracksInLikedSongsQuery,
+  useGetTracksInPlaylistQuery,
+} from "@/services/playlists/playlistApi";
 import { useGetTracksQuery } from "@/services/tracks/trackApi";
 import { useUserSlice } from "@/store/slices/userSlice";
 import { useParams } from "next/navigation";
@@ -24,6 +29,9 @@ const DetailPlaylistPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const { user } = useUserSlice();
+  const { handleDeletePlaylist } = usePlaylistAction();
+
+  const isLikedSongs = user?.liked_songs === id;
 
   const {
     data: playlistData,
@@ -35,7 +43,14 @@ const DetailPlaylistPage = () => {
     return playlistData && playlistData.data;
   }, [playlistData]);
 
-  const { handleDeletePlaylist } = usePlaylistAction();
+  const { data: tracksData } = useGetTracksInPlaylistQuery(id, {
+    skip: !id || isLikedSongs,
+  });
+
+  const { data: likedTracksData } = useGetTracksInLikedSongsQuery(undefined, {
+    skip: !isLikedSongs,
+  });
+
   const {
     data: recommendTrackData,
     isLoading: recommendLoading,
@@ -50,6 +65,28 @@ const DetailPlaylistPage = () => {
       skip: playlist?.tracks.length !== 0,
     },
   );
+
+  const tracks: Playlist["tracks"] = useMemo(() => {
+    if (isLikedSongs && likedTracksData?.data?.results) {
+      return likedTracksData.data.results.map(
+        (item: { _id: Track; time_added: string }) => ({
+          ...item._id,
+          time_added: item.time_added,
+        }),
+      );
+    }
+
+    if (tracksData?.data?.results) {
+      return tracksData.data.results.map(
+        (item: { _id: Track; time_added: string }) => ({
+          ...item._id,
+          time_added: item.time_added,
+        }),
+      );
+    }
+
+    return [];
+  }, [tracksData, likedTracksData, isLikedSongs]);
 
   if (playlistLoading) {
     return (
@@ -72,18 +109,19 @@ const DetailPlaylistPage = () => {
       {playlist && (
         <PlaylistHeroSection
           playlist={playlist}
-          disabledDialog={user?.liked_songs === id}
+          disabledDialog={isLikedSongs}
+          tracks={tracks}
         />
       )}
 
       <Separator className="my-4" />
 
       <PlaylistControlSection
-        onPlay={() => playlist && playTracks(playlist.tracks)}
-        onDelete={() => handleDeletePlaylist(id)}
+        onPlay={() => playlist && tracks && playTracks(tracks)}
+        onDelete={() => (isLikedSongs ? handleDeletePlaylist(id) : undefined)}
       />
 
-      {playlist && playlist.tracks.length === 0 && (
+      {tracks && tracks.length === 0 && (
         <SearchTrack searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       )}
 
@@ -98,7 +136,7 @@ const DetailPlaylistPage = () => {
         />
       )}
 
-      {!searchTerm && playlist && playlist.tracks.length === 0 && (
+      {!searchTerm && tracks && tracks.length === 0 && (
         <TracksList
           tracks={recommendTrackData?.data.items || []}
           title="Recommended tracks"
@@ -108,9 +146,7 @@ const DetailPlaylistPage = () => {
         />
       )}
 
-      {playlist && playlist.tracks.length !== 0 && (
-        <SimpleTrackTable tracks={playlist.tracks} />
-      )}
+      {tracks && tracks.length !== 0 && <SimpleTrackTable tracks={tracks} />}
     </div>
   );
 };

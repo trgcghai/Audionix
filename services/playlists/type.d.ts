@@ -58,3 +58,11 @@ export type CheckTracksParams = {
   id: string;
   trackIds: string[];
 };
+
+export type FindTracksInPlaylistResponse = ApiResponse<{
+  _id: string;
+  results: {
+    time_added: string;
+    _id: Track;
+  }[];
+}>;

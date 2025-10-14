@@ -14,7 +14,7 @@ interface BaseProps {
 
 interface ActionMenuProps {
   variant: "playlist" | "track";
-  onDelete?: () => void;
+  onDelete?: () => Promise<void>;
   onAddToPlaylist?: () => void;
 }
 
@@ -33,8 +33,12 @@ const ActionMenu = ({
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent align="start" sideOffset={10}>
-      {variant === "playlist" && onDelete && (
-        <DropdownMenuItem variant="destructive" onClick={onDelete}>
+      {variant === "playlist" && (
+        <DropdownMenuItem
+          variant="destructive"
+          onClick={onDelete}
+          disabled={!onDelete}
+        >
           <Trash2 className="mr-2 h-4 w-4" />
           Delete
         </DropdownMenuItem>
@@ -99,7 +103,7 @@ const TrackControlSection = ({
 };
 
 interface PlaylistControlSectionProps extends BaseProps {
-  onDelete: () => void;
+  onDelete?: () => Promise<void>;
 }
 
 const PlaylistControlSection = ({

@@ -33,6 +33,8 @@ const DetailPlaylistPage = () => {
 
   const isLikedSongs = user?.liked_songs === id;
 
+  console.log(isLikedSongs);
+
   const {
     data: playlistData,
     isLoading: playlistLoading,
@@ -118,7 +120,7 @@ const DetailPlaylistPage = () => {
 
       <PlaylistControlSection
         onPlay={() => playlist && tracks && playTracks(tracks)}
-        onDelete={() => (isLikedSongs ? handleDeletePlaylist(id) : undefined)}
+        onDelete={!isLikedSongs ? () => handleDeletePlaylist(id) : undefined}
       />
 
       {tracks && tracks.length === 0 && (

@@ -1,5 +1,5 @@
 "use client";
-import MediaList from "@/app/(main)/components/MediaList";
+import MediaList from "@/app/(main)/components/mediaList/MediaList";
 import FilterButtons from "@/app/(main)/search/components/FilterButtons";
 import { ITEM_PER_MEDIA_ROW } from "@/app/constant";
 import { ApiErrorResponse } from "@/app/types/api";

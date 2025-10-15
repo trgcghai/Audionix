@@ -1,7 +1,7 @@
 "use client";
 import { TrackControlSection } from "@/app/(main)/components/controlSection";
 import { TrackHeroSection } from "@/app/(main)/components/heroSection";
-import MediaList from "@/app/(main)/components/MediaList";
+import MediaList from "@/app/(main)/components/mediaList/MediaList";
 import AddToPlaylistDialog from "@/app/(main)/tracks/components/AddToPlaylistDialog";
 import { ITEM_PER_MEDIA_ROW } from "@/app/constant";
 import { ApiErrorResponse } from "@/app/types/api";

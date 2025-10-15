@@ -1,6 +1,6 @@
 "use client";
 import { ArtistHeroSection } from "@/app/(main)/components/heroSection";
-import MediaList from "@/app/(main)/components/MediaList";
+import MediaList from "@/app/(main)/components/mediaList/MediaList";
 import { ITEM_PER_MEDIA_ROW } from "@/app/constant";
 import { ApiErrorResponse } from "@/app/types/api";
 import ErrorMessage from "@/components/common/ErrorMessage";

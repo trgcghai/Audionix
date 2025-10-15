@@ -1,4 +1,4 @@
-import MediaList from "@/app/(main)/components/MediaList";
+import MediaList from "@/app/(main)/components/mediaList/MediaList";
 import { Album, Artist, Track } from "@/app/types/model";
 import SimpleTrackTable from "@/components/common/SimpleTrackTable";
 

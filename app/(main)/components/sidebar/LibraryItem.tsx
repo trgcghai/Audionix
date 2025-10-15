@@ -1,4 +1,5 @@
 import { Album, Artist, Playlist } from "@/app/types/model";
+import truncatedText from "@/utils/truncatedText";
 import { Music, User2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -83,7 +84,7 @@ const LibraryItem = ({ data }: LibraryItemProps) => {
             className="font-medium text-base truncate w-full"
             title={title} // Hiển thị full title khi hover
           >
-            {title}
+            {truncatedText(title, 30)}
           </p>
           <p
             className="text-muted-foreground text-sm truncate w-full"

@@ -14,6 +14,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import formatStringCapital from "@/utils/formatStringCapital";
 import { formatTrackDuration } from "@/utils/formatTrackDuration";
 import { formatUploadTime } from "@/utils/formatUploadTime";
+import truncatedText from "@/utils/truncatedText";
 import { Ellipsis, Trash2 } from "lucide-react";
 
 const TrackRow = ({
@@ -37,10 +38,14 @@ const TrackRow = ({
           <p className="text-sm text-gray-500">{index}</p>
         </TableCell>
         <TableCell className="w-1/2">
-          <p className="text-sm font-semibold">{track.title}</p>
+          <p className="text-sm font-semibold truncate" title={track.title}>
+            {truncatedText(track.title, 50)}
+          </p>
         </TableCell>
         <TableCell className="w-2/10">
-          <p className="text-sm font-medium">{albumName}</p>
+          <p className="text-sm font-medium truncate" title={albumName}>
+            {truncatedText(albumName, 40)}
+          </p>
         </TableCell>
         <TableCell className="w-2/10">
           <p className="text-sm font-medium">{track.artist.name}</p>
@@ -63,7 +68,9 @@ const TrackRow = ({
         <TableCell>
           <div className="flex items-center gap-2">
             <div>
-              <p className="text-sm font-semibold">{track.title}</p>
+              <p className="text-sm font-semibold truncate" title={track.title}>
+                {truncatedText(track.title, 50)}
+              </p>
               <p className="text-sm text-gray-500">{track.artist.name}</p>
             </div>
           </div>
@@ -99,7 +106,9 @@ const TrackRow = ({
           <p className="text-sm text-gray-500">{index}</p>
         </TableCell>
         <TableCell className="w-2/5">
-          <p className="text-sm font-semibold">{track.title}</p>
+          <p className="text-sm font-semibold truncate" title={track.title}>
+            {truncatedText(track.title, 50)}
+          </p>
         </TableCell>
         <TableCell className="w-2/5">
           <p className="text-sm font-medium">
@@ -133,7 +142,9 @@ const TrackRow = ({
           <p className="text-sm text-gray-500">{index}</p>
         </TableCell>
         <TableCell className="w-2/5">
-          <p className="text-sm font-semibold">{track.title}</p>
+          <p className="text-sm font-semibold truncate" title={track.title}>
+            {truncatedText(track.title, 50)}
+          </p>
         </TableCell>
         <TableCell className="w-2/5">
           <p className="text-sm font-medium">
@@ -191,16 +202,20 @@ const TrackRow = ({
       <TableCell className="w-6 rounded-tl-lg rounded-bl-lg">
         <p className="text-sm text-gray-500">{index}</p>
       </TableCell>
-      <TableCell className="w-1/2">
+      <TableCell className="w-1/3">
         <div className="flex items-center gap-2">
-          <div>
-            <p className="text-sm font-semibold">{track.title}</p>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-semibold truncate" title={track.title}>
+              {truncatedText(track.title, 50)}
+            </p>
             <p className="text-sm text-gray-500">{track.artist?.name}</p>
           </div>
         </div>
       </TableCell>
-      <TableCell className="w-1/10">
-        <p className="text-sm font-medium">{albumName}</p>
+      <TableCell className="w-1/3">
+        <p className="text-sm font-medium truncate" title={albumName}>
+          {truncatedText(albumName, 40)}
+        </p>
       </TableCell>
       <TableCell className="w-1/5">
         <p className="text-sm font-medium">

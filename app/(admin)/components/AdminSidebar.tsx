@@ -1,7 +1,15 @@
 import LinkLogo from "@/components/common/LinkLogo";
 import { NavMain } from "@/components/ui/nav-main";
 import { Sidebar, SidebarContent, SidebarRail } from "@/components/ui/sidebar";
-import {Album, BarChart3, Gauge, ListMusic, Music, Settings, UserCog} from "lucide-react";
+import {
+  Album,
+  BarChart3,
+  Gauge,
+  ListMusic,
+  Music,
+  Settings,
+  UserCog,
+} from "lucide-react";
 import NextLink from "next/link";
 import * as React from "react";
 
@@ -21,43 +29,7 @@ const navItems = [
         key: "chart-general",
         url: "/admin/dashboard",
       },
-      {
-        title: (
-          <p className="flex items-center gap-2">
-            <Music className="w-4 h-4" /> Tracks
-          </p>
-        ),
-        key: "chart-tracks",
-        url: "/admin/dashboard/tracks",
-      },
-      {
-        title: (
-          <p className="flex items-center gap-2">
-            <Album className="w-4 h-4" /> Albums
-          </p>
-        ),
-        key: "chart-albums",
-        url: "/admin/dashboard/albums",
-      },
-      {
-        title: (
-          <p className="flex items-center gap-2">
-            <ListMusic className="w-4 h-4" /> Playlists
-          </p>
-        ),
-        key: "chart-playlists",
-        url: "/admin/dashboard/playlists",
-      },
-      {
-        title: (
-          <p className="flex items-center gap-2">
-            <UserCog className="w-4 h-4" /> Accounts
-          </p>
-        ),
-        key: "chart-accounts",
-        url: "/admin/dashboard/accounts",
-      },
-    ]
+    ],
   },
   {
     title: "Management",

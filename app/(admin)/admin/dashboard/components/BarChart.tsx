@@ -1,3 +1,4 @@
+import { LikesDataDto, TopArtistDataDto } from "@/app/types/api";
 import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import {
   Bar,
@@ -9,8 +10,7 @@ import {
 } from "recharts";
 
 interface BarChartComponentProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any[];
+  data: (TopArtistDataDto | LikesDataDto)[];
   dataKeys: string[];
   xAxisKey: string;
   isVertical?: boolean;
@@ -18,7 +18,7 @@ interface BarChartComponentProps {
 }
 
 export default function BarChartComponent({
-  data,
+  data = [],
   dataKeys,
   xAxisKey,
   isVertical = false,

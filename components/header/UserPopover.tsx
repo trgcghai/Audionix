@@ -38,8 +38,8 @@ export default function UserPopover({ user, roles }: UserPopoverProps) {
   );
 
   const isAtAdminPortal = useMemo(
-      () => pathname.includes("/admin/"),
-      [pathname],
+    () => pathname.includes("/admin/"),
+    [pathname],
   );
 
   const hasAdminRole = useMemo(() => roles.includes("admin"), [roles]);
@@ -144,30 +144,32 @@ export default function UserPopover({ user, roles }: UserPopoverProps) {
               </Button>
             </Link>
           )}
-          {hasAdminRole && (
-              isAtAdminPortal ? (
-                  <Link href="/">
-                    <Button
-                      variant="ghost"
-                      className="h-auto w-full justify-start gap-2 px-3 py-2"
-                    >
-                      <ShieldCheck className="h-4 w-4" />
-                      <span className="text-sm capitalize">Go back to user page</span>
-                    </Button>
-                  </Link>
-              ) : (
-                  <Link href="/admin/dashboard">
-                    <Button
-                      variant="ghost"
-                      className="h-auto w-full justify-start gap-2 px-3 py-2"
-                    >
-                      <ShieldCheck className="h-4 w-4" />
-                      <span className="text-sm capitalize">Go to admin dashboard</span>
-                    </Button>
-                  </Link>
-              )
-          )}
-
+          {hasAdminRole &&
+            (isAtAdminPortal ? (
+              <Link href="/">
+                <Button
+                  variant="ghost"
+                  className="h-auto w-full justify-start gap-2 px-3 py-2"
+                >
+                  <ShieldCheck className="h-4 w-4" />
+                  <span className="text-sm capitalize">
+                    Go back to user page
+                  </span>
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/admin/dashboard">
+                <Button
+                  variant="ghost"
+                  className="h-auto w-full justify-start gap-2 px-3 py-2"
+                >
+                  <ShieldCheck className="h-4 w-4" />
+                  <span className="text-sm capitalize">
+                    Go to admin dashboard
+                  </span>
+                </Button>
+              </Link>
+            ))}
         </div>
         <Separator />
 
@@ -178,7 +180,7 @@ export default function UserPopover({ user, roles }: UserPopoverProps) {
             className="h-auto w-full justify-start gap-2 px-3 py-2 text-red-600"
           >
             <LogOut className="h-4 w-4" />
-            <span className="text-sm">Đăng xuất</span>
+            <span className="text-sm">Logout</span>
           </Button>
         </div>
       </PopoverContent>

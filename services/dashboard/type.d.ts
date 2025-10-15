@@ -1,4 +1,11 @@
-import { ApiResponse } from "@/app/types/api";
+import {
+  ApiResponse,
+  DashboardStatsDto,
+  LikesDataDto,
+  PlaylistDataDto,
+  TopArtistDataDto,
+  UserRegistrationDataDto,
+} from "@/app/types/api";
 
 export type DashboardResponse = ApiResponse<{
   stats: DashboardStatsDto;

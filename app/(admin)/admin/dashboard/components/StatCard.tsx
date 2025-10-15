@@ -6,6 +6,7 @@ interface StatCardProps {
   value: number;
   icon: LucideIcon;
   formatValue?: (value: number) => string;
+  change: number;
 }
 
 export default function StatCard({
@@ -13,6 +14,7 @@ export default function StatCard({
   value,
   icon: Icon,
   formatValue = (val) => val.toLocaleString(),
+  change,
 }: StatCardProps) {
   return (
     <Card className="bg-card border-border">
@@ -26,6 +28,9 @@ export default function StatCard({
         <div className="text-2xl font-bold text-card-foreground">
           {formatValue(value || 0)}
         </div>
+        <p className="text-sm text-muted-foreground">
+          {change}% from last month
+        </p>
       </CardContent>
     </Card>
   );

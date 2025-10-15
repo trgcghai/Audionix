@@ -1,3 +1,4 @@
+import { PlaylistDataDto, UserRegistrationDataDto } from "@/app/types/api";
 import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import {
   CartesianGrid,
@@ -9,14 +10,13 @@ import {
 } from "recharts";
 
 interface LineChartComponentProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any[];
+  data: (UserRegistrationDataDto | PlaylistDataDto)[];
   dataKey: string;
   xAxisKey: string;
 }
 
 export default function LineChartComponent({
-  data,
+  data = [],
   dataKey,
   xAxisKey,
 }: LineChartComponentProps) {

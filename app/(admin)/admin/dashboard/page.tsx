@@ -22,32 +22,38 @@ export default function AdminDashboard() {
 
   const { data, isLoading, isError, error } = useGetDashboardDataQuery();
 
-  const dashboardStats = data?.data?.stats || [];
-  const realUserData = data?.data?.userRegistrationData || [];
-  const realTopArtists = data?.data?.topArtistsData || [];
-  const realLikesData = data?.data?.likesData || [];
-  const realPlaylistData = data?.data?.playlistData || [];
+  const dashboardStats = data?.data?.stats;
+  const realUserData = data?.data?.userRegistrationData;
+  const realTopArtists = data?.data?.topArtistsData;
+  const realLikesData = data?.data?.likesData;
+  const realPlaylistData = data?.data?.playlistData;
+
+  console.log(realTopArtists);
 
   const statCards = [
     {
       title: "Total Users",
-      value: dashboardStats.totalUsers,
+      value: dashboardStats?.totalUsers,
       icon: Users,
+      change: dashboardStats?.userGrowthPercentage || 0,
     },
     {
       title: "Total Tracks",
-      value: dashboardStats.totalTracks,
+      value: dashboardStats?.totalTracks,
       icon: Music,
+      change: dashboardStats?.trackGrowthPercentage || 0,
     },
     {
       title: "Total Likes",
-      value: dashboardStats.totalLikes,
+      value: dashboardStats?.totalLikes,
       icon: Heart,
+      change: dashboardStats?.likesGrowthPercentage || 0,
     },
     {
       title: "User Playlists",
-      value: dashboardStats.totalPlaylists,
+      value: dashboardStats?.userPlaylists,
       icon: ListMusic,
+      change: dashboardStats?.playlistGrowthPercentage || 0,
     },
   ];
 
@@ -66,8 +72,6 @@ export default function AdminDashboard() {
       albums: { label: "Albums", color: "hsl(var(--chart-5))" },
     },
   };
-
-  console.log(statCards);
 
   return (
     <div className="min-h-screen px-3">
@@ -97,8 +101,9 @@ export default function AdminDashboard() {
                 <StatCard
                   key={card.title}
                   title={card.title}
-                  value={card.value}
+                  value={card.value || 0}
                   icon={card.icon}
+                  change={card.change}
                 />
               ))}
         </div>
@@ -119,7 +124,7 @@ export default function AdminDashboard() {
                 className="w-full"
               >
                 <LineChartComponent
-                  data={realUserData}
+                  data={realUserData || []}
                   dataKey="users"
                   xAxisKey="date"
                 />
@@ -131,7 +136,7 @@ export default function AdminDashboard() {
                 className="w-full"
               >
                 <LineChartComponent
-                  data={realPlaylistData}
+                  data={realPlaylistData || []}
                   dataKey="count"
                   xAxisKey="month"
                 />
@@ -143,7 +148,7 @@ export default function AdminDashboard() {
                 className="h-[400px] w-full"
               >
                 <BarChartComponent
-                  data={realTopArtists}
+                  data={realTopArtists || []}
                   dataKeys={["likes"]}
                   xAxisKey="name"
                   isVertical={true}
@@ -156,7 +161,7 @@ export default function AdminDashboard() {
                 className="h-[400px] w-full"
               >
                 <BarChartComponent
-                  data={realLikesData}
+                  data={realLikesData || []}
                   dataKeys={["songs", "albums"]}
                   xAxisKey="month"
                   colors={["var(--primary)", "var(--secondary)"]}

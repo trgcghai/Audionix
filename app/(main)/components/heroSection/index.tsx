@@ -37,7 +37,7 @@ const ArtistHeroSection = ({
           Artist
         </p>
         <h1
-          className="text-start text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold capitalize line-clamp-2 break-words min-w-0"
+          className="text-start text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold capitalize line-clamp-1 py-1 min-w-0"
           title={artistName}
         >
           {artistName}
@@ -51,10 +51,6 @@ const ArtistHeroSection = ({
             >
               {isFollowing ? "Unfollow" : "Follow"}
             </Button>
-            <Dot />
-            <p>Artist total tracks</p>
-            <Dot />
-            <p>Artist total albums</p>
           </div>
         </div>
       </div>

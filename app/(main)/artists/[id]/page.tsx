@@ -98,6 +98,7 @@ const DetailArtistPage = () => {
         <SimpleTrackTable
           tracks={tracksData?.data.items || []}
           showHeader={false}
+          variant="album"
         />
       </div>
 

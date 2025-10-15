@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎵 Audionix - Music Streaming Platform
 
-## Getting Started
+**Audionix** là một nền tảng streaming nhạc hiện đại được xây dựng với **Next.js**, cung cấp trải nghiệm nghe nhạc mượt mà và toàn diện cho người dùng.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Tính năng chính
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🎧 Cho người dùng
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Tìm kiếm:** Tìm kiếm bài hát, album, nghệ sĩ
+- **Playlist cá nhân:** Tạo và quản lý playlist riêng
+- **Liked Songs:** Lưu những bài hát yêu thích
+- **Theo dõi nghệ sĩ:** Follow nghệ sĩ để cập nhật nhạc mới
+- **Phát nhạc liên tục:** Queue và shuffle mode
+- **Responsive design:** Tối ưu cho mọi thiết bị
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 👨‍💼 Cho Admin
 
-## Learn More
+- **Quản lý người dùng:** CRUD operations cho users
+- **Quản lý nội dung:** Upload và quản lý tracks, albums
+- **Phân quyền:** Hệ thống role-based access control
 
-To learn more about Next.js, take a look at the following resources:
+### 🎤 Cho Nghệ sĩ
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Upload nhạc:** Đăng tải và quản lý tác phẩm
+- **Quản lý album:** Tạo và tổ chức album
+- **Thống kê:** Xem số liệu về lượt nghe, followers
+- **Profile management:** Quản lý thông tin cá nhân
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🛠️ Công nghệ sử dụng
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### **Frontend**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Next.js 14:** React framework với App Router
+- **TypeScript:** Type safety và developer experience
+- **Tailwind CSS:** Utility-first CSS framework
+- **Shadcn/ui:** Modern UI component library
+- **Redux Toolkit:** State management
+- **RTK Query:** Data fetching và caching
+- **React Hook Form:** Form validation
+
+---
+
+## 📦 Cài đặt
+
+### **Yêu cầu hệ thống**
+
+- Node.js 18.17 hoặc cao hơn
+- npm, yarn, pnpm hoặc bun
+- Git
+
+### **Các bước cài đặt**
+
+1. **Clone repository**
+   ```bash
+   git clone https://github.com/username/audionix.git
+   cd audionix
+   ```
+2. **Cài đặt dependencies**
+   ```bash
+    npm install
+    # hoặc
+    yarn install
+   ```
+3. **Thiết lập environment variables**
+   ```bash
+   NEXT_PUBLIC_BE_URL=
+   ```
+4. **Chạy development server**
+   ```bash
+   npm run dev
+   ```
+5. **Mở trình duyệt**
+
+- Truy cập http://localhost:3000 để xem ứng dụng.

@@ -1,5 +1,6 @@
 import { CardType } from "@/app/(main)/components/mediaList/MediaList";
 import { Album, Artist, Playlist, Track } from "@/app/types/model";
+import { cn } from "@/libs/utils";
 import { Music, User2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -108,9 +109,11 @@ const MediaCard = ({
           </div>
         )}
         <p
-          className={`dark:text-foreground w-full truncate mt-2 text-base capitalize ${
-            isArtist ? "text-center" : ""
-          }`}
+          className={cn(
+            "dark:text-foreground w-full truncate mt-2 text-base capitalize 2xl:text-lg",
+            isArtist && "text-center",
+          )}
+          title={isArtist ? artistName : title} // Show full title on hover
         >
           {isArtist ? artistName : title}
         </p>

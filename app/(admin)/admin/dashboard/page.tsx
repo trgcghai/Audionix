@@ -12,23 +12,12 @@ import LineChartComponent from "./components/LineChart";
 import StatCard from "./components/StatCard";
 
 export default function AdminDashboard() {
-  // const {
-  //   stats,
-  //   userRegistrationData,
-  //   topArtistsData,
-  //   likesData,
-  //   playlistData,
-  // } = useDashboardData();
-
   const { data, isLoading, isError, error } = useGetDashboardDataQuery();
 
   const dashboardStats = data?.data?.stats;
   const realUserData = data?.data?.userRegistrationData;
   const realTopArtists = data?.data?.topArtistsData;
-  const realLikesData = data?.data?.likesData;
   const realPlaylistData = data?.data?.playlistData;
-
-  console.log(realTopArtists);
 
   const statCards = [
     {
@@ -107,7 +96,7 @@ export default function AdminDashboard() {
                 />
               ))}
         </div>
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 grid-cols-2">
           {isLoading ? (
             <>
               <ChartCardSkeleton />
@@ -146,25 +135,13 @@ export default function AdminDashboard() {
                 description="Artists with the most followers and likes"
                 config={chartConfigs.artists}
                 className="h-[400px] w-full"
+                containerClassName="col-span-2"
               >
                 <BarChartComponent
                   data={realTopArtists || []}
                   dataKeys={["likes"]}
                   xAxisKey="name"
                   isVertical={true}
-                />
-              </ChartCard>
-              <ChartCard
-                title="Likes Overview"
-                description="Total likes on songs and albums over time"
-                config={chartConfigs.likes}
-                className="h-[400px] w-full"
-              >
-                <BarChartComponent
-                  data={realLikesData || []}
-                  dataKeys={["songs", "albums"]}
-                  xAxisKey="month"
-                  colors={["var(--primary)", "var(--secondary)"]}
                 />
               </ChartCard>
             </>

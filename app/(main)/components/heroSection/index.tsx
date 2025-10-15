@@ -25,6 +25,7 @@ const ArtistHeroSection = ({
   isFollowing,
   onFollow,
 }: HeroSectionProps) => {
+  const artistName = artist?.name || "";
   return (
     <BaseHeroSection
       title={artist?.name || ""}
@@ -35,9 +36,12 @@ const ArtistHeroSection = ({
         <p className="text-foreground text-sm font-semibold capitalize">
           Artist
         </p>
-        <p className="text-start text-7xl font-bold capitalize">
-          {artist?.name || ""}
-        </p>
+        <h1
+          className="text-start text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold capitalize line-clamp-2 break-words min-w-0"
+          title={artistName}
+        >
+          {artistName}
+        </h1>
         <div className="text-muted-foreground flex flex-col items-start gap-2 text-sm">
           <div className="flex items-center gap-2">
             <Button
@@ -67,6 +71,9 @@ const PlaylistHeroSection = ({
   disabledDialog: boolean;
   tracks: Playlist["tracks"];
 }) => {
+  const playlistTitle = playlist?.title || "";
+  const playlistDescription = playlist?.description || "";
+
   return (
     <Dialog>
       <DialogTrigger className="w-full" disabled={disabledDialog}>
@@ -81,11 +88,21 @@ const PlaylistHeroSection = ({
             <p className="text-foreground text-sm font-semibold capitalize">
               Playlist
             </p>
-            <p className="text-start text-7xl font-bold capitalize">
-              {playlist?.title || ""}
-            </p>
+            <h1
+              className="text-start text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold capitalize line-clamp-1 break-words"
+              title={playlistTitle}
+            >
+              {playlistTitle}
+            </h1>
             <div className="text-muted-foreground flex flex-col items-start gap-2 text-sm">
-              {playlist?.description && <p>{playlist?.description}</p>}
+              {playlistDescription && (
+                <p
+                  className="line-clamp-3 break-words max-w-lg"
+                  title={playlistDescription}
+                >
+                  {playlistDescription}
+                </p>
+              )}
               <div className="flex items-center gap-2">
                 <p>
                   {formatTotalTime(
@@ -110,9 +127,11 @@ const PlaylistHeroSection = ({
 };
 
 const TrackHeroSection = ({ track }: { track: Track }) => {
+  const trackTitle = track?.title || "";
+  const artistName = track?.artist?.name || "";
   return (
     <BaseHeroSection
-      title={track?.title || ""}
+      title={trackTitle}
       coverUrl={track?.cover_images[0]?.url || ""}
       showCoverImage={!!track?.cover_images.length}
     >
@@ -120,12 +139,20 @@ const TrackHeroSection = ({ track }: { track: Track }) => {
         <p className="text-foreground text-sm font-semibold capitalize">
           Track
         </p>
-        <p className="text-start text-7xl font-bold capitalize">
-          {track?.title || ""}
-        </p>
+        <h1
+          className="text-start text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold capitalize line-clamp-1 break-words min-w-0"
+          title={trackTitle}
+        >
+          {trackTitle}
+        </h1>
         <div className="text-muted-foreground flex flex-col items-start gap-2 text-sm">
           <div className="flex items-center gap-2">
-            <p>{track.artist.name}</p>
+            <p
+              className="truncate max-w-[150px] sm:max-w-[200px]"
+              title={artistName}
+            >
+              {artistName}
+            </p>
             <Dot />
             <p>{formatTrackDuration(track.duration_ms)}</p>
             <Dot />
@@ -144,9 +171,11 @@ const AlbumHeroSection = ({
   album: Album;
   tracks: Album["tracks"];
 }) => {
+  const albumTitle = album?.title || "";
+  const artistName = album?.artist?.name || "";
   return (
     <BaseHeroSection
-      title={album?.title || ""}
+      title={albumTitle}
       coverUrl={album?.cover_images[0]?.url || ""}
       showCoverImage={!!album?.cover_images.length}
     >
@@ -154,12 +183,20 @@ const AlbumHeroSection = ({
         <p className="text-foreground text-sm font-semibold capitalize">
           Album
         </p>
-        <p className="text-start text-7xl font-bold capitalize">
-          {album?.title || ""}
-        </p>
+        <h1
+          className="text-start text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold capitalize line-clamp-1 break-words min-w-0"
+          title={albumTitle}
+        >
+          {albumTitle}
+        </h1>
         <div className="text-muted-foreground flex flex-col items-start gap-2 text-sm">
           <div className="flex items-center gap-2">
-            <p>{album?.artist.name}</p>
+            <p
+              className="truncate max-w-[150px] sm:max-w-[200px]"
+              title={artistName}
+            >
+              {artistName}
+            </p>
             <Dot />
             <p>{album?.tracks.length} items</p>
             <Dot />

@@ -7,8 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import usePlaylistAction from "@/hooks/usePlaylistAction";
 import { motion } from "framer-motion";
-import { Bot, Music, Plus } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { Music, Plus } from "lucide-react";
 import { useState } from "react";
 
 const iconVariants = {
@@ -43,7 +42,6 @@ const CreateOptionItem = ({ optionItem }: { optionItem: OptionItem }) => {
 };
 
 const CreatePlaylistButton = () => {
-  const router = useRouter();
   const { handleCreatePlaylist } = usePlaylistAction();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -54,16 +52,6 @@ const CreatePlaylistButton = () => {
       description: "Create a new playlist with tracks",
       type: "playlist",
       onClick: handleCreatePlaylist,
-    },
-    {
-      icon: Bot,
-      title: "AI suggest",
-      description: "AI suggestions based on your prompt",
-      type: "ai-suggest",
-      onClick: () => {
-        console.log("AI suggest clicked");
-        router.push("/playlists/create");
-      },
     },
   ];
 
@@ -104,6 +92,6 @@ interface OptionItem {
   icon: React.ElementType;
   title: string;
   description: string;
-  type: "playlist" | "ai-suggest";
+  type: "playlist";
   onClick: () => void;
 }

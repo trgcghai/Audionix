@@ -108,7 +108,7 @@ const MediaCard = ({
           </div>
         )}
         <p
-          className={`dark:text-foreground mt-2 text-sm capitalize ${
+          className={`dark:text-foreground w-full truncate mt-2 text-base capitalize ${
             isArtist ? "text-center" : ""
           }`}
         >
